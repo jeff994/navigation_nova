@@ -17,7 +17,7 @@ def encoder():
 	while ser.isOpen():
                         bytesToRead = ser.readline()
                         rospy.loginfo(str(bytesToRead))
-                        #bytesToRead = bytesToRead.strip('\n')
+                        bytesToRead = bytesToRead.strip('\n')
                         if len(bytesToRead)  == 17: 
                                 #separates the data into readable things
                                 #rospy.loginfo(str(bytesToRead))
