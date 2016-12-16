@@ -130,7 +130,7 @@ def encoder_callback(data):
 	dist = (int(left_encode) + int(right_encode))/(2.0 * encode_to_mm)
 
 	#FSM of turning
-	if (job_des[0] = 'T') :
+	if (job_des[0] == 'T') :
 		#bearing thresholds
 		high_threshold = (job_num[0] + 1 + 360) % 360
 		low_threshold = (job_num[0] - 1 + 360) % 360
@@ -154,7 +154,7 @@ def encoder_callback(data):
 			del job_num[0]
 
 	#FSM of driving
-	elif (job_des[1] = 'F') :
+	elif (job_des[1] == 'F') :
 		#accumulate
 		dist_travelled = dist_travelled + dist   #this is in mm
 		#distance travelled threshold
