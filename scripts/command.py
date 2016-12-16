@@ -75,13 +75,21 @@ def job_details(first_point, second_point):
 
 	return ([round(angle_next), distance])
 
+def job_generator_straight_1m():
+	global job_des
+	global job_num
+	job_num.extend([0, 1000]) 
+	job_des.extend(['T','F'])
+
+
 def job_generator(init_bearing, loops):
 	global job_des
 	global job_num
 	
 	#handles from start to first point
 	job = job_details(0, 1)
-	job_des.extend(['T','F'])
+	job_des.append('T');
+	job_des.append('F');
 	job_num.extend([job[0],job[1]])   #in the form of target bearing and distance
 		
 	#handles how many loops
@@ -127,14 +135,20 @@ def encoder_callback(data):
 
 	data_string = data.data
 	left_encode, right_encode = data_string.split(" ")
-	dist = (int(left_encode) + int(right_encode))/(2.0 * encode_to_mm)
-
+	dist = (float(left_encode) + float(right_encode))/(2.0 * encode_to_mm)
+	distpub = '%f %f' % (dist,dist_travelled)
+	rospy.loginfo(distpub)
 	#FSM of turning
-	if (job_des[0] == 'T') :
+	if(len(job_des) <= 1):
+		return 
+
+	if (job_des[0] == 'R') : 	#used for temporally disable the truning part  
+                #if (job_des[0] == 'T') :
 		#bearing thresholds
 		high_threshold = (job_num[0] + 1 + 360) % 360
 		low_threshold = (job_num[0] - 1 + 360) % 360
-		while (compass_data != low_threshold or compass_data != high_threshold or compass_data != job_num[0]) : #boundary of plus minus 1 degree
+
+		if (compass_data != low_threshold or compass_data != high_threshold or compass_data != job_num[0]) : #boundary of plus minus 1 degree
 			#it is still outside the boundary, continue turning
 			d_angle = job_num[0] - compass_data
 			if (d_angle > 0) :
@@ -150,6 +164,8 @@ def encoder_callback(data):
 					send_command('L',1)
 		#once turn till target, delete job, considered job done
 		if (compass_data == low_threshold or compass_data == high_threshold or compass_data == job_num[0]) :
+			send_command('S',0);
+			dist_travelled = 0; 	
 			del job_des[0]
 			del job_num[0]
 
@@ -158,10 +174,16 @@ def encoder_callback(data):
 		#accumulate
 		dist_travelled = dist_travelled + dist   #this is in mm
 		#distance travelled threshold
-		dist_threshold = job_num[0] - 0 	#0 mm, I can choose -50mm, but since there will be inefficiencies, 0 error threshold might be good enough
-		while (dist_travelled < dist_threshold) :
-			send_command('F',1)
-		if (dist_travelled >= dist_threshold) :
+		dist_threshold = job_num[1] - 0 	#0 mm, I can choose -50mm, but since there will be inefficiencies, 0 error threshold might be good enough
+		if (dist_threshold - dist_travelled > 50) :
+			send_command('F',3)
+		elif (dist_threshold - dist_travelled > 20): 
+			send_command('F', 2); 
+		elif(dist_threshold - dist_travelled > 3):
+			send_command('F', 1);
+		if (dist_travelled >= dist_threshold - 3) :
+			send_command('S',0)
+			rospy.loginfo("Completed a job")
 			del job_des[0]
 			del job_num[0]
 
@@ -171,6 +193,7 @@ def send_command(command_string, speed):
 	#handle the format of the string
 	stringToSend = 'S%s00000%dE\n' % (command_string, speed) #might need to add \n behind the E
 	#sending the string
+	rospy.loginfo(str(stringToSend))
 	if ser.isOpen():
 		ser.write(stringToSend)
 	else:
@@ -184,7 +207,9 @@ def main_listener():
 
 if __name__ == '__main__':
 	try:
-		job_generator(initial_bearing, loops)
+		# AAron's initial one for final testing
+		#job_generator(initial_bearing, loops)
+		job_generator_straight_1m();
 		main_listener()
 	except rospy.ROSInterruptException:
 		pass
