@@ -79,7 +79,7 @@ def job_generator(init_bearing, loops):
 	global job_num
 	
 	#handles from start to first point
-	job = job_details(compass_data, 0, 1)
+	job = job_details(0, 1)
 	job_des.extend(['T','F'])
 	job_num.extend([job[0],job[1]])   #in the form of target bearing and distance
 		
@@ -168,7 +168,7 @@ def send_command(command_string, speed):
 	global job_des
 	global job_num
 	#handle the format of the string
-	stringToSend = 'S%s00000%dE' % (command_string, speed) #might need to add \n behind the E
+	stringToSend = 'S%s00000%dE\n' % (command_string, speed) #might need to add \n behind the E
 	#sending the string
 	if ser.isOpen():
 		ser.write(stringToSend)
