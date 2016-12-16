@@ -60,7 +60,7 @@ def bearing(lon1, lat1, lon2, lat2):  #from position 1 to 2
 
 def job_details(first_point, second_point):
 	global gps_lon
-    global gps_lat
+	global gps_lat
 	#handles from first_point to second_point
 	distance = haversine(gps_lon[first_point],gps_lat[first_point],gps_lon[second_point],gps_lat[second_point]) #km
 	angle_next = bearing(gps_lon[first_point],gps_lat[first_point],gps_lon[second_point],gps_lat[second_point]) #deg  
