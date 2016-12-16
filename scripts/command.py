@@ -31,7 +31,7 @@ job_num = []
 
 #defining serial port to write to (the commands)
 ser = serial.Serial()
-ser.port = "/dev/ttyACM2" #depends on the device port name
+ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__0042_95333353836351012281-if00" #depends on the device port name
 ser.baudrate = 9600
 ser.open()
 

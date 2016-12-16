@@ -22,14 +22,15 @@ def compass():
 		bytesToRead = ser.readline()
 		#rospy.loginfo(bytesToRead)
 		bytesToRead = bytesToRead.strip('\n')
-		#removes all alphabets turns into integer to remove 00
-		all = string.maketrans('','')
-		nodigs = all.translate(all, string.digits)
-		bytesToRead = bytesToRead.translate(all, nodigs)
-		bytesToPublish = int(bytesToRead)
-		#publishing data in string for standardization
-		#rospy.loginfo(str(bytesToRead))
-		pub.publish(str(bytesToPublish))
+		if len(bytesToRead)  > 0: 
+			#removes all alphabets turns into integer to remove 00
+			all = string.maketrans('','')
+			nodigs = all.translate(all, string.digits)
+			bytesToRead = bytesToRead.translate(all, nodigs)
+			bytesToPublish = int(bytesToRead)
+			#publishing data in string for standardization
+			#rospy.loginfo(str(bytesToRead))
+			pub.publish(str(bytesToPublish))
 
 		rate.sleep()
 
