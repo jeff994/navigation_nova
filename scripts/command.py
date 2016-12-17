@@ -29,10 +29,12 @@ y_target = 0 	#mm, should always be 0, because we will be moving in a straight l
 bearing_target = 0 	#degrees
 job_des = []
 job_num = []
+last_left_encoder = 0;
+last_right_encoder = 0; 
 
 #defining serial port to write to (the commands)
 ser = serial.Serial()
-ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__0042_95333353836351012281-if00" #depends on the device port name
+ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Mega_2560_75533353637351612091-if00" #depends on the device port name
 ser.baudrate = 9600
 ser.open()
 
@@ -78,7 +80,7 @@ def job_details(first_point, second_point):
 def job_generator_straight_1m():
 	global job_des
 	global job_num
-	job_num.extend([0, 1000]) 
+	job_num.extend([0, 100]) 
 	job_des.extend(['T','F'])
 
 
@@ -132,15 +134,29 @@ def encoder_callback(data):
 	global x_now
 	global y_now
 	global dist_travelled
+        global last_right_encoder
+        global last_left_encoder
 
 	data_string = data.data
 	left_encode, right_encode = data_string.split(" ")
-	dist = (int(left_encode) + int(right_encode))/(2.0 * encode_to_mm)
+
+	left_encoder_n  = float(left_encode)
+        right_encoder_n = float(right_encode)
+	dist = (left_encoder_n + right_encoder_n)/(2.0 * encode_to_mm)
+	resend = True
+        if(last_right_encoder == right_encoder_n and last_left_encoder == right_encoder_n):
+		resend = None
+	else:
+                last_right_encoder = right_encoder_n
+                last_left_encoder = left_encoder_n
+        
+
 	distpub = '%f %f' % (dist,dist_travelled)
 	rospy.loginfo(distpub)
 	#FSM of turning
 	if(len(job_des) <= 1):
-		return 
+		send_command('S',0)
+                return 
 
 	if (job_des[0] == 'R') : 	#used for temporally disable the truning part  
                 #if (job_des[0] == 'T') :
@@ -175,17 +191,17 @@ def encoder_callback(data):
 		dist_travelled = dist_travelled + dist   #this is in mm
 		#distance travelled threshold
 		dist_threshold = job_num[1] - 0 	#0 mm, I can choose -50mm, but since there will be inefficiencies, 0 error threshold might be good enough
-		if (dist_threshold - dist_travelled > 50) :
+		if (dist_threshold - dist_travelled > 50 and resend) :
 			send_command('F',5)
 		elif (dist_threshold - dist_travelled > 20): 
 			send_command('F', 4); 
-		elif(dist_threshold - dist_travelled > 3):
+		elif(dist_threshold - dist_travelled > 2):
 			send_command('F', 3);
-		if (dist_travelled >= dist_threshold - 3) :
-			send_command('S',0)
-			rospy.loginfo("Completed a job")
-			del job_des[0]
-			del job_num[0]
+		if (dist_travelled >= dist_threshold - 2) :
+                        send_command('0',0)
+                        rospy.loginfo("Completed a job")
+                        del job_des[0]
+                        del job_num[0]
 
 def send_command(command_string, speed):
 	global job_des

@@ -13,12 +13,12 @@ ser.open()
 
 def send_command():
 	#handle the format of the string
-	stringToSend = 'SS000000E\n' #might need to add \n behind the E
+	stringToSend = 'SF000005E\0' #might need to add \n behind the E
 	#sending the string
 	if ser.isOpen():
-                                #ser.write('S0000000E\n' )
-                                ser.write(stringToSend)
-	
+		ser.write(stringToSend)
+	else:
+		rospy.loginfo("Commanding Serial port not connected")
 
 
 if __name__ == '__main__':
