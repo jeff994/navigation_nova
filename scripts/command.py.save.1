@@ -139,8 +139,7 @@ def encoder_callback(data):
 	distpub = '%f %f' % (dist,dist_travelled)
 	rospy.loginfo(distpub)
 	#FSM of turning
-	if(len(job_des) <= 1):
-		return 
+	if(len(job_des) <= 1):		return
 
 	if (job_des[0] == 'R') : 	#used for temporally disable the truning part  
                 #if (job_des[0] == 'T') :
@@ -175,15 +174,11 @@ def encoder_callback(data):
 		dist_travelled = dist_travelled + dist   #this is in mm
 		#distance travelled threshold
 		dist_threshold = job_num[1] - 0 	#0 mm, I can choose -50mm, but since there will be inefficiencies, 0 error threshold might be good enough
-		if (dist_threshold - dist_travelled > 50) :
-			send_command('F',5)
-		elif (dist_threshold - dist_travelled > 20): 
-			send_command('F', 4); 
-		elif(dist_threshold - dist_travelled > 3):
-			send_command('F', 3);
-		if (dist_travelled >= dist_threshold - 3) :
-			send_command('S',0)
-			rospy.loginfo("Completed a job")
+		if (dist_travelled < dist_threshold) :
+			send_command('F',3)
+		if (dist_travelled >= dist_threshold) :
+			
+			send_command('S',0);
 			del job_des[0]
 			del job_num[0]
 
