@@ -135,7 +135,7 @@ def encoder_callback(data):
 
 	data_string = data.data
 	left_encode, right_encode = data_string.split(" ")
-	dist = (float(left_encode) + float(right_encode))/(2.0 * encode_to_mm)
+	dist = (int(left_encode) + int(right_encode))/(2.0 * encode_to_mm)
 	distpub = '%f %f' % (dist,dist_travelled)
 	rospy.loginfo(distpub)
 	#FSM of turning
