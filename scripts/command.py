@@ -19,6 +19,7 @@ encode_to_mm = 1000 #1000 encoding signals = 1 mm travelled
 
 ############################################################
 
+keyboard_data 
 compass_data = 0	#degrees, true north is 0 degrees
 dist_travelled = 0	#mm
 x_now = 0  	#mm
@@ -119,6 +120,10 @@ def job_generator(init_bearing, loops):
 	#if ending_turn_angle > 180 :
 	#	ending_turn_angle = ending_turn_angle - 360.0
 	#job_num.append(ending_turn_angle)
+def keyboard_callback(data):
+	global keyboard_data
+	keyboard_data = data.data
+	print(keyboard_data)
 
 def compass_callback(data):
 	global compass_data
@@ -221,6 +226,7 @@ def main_listener():
 	rospy.init_node('commander')
 	rospy.Subscriber('compass', String, compass_callback)
 	rospy.Subscriber('encoder', String, encoder_callback)
+	rospy.Subscriber('keyboard', String, keyboard_callback)
 	rospy.spin()
 
 if __name__ == '__main__':
