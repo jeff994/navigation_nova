@@ -5,7 +5,7 @@ import string
 from std_msgs.msg import String
 
 ser = serial.Serial()
-ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Mega_2560_75533353637351612091-if00"
+ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75435363138351A09171-if00"
 #depends on the device port name
 ser.baudrate = 9600
 ser.open()

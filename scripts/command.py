@@ -34,7 +34,8 @@ last_right_encoder = 0;
 
 #defining serial port to write to (the commands)
 ser = serial.Serial()
-ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Mega_2560_75533353637351612091-if00" #depends on the device port name
+#ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Mega_2560_75533353637351612091-if00" #depends on the device port name
+ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75435363138351A09171-if00"
 ser.baudrate = 9600
 ser.open()
 
@@ -144,7 +145,7 @@ def encoder_callback(data):
         right_encoder_n = float(right_encode)
 	dist = (left_encoder_n + right_encoder_n)/(2.0 * encode_to_mm)
 	resend = True
-        if(last_right_encoder == right_encoder_n and last_left_encoder == right_encoder_n):
+        if(last_right_encoder == right_encoder_n and last_left_encoder == left_encoder_n):
 		resend = None
 	else:
                 last_right_encoder = right_encoder_n
@@ -191,8 +192,9 @@ def encoder_callback(data):
 		dist_travelled = dist_travelled + dist   #this is in mm
 		#distance travelled threshold
 		dist_threshold = job_num[1] - 0 	#0 mm, I can choose -50mm, but since there will be inefficiencies, 0 error threshold might be good enough
-		if (dist_threshold - dist_travelled > 50 and resend) :
-			send_command('F',5)
+		if (dist_threshold - dist_travelled > 50) :
+			if resend:
+				send_command('F',5)
 		elif (dist_threshold - dist_travelled > 20): 
 			send_command('F', 4); 
 		elif(dist_threshold - dist_travelled > 2):
