@@ -2,6 +2,7 @@
 import rospy
 import serial
 import string
+import math 
 
 from std_msgs.msg import String
 from math import radians, cos, sin, asin, sqrt, atan2, degrees
@@ -14,14 +15,16 @@ gps_lon = [103.962386,103.962389,103.962456,103.962461,103.962381] #S,A,B,C,D
 gps_lat = [1.340549,1.3407,1.340696,1.340589,1.340599]
 
 initial_bearing = 0 	#set as north for now
-loops = 1 			#how many rounds to go
-encode_to_mm = 1000 #1000 encoding signals = 1 mm travelled
+loops = 1 				#how many rounds to go
+encode_to_mm = 1000 	#1000 encoding signals = 1 mm travelled
+turn_radius = 312 		#radius when turning 
 
 ############################################################
 
 keyboard_data  = ''	#keyboard control data
 compass_data = 0	#degrees, true north is 0 degrees
 dist_travelled = 0	#mm
+degree_turned = 0 	#angle inturns of degree
 x_now = 0  		#mm
 y_now = 0		#mm
 r = 350 		#mm, distance between center of robot to wheel
@@ -91,7 +94,7 @@ def clear_jobs():
 def job_generator_straight_1m():
 	global job_des
 	global job_num
-	job_num.extend([0, 100]) 
+	job_num.extend([90, 0]) 
 	job_des.extend(['T','F'])
 
 
@@ -149,11 +152,12 @@ def compass_callback(data):
 	compass_data = int(data.data)
 	#rospy.loginfo("compass : %s", data.data)
 
-def move_forward(dist):
+def move_forward(left_encode, right_encode):
 	global dist_travelled 
 	global job_num
 	global job_des
 
+	dist = (left_encoder_n + right_encoder_n)/(2.0 * encode_to_mm)
 	dist_travelled = dist_travelled + dist   #this is in mm
 	#distance travelled threshold
 	dist_threshold = job_num[1] - 0 	#0 mm, I can choose -50mm, but since there will be inefficiencies, 0 error threshold might be good enough
@@ -169,13 +173,49 @@ def move_forward(dist):
         del job_des[0]
         del job_num[0]
 
+
+def turn_degree(degree, left_encode, right_encode): 
+	global turn_radius
+	#clock wise
+	degree_turned = 0; 
+	if(degree == 0): 
+		return
+
+	#start the turning operation when both wheel are stoped  
+	if(left_encode == 0 and right_encode == 0):
+		if(degree < 0 ):
+			send_command('L', 3)
+		if(degree > 0): 
+			send_command('R', 3)
+		return; 
+
+	distance = (abs(left_encode) + abs(right_encode))/2.0 
+
+	step_angle = (360 * distance_ / (path.pi * 2 * turn_radius)   
+	angle_turned  = angle_turned + step_angle
+
+	if(degree_turned < abs(degree)): 
+		if(degree < 0 ):
+			send_command('L', 3)
+		if(degree > 0): 
+			send_command('R', 3)
+		return; 
+	else: 
+		#finishe the turning 
+		send_command('S',0);
+		del job_des[0]
+		del job_num[0]
+
+
 def turn():
 	global compass_data
 	global job_num
 	global job_des
-	high_threshold = (job_num[0] + 1 + 360) % 360
-	low_threshold = (job_num[0] - 1 + 360) % 360
+	
 
+	high_threshold = (job_num[0] + 2 + 360) % 360
+	low_threshold = (job_num[0] - 2 + 360) % 360
+	
 	if (compass_data != low_threshold or compass_data != high_threshold or compass_data != job_num[0]) : #boundary of plus minus 1 degree
 		#it is still outside the boundary, continue turning
 		d_angle = job_num[0] - compass_data
@@ -184,7 +224,6 @@ def turn():
 				send_command('L',4)     #test with slowest speed first
 			else :
 				send_command('R',4)		#after testing will use speed feedback
-			send_command('L',4)
 		elif (d_angle < 0) :
 			if (d_angle < -180) :
 				send_command('R',4)
@@ -214,7 +253,7 @@ def encoder_callback(data):
 	left_encode, right_encode = data_string.split(" ")
 	left_encoder_n  = float(left_encode)
         right_encoder_n = float(right_encode)
-	dist = (left_encoder_n + right_encoder_n)/(2.0 * encode_to_mm)
+	
 	
 	#Update the last encoder data to current 
 	resend = True
@@ -239,11 +278,11 @@ def encoder_callback(data):
 	if (job_des[0] == 'T') : 	#used for temporally disable the truning part  
          #if (job_des[0] == 'T') :
 		#bearing thresholds
-		turn()
+		turn_degree(job_num[0], left_encoder_n, right_encoder_n)
 
 	#FSM of driving
 	elif (job_des[1] == 'F') :
-		move_forward(dist)
+		move_forward(left_encoder_n, right_encoder_n)
 
 def send_command(command_string, speed):
 	global job_des
