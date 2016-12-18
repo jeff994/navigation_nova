@@ -181,15 +181,15 @@ def turn():
 		d_angle = job_num[0] - compass_data
 		if (d_angle > 0) :
 			if (d_angle > 180) :
-				send_command('L',1)     #test with slowest speed first
+				send_command('L',4)     #test with slowest speed first
 			else :
-				send_command('R',1)		#after testing will use speed feedback
-			send_command('L',1)
+				send_command('R',4)		#after testing will use speed feedback
+			send_command('L',4)
 		elif (d_angle < 0) :
 			if (d_angle < -180) :
-				send_command('R',1)
+				send_command('R',4)
 			else :
-				send_command('L',1)
+				send_command('L',4)
 	#once turn till target, delete job, considered job done
 	if (compass_data == low_threshold or compass_data == high_threshold or compass_data == job_num[0]) :
 		send_command('S',0);
