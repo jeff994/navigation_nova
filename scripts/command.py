@@ -35,8 +35,10 @@ last_right_encoder = 0; #right encoder last time
 
 #defining serial port to write to (the commands)
 ser = serial.Serial()
-#ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75439333335351412220-if00" #depends on the device port name
-ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75435363138351A09171-if00"
+#real robot port
+#ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75435363138351A09171-if00"
+#testing port
+ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75439333335351412220-if00"
 ser.baudrate = 9600
 ser.open()
 
@@ -159,7 +161,7 @@ def move_forward(dist):
 	elif(dist_threshold - dist_travelled > 2):
 		send_command('F', 3);
 	if (dist_travelled >= dist_threshold - 2) :
-        send_command('0',0)
+        	send_command('0',0)
         rospy.loginfo("Completed a job")
         del job_des[0]
         del job_num[0]
