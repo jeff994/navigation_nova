@@ -19,19 +19,19 @@ encode_to_mm = 1000 #1000 encoding signals = 1 mm travelled
 
 ############################################################
 
-keyboard_data  = ''
+keyboard_data  = ''	#keyboard control data
 compass_data = 0	#degrees, true north is 0 degrees
 dist_travelled = 0	#mm
-x_now = 0  	#mm
-y_now = 0	#mm
+x_now = 0  		#mm
+y_now = 0		#mm
 r = 350 		#mm, distance between center of robot to wheel
-x_target = 0	#mm
-y_target = 0 	#mm, should always be 0, because we will be moving in a straight line
+x_target = 0		#mm
+y_target = 0 		#mm, should always be 0, because we will be moving in a straight line
 bearing_target = 0 	#degrees
-job_des = []
-job_num = []
-last_left_encoder = 0;
-last_right_encoder = 0; 
+job_des = []		#could be 'T' or 'F'
+job_num = []		#if job is 'T', the number is the angle of robot need to face of the job else it's the distance in mm 
+last_left_encoder = 0;	#hold the encoder left data of last time 
+last_right_encoder = 0; #right encoder last time 
 
 #defining serial port to write to (the commands)
 ser = serial.Serial()
@@ -79,6 +79,13 @@ def job_details(first_point, second_point):
 
 	return ([round(angle_next), distance])
 
+def clear_jobs():
+	global job_des 
+	global job_num
+	del job_des[:]
+	del job_num[:]
+
+
 def job_generator_straight_1m():
 	global job_des
 	global job_num
@@ -120,10 +127,16 @@ def job_generator(init_bearing, loops):
 	#if ending_turn_angle > 180 :
 	#	ending_turn_angle = ending_turn_angle - 360.0
 	#job_num.append(ending_turn_angle)
+
 def keyboard_callback(data):
 	global keyboard_data
 	keyboard_data = data.data
-	print(keyboard_data)
+	if(keyboard_data == 'Reset'):
+		job_generator_straight_1m()
+	elif (keyboard_data == "Stop"):
+		clear_jobs(); 
+	else: 
+		print("Not handled command in the moment")
 
 def compass_callback(data):
 	global compass_data
@@ -131,6 +144,54 @@ def compass_callback(data):
 	compass_data = int(data.data)
 	#rospy.loginfo("compass : %s", data.data)
 
+def move_forward(dist):
+	global dist_travelled 
+	global job_num
+	global job_des
+
+	dist_travelled = dist_travelled + dist   #this is in mm
+	#distance travelled threshold
+	dist_threshold = job_num[1] - 0 	#0 mm, I can choose -50mm, but since there will be inefficiencies, 0 error threshold might be good enough
+	if (dist_threshold - dist_travelled > 50) :
+		send_command('F',5)
+	elif (dist_threshold - dist_travelled > 20): 
+		send_command('F', 4); 
+	elif(dist_threshold - dist_travelled > 2):
+		send_command('F', 3);
+	if (dist_travelled >= dist_threshold - 2) :
+        send_command('0',0)
+        rospy.loginfo("Completed a job")
+        del job_des[0]
+        del job_num[0]
+
+def turn():
+	global compass_data
+	global job_num
+	global job_des
+	high_threshold = (job_num[0] + 1 + 360) % 360
+	low_threshold = (job_num[0] - 1 + 360) % 360
+
+	if (compass_data != low_threshold or compass_data != high_threshold or compass_data != job_num[0]) : #boundary of plus minus 1 degree
+		#it is still outside the boundary, continue turning
+		d_angle = job_num[0] - compass_data
+		if (d_angle > 0) :
+			if (d_angle > 180) :
+				send_command('L',1)     #test with slowest speed first
+			else :
+				send_command('R',1)		#after testing will use speed feedback
+			send_command('L',1)
+		elif (d_angle < 0) :
+			if (d_angle < -180) :
+				send_command('R',1)
+			else :
+				send_command('L',1)
+	#once turn till target, delete job, considered job done
+	if (compass_data == low_threshold or compass_data == high_threshold or compass_data == job_num[0]) :
+		send_command('S',0);
+		del job_des[0]
+		del job_num[0]
+
+# The main call back, getting encoder data and make decision for the next move 
 def encoder_callback(data):
 	#accumulate encoder data
 	global r
@@ -143,12 +204,14 @@ def encoder_callback(data):
         global last_right_encoder
         global last_left_encoder
 
+	#Get left encoder and right encoder 
 	data_string = data.data
 	left_encode, right_encode = data_string.split(" ")
-
 	left_encoder_n  = float(left_encode)
         right_encoder_n = float(right_encode)
 	dist = (left_encoder_n + right_encoder_n)/(2.0 * encode_to_mm)
+	
+	#Update the last encoder data to current 
 	resend = True
         if(last_right_encoder == right_encoder_n and last_left_encoder == left_encoder_n):
 		resend = None
@@ -156,58 +219,26 @@ def encoder_callback(data):
                 last_right_encoder = right_encoder_n
                 last_left_encoder = left_encoder_n
         
-
+	
+	#log info 
 	distpub = '%f %f' % (dist,dist_travelled)
 	rospy.loginfo(distpub)
+	
 	#FSM of turning
+	#if no more job left, just send commad for rbot to stop 
 	if(len(job_des) <= 1):
 		send_command('S',0)
                 return 
 
-	if (job_des[0] == 'R') : 	#used for temporally disable the truning part  
-                #if (job_des[0] == 'T') :
+	#Peform turning job 
+	if (job_des[0] == 'T') : 	#used for temporally disable the truning part  
+         #if (job_des[0] == 'T') :
 		#bearing thresholds
-		high_threshold = (job_num[0] + 1 + 360) % 360
-		low_threshold = (job_num[0] - 1 + 360) % 360
-
-		if (compass_data != low_threshold or compass_data != high_threshold or compass_data != job_num[0]) : #boundary of plus minus 1 degree
-			#it is still outside the boundary, continue turning
-			d_angle = job_num[0] - compass_data
-			if (d_angle > 0) :
-				if (d_angle > 180) :
-					send_command('L',1)     #test with slowest speed first
-				else :
-					send_command('R',1)		#after testing will use speed feedback
-				send_command('L',1)
-			elif (d_angle < 0) :
-				if (d_angle < -180) :
-					send_command('R',1)
-				else :
-					send_command('L',1)
-		#once turn till target, delete job, considered job done
-		if (compass_data == low_threshold or compass_data == high_threshold or compass_data == job_num[0]) :
-			send_command('S',0);
-			dist_travelled = 0; 	
-			del job_des[0]
-			del job_num[0]
+		turn()
 
 	#FSM of driving
 	elif (job_des[1] == 'F') :
-		#accumulate
-		dist_travelled = dist_travelled + dist   #this is in mm
-		#distance travelled threshold
-		dist_threshold = job_num[1] - 0 	#0 mm, I can choose -50mm, but since there will be inefficiencies, 0 error threshold might be good enough
-		if (dist_threshold - dist_travelled > 50) :
-			send_command('F',5)
-		elif (dist_threshold - dist_travelled > 20): 
-			send_command('F', 4); 
-		elif(dist_threshold - dist_travelled > 2):
-			send_command('F', 3);
-		if (dist_travelled >= dist_threshold - 2) :
-                        send_command('0',0)
-                        rospy.loginfo("Completed a job")
-                        del job_des[0]
-                        del job_num[0]
+		move_forward(dist)
 
 def send_command(command_string, speed):
 	global job_des
