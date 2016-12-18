@@ -23,26 +23,26 @@ def KeyControl():
 	#rospy.loginfo(str("test"))
 	while True:
 		is_valid = 0
-		while is_valid:
+		while not is_valid:
 			#rospy.loginfo(str("Reading data from serial port"))
 			try :
-	            choice = int ( raw_input('Enter your choice [1-4] : ') )
-	            is_valid = 1 ## set it to 1 to validate input and to terminate the while..not loop
-	        except ValueError, e :
-	            print ("'%s' is not a valid integer." % e.args[0].split(": ")[1])
+	            		choice = int ( raw_input('Enter your choice [1-4] : ') )
+	            		is_valid = 1 ## set it to 1 to validate input and to terminate the while..not loop
+	        	except ValueError, e :
+	            		print ("'%s' is not a valid integer." % e.args[0].split(": ")[1])
 		if choice == 1:
 			print ("Init Job For Robot")
-	        pub.publish('Reset')
+	        	pub.publish('Reset')
 		elif choice == 2:
 			print ("Clear all the remaining tasks, stop the robot")
-		    pub.publish('Stop')
+		    	pub.publish('Stop')
 		elif choice == 3:
 			print ("Get a new job")
 		elif choice == 4: 
 			print ("Stop the control...")
 			break; 
 		else:
-		    print ("Invalid number. Try again...")
+		    	print ("Invalid number. Try again...")
 	rate.sleep()
 
 if __name__ == '__main__':

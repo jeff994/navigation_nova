@@ -19,7 +19,6 @@ encode_to_mm = 1000 #1000 encoding signals = 1 mm travelled
 
 ############################################################
 
-keyboard_data  = ''
 compass_data = 0	#degrees, true north is 0 degrees
 dist_travelled = 0	#mm
 x_now = 0  	#mm
@@ -35,7 +34,7 @@ last_right_encoder = 0;
 
 #defining serial port to write to (the commands)
 ser = serial.Serial()
-#ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75439333335351412220-if00" #depends on the device port name
+#ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Mega_2560_75533353637351612091-if00" #depends on the device port name
 ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75435363138351A09171-if00"
 ser.baudrate = 9600
 ser.open()
@@ -120,10 +119,6 @@ def job_generator(init_bearing, loops):
 	#if ending_turn_angle > 180 :
 	#	ending_turn_angle = ending_turn_angle - 360.0
 	#job_num.append(ending_turn_angle)
-def keyboard_callback(data):
-	global keyboard_data
-	keyboard_data = data.data
-	print(keyboard_data)
 
 def compass_callback(data):
 	global compass_data
@@ -161,7 +156,8 @@ def encoder_callback(data):
 	rospy.loginfo(distpub)
 	#FSM of turning
 	if(len(job_des) <= 1):
-		send_command('S',0)
+		if (resend == True):
+			send_command('S',0)
                 return 
 
 	if (job_des[0] == 'R') : 	#used for temporally disable the truning part  
@@ -196,9 +192,11 @@ def encoder_callback(data):
 		#accumulate
 		dist_travelled = dist_travelled + dist   #this is in mm
 		#distance travelled threshold
-		dist_threshold = job_num[1] - 0 	#0 mm, I can choose -50mm, but since there will be inefficiencies, 0 error threshold might be good enough
+		dist_threshold = job_num[1] - 0 	#0 mm, I can choose -50mm, but since there will be inefficiencies, 0 error threshold might be good enoug
+
 		if (dist_threshold - dist_travelled > 50) :
-			send_command('F',5)
+			if resend:
+				send_command('F',5)
 		elif (dist_threshold - dist_travelled > 20): 
 			send_command('F', 4); 
 		elif(dist_threshold - dist_travelled > 2):
@@ -225,7 +223,6 @@ def main_listener():
 	rospy.init_node('commander')
 	rospy.Subscriber('compass', String, compass_callback)
 	rospy.Subscriber('encoder', String, encoder_callback)
-	rospy.Subscriber('keyboard', String, keyboard_callback)
 	rospy.spin()
 
 if __name__ == '__main__':

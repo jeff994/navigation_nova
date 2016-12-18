@@ -5,8 +5,8 @@ import string
 from std_msgs.msg import String
 
 ser = serial.Serial()
-ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75439333335351412220-if00"
-
+#ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75439333335351412220-if00"
+ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75533353637351616171-if00"
 #ser.port = "/dev/ttyACM1"  #depends on the device port name
 ser.baudrate = 9600
 ser.open()
@@ -14,7 +14,7 @@ ser.open()
 def encoder():
 	pub = rospy.Publisher('encoder', String, queue_size = 10)
 	rospy.init_node('encoder', anonymous=True)
-	rate = rospy.Rate(3)
+	rate = rospy.Rate(20)
 
 	while ser.isOpen():
                         bytesToRead = ser.readline()
