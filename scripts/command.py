@@ -134,11 +134,14 @@ def keyboard_callback(data):
 	global keyboard_data
 	keyboard_data = data.data
 	if(keyboard_data == 'Reset'):
+		print("Command received, mission reset")
 		job_generator_straight_1m()
 	elif (keyboard_data == "Stop"):
+		print("Comamnd received, clear all jobs") 
 		clear_jobs(); 
 	else: 
-		print("Not handled command in the moment")
+		print(keyboard_data)
+		print("Not recognizing command receivied")
 
 def compass_callback(data):
 	global compass_data
