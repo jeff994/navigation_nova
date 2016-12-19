@@ -1,0 +1,31 @@
+Driving logic: 
+
+For each step of encoder data received 
+	if no more job left in queue
+		return 
+	check the currenct job
+		if the mission is a turning job 
+			set on_mission indicator if it's not set 
+			then perofrm turn 
+			if the angle turn accumalted equal or greater than required angle  
+				issue signal current job completed
+				de-set on_mission indicator
+				delelte the current job 
+			else 
+				if on_misson set
+					continue for next step
+				else
+					command robot to rotate 
+		if the mission is a moving job
+			set on_mission indicator if it's not set 
+			drive forward
+			calculate the distance run for this step 
+			if the distance accumlated equal or greater than required angle 
+				issue signal current job completed
+				delete current job
+				de-set on_mission indicator
+			else 
+				if on_mission set
+					continue for the next step 
+				else 
+					command robot to move 
