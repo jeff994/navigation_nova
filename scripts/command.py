@@ -38,9 +38,9 @@ job_num = []		#if job is 'T', the number is the angle of robot need to face of t
 #defining serial port to write to (the commands)
 ser = serial.Serial()
 #real robot port
-ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75435363138351A09171-if00"
+#ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75435363138351A09171-if00"
 #testing port
-#ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75439333335351412220-if00"
+ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75439333335351412220-if00"
 ser.baudrate = 9600
 ser.open()
 
@@ -148,7 +148,7 @@ def keyboard_callback(data):
 	keyboard_data = data.data
 	if (keyboard_data == 'Reset'):
 		print("Command received, mission reset")
-		job_generator_straight_1m()
+		job_generator_move_1m()
 	elif (keyboard_data == 'Turn_Left'):
 		rospy.loginfo("Left turn received"); 
 		job_generator_turn_90_left()
@@ -264,7 +264,7 @@ def turn_degree(degree, left_encode, right_encode):
  	global robot_on_mission
 
  	# The degree passed is not correct, just log and return 
-	if(degree <= 0): 
+	if(degree == 0): 
 		#No turn is required, clear current job and rerun 
 		rospy.loginfo('Robot has been assigned a meaning less 0 degree turn task')
 		complete_turn_job()
@@ -351,10 +351,10 @@ def encoder_callback(data):
     	# Step 2: Check whether if there's any job left for the robot
     	# If no jobs, make sure robot stopped moving, we cannot leave robot moving there 
 	if(len(job_des) < 1 or len(job_num) < 1):
-		rospy.loginfo('Not any jobs left')
+		#rospy.loginfo('Not any jobs left')
 		# Make sure robt stop   
 		if(left_encoder_n >=1 or right_encoder_n >=1):
-			rospy.logwarn('warning: robot is not fully stopped')
+			#rospy.logwarn('warning: robot is not fully stopped')
 			send_command('S',0)
         	return
 
@@ -373,7 +373,7 @@ def send_command(command_string, speed):
 	#handle the format of the string
 	stringToSend = 'S%s00000%dE\n' % (command_string, speed) #might need to add \n behind the E
 	#sending the string
-	rospy.loginfo(str(stringToSend))
+	#rospy.loginfo(str(stringToSend))
 	if ser.isOpen():
 		ser.write(stringToSend)
 	else:
