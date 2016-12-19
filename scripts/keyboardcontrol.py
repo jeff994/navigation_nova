@@ -15,10 +15,11 @@ def KeyControl():
 	print (30 * '-')
 	print ("   M A I N - M E N U")
 	print (30 * '-')
-	print ("1. Re-Init job")
+	print ("1. Move 1m forward")
 	print ("2. Stop robot from moving")
-	print ("3. Get a new job")
-	print ("4. Quit")
+	print ("3. Trun left")
+	print ("4. Turn right")
+	print( "5. Quit")
 	print (30 * '-')
 	#rospy.loginfo(str("test"))
 	while True:
@@ -32,14 +33,15 @@ def KeyControl():
 	            		print ("'%s' is not a valid integer." % e.args[0].split(": ")[1])
 		if choice == 1:
 			print ("Init Job For Robot")
-	        	pub.publish('Reset')
+	        pub.publish('Reset')
 		elif choice == 2:
 			print ("Clear all the remaining tasks, stop the robot")
-		    	pub.publish('Stop')
+		    pub.publish('Stop')
 		elif choice == 3:
-			print ("Get a new job")
+			pub.publish('Trun_Left')
 		elif choice == 4: 
-			print ("Stop the control...")
+			pub.publish('Trun_Right')
+		else if chose == 5:
 			break; 
 		else:
 		    	print ("Invalid number. Try again...")

@@ -90,12 +90,23 @@ def clear_jobs():
 	del job_num[:]
 
 
-def job_generator_straight_1m():
+def job_generator_move_1m():
 	global job_des
 	global job_num
 	job_num.extend([1000]) 
 	job_des.extend(['F'])
 
+def job_generator_turn_90_left():
+	global job_des
+	global job_num
+	job_num.extend([-90]) 
+	job_des.extend(['T'])
+
+def job_generator_turn_90_right():
+	global job_des
+	global job_num
+	job_num.extend([90]) 
+	job_des.extend(['T'])
 
 def job_generator(init_bearing, loops):
 	global job_des
@@ -135,9 +146,15 @@ def job_generator(init_bearing, loops):
 def keyboard_callback(data):
 	global keyboard_data
 	keyboard_data = data.data
-	if(keyboard_data == 'Reset'):
+	if (keyboard_data == 'Reset'):
 		print("Command received, mission reset")
 		job_generator_straight_1m()
+	elif (keyboard_data == 'Turn_Left')
+		rospy.loginfo("Left turn received"); 
+		job_generator_turn_90_left(); 
+	elif (keyboard_data == 'Turn_Right') 
+		rospy.loginfo('Right turn received')
+		job_generator_turn_90_right(); 
 	elif (keyboard_data == "Stop"):
 		print("Comamnd received, clear all jobs") 
 		clear_jobs(); 
@@ -373,7 +390,7 @@ if __name__ == '__main__':
 	try:
 		# AAron's initial one for final testing
 		#job_generator(initial_bearing, loops)
-		job_generator_straight_1m();
+		#job_generator_move_1m();
 		main_listener()
 	except rospy.ROSInterruptException:
 		pass
