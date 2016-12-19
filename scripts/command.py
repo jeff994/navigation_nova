@@ -149,15 +149,15 @@ def keyboard_callback(data):
 	if (keyboard_data == 'Reset'):
 		print("Command received, mission reset")
 		job_generator_straight_1m()
-	elif (keyboard_data == 'Turn_Left')
+	elif (keyboard_data == 'Turn_Left'):
 		rospy.loginfo("Left turn received"); 
-		job_generator_turn_90_left(); 
-	elif (keyboard_data == 'Turn_Right') 
+		job_generator_turn_90_left()
+	elif (keyboard_data == 'Turn_Right'): 
 		rospy.loginfo('Right turn received')
-		job_generator_turn_90_right(); 
+		job_generator_turn_90_right() 
 	elif (keyboard_data == "Stop"):
 		print("Comamnd received, clear all jobs") 
-		clear_jobs(); 
+		clear_jobs()
 	else: 
 		print(keyboard_data)
 		print("Not recognizing command receivied")
