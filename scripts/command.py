@@ -16,7 +16,7 @@ gps_lat = [1.340549,1.3407,1.340696,1.340589,1.340599]
 
 initial_bearing = 0 	#set as north for now
 loops = 1 				#how many rounds to go
-encode_to_mm = 1000 	#1000 encoding signals = 1 mm travelled
+encode_to_mm = 68.3 	#1000 encoding signals = 1 mm travelled
 turn_radius = 312 		#radius when turning 
 
 ############################################################
@@ -94,7 +94,7 @@ def clear_jobs():
 def job_generator_straight_1m():
 	global job_des
 	global job_num
-	job_num.extend([90, 0]) 
+	job_num.extend([0, 1000]) 
 	job_des.extend(['T','F'])
 
 
@@ -157,21 +157,27 @@ def move_forward(left_encode, right_encode):
 	global job_num
 	global job_des
 
-	dist = (left_encoder_n + right_encoder_n)/(2.0 * encode_to_mm)
+	dist = (left_encode + right_encode)/(2.0 * encode_to_mm)
+	
 	dist_travelled = dist_travelled + dist   #this is in mm
 	#distance travelled threshold
 	dist_threshold = job_num[1] - 0 	#0 mm, I can choose -50mm, but since there will be inefficiencies, 0 error threshold might be good enough
+	
+
+	distpub = 'dist trav: %f disttotal:%f step:%f' % (dist_travelled,dist_threshold,dist)
+        rospy.loginfo(distpub)
+
 	if (dist_threshold - dist_travelled > 50) :
-		send_command('F',5)
+		send_command('F',3)
 	elif (dist_threshold - dist_travelled > 20): 
-		send_command('F', 4); 
+		send_command('F', 3); 
 	elif(dist_threshold - dist_travelled > 2):
 		send_command('F', 3);
 	if (dist_travelled >= dist_threshold - 2) :
         	send_command('0',0)
-        rospy.loginfo("Completed a job")
-        del job_des[0]
-        del job_num[0]
+        	rospy.loginfo("Completed a job")
+       	 	del job_des[0]
+        	del job_num[0]
 
 
 def turn_degree(degree, left_encode, right_encode): 
@@ -268,11 +274,6 @@ def encoder_callback(data):
 	else:
                 last_right_encoder = right_encoder_n
                 last_left_encoder = left_encoder_n
-        
-	
-	#log info 
-	distpub = '%f' % (dist_travelled)
-	rospy.loginfo(distpub)
 	
 	#FSM of turning
 	#if no more job left, just send commad for rbot to stop 
@@ -282,7 +283,7 @@ def encoder_callback(data):
                 return 
 
 	#Peform turning job 
-	if (job_des[0] == 'T') : 	#used for temporally disable the truning part  
+	if (job_des[0] == 'R') : 	#used for temporally disable the truning part  
          #if (job_des[0] == 'T') :
 		#bearing thresholds
 		turn_degree(job_num[0], left_encoder_n, right_encoder_n)
