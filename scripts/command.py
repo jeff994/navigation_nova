@@ -39,9 +39,9 @@ last_right_encoder = 0; #right encoder last time
 #defining serial port to write to (the commands)
 ser = serial.Serial()
 #real robot port
-#ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75435363138351A09171-if00"
+ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75435363138351A09171-if00"
 #testing port
-ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75439333335351412220-if00"
+#ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75439333335351412220-if00"
 ser.baudrate = 9600
 ser.open()
 
