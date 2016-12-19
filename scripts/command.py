@@ -38,9 +38,9 @@ job_num = []		#if job is 'T', the number is the angle of robot need to face of t
 #defining serial port to write to (the commands)
 ser = serial.Serial()
 #real robot port
-#ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75435363138351A09171-if00"
+ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75435363138351A09171-if00"
 #testing port
-ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75439333335351412220-if00"
+#ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75439333335351412220-if00"
 ser.baudrate = 9600
 ser.open()
 
@@ -147,7 +147,7 @@ def keyboard_callback(data):
 	global keyboard_data
 	keyboard_data = data.data
 	if (keyboard_data == 'Reset'):
-		print("Command received, mission reset")
+		rospy.loginfo("Command received, mission reset")
 		job_generator_move_1m()
 	elif (keyboard_data == 'Turn_Left'):
 		rospy.loginfo("Left turn received"); 
@@ -156,11 +156,11 @@ def keyboard_callback(data):
 		rospy.loginfo('Right turn received')
 		job_generator_turn_90_right() 
 	elif (keyboard_data == "Stop"):
-		print("Comamnd received, clear all jobs") 
+		rospy.loginfo("Comamnd received, clear all jobs") 
 		clear_jobs()
 	else: 
-		print(keyboard_data)
-		print("Not recognizing command receivied")
+		rospy.loginfo(keyboard_data)
+		rospy.loginfo("Not recognizing command receivied")
 
 def compass_callback(data):
 	global compass_data
