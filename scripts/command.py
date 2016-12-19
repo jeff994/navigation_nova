@@ -167,7 +167,9 @@ def complete_move_job():
 	rospy.loginfo('Robot completed a moving job')
 
 def start_move_job():
-	ospy.loginfo('Robot moving job started')
+	global dist_travelled 
+	global robot_on_mission 
+	rospy.loginfo('Robot moving job started')
 	robot_on_mission = 1 
 	dist_travelled = 0
 	send_command('F',3)
@@ -186,10 +188,10 @@ def move_forward(dist_to_run, left_encode, right_encode):
 
 	# Mission started, let robot start moving 
 	if(robot_on_mission == 0): 
-		tart_move_job()
+		start_move_job()
 		return
 	# Exception handling, make sure robot wheels is moving the same direction 
-	if(left_encode > 10 and right_encode < 10)
+	if(left_encode > 10 and right_encode < 10):
 		rospy.loginfo('Robot wheel not moving as expected, step current job')
 		complete_move_job()
 		return
@@ -335,6 +337,7 @@ def encoder_callback(data):
 		rospy.loginfo('Not any jobs left')
 		# Make sure robt stop   
 		if(left_encoder_n >=1 or right_encoder_n >=1):
+			rospy.logwarn('warning: robot is not fully stopped')
 			send_command('S',0)
         	return
 
