@@ -177,10 +177,11 @@ def move_forward(left_encode, right_encode):
 def turn_degree(degree, left_encode, right_encode): 
 	global turn_radius
 	#clock wise
-	degree_turned = 0; 
+	global degree_turned 
+ 
 	if(degree == 0): 
 		return
-
+	
 	#start the turning operation when both wheel are stoped  
 	if(left_encode == 0 and right_encode == 0):
 		if(degree < 0 ):
@@ -188,11 +189,14 @@ def turn_degree(degree, left_encode, right_encode):
 		if(degree > 0): 
 			send_command('R', 3)
 		return; 
+	
+	distpub = 'Need:%f turned:%f' % (degree, degree_turned)
+        rospy.loginfo(distpub)
+	
+	distance = (abs(left_encode) + abs(right_encode))/(2.0 * encode_to_mm)
 
-	distance = (abs(left_encode) + abs(right_encode))/2.0 
-
-	step_angle = (360 * distance_ / (path.pi * 2 * turn_radius)   
-	angle_turned  = angle_turned + step_angle
+	step_angle = (360 * distance) / (math.pi * 2 * turn_radius)   
+	degree_turned = degree_turned + step_angle
 
 	if(degree_turned < abs(degree)): 
 		if(degree < 0 ):
@@ -202,9 +206,11 @@ def turn_degree(degree, left_encode, right_encode):
 		return; 
 	else: 
 		#finishe the turning 
+		rospy.loginfo('Finished turning');
 		send_command('S',0);
 		del job_des[0]
 		del job_num[0]
+		degree_turned = 0;
 
 
 def turn():
@@ -265,12 +271,13 @@ def encoder_callback(data):
         
 	
 	#log info 
-	distpub = '%f %f' % (dist,dist_travelled)
+	distpub = '%f' % (dist_travelled)
 	rospy.loginfo(distpub)
 	
 	#FSM of turning
 	#if no more job left, just send commad for rbot to stop 
 	if(len(job_des) <= 1):
+		rospy.loginfo('Not  enough job')
 		send_command('S',0)
                 return 
 
