@@ -13,19 +13,19 @@ move_direction = 'F'
 dist_completed = 0
 
 # Starts the robot for moving, put the control variables into proper value 
-def start_move(robot_on_mission, move_speed):
+def start_move(move_speed):
 	global dist_completed
 	global move_direction
 	rospy.loginfo('Robot moving job started')
-	robot_on_mission = 1 
+	robotdrive.robot_on_mission = 1 
 	dist_completed = 0
 	robotdrive.send_command(move_direction, move_speed)
 
 # Roboet complet a moving job 
-def stop_move(robot_on_mission):	
+def stop_move():	
 	global dist_completed
 	dist_completed = 0
-	robot_on_mission = 0 
+	robotdrive.robot_on_mission = 0 
 	robotdrive.send_command('S',0)
 	rospy.loginfo('Robot completed a moving job')
 
@@ -36,13 +36,13 @@ def change_move_speed(speed_now, disired_speed):
 	speed_now = desired_speed 
 
 # main function to control the robot movement 
-def move_distance(dist_to_run, robot_on_mission, left_encode, right_encode, speed_now, desired_speed):
+def move_distance(dist_to_run, left_encode, right_encode, speed_now, desired_speed):
 	global move_direction 
 	global dist_completed
 	# if robot received a meaning less job, just signal, clear the job and return 
 	if (dist_to_run == 0):
 		rospy.loginfo('Robot received a meaning less moving job')
-		stop_move(robot_on_mission)
+		stop_move()
 		return 1
 
 	if (dist_to_run < 0):
@@ -52,14 +52,14 @@ def move_distance(dist_to_run, robot_on_mission, left_encode, right_encode, spee
 		move_direction = 'F'
 
 	# Mission started, let robot start moving 
-	if (robot_on_mission == 0): 
-		start_move(robot_on_mission, speed_now)
+	if (robotdrive.robot_on_mission == 0): 
+		start_move(speed_now)
 		return 0
 
 	# Exception handling, make sure robot wheels is moving the same direction 
 	if (left_encode > 10 and right_encode < 10):
 		rospy.loginfo('Robot wheel not moving as expected, step current job')
-		stop_move(robot_on_mission)
+		stop_move()
 		return 1 
 
 	# Accumulate the running distance and check 
@@ -81,7 +81,7 @@ def move_distance(dist_to_run, robot_on_mission, left_encode, right_encode, spee
 			change_move_speed(speed_now, disired_speed)
 		return  0
 	else :
-		stop_move(robot_on_mission)
+		stop_move()
        	return 1; 
        	#clean current job 
 	

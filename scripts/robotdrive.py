@@ -8,6 +8,7 @@ encode_to_mm = 68.3 	#1000 encoding signals = 1 mm travelled
 turn_radius = 312 		#radius when turning in mm (half distance between the middle point of two wheels) 
 move_speed = 3			# Global robot moving spped, 3 - 5
 move_speed_now = 3;		# Robot moving speed now
+robot_on_mission = 0	#set an indicator that robot's on a job right now 
 
 #defining serial port to write to (the commands)
 ser = serial.Serial()

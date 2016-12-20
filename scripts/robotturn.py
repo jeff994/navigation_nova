@@ -12,18 +12,18 @@ turn_direction 	='L'
 degree_turned = 0
 
 # start a turn job 
-def start_turn(robot_on_mission, move_speed):
+def start_turn(move_speed):
 	global degree_turned
 	global turn_direction
 	rospy.loginfo('Robot starts to execute a turn job')
-	robot_on_mission = 1
+	robotdrive.robot_on_mission = 1
 	degree_turned = 0
 	robotdrive.send_command(turn_direction, move_speed)
 
 # tell the robot to complete it's turning job 
-def complete_turn(robot_on_mission):
+def complete_turn():
 	global degree_turned
-	robot_on_mission = 0
+	robotdrive.robot_on_mission = 0
 	degree_turned = 0
 	robotdrive.send_command('S',0)
 	rospy.loginfo('Robot completed a turn job')
@@ -35,7 +35,7 @@ def update_turn_speed(move_speed, move_speed_now):
 	move_speed_now = move_speed
 
 # let robot performs a turning job of certain degree 
-def turn_degree(degree_to_turn, robot_on_mission, left_encode, right_encode, move_speed_now, move_speed): 
+def turn_degree(degree_to_turn, left_encode, right_encode, move_speed_now, move_speed): 
  	global turn_direction
  	global degree_turned 
 
@@ -43,7 +43,7 @@ def turn_degree(degree_to_turn, robot_on_mission, left_encode, right_encode, mov
 	if(degree == 0): 
 		#No turn is required, clear current job and rerun 
 		rospy.loginfo('Robot has been assigned a meaning less 0 degree turn task')
-		complete_turn(robot_on_mission)
+		complete_turn()
 		return 1
 
  	if (degree_to_turn < 0): #ccw turning 
@@ -53,13 +53,13 @@ def turn_degree(degree_to_turn, robot_on_mission, left_encode, right_encode, mov
  		turn_direction = 'R'
 
 	#robot has not started turning, just start the turning 
-	if(robot_on_mission == 0):
-		start_turn(robot_on_mission, move_speed)
+	if(robotdrive.robot_on_mission == 0):
+		start_turn(move_speed)
 		return 0
 
 	if((left_encode > 10 and right_encode > 10) or (left_encode < -10 and right_encode < -10)): 
 		rospy.loginfo('Robot wheel not moving as expected, clear current task')
-		complete_turn(robot_on_mission)
+		complete_turn()
 		return 1
 
 	#Get the turned angle and then calculate 
@@ -81,6 +81,6 @@ def turn_degree(degree_to_turn, robot_on_mission, left_encode, right_encode, mov
 		return 0
 	else: 
 		#finishe the turning 
-		complete_turn(robot_on_mission)
+		complete_turn()
 		return 1
 	return 0 

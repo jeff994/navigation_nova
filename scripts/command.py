@@ -21,7 +21,6 @@ gps_lat = [1.340549,1.3407,1.340696,1.340589,1.340599]
 
 initial_bearing = 0 	#set as north for now
 loops = 1 				#how many rounds to go
-robot_on_mission = 0	#set an indicator that robot's on a job right now 
 ############################################################
 
 keyboard_data  = ''		#keyboard control data
@@ -142,7 +141,6 @@ def encoder_callback(data):
 	global x_now
 	global y_now
 	global dist_travelled
-	global robot_on_mission 
 	global move_speed
 	global move_speed_now
 
@@ -170,10 +168,10 @@ def encoder_callback(data):
 	job_completed = 0; 
 	if (job_des[0] == 'T') : 	#used for temporally disable the truning part  
 		#bearing thresholds
-		job_completed =robotturn.turn_degree(job_num[0], robot_on_mission, left_encode, right_encode, robotdrive.move_speed_now, robotdrive.move_speed)
+		job_completed =robotturn.turn_degree(job_num[0], left_encode, right_encode, robotdrive.move_speed_now, robotdrive.move_speed)
 	#FSM moving of dirction
 	elif (job_des[0] == 'F' or job_des[0] == 'B') :
-		job_completed =robotmove.move_distance(job_num[0],robot_on_mission, left_encode, right_encode, robotdrive.move_speed_now, robotdrive.move_speed)
+		job_completed =robotmove.move_distance(job_num[0], left_encode, right_encode, robotdrive.move_speed_now, robotdrive.move_speed)
 	else :
 		rospy.logwarn('warning: illegal job description found, not peform any actions')
 	

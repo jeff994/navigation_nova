@@ -16,7 +16,7 @@ gps_lat = [1.340549,1.3407,1.340696,1.340589,1.340599]
 
 initial_bearing = 0 	#set as north for now
 loops = 1 		#how many rounds to go
-robot_on_mission = 0	#set an indicator that robot's on a job right now 
+robotdrive.robot_on_mission = 0	#set an indicator that robot's on a job right now 
 encode_to_mm = 68.3 	#1000 encoding signals = 1 mm travelled
 turn_radius = 312 	#radius when turning in mm (half distance between the middle point of two wheels) 
 
@@ -207,20 +207,20 @@ def complete_move_job():
 	global dist_travelled 
 	global job_num
 	global job_des
-	global robot_on_mission 	
+	global robotdrive.robot_on_mission 	
 	dist_travelled = 0
-	robot_on_mission = 0 
+	robotdrive.robot_on_mission = 0 
 	del job_des[0]
 	del job_num[0]
 	rospy.loginfo('Robot completed a moving job')
 
 def start_move_job():
 	global dist_travelled 
-	global robot_on_mission 
+	global robotdrive.robot_on_mission 
 	global move_direction
 	global move_speed
 	rospy.loginfo('Robot moving job started')
-	robot_on_mission = 1 
+	robotdrive.robot_on_mission = 1 
 	dist_travelled = 0
 	send_command(move_direction, move_speed)
 
@@ -235,7 +235,7 @@ def move_distance(dist_to_run, left_encode, right_encode):
 	global dist_travelled 
 	global job_num
 	global job_des
-	global robot_on_mission 
+	global robotdrive.robot_on_mission 
 	global move_speed 
 	global move_speed_now
 
@@ -246,7 +246,7 @@ def move_distance(dist_to_run, left_encode, right_encode):
 		return 
 
 	# Mission started, let robot start moving 
-	if(robot_on_mission == 0): 
+	if(robotdrive.robot_on_mission == 0): 
 		start_move_job()
 		return
 	# Exception handling, make sure robot wheels is moving the same direction 
@@ -285,10 +285,10 @@ def complete_turn_job():
 	global degree_turned 
  	global job_des 
  	global job_num
- 	global robot_on_mission
+ 	global robotdrive.robot_on_mission
 	del job_des[0]
 	del job_num[0]
-	robot_on_mission = 0
+	robotdrive.robot_on_mission = 0
 	degree_turned = 0
 	rospy.loginfo('Robot completed a turn job')
 
@@ -296,9 +296,9 @@ def complete_turn_job():
 def start_turn_job():
 	rospy.loginfo('Robot starts to execute a turn job')
 	global degree_turned 
-	global robot_on_mission
+	global robotdrive.robot_on_mission
 	global move_speed
-	robot_on_mission = 1
+	robotdrive.robot_on_mission = 1
 	degree_turned = 0
 	send_command(turn_direction, move_speed)
 
@@ -316,7 +316,7 @@ def turn_degree(degree, left_encode, right_encode):
 	global degree_turned 
  	global job_des 
  	global job_num
- 	global robot_on_mission
+ 	global robotdrive.robot_on_mission
  	global turn_direction
 
  	if (degree < 0): #ccw turning 
@@ -332,7 +332,7 @@ def turn_degree(degree, left_encode, right_encode):
 		return
 
 	#robot has not started turning, just start the turning 
-	if(robot_on_mission == 0):
+	if(robotdrive.robot_on_mission == 0):
 		start_turn_job()
 		return
 
