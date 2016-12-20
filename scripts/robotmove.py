@@ -66,16 +66,16 @@ def move_distance(dist_to_run, left_encode, right_encode, speed_now, desired_spe
 	# Get each step of the distance 
 	dist_step = (left_encode + right_encode)/(2.0 * robotdrive.encode_to_mm)
 	# accumulate the distance to the completed distance 
-	dist_completed = dist_completed + dist   #this is in mm
+	dist_completed = dist_completed + dist_step   #this is in mm
 	#distance travelled threshold (put 2 mm thresh hold before stopping)
 	dist_threshold = dist_to_run - 2 	#0 mm, I can choose -50mm, but since there will be inefficiencies, 0 error threshold might be good enough
 	
-	distpub = 'dist-travelled: %f dist-total:%f dist-step:%f' % (dist_completed,dist_threshold,dist)
+	distpub = 'dist-travelled: %f dist-total:%f dist-step:%f' % (dist_completed,dist_threshold,dist_step)
 	rospy.loginfo(distpub)
 
 	if (dist_threshold - dist_completed > 0) :
 		#just continue moving of job not completed and no change of speed command received 
-		if(move_speed  == move_speed_now):
+		if(speed_now  == desired_speed):
 			rospy.loginfo('Still moving at the same speed...')
 		else :
 			change_move_speed(speed_now, disired_speed)

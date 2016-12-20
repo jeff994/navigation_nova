@@ -40,7 +40,7 @@ def turn_degree(degree_to_turn, left_encode, right_encode, move_speed_now, move_
  	global degree_turned 
 
  	# The degree passed is not correct, just log and return 
-	if(degree == 0): 
+	if(degree_to_turn == 0): 
 		#No turn is required, clear current job and rerun 
 		rospy.loginfo('Robot has been assigned a meaning less 0 degree turn task')
 		complete_turn()
