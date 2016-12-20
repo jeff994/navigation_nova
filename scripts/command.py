@@ -44,9 +44,9 @@ job_num = []		#if job is 'T', the number is the angle of robot need to face of t
 #defining serial port to write to (the commands)
 ser = serial.Serial()
 #real robot port
-ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75435363138351A09171-if00"
+#ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75435363138351A09171-if00"
 #testing port
-#ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75439333335351412220-if00"
+ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75439333335351412220-if00"
 ser.baudrate = 9600
 ser.open()
 
@@ -100,12 +100,11 @@ def clear_jobs():
 	del job_num[:]
 
 #Generate differnet jobs 
-def job_generator_move_1m(direction):
+def job_generator_move_1m():
 	global job_des
 	global job_num
 	global move_direction 
 
-	move_direction = direction
 	job_num.extend([1000]) 
 	job_des.extend([move_direction])
 
@@ -159,18 +158,25 @@ def job_generator(init_bearing, loops):
 # Subscriber to keyboard topic and peform actions based on the command get  
 def keyboard_callback(data):
 	global keyboard_data
+	global turn_direction
+	global move_speed
+	global move_direction
 	keyboard_data = data.data
 	if (keyboard_data == 'Forward'):
 		rospy.loginfo("Command received: Start to move forward 1 m")
-		job_generator_move_1m('F')
+		move_direction='F'
+		job_generator_move_1m()
 	if (keyboard_data == 'Back'):
 		rospy.loginfo("Command received: Start to move forward 1 m")
-		job_generator_move_1m('B')
+		move_direction ='B'
+		job_generator_move_1m()
 	elif (keyboard_data == 'Turn_Left'):
 		rospy.loginfo("Left turn received"); 
-		job_generator_turn_90_left('B')
+		turn_direction ='L';
+		job_generator_turn_90_left()
 	elif (keyboard_data == 'Turn_Right'): 
 		rospy.loginfo('Right turn received')
+		turn_direction='R'
 		job_generator_turn_90_right() 
 	elif (keyboard_data == 'Stop'):
 		rospy.loginfo("Comamnd received, clear all jobs") 
@@ -217,7 +223,7 @@ def start_move_job():
 	dist_travelled = 0
 	send_command(move_direction, move_speed)
 
-def update_move_speed()
+def update_move_speed():
 	global move_direction
 	global move_speed
 	global move_speed_now 
@@ -295,7 +301,8 @@ def start_turn_job():
 	degree_turned = 0
 	send_command(turn_direction, move_speed)
 
-def update_turn_speed()
+def update_turn_speed():
+
 	global turn_direction
 	global move_speed
 	send_command(turn_direction, move_speed)
@@ -345,10 +352,10 @@ def turn_degree(degree, left_encode, right_encode):
 
 	if(degree_turned < abs(degree)): 
 		#continure turning and no need issue new command
-		if(move_speed == move_speed_now) 
+		if(move_speed == move_speed_now): 
 			rospy.loginfo('Continue turning at same speed...')
-		else 
-
+		else:
+			update_turn_speed()
 		return;
 	else: 
 		#finishe the turning 
@@ -422,7 +429,7 @@ def encoder_callback(data):
 	#FSM moving of dirction
 	elif (job_des[0] == 'F' or job_des[0] == 'B') :
 		move_distance(job_num[0], left_encoder_n, right_encoder_n)
-	else 
+	else :
 		rospy.logwarn('warning: illegal job description found, not peform any actions')
 
 # Helper function which can send commands to robot 
