@@ -149,10 +149,6 @@ def encoder_callback(data):
 	data_string = data.data
 	left_encode, right_encode = data_string.split(" ")
 
-	#convert encoder number to floading point number, make sure all subsquent calculation is on floating point mode 
-	left_encode  = float(left_encode)
-    	right_encode = float(right_encode)
-
     	# Step 2: Check whether if there's any job left for the robot
     	# If no jobs, make sure robot stopped moving, we cannot leave robot moving there 
 	if(len(job_des) < 1 or len(job_num) < 1):
@@ -168,10 +164,10 @@ def encoder_callback(data):
 	job_completed = 0; 
 	if (job_des[0] == 'T') : 	#used for temporally disable the truning part  
 		#bearing thresholds
-		job_completed =robotturn.turn_degree(job_num[0], left_encode, right_encode, robotdrive.move_speed_now, robotdrive.move_speed)
+		job_completed =robotturn.turn_degree(job_num[0], float(left_encode), float(right_encode), robotdrive.move_speed_now, robotdrive.move_speed)
 	#FSM moving of dirction
 	elif (job_des[0] == 'F' or job_des[0] == 'B') :
-		job_completed =robotmove.move_distance(job_num[0], left_encode, right_encode, robotdrive.move_speed_now, robotdrive.move_speed)
+		job_completed =robotmove.move_distance(job_num[0], float(left_encode), float(right_encode), robotdrive.move_speed_now, robotdrive.move_speed)
 	else :
 		rospy.logwarn('warning: illegal job description found, not peform any actions')
 	
