@@ -64,33 +64,10 @@ def job_details(first_point, second_point):
 	#turn_angle = angle_next - angle_now
 	#if turn_angle > 180.0 :
 	#	turn_angle = turn_angle - 360.0
-		
+	generate_move
 	#handles forward distance in mm
 	distance = distance * 1000.0 * 1000.0
-
 	return ([round(angle_next), distance])
-
-
-#Generate differnet jobs 
-def job_generator_move_1m():
-	global job_des
-	global job_num
-	global move_direction 
-
-	job_num.extend([1000]) 
-	job_des.extend([move_direction])
-
-def job_generator_turn_90_left():
-	global job_des
-	global job_num
-	job_num.extend([-90]) 
-	job_des.extend(['T'])
-
-def job_generator_turn_90_right():
-	global job_des
-	global job_num
-	job_num.extend([90]) 
-	job_des.extend(['T'])
 
 def job_generator(init_bearing, loops):
 	global job_des
@@ -139,20 +116,16 @@ def keyboard_callback(data):
 	keyboard_data = data.data
 	if (keyboard_data == 'Forward'):
 		rospy.loginfo("Command received: Start to move forward 1 m")
-		move_direction='F'
-		job_generator_move_1m()
+		robotjob.generate_move(job_des, job_num, 1000, 'F')
 	if (keyboard_data == 'Back'):
 		rospy.loginfo("Command received: Start to move forward 1 m")
-		move_direction ='B'
-		job_generator_move_1m()
+		robotjob.generate_move(job_des, job_num, 1000, 'B')
 	elif (keyboard_data == 'Turn_Left'):
 		rospy.loginfo("Left turn received"); 
-		turn_direction ='L';
-		job_generator_turn_90_left()
+		robotjob.generate_turn(job_des, job_num, -90)
 	elif (keyboard_data == 'Turn_Right'): 
 		rospy.loginfo('Right turn received')
-		turn_direction='R'
-		job_generator_turn_90_right() 
+		obotjob.generate_turn(job_des, job_num, 90)
 	elif (keyboard_data == 'Stop'):
 		rospy.loginfo("Comamnd received, clear all jobs") 
 		robotjob.clear_jobs(job_des, job_num)
@@ -277,7 +250,6 @@ def start_turn_job():
 	send_command(turn_direction, move_speed)
 
 def update_turn_speed():
-
 	global turn_direction
 	global move_speed
 	send_command(turn_direction, move_speed)
@@ -294,9 +266,9 @@ def turn_degree(degree, left_encode, right_encode):
  	global turn_direction
 
  	if (degree < 0): #ccw turning 
- 		turn_direction = 'R'
- 	else:
  		turn_direction = 'L'
+ 	else:
+ 		turn_direction = 'R'
 
  	# The degree passed is not correct, just log and return 
 	if(degree == 0): 
@@ -403,6 +375,7 @@ def encoder_callback(data):
 		turn_degree(job_num[0], left_encoder_n, right_encoder_n)
 	#FSM moving of dirction
 	elif (job_des[0] == 'F' or job_des[0] == 'B') :
+		move_direction = job_des[0]
 		move_distance(job_num[0], left_encoder_n, right_encoder_n)
 	else :
 		rospy.logwarn('warning: illegal job description found, not peform any actions')
