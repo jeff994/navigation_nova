@@ -1,115 +1,42 @@
 #!/usr/bin/env python
 import rospy
-import serial
 import string
-import math 
-import gpsmath
 import robotjob 
 import robotdrive
 import robotmove
 import robotturn
 
 from std_msgs.msg import String
-from math import radians, cos, sin, asin, sqrt, atan2, degrees
-
-###################### EDIT HERE ###########################
-#defining or acquiring the GPS coordinates
-gps_num = 4
-start = [103.962386,1.340549]
-gps_lon = [103.962386,103.962389,103.962456,103.962461,103.962381] #S,A,B,C,D
-gps_lat = [1.340549,1.3407,1.340696,1.340589,1.340599]
 
 initial_bearing = 0 	#set as north for now
-loops = 1 				#how many rounds to go
 ############################################################
 
 compass_data = 0		#degrees, true north is 0 degrees
-
 x_now = 0  				#mm
 y_now = 0				#mm
 r = 350 				#mm, distance between center of robot to wheel
 x_target = 0			#mm
 y_target = 0 			#mm, should always be 0, because we will be moving in a straight line
 bearing_target = 0 		#degrees
-job_des = []			#could be 'T' or 'F'
-job_num = []			#if job is 'T', the number is the angle of robot need to face of the job else it's the distance in mm 
-
-
-#based on the gps coordinates of the two location, generate jobs
-def job_details(first_point, second_point):
-	global gps_lon
-	global gps_lat
-	#handles from first_point to second_point
-	distance 	= gpsmath.haversine(gps_lon[first_point],gps_lat[first_point],gps_lon[second_point],gps_lat[second_point]) #km
-	angle_next 	= gpsmath.bearing(gps_lon[first_point],gps_lat[first_point],gps_lon[second_point],gps_lat[second_point]) #deg  
-		
-	#handles turning angle		
-	#turn_angle = angle_next - angle_now
-	#if turn_angle > 180.0 :
-	#	turn_angle = turn_angle - 360.0
-	generate_move
-	#handles forward distance in mm
-	distance = distance * 1000.0 * 1000.0
-	return ([round(angle_next), distance])
-
-def job_generator(init_bearing, loops):
-	global job_des
-	global job_num
-	
-	#handles from start to first point
-	job = job_details(0, 1)
-	job_des.append('T');
-	job_des.append('F');
-	job_num.extend([job[0],job[1]])   #in the form of target bearing and distance
-		
-	#handles how many loops
-	for i in range (loops) :
-		for k in range (gps_num):
-			if k < gps_num - 1 :
-				job = job_details(k + 1, k + 2)
-				job_des.extend(['T','F'])
-				job_num.extend([job[0],job[1]])
-				
-			else : 
-				job = job_details(k + 1, 1)
-				job_des.extend(['T','F'])
-				job_num.extend([job[0],job[1]])
-	
-	#handles closing loop, going back to start
-	job = job_details(1, 0)
-	job_des.extend(['T','F'])
-	job_num.extend([job[0],job[1]])
-	#final turn to init_bearing
-	job_des.append('T')
-	job_num.append(init_bearing)
-	#ending_turn_angle = init_angle - angle_now
-	#if ending_turn_angle > 180 :
-	#	ending_turn_angle = ending_turn_angle - 360.0
-	#job_num.append(ending_turn_angle)
 
 # Subscriber to keyboard topic and peform actions based on the command get  
 def keyboard_callback(data):
-	keyboard_data = ''
-	global turn_direction
-	global job_des
-	global job_num
-
 	keyboard_data = data.data
 	if (keyboard_data == 'Forward'):
 		rospy.loginfo("Command received: Start to move forward 1 m")
-		robotjob.generate_move(job_des, job_num, 1000, 'F')
+		robotjob.generate_move(robotjob.job_des, robotjob.job_num, 1000, 'F')
 	if (keyboard_data == 'Back'):
 		rospy.loginfo("Command received: Start to move back 1 m")
-		robotjob.generate_move(job_des, job_num, -1000, 'B')
+		robotjob.generate_move(robotjob.job_des, robotjob.job_num, -1000, 'B')
 	elif (keyboard_data == 'Turn_Left'):
 		rospy.loginfo("Left turn received"); 
-		robotjob.generate_turn(job_des, job_num, -90)
+		robotjob.generate_turn(robotjob.job_des, robotjob.job_num, -90)
 	elif (keyboard_data == 'Turn_Right'): 
 		rospy.loginfo('Right turn received')
-		robotjob.generate_turn(job_des, job_num, 90)
+		robotjob.generate_turn(robotjob.job_des, robotjob.job_num, 90)
 	elif (keyboard_data == 'Stop'):
 		rospy.loginfo("Comamnd received, clear all jobs") 
-		robotjob.clear_jobs(job_des, job_num)
+		robotjob.clear_jobs(robotjob.job_des, robotjob.job_num)
 	elif (keyboard_data == 'Faster'):
 		if(robotdrive.move_speed < 5): 
 			robotdrive.desired_speed = robotdrive.desired_speed + 1  
@@ -132,11 +59,8 @@ def encoder_callback(data):
 	#accumulate encoder data
 	global r
 	global compass_data
-	global job_des
-	global job_num
 	global x_now
 	global y_now
-	global dist_travelled
 
 	#Step 1: Get encoder data and convert them to number for later use 
 	#Get left encoder and right encoder 
@@ -149,7 +73,7 @@ def encoder_callback(data):
 
     	# Step 2: Check whether if there's any job left for the robot
     	# If no jobs, make sure robot stopped moving, we cannot leave robot moving there 
-	if(len(job_des) < 1 or len(job_num) < 1):
+	if(len(robotjob.job_des) < 1 or len(robotjob.job_num) < 1):
 		#rospy.loginfo('Not any jobs left')
 		# Make sure robt stop   
 		if(left_encode >=1 or right_encode >=1):
@@ -160,18 +84,18 @@ def encoder_callback(data):
      # Step 3: Perform actually turning and moving 
 	#Peform turning job 
 	job_completed = 0; 
-	if (job_des[0] == 'T') : 	#used for temporally disable the truning part  
+	if (robotjob.job_des[0] == 'T') : 	#used for temporally disable the truning part  
 		#bearing thresholds
-		job_completed =robotturn.turn_degree(job_num[0], left_encode, right_encode)
+		job_completed =robotturn.turn_degree(robotjob.job_num[0], left_encode, right_encode)
 	#FSM moving of dirction
-	elif (job_des[0] == 'F' or job_des[0] == 'B') :
-		job_completed =robotmove.move_distance(job_num[0], left_encode, right_encode)
+	elif (robotjob.job_des[0] == 'F' or robotjob.job_des[0] == 'B') :
+		job_completed =robotmove.move_distance(robotjob.job_num[0], left_encode, right_encode)
 	else :
 		rospy.logwarn('warning: illegal job description found, not peform any actions')
 	
 	if job_completed == 1: 
-		del job_des[0]
-		del job_num[0]
+		del robotjob.job_des[0]
+		del robotjob.job_num[0]
 
 #subscribes to different topic 
 def main_listener():
