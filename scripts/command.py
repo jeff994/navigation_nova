@@ -4,6 +4,7 @@ import serial
 import string
 import math 
 import gpsmath
+import robotjob 
 
 from std_msgs.msg import String
 from math import radians, cos, sin, asin, sqrt, atan2, degrees
@@ -69,12 +70,6 @@ def job_details(first_point, second_point):
 
 	return ([round(angle_next), distance])
 
-# Clear jobs 
-def clear_jobs():
-	global job_des 
-	global job_num
-	del job_des[:]
-	del job_num[:]
 
 #Generate differnet jobs 
 def job_generator_move_1m():
@@ -138,6 +133,9 @@ def keyboard_callback(data):
 	global turn_direction
 	global move_speed
 	global move_direction
+	global job_des
+	global job_num
+
 	keyboard_data = data.data
 	if (keyboard_data == 'Forward'):
 		rospy.loginfo("Command received: Start to move forward 1 m")
@@ -157,7 +155,7 @@ def keyboard_callback(data):
 		job_generator_turn_90_right() 
 	elif (keyboard_data == 'Stop'):
 		rospy.loginfo("Comamnd received, clear all jobs") 
-		clear_jobs()
+		robotjob.clear_jobs(job_des, job_num)
 	elif (keyboard_data == 'Faster'):
 		if(move_speed < 5): 
 			move_speed = move_speed + 1  
