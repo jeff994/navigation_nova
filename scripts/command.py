@@ -24,19 +24,19 @@ def keyboard_callback(data):
 	keyboard_data = data.data
 	if (keyboard_data == 'Forward'):
 		rospy.loginfo("Command received: Start to move forward 1 m")
-		robotjob.generate_move(robotjob.job_des, robotjob.job_num, 1000, 'F')
+		robotjob.generate_move(1000, 'F')
 	if (keyboard_data == 'Back'):
 		rospy.loginfo("Command received: Start to move back 1 m")
-		robotjob.generate_move(robotjob.job_des, robotjob.job_num, -1000, 'B')
+		robotjob.generate_move(-1000, 'B')
 	elif (keyboard_data == 'Turn_Left'):
 		rospy.loginfo("Left turn received"); 
-		robotjob.generate_turn(robotjob.job_des, robotjob.job_num, -90)
+		robotjob.generate_turn(-90)
 	elif (keyboard_data == 'Turn_Right'): 
 		rospy.loginfo('Right turn received')
-		robotjob.generate_turn(robotjob.job_des, robotjob.job_num, 90)
+		robotjob.generate_turn(90)
 	elif (keyboard_data == 'Stop'):
 		rospy.loginfo("Comamnd received, clear all jobs") 
-		robotjob.clear_jobs(robotjob.job_des, robotjob.job_num)
+		robotjob.clear_jobs()
 	elif (keyboard_data == 'Faster'):
 		if(robotdrive.move_speed < 5): 
 			robotdrive.desired_speed = robotdrive.desired_speed + 1  
