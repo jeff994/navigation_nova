@@ -84,7 +84,7 @@ def turn_degree(degree_to_turn, left_encode, right_encode):
 	degree_turned = degree_turned + step_angle
 		
 	#simple log for tracing 
-	distpub = 'Required angle:%f turned angle:%f step angle' % (degree_to_turn, degree_turned, step_angle)
+	distpub = 'Required angle:%f turned angle:%f step angle: %f' % (degree_to_turn, degree_turned, step_angle)
         rospy.loginfo(distpub)
 
 	if(degree_turned < degree_to_turn): 
