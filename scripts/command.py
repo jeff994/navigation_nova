@@ -3,6 +3,7 @@ import rospy
 import serial
 import string
 import math 
+import gpsmath
 
 from std_msgs.msg import String
 from math import radians, cos, sin, asin, sqrt, atan2, degrees
@@ -50,37 +51,13 @@ ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_754353631
 ser.baudrate = 9600
 ser.open()
 
-# Calculate distance between two gps coordinates 
-def haversine(lon1, lat1, lon2, lat2):
-	#convert to radians
-	lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1,lon2, lat2])
-	#haversine
-	dlon = lon2 - lon1
-	dlat = lat2 - lat1
-	a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
-	c = 2 * asin(sqrt(a))
-	r = 6371 #radius of earth in kilometers
-
-	return c * r
-
-# Calculate angle between two diffent gps positions 
-def bearing(lon1, lat1, lon2, lat2):  #from position 1 to 2
-	#convert to radians
-	lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
-	
-	bearing = atan2(sin(lon2-lon1)*cos(lat2), cos(lat1)*sin(lat2)-sin(lat1)*cos(lat2)*cos(lon2-lon1))
-	bearing = degrees(bearing)
-	bearing = (bearing + 360) % 360
-
-	return bearing
-
 #based on the gps coordinates of the two location, generate jobs
 def job_details(first_point, second_point):
 	global gps_lon
 	global gps_lat
 	#handles from first_point to second_point
-	distance = haversine(gps_lon[first_point],gps_lat[first_point],gps_lon[second_point],gps_lat[second_point]) #km
-	angle_next = bearing(gps_lon[first_point],gps_lat[first_point],gps_lon[second_point],gps_lat[second_point]) #deg  
+	distance 	= gpsmath.haversine(gps_lon[first_point],gps_lat[first_point],gps_lon[second_point],gps_lat[second_point]) #km
+	angle_next 	= gpsmath.bearing(gps_lon[first_point],gps_lat[first_point],gps_lon[second_point],gps_lat[second_point]) #deg  
 		
 	#handles turning angle		
 	#turn_angle = angle_next - angle_now
