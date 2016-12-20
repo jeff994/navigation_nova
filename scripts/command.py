@@ -26,7 +26,6 @@ robot_on_mission = 0	#set an indicator that robot's on a job right now
 
 keyboard_data  = ''		#keyboard control data
 
-
 compass_data = 0		#degrees, true north is 0 degrees
 dist_travelled = 0		#mm
 degree_turned = 0 		#angle inturns of degree
