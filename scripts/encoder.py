@@ -38,9 +38,9 @@ def encoder():
 
 		#turning them into strings
                                 #real data 
-                                #bytesToPublish = '%d %d' % (nl_encoder, nr_encoder)
+                                bytesToPublish = '%d %d' % (nl_encoder, nr_encoder)
 				#simulated testing data 
-                                bytesToPublish = '1234 -1234'
+                                #bytesToPublish = '-1234 1234'
                                 #publishing data in string for standardization
                                 #rospy.loginfo(str(bytesToPublish))
                                 pub.publish(str(bytesToPublish))
