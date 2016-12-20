@@ -36,7 +36,7 @@ def change_move_speed(speed_now, disired_speed):
 	speed_now = desired_speed 
 
 # main function to control the robot movement 
-def move_distance(dist_to_run, robot_on_missin, left_encode, right_encode, speed_now, desired_speed):
+def move_distance(dist_to_run, robot_on_mission, left_encode, right_encode, speed_now, desired_speed):
 	global move_direction 
 	global dist_completed
 	# if robot received a meaning less job, just signal, clear the job and return 
@@ -48,12 +48,12 @@ def move_distance(dist_to_run, robot_on_missin, left_encode, right_encode, speed
 	if (dist_to_run < 0):
 		move_direction = 'B'
 		dist_to_run = -dist_to_run
-	else 
+	else: 
 		move_direction = 'F'
 
 	# Mission started, let robot start moving 
 	if (robot_on_mission == 0): 
-		start_move(drobot_on_mission, move_speed)
+		start_move(robot_on_mission, speed_now)
 		return 0
 
 	# Exception handling, make sure robot wheels is moving the same direction 

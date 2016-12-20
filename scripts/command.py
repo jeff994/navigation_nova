@@ -173,7 +173,7 @@ def encoder_callback(data):
 		job_completed =robotturn.turn_degree(job_num[0], robot_on_mission, left_encode, right_encode, robotdrive.move_speed_now, robotdrive.move_speed)
 	#FSM moving of dirction
 	elif (job_des[0] == 'F' or job_des[0] == 'B') :
-		job_completed =robotmove.move_distance(job_num[0],robot_on_missin, left_encode, right_encode, robotdrive.move_speed_now, robotdrive.move_speed)
+		job_completed =robotmove.move_distance(job_num[0],robot_on_mission, left_encode, right_encode, robotdrive.move_speed_now, robotdrive.move_speed)
 	else :
 		rospy.logwarn('warning: illegal job description found, not peform any actions')
 	

@@ -27,9 +27,9 @@ def open_serial():
 	return 0; 
 
 # Helper function which can send commands to robot 
-def send_command(ser, command_string, speed):
+def send_command(command_string, speed):
 	#sending the string
-	if(open_serial() == 0)
+	if(open_serial() == 0):
 		rospy.loginfo("Commanding Serial port not connected, failed to execute the command")
 		return; 
 
