@@ -23,9 +23,15 @@ turn_radius = 312 	#radius when turning in mm (half distance between the middle 
 ############################################################
 
 keyboard_data  = ''	#keyboard control data
+move_direction ='F' # robot moving direction: F or B, F for forwarding, B for back 
+move_speed = 3		# Global robot moving spped, 3 - 5
+turn_direction='L'  # Global robot turning direction
+
 compass_data = 0	#degrees, true north is 0 degrees
 dist_travelled = 0	#mm
 degree_turned = 0 	#angle inturns of degree
+
+move_speed_now = 3;	# Robot moving speed now
 x_now = 0  		#mm
 y_now = 0		#mm
 r = 350 		#mm, distance between center of robot to wheel
@@ -44,6 +50,7 @@ ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_754353631
 ser.baudrate = 9600
 ser.open()
 
+# Calculate distance between two gps coordinates 
 def haversine(lon1, lat1, lon2, lat2):
 	#convert to radians
 	lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1,lon2, lat2])
@@ -56,6 +63,7 @@ def haversine(lon1, lat1, lon2, lat2):
 
 	return c * r
 
+# Calculate angle between two diffent gps positions 
 def bearing(lon1, lat1, lon2, lat2):  #from position 1 to 2
 	#convert to radians
 	lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
@@ -66,6 +74,7 @@ def bearing(lon1, lat1, lon2, lat2):  #from position 1 to 2
 
 	return bearing
 
+#based on the gps coordinates of the two location, generate jobs
 def job_details(first_point, second_point):
 	global gps_lon
 	global gps_lat
@@ -83,18 +92,22 @@ def job_details(first_point, second_point):
 
 	return ([round(angle_next), distance])
 
+# Clear jobs 
 def clear_jobs():
 	global job_des 
 	global job_num
 	del job_des[:]
 	del job_num[:]
 
-
-def job_generator_move_1m():
+#Generate differnet jobs 
+def job_generator_move_1m(direction):
 	global job_des
 	global job_num
+	global move_direction 
+
+	move_direction = direction
 	job_num.extend([1000]) 
-	job_des.extend(['F'])
+	job_des.extend([move_direction])
 
 def job_generator_turn_90_left():
 	global job_des
@@ -143,25 +156,36 @@ def job_generator(init_bearing, loops):
 	#	ending_turn_angle = ending_turn_angle - 360.0
 	#job_num.append(ending_turn_angle)
 
+# Subscriber to keyboard topic and peform actions based on the command get  
 def keyboard_callback(data):
 	global keyboard_data
 	keyboard_data = data.data
-	if (keyboard_data == 'Reset'):
-		rospy.loginfo("Command received, mission reset")
-		job_generator_move_1m()
+	if (keyboard_data == 'Forward'):
+		rospy.loginfo("Command received: Start to move forward 1 m")
+		job_generator_move_1m('F')
+	if (keyboard_data == 'Back'):
+		rospy.loginfo("Command received: Start to move forward 1 m")
+		job_generator_move_1m('B')
 	elif (keyboard_data == 'Turn_Left'):
 		rospy.loginfo("Left turn received"); 
-		job_generator_turn_90_left()
+		job_generator_turn_90_left('B')
 	elif (keyboard_data == 'Turn_Right'): 
 		rospy.loginfo('Right turn received')
 		job_generator_turn_90_right() 
-	elif (keyboard_data == "Stop"):
+	elif (keyboard_data == 'Stop'):
 		rospy.loginfo("Comamnd received, clear all jobs") 
 		clear_jobs()
+	elif (keyboard_data == 'Faster'):
+		if(move_speed < 5): 
+			move_speed = move_speed + 1  
+	elif (keyboard_data == 'Slower'):
+		if(move_speed > 3): 
+			move_speed = move_speed - 1  
 	else: 
 		rospy.loginfo(keyboard_data)
 		rospy.loginfo("Not recognizing command receivied")
 
+# Real time get compass data 
 def compass_callback(data):
 	global compass_data
 	#update compass_data global variable
@@ -186,16 +210,27 @@ def complete_move_job():
 def start_move_job():
 	global dist_travelled 
 	global robot_on_mission 
+	global move_direction
+	global move_speed
 	rospy.loginfo('Robot moving job started')
 	robot_on_mission = 1 
 	dist_travelled = 0
-	send_command('F',3)
+	send_command(move_direction, move_speed)
+
+def update_move_speed()
+	global move_direction
+	global move_speed
+	global move_speed_now 
+	send_command(move_direction, move_speed)
+	move_speed_now = move_speed
 	
-def move_forward(dist_to_run, left_encode, right_encode):
+def move_distance(dist_to_run, left_encode, right_encode):
 	global dist_travelled 
 	global job_num
 	global job_des
 	global robot_on_mission 
+	global move_speed 
+	global move_speed_now
 
 	# if robot received a meaning less job, just signal, clear the job and return 
 	if (dist_to_run <= 0):
@@ -219,12 +254,16 @@ def move_forward(dist_to_run, left_encode, right_encode):
 	#distance travelled threshold
 	dist_threshold = dist_to_run - 0 	#0 mm, I can choose -50mm, but since there will be inefficiencies, 0 error threshold might be good enough
 	
-	distpub = 'dist trav: %f disttotal:%f step:%f' % (dist_travelled,dist_threshold,dist)
+	distpub = 'dist-travelled: %f dist-total:%f dist-step:%f' % (dist_travelled,dist_threshold,dist)
         rospy.loginfo(distpub)
 
 	if (dist_threshold - dist_travelled > 2) :
 		#just continue moving 
-		rospy.loginfo('Still moving...')
+		
+		if(move_speed  == move_speed_now):
+			rospy.loginfo('Still moving at the same speed...')
+		else :
+			update_move_speed()
 		return
 	else :
 		complete_move_job()
@@ -251,9 +290,17 @@ def start_turn_job():
 	rospy.loginfo('Robot starts to execute a turn job')
 	global degree_turned 
 	global robot_on_mission
+	global move_speed
 	robot_on_mission = 1
 	degree_turned = 0
-	send_command('L', 3)
+	send_command(turn_direction, move_speed)
+
+def update_turn_speed()
+	global turn_direction
+	global move_speed
+	send_command(turn_direction, move_speed)
+	move_speed_now = move_speed
+
 
 # let robot performs a turning job of certain degree 
 def turn_degree(degree, left_encode, right_encode): 
@@ -262,6 +309,12 @@ def turn_degree(degree, left_encode, right_encode):
  	global job_des 
  	global job_num
  	global robot_on_mission
+ 	global turn_direction
+
+ 	if (degree < 0): #ccw turning 
+ 		turn_direction = 'R'
+ 	else:
+ 		turn_direction = 'L'
 
  	# The degree passed is not correct, just log and return 
 	if(degree == 0): 
@@ -291,8 +344,11 @@ def turn_degree(degree, left_encode, right_encode):
 
 
 	if(degree_turned < abs(degree)): 
-		#continure turning and no need issue new command 
-		rospy.loginfo('Still turning...')
+		#continure turning and no need issue new command
+		if(move_speed == move_speed_now) 
+			rospy.loginfo('Continue turning at same speed...')
+		else 
+
 		return;
 	else: 
 		#finishe the turning 
@@ -354,7 +410,7 @@ def encoder_callback(data):
 		#rospy.loginfo('Not any jobs left')
 		# Make sure robt stop   
 		if(left_encoder_n >=1 or right_encoder_n >=1):
-			#rospy.logwarn('warning: robot is not fully stopped')
+			rospy.logwarn('warning: robot is not fully stopped')
 			send_command('S',0)
         	return
 
@@ -363,10 +419,13 @@ def encoder_callback(data):
 	if (job_des[0] == 'T') : 	#used for temporally disable the truning part  
 		#bearing thresholds
 		turn_degree(job_num[0], left_encoder_n, right_encoder_n)
-	#FSM of driving
-	elif (job_des[0] == 'F') :
-		move_forward(job_num[0], left_encoder_n, right_encoder_n)
+	#FSM moving of dirction
+	elif (job_des[0] == 'F' or job_des[0] == 'B') :
+		move_distance(job_num[0], left_encoder_n, right_encoder_n)
+	else 
+		rospy.logwarn('warning: illegal job description found, not peform any actions')
 
+# Helper function which can send commands to robot 
 def send_command(command_string, speed):
 	global job_des
 	global job_num
@@ -379,6 +438,7 @@ def send_command(command_string, speed):
 	else:
 		rospy.loginfo("Commanding Serial port not connected")
 
+#subscribes to different topic 
 def main_listener():
 	rospy.init_node('commander')
 	rospy.Subscriber('compass', String, compass_callback)
