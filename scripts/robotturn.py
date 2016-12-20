@@ -22,7 +22,7 @@ def start_turn():
 	robotdrive.send_command(turn_direction, robotdrive.speed_now)
 
 # tell the robot to complete it's turning job 
-def complete_turn():
+def stop_turn():
 	global degree_turned
 	robotdrive.robot_on_mission = 0
 	degree_turned = 0
@@ -48,24 +48,34 @@ def turn_degree(degree_to_turn, left_encode, right_encode):
  	# The degree passed is not correct, just log and return 
 	if(degree_to_turn == 0): 
 		#No turn is required, clear current job and rerun 
-		rospy.loginfo('Robot has been assigned a meaning less 0 degree turn task')
-		complete_turn()
+		rospy.logwarn('Robot has been assigned a meaning less 0 degree turn task')
+		stop_turn()
 		return 1
 
  	if (degree_to_turn < 0): #ccw turning 
  		degree_to_turn = - degree_to_turn
  		turn_direction = 'L'
- 	else:
+ 	else:  #cw turning 
  		turn_direction = 'R'
 
 	#robot has not started turning, just start the turning 
 	if(robotdrive.robot_on_mission == 0):
 		start_turn()
 		return 0
+	
+	if(turn_direction == 'R' and left_encode <- 10 and right_encode > 10):
+		rospy.logwarn('Robot wheel moving revered to the turn right command');
+		stop_turn()
+		return 1
+
+	if(turn_direction == 'L' and left_encode > 10 and right_encode < -10):
+		rospy.logwarn('Robot wheel moving revered to the turn left command');
+		stop_turn()
+		return 1
 
 	if((left_encode > 10 and right_encode > 10) or (left_encode < -10 and right_encode < -10)): 
-		rospy.loginfo('Robot wheel not moving as expected, clear current task')
-		complete_turn()
+		rospy.logwarn('Robot wheel not moving as expected, clear current task')
+		stop_turn()
 		return 1
 
 	#Get the turned angle and then calculate 
@@ -74,7 +84,7 @@ def turn_degree(degree_to_turn, left_encode, right_encode):
 	degree_turned = degree_turned + step_angle
 		
 	#simple log for tracing 
-	distpub = 'Required angle:%f turned angle:%f' % (degree_to_turn, degree_turned)
+	distpub = 'Required angle:%f turned angle:%f step angle' % (degree_to_turn, degree_turned, step_angle)
         rospy.loginfo(distpub)
 
 	if(degree_turned < degree_to_turn): 
@@ -82,6 +92,6 @@ def turn_degree(degree_to_turn, left_encode, right_encode):
 		return 0
 	else: 
 		#finishe the turning 
-		complete_turn()
+		stop_turn()
 		return 1
 	return 0 

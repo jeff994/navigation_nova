@@ -45,7 +45,7 @@ def move_distance(dist_to_run, left_encode, right_encode):
 	global dist_completed
 	# if robot received a meaning less job, just signal, clear the job and return 
 	if (dist_to_run == 0):
-		rospy.loginfo('Robot received a meaning less moving job')
+		rospy.logwarn('Robot received a meaningless moving job')
 		stop_move()
 		return 1
 
@@ -60,9 +60,19 @@ def move_distance(dist_to_run, left_encode, right_encode):
 		start_move()
 		return 0
 
+	if(move_direction == 'F' and left_encode < -10 and right_encode < -10):
+		rospy.logwarn('Robot supposed to move forward, actually moveing backward, stop the job')
+		stop_move()
+		return 1 
+
+	if(move_direction == 'B' and left_encode > 10 and right_encode > 10):
+		rospy.logwarn('Robot supposed to move backward, acutally moveing forward, stop the job')
+		stop_move()
+		return 1 
+
 	# Exception handling, make sure robot wheels is moving the same direction 
 	if (left_encode > 10 and right_encode < 10):
-		rospy.loginfo('Robot wheel not moving as expected, step current job')
+		rospy.logwarn('Robot wheel not moving as expected, stop current job')
 		stop_move()
 		return 1 
 
