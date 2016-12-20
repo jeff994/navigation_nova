@@ -118,14 +118,14 @@ def keyboard_callback(data):
 		rospy.loginfo("Command received: Start to move forward 1 m")
 		robotjob.generate_move(job_des, job_num, 1000, 'F')
 	if (keyboard_data == 'Back'):
-		rospy.loginfo("Command received: Start to move forward 1 m")
+		rospy.loginfo("Command received: Start to move back 1 m")
 		robotjob.generate_move(job_des, job_num, 1000, 'B')
 	elif (keyboard_data == 'Turn_Left'):
 		rospy.loginfo("Left turn received"); 
 		robotjob.generate_turn(job_des, job_num, -90)
 	elif (keyboard_data == 'Turn_Right'): 
 		rospy.loginfo('Right turn received')
-		obotjob.generate_turn(job_des, job_num, 90)
+		robotjob.generate_turn(job_des, job_num, 90)
 	elif (keyboard_data == 'Stop'):
 		rospy.loginfo("Comamnd received, clear all jobs") 
 		robotjob.clear_jobs(job_des, job_num)
