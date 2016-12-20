@@ -60,7 +60,7 @@ def turn_degree(degree_to_turn, left_encode, right_encode):
 
 	#robot has not started turning, just start the turning 
 	if(robotdrive.robot_on_mission == 0):
-		start_turn(move_speed)
+		start_turn()
 		return 0
 
 	if((left_encode > 10 and right_encode > 10) or (left_encode < -10 and right_encode < -10)): 
