@@ -13,13 +13,13 @@ move_direction = 'F'
 dist_completed = 0
 
 # Starts the robot for moving, put the control variables into proper value 
-def start_move(move_speed):
+def start_move():
 	global dist_completed
 	global move_direction
 	rospy.loginfo('Robot moving job started')
 	robotdrive.robot_on_mission = 1 
 	dist_completed = 0
-	robotdrive.send_command(move_direction, move_speed)
+	robotdrive.send_command(move_direction, robotdrive.speed_now)
 
 # Roboet complet a moving job 
 def stop_move():	
@@ -30,13 +30,17 @@ def stop_move():
 	rospy.loginfo('Robot completed a moving job')
 
 # Update robot speed as required new speed 
-def change_move_speed(speed_now, disired_speed):
+def continue_move():
 	global move_direction
-	robotdrive.send_command(move_direction, desired_speed)
-	speed_now = desired_speed 
-
+	if(robotdrive.speed_now  == robotdrive.desired_speed):
+		rospy.loginfo('Still moving at the same speed...')
+	else:
+		robotdrive.send_command(move_direction, desired_speed)
+		robotdrive.speed_now  = robotdrive.desired_speed
+		distpub = 'Robot move speed changed from %d to %d' % (robotdrive.speed_now, robotdrive.desired_speed)
+		rospy.loginfo(distpub)
 # main function to control the robot movement 
-def move_distance(dist_to_run, left_encode, right_encode, speed_now, desired_speed):
+def move_distance(dist_to_run, left_encode, right_encode):
 	global move_direction 
 	global dist_completed
 	# if robot received a meaning less job, just signal, clear the job and return 
@@ -53,7 +57,7 @@ def move_distance(dist_to_run, left_encode, right_encode, speed_now, desired_spe
 
 	# Mission started, let robot start moving 
 	if (robotdrive.robot_on_mission == 0): 
-		start_move(speed_now)
+		start_move()
 		return 0
 
 	# Exception handling, make sure robot wheels is moving the same direction 
@@ -75,10 +79,8 @@ def move_distance(dist_to_run, left_encode, right_encode, speed_now, desired_spe
 
 	if (dist_threshold - dist_completed > 0) :
 		#just continue moving of job not completed and no change of speed command received 
-		if(speed_now  == desired_speed):
-			rospy.loginfo('Still moving at the same speed...')
-		else :
-			change_move_speed(speed_now, disired_speed)
+		#if speed changed, then just change the move speed 
+		continue_move(); 
 		return  0
 	else :
 		stop_move()

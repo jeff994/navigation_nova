@@ -23,11 +23,7 @@ initial_bearing = 0 	#set as north for now
 loops = 1 				#how many rounds to go
 ############################################################
 
-keyboard_data  = ''		#keyboard control data
-
 compass_data = 0		#degrees, true north is 0 degrees
-dist_travelled = 0		#mm
-degree_turned = 0 		#angle inturns of degree
 
 x_now = 0  				#mm
 y_now = 0				#mm
@@ -93,7 +89,7 @@ def job_generator(init_bearing, loops):
 
 # Subscriber to keyboard topic and peform actions based on the command get  
 def keyboard_callback(data):
-	global keyboard_data
+	keyboard_data = ''
 	global turn_direction
 	global job_des
 	global job_num
@@ -116,10 +112,10 @@ def keyboard_callback(data):
 		robotjob.clear_jobs(job_des, job_num)
 	elif (keyboard_data == 'Faster'):
 		if(robotdrive.move_speed < 5): 
-			robotdrive.move_speed = robotdrive.move_speed + 1  
+			robotdrive.desired_speed = robotdrive.desired_speed + 1  
 	elif (keyboard_data == 'Slower'):
 		if(robotdrive.move_speed > 3): 
-			robotdrive.move_speed = move_speed - 1  
+			robotdrive.desired_speed = robotdrive.desired_speed - 1  
 	else: 
 		rospy.loginfo(keyboard_data)
 		rospy.loginfo("Not recognizing command receivied")
@@ -141,8 +137,6 @@ def encoder_callback(data):
 	global x_now
 	global y_now
 	global dist_travelled
-	global move_speed
-	global move_speed_now
 
 	#Step 1: Get encoder data and convert them to number for later use 
 	#Get left encoder and right encoder 
@@ -163,16 +157,15 @@ def encoder_callback(data):
 			robotdrive.send_command('S',0)
         	return
 
-	rospy.logwarn(job_des[0])
      # Step 3: Perform actually turning and moving 
 	#Peform turning job 
 	job_completed = 0; 
 	if (job_des[0] == 'T') : 	#used for temporally disable the truning part  
 		#bearing thresholds
-		job_completed =robotturn.turn_degree(job_num[0], left_encode, right_encode, robotdrive.move_speed_now, robotdrive.move_speed)
+		job_completed =robotturn.turn_degree(job_num[0], left_encode, right_encode)
 	#FSM moving of dirction
 	elif (job_des[0] == 'F' or job_des[0] == 'B') :
-		job_completed =robotmove.move_distance(job_num[0], left_encode, right_encode, robotdrive.move_speed_now, robotdrive.move_speed)
+		job_completed =robotmove.move_distance(job_num[0], left_encode, right_encode)
 	else :
 		rospy.logwarn('warning: illegal job description found, not peform any actions')
 	

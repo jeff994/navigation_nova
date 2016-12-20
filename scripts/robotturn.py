@@ -13,13 +13,13 @@ turn_direction 	='L'
 degree_turned = 0
 
 # start a turn job 
-def start_turn(move_speed):
+def start_turn():
 	global degree_turned
 	global turn_direction
 	rospy.loginfo('Robot starts to execute a turn job')
 	robotdrive.robot_on_mission = 1
 	degree_turned = 0
-	robotdrive.send_command(turn_direction, move_speed)
+	robotdrive.send_command(turn_direction, robotdrive.speed_now)
 
 # tell the robot to complete it's turning job 
 def complete_turn():
@@ -30,13 +30,18 @@ def complete_turn():
 	rospy.loginfo('Robot completed a turn job')
 
 # change the speed of turing 
-def update_turn_speed(move_speed, move_speed_now):
+def continue_turn():
 	global turn_direction
-	robotdrive.send_command(turn_direction, move_speed)
-	move_speed_now = move_speed
+	if(robotdrive.desired_speed == robotdrive.speed_now ): 
+			rospy.loginfo('Continue turning at same speed...')
+	else:
+		robotdrive.send_command(turn_direction, robotdrive.desired_speed)
+		distpub = 'Robot turning speed changed from %d to %d' % (robotdrive.speed_now, robotdrive.desired_speed)
+		robotdrive.speed_now = robotdrive.desired_speed
+		rospy.loginfo(distpub)
 
 # let robot performs a turning job of certain degree 
-def turn_degree(degree_to_turn, left_encode, right_encode, move_speed_now, move_speed): 
+def turn_degree(degree_to_turn, left_encode, right_encode): 
  	global turn_direction
  	global degree_turned 
 
@@ -73,12 +78,7 @@ def turn_degree(degree_to_turn, left_encode, right_encode, move_speed_now, move_
         rospy.loginfo(distpub)
 
 	if(degree_turned < degree_to_turn): 
-		#continure turning and no need issue new command
-		if(move_speed == move_speed_now): 
-			rospy.loginfo('Continue turning at same speed...')
-		else:
-			rospy.loginfo('Change speed of turning...')
-			update_turn_speed(turn_direction, move_speed, move_speed_now)
+		continue_turn()
 		return 0
 	else: 
 		#finishe the turning 
