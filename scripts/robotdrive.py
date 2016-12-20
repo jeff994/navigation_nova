@@ -15,7 +15,7 @@ ser = serial.Serial()
 #ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75435363138351A09171-if00"
 #testing port
 
-def open_serial();
+def open_serial():
 	global ser
 	if ser.isOpen()):
 		return 1; 
