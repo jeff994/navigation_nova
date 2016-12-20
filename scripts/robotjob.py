@@ -22,7 +22,7 @@ job_des = []			#could be 'T' or 'F'
 job_num = []			#if job is 'T', the number is the angle of robot need to face of the job else it's the distance in mm 
 loops = 1 				#how many rounds to go
 
-def job_generator(init_bearing, loops):	
+def job_generator(init_bearing):	
 	global gps_lon
 	global gps_lat
 	global job_des
