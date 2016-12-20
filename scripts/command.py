@@ -167,15 +167,19 @@ def encoder_callback(data):
 
      # Step 3: Perform actually turning and moving 
 	#Peform turning job 
+	job_completed = 0; 
 	if (job_des[0] == 'T') : 	#used for temporally disable the truning part  
 		#bearing thresholds
-		robotturn.turn_degree(job_num[0], degree_turned, robot_on_mission, left_encode, right_encode, robotdrive.move_speed_now, robotdrive.move_speed)
+		job_completed =robotturn.turn_degree(job_num[0], robot_on_mission, left_encode, right_encode, robotdrive.move_speed_now, robotdrive.move_speed)
 	#FSM moving of dirction
 	elif (job_des[0] == 'F' or job_des[0] == 'B') :
-		robotmove.move_distance(job_num[0], dist_travelled,robot_on_missin, left_encode, right_encode, robotdrive.move_speed_now, robotdrive.move_speed)
+		job_completed =robotmove.move_distance(job_num[0],robot_on_missin, left_encode, right_encode, robotdrive.move_speed_now, robotdrive.move_speed)
 	else :
 		rospy.logwarn('warning: illegal job description found, not peform any actions')
-
+	
+	if job_completed == 1: 
+		del job_des[0]
+		del job_num[0]
 
 #subscribes to different topic 
 def main_listener():
