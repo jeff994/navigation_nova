@@ -23,6 +23,12 @@ job_num = []			#if job is 'T', the number is the angle of robot need to face of 
 loops = 1 				#how many rounds to go
 
 def job_generator(init_bearing, loops):	
+	global gps_lon
+	global gps_lat
+	global job_des
+	global job_num 
+	global gps_num 
+	global loops 
 	#handles from start to first point
 	job = job_details(0, 1)
 	robotjob.job_des.append('T');
