@@ -4,6 +4,7 @@ import serial
 import string
 from std_msgs.msg import String
 import robotdrive
+import math
 
 #-------------------------------------------------------#
 # Robot turning module 									#
@@ -68,7 +69,7 @@ def turn_degree(degree_to_turn, left_encode, right_encode, move_speed_now, move_
 	degree_turned = degree_turned + step_angle
 		
 	#simple log for tracing 
-	distpub = 'Required angle:%f turned angle:%f' % (degree, degree_turned)
+	distpub = 'Required angle:%f turned angle:%f' % (degree_to_turn, degree_turned)
         rospy.loginfo(distpub)
 
 	if(degree_turned < degree_to_turn): 

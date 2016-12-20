@@ -163,6 +163,7 @@ def encoder_callback(data):
 			robotdrive.send_command('S',0)
         	return
 
+	rospy.logwarn(job_des[0])
      # Step 3: Perform actually turning and moving 
 	#Peform turning job 
 	job_completed = 0; 
