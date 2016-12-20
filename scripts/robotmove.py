@@ -39,6 +39,7 @@ def continue_move():
 		robotdrive.speed_now  = robotdrive.desired_speed
 		distpub = 'Robot move speed changed from %d to %d' % (robotdrive.speed_now, robotdrive.desired_speed)
 		rospy.loginfo(distpub)
+
 # main function to control the robot movement 
 def move_distance(dist_to_run, left_encode, right_encode):
 	global move_direction 

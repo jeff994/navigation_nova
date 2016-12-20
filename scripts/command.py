@@ -8,17 +8,6 @@ import robotturn
 
 from std_msgs.msg import String
 
-initial_bearing = 0 	#set as north for now
-############################################################
-
-compass_data = 0		#degrees, true north is 0 degrees
-x_now = 0  				#mm
-y_now = 0				#mm
-r = 350 				#mm, distance between center of robot to wheel
-x_target = 0			#mm
-y_target = 0 			#mm, should always be 0, because we will be moving in a straight line
-bearing_target = 0 		#degrees
-
 # Subscriber to keyboard topic and peform actions based on the command get  
 def keyboard_callback(data):
 	keyboard_data = data.data
@@ -57,11 +46,6 @@ def compass_callback(data):
 # The main call back, getting encoder data and make decision for the next move 
 def encoder_callback(data):
 	#accumulate encoder data
-	global r
-	global compass_data
-	global x_now
-	global y_now
-
 	#Step 1: Get encoder data and convert them to number for later use 
 	#Get left encoder and right encoder 
 	data_string = data.data

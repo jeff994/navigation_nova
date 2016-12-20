@@ -4,11 +4,26 @@ import serial
 import string
 from std_msgs.msg import String
 
+#-------------------------------------------------------#
+#	Robot drive module									#
+#-------------------------------------------------------#
+
 encode_to_mm = 68.3 	#1000 encoding signals = 1 mm travelled
 turn_radius = 312 		#radius when turning in mm (half distance between the middle point of two wheels) 
 desired_speed = 3			# Global robot moving spped, 3 - 5
 speed_now = 3;		# Robot moving speed now
 robot_on_mission = 0	#set an indicator that robot's on a job right now 
+
+initial_bearing = 0 	#set as north for now
+############################################################
+
+compass_data = 0		#degrees, true north is 0 degrees
+x_now = 0  				#mm
+y_now = 0				#mm
+r = 350 				#mm, distance between center of robot to wheel
+x_target = 0			#mm
+y_target = 0 			#mm, should always be 0, because we will be moving in a straight line
+bearing_target = 0 		#degrees
 
 #defining serial port to write to (the commands)
 ser = serial.Serial()

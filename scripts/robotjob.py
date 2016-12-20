@@ -5,6 +5,10 @@ import string
 import math 
 import gpsmath
 
+#-------------------------------------------------------#
+#	Robot jobs module									#
+#-------------------------------------------------------#
+
 from std_msgs.msg import String
 from math import radians, cos, sin, asin, sqrt, atan2, degrees
 
