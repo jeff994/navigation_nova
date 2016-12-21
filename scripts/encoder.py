@@ -2,6 +2,11 @@
 import rospy
 import serial
 import string
+from datetime
+
+start = 0.0
+end = 0.0
+
 from std_msgs.msg import String
 
 ser = serial.Serial()
@@ -35,7 +40,14 @@ def encoder():
 	rospy.loginfo("Started encoder")
 
 	while open_serial():
+		start = datetime.now()
 		bytesToRead = ser.readline()
+		end = datetime.now()
+		delta = end-start
+		if(delta.seconds > 0.3):
+			print str(delta)
+			rospy.logwarn("Time gap between data received is more than 0.3 sec")
+		
 		#rospy.loginfo(str(bytesToRead))
 		bytesToRead = bytesToRead.strip('\n')
 		if len(bytesToRead)  == 17: 
@@ -65,6 +77,9 @@ def encoder():
 				rospy.loginfo("------------------")
 				rospy.loginfo(bytesToPublish)
 			pub.publish(str(bytesToPublish))
+		else:
+			rospy.logwarn("Found data which is not in a required format")
+			rospy.logwarn(bytesToRead)
 		ser.flushInput()
 		ser.flushOutput()
 		ser.flush()
