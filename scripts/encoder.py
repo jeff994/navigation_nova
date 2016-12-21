@@ -47,9 +47,9 @@ def encoder():
                                 #publishing data in string for standardization
                                 #rospy.loginfo(str(bytesToPublish))
 			if(nl_encoder != 0  or nr_encoder != 0):
-				print("------------------")
-				print("------------------")
-				print(bytesToPublish)
+				rospy.loginfo("------------------")
+				rospy.loginfo("------------------")
+				rospy.loginfo(bytesToPublish)
 			pub.publish(str(bytesToPublish))
                         rate.sleep()
 
