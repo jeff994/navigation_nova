@@ -25,18 +25,10 @@ lon_target = 0.0
 lat_target = 0.0
 bearing_target = 0 		#degrees
 
-
 compass_data = 0		#degrees, true north is 0 degrees
-x_now = 0  				#mm
-y_now = 0				#mm
-r = 350 				#mm, distance between center of robot to wheel
-x_target = 0			#mm
-y_target = 0 			#mm, should always be 0, because we will be moving in a straight line
-
 
 #defining serial port to write to (the commands)
 ser = serial.Serial()
-
 
 def open_serial():
 	global ser

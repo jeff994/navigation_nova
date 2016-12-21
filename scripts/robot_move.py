@@ -12,11 +12,21 @@ import robot_correction
 
 move_direction = 'F'
 dist_completed = 0.0
+dist_to_run = 0.0
 
 # Starts the robot for moving, put the control variables into proper value 
 def start_move():
 	global dist_completed
 	global move_direction
+	global dist_to_run 
+
+	lon1 = robot_drive.lon_now
+	lat1 =  robot_drive.lat_now
+	initial_bearing = robot_drive.bearing_now
+	target_gps = gpsmath.get_gps(lon1, lat1, bearing, dist_to_run)
+	robot_drive.lon_target = target_gps[0]
+	robot_drive.lat_target = target_gps[1]
+
 	rospy.loginfo('Robot moving job started')
 	robot_drive.robot_on_mission = 1 
 	dist_completed = 0
@@ -46,9 +56,12 @@ def continue_move(left_dist, right_dist):
 
 
 # main function to control the robot movement 
-def move_distance(dist_to_run, left_encode, right_encode):
+def move_distance(dist, left_encode, right_encode):
 	global move_direction 
 	global dist_completed
+	global dist_to_run 
+
+	dist_to_run = dist
 	# if robot received a meaning less job, just signal, clear the job and return 
 	if (dist_to_run == 0):
 		rospy.logwarn('Robot received a meaningless moving job')
