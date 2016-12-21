@@ -106,7 +106,11 @@ def encoder_callback(data):
 
 	#FSM moving of dirction
 	elif (robot_job.job_des[0] == 'F' or robot_job.job_des[0] == 'B') :
+		
+
 		job_completed =robot_move.move_distance(robot_job.job_num[0], left_encode, right_encode)
+		if(job_completed == 1): 
+
 	else :
 		rospy.logwarn('warning: illegal job description found, not peform any actions')
 	
