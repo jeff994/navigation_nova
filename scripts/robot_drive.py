@@ -27,15 +27,16 @@ bearing_target = 0 		#degrees
 
 #defining serial port to write to (the commands)
 ser = serial.Serial()
-#real robot port
-#ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75435363138351A09171-if00"
-#testing port
+
 
 def open_serial():
 	global ser
 	if ser.isOpen():
 		return 1 
-	ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75439333335351412220-if00"
+	#real robot port
+	ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75435363138351A09171-if00"
+	#testing port
+	#ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75439333335351412220-if00"
 	ser.baudrate = 9600
 	ser.open()
 	if ser.isOpen():
