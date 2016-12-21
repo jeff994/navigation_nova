@@ -77,12 +77,12 @@ def generate_one_job(first_point, second_point):
 	return ([round(angle_next), distance])
 
 # clear current job
-def remove_current_job()
+def remove_current_job():
 	global job_des
 	global job_num 
-	if(len(job_des) > 1): 
+	if(len(job_des) > 0): 
 		del job_des[0]
-	if(len(job_num) < 1):
+	if(len(job_num) > 0):
 		del job_num[0]
 
 # Clear jobs 

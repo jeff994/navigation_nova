@@ -18,20 +18,28 @@ def keyboard_callback(data):
 		rospy.loginfo("Command received: Start to move back 1 m")
 		robot_job.generate_move(-1000, 'B')
 	elif (keyboard_data == 'Turn_Left'):
-		rospy.loginfo("Left turn received") 
+		rospy.loginfo("Command received: Left turn received") 
 		robot_job.generate_turn(-90)
 	elif (keyboard_data == 'Turn_Right'): 
-		rospy.loginfo('Right turn received')
+		rospy.loginfo('Command received: Right turn received')
 		robot_job.generate_turn(90)
 	elif (keyboard_data == 'Stop'):
-		rospy.loginfo("Comamnd received, clear all jobs") 
+		rospy.loginfo("Comamnd received: Clear all jobs") 
 		robot_job.clear_jobs()
 	elif (keyboard_data == 'Faster'):
-		if(robot_drive.move_speed < 5): 
+		rospy.loginfo('Command received: Try to increase robot speed')
+		if(robot_drive.desired_speed < 5): 
+			rospy.loginfo('Robot speed increased')
 			robot_drive.desired_speed = robot_drive.desired_speed + 1  
+		else:
+			rospy.loginfo('Robot speed already maximized')
 	elif (keyboard_data == 'Slower'):
-		if(robot_drive.move_speed > 3): 
+		rospy.loginfo('Command received, trying to reduce robot speed')
+		if(robot_drive.desired_speed > 3): 
+			rospy.loginfo('Robot speed reduced')
 			robot_drive.desired_speed = robot_drive.desired_speed - 1  
+		else: 
+			rospy.loginfo('Robot speed already minimized')
 	else: 
 		rospy.loginfo(keyboard_data)
 		rospy.loginfo("Not recognizing command receivied")
@@ -61,7 +69,7 @@ def encoder_callback(data):
 		#rospy.loginfo('Not any jobs left')
 		# Make sure robt stop   
 		if(left_encode >=1 or right_encode >=1):
-			rospy.logwarn('warning: robot is not fully stopped')
+			rospy.logwarn('warning: robot is not fully stopped even though a top command issed')
 			robot_drive.send_command('S',0)
         	return
 
