@@ -51,7 +51,10 @@ def encoder():
 				rospy.loginfo("------------------")
 				rospy.loginfo(bytesToPublish)
 			pub.publish(str(bytesToPublish))
-                        rate.sleep()
+		ser.flushInput()
+		ser.flushOutput()
+		ser.flush()
+		rate.sleep()
 
 if __name__ == '__main__':
 	try:
