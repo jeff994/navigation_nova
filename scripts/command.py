@@ -60,6 +60,8 @@ def encoder_callback(data):
 	left_encode, right_encode = data_string.split(" ")
 
 	#convert encoder number to floading point number, make sure all subsquent calculation is on floating point mode 
+	if (robot_drive.robot_on_mission ==1 ):
+		rospy.loginfo(str(data_string))
 	left_encode  = float(left_encode)
     	right_encode = float(right_encode)
 

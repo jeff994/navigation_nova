@@ -22,7 +22,7 @@ def encoder():
 
 	while ser.isOpen():
 		bytesToRead = ser.readline()
-		rospy.loginfo(str(bytesToRead))
+		#rospy.loginfo(str(bytesToRead))
 		bytesToRead = bytesToRead.strip('\n')
 		if len(bytesToRead)  == 17: 
 			#separates the data into readable things
@@ -46,6 +46,10 @@ def encoder():
                                 #bytesToPublish = '-1234 1234'
                                 #publishing data in string for standardization
                                 #rospy.loginfo(str(bytesToPublish))
+			if(nl_encoder != 0  or nr_encoder != 0):
+				print("------------------")
+				print("------------------")
+				print(bytesToPublish)
 			pub.publish(str(bytesToPublish))
                         rate.sleep()
 
