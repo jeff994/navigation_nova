@@ -20,7 +20,7 @@ def KeyControl():
 	print ("3. Turn left")
 	print ("4. Turn right")
 	print ("5. Speed increse")
-	print ("6. Speed decrease");
+	print ("6. Speed decrease")
 	print ("8. Stop robot from moving")
 	print ("9. Quit form keyboard control")
 	print (30 * '-')
@@ -50,7 +50,7 @@ def KeyControl():
 			print ("Clear all the remaining tasks, stop the robot")
 		    	pub.publish('Stop')
 		elif choice == 9:
-			break; 
+			break 
 		else:
 		    	print ("Invalid/Not defined number. Try again...")
 	rate.sleep()

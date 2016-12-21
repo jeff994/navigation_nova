@@ -26,8 +26,8 @@ def encoder():
                                 #separates the data into readable things
                                 #rospy.loginfo(str(bytesToRead))
                                 r_encoder, r_direction, l_encoder, l_direction = bytesToRead.split(" ")
-                                nr_encoder = int(r_encoder);
-                                nl_encoder = int (l_encoder);
+                                nr_encoder = int(r_encoder)
+                                nl_encoder = int (l_encoder)
                                 if r_direction == "1" :
                                         nr_encoder = -int(nr_encoder)
                                 elif l_direction == "1" :

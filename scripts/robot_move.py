@@ -3,7 +3,7 @@ import rospy
 import serial
 import string
 from std_msgs.msg import String
-import robotdrive
+import robot_drive
 
 #-------------------------------------------------------#
 #	Robot moving module									#
@@ -17,27 +17,27 @@ def start_move():
 	global dist_completed
 	global move_direction
 	rospy.loginfo('Robot moving job started')
-	robotdrive.robot_on_mission = 1 
+	robot_drive.robot_on_mission = 1 
 	dist_completed = 0
-	robotdrive.send_command(move_direction, robotdrive.speed_now)
+	robot_drive.send_command(move_direction, robot_drive.speed_now)
 
 # Roboet complet a moving job 
 def stop_move():	
 	global dist_completed
 	dist_completed = 0
-	robotdrive.robot_on_mission = 0 
-	robotdrive.send_command('S',0)
+	robot_drive.robot_on_mission = 0 
+	robot_drive.send_command('S',0)
 	rospy.loginfo('Robot completed a moving job')
 
 # Update robot speed as required new speed 
 def continue_move():
 	global move_direction
-	if(robotdrive.speed_now  == robotdrive.desired_speed):
+	if(robot_drive.speed_now  == robot_drive.desired_speed):
 		rospy.loginfo('Still moving at the same speed...')
 	else:
-		robotdrive.send_command(move_direction, desired_speed)
-		robotdrive.speed_now  = robotdrive.desired_speed
-		distpub = 'Robot move speed changed from %d to %d' % (robotdrive.speed_now, robotdrive.desired_speed)
+		robot_drive.send_command(move_direction, desired_speed)
+		robot_drive.speed_now  = robot_drive.desired_speed
+		distpub = 'Robot move speed changed from %d to %d' % (robot_drive.speed_now, robot_drive.desired_speed)
 		rospy.loginfo(distpub)
 
 # main function to control the robot movement 
@@ -57,7 +57,7 @@ def move_distance(dist_to_run, left_encode, right_encode):
 		move_direction = 'F'
 
 	# Mission started, let robot start moving 
-	if (robotdrive.robot_on_mission == 0): 
+	if (robot_drive.robot_on_mission == 0): 
 		start_move()
 		return 0
 
@@ -79,7 +79,7 @@ def move_distance(dist_to_run, left_encode, right_encode):
 
 	# Accumulate the running distance and check 
 	# Get each step of the distance 
-	dist_step = (left_encode + right_encode)/(2.0 * robotdrive.encode_to_mm)
+	dist_step = (left_encode + right_encode)/(2.0 * robot_drive.encode_to_mm)
 	# accumulate the distance to the completed distance 
 	dist_completed = dist_completed + dist_step   #this is in mm
 	#distance travelled threshold (put 2 mm thresh hold before stopping)
@@ -91,11 +91,11 @@ def move_distance(dist_to_run, left_encode, right_encode):
 	if (dist_threshold - dist_completed > 0) :
 		#just continue moving of job not completed and no change of speed command received 
 		#if speed changed, then just change the move speed 
-		continue_move(); 
+		continue_move() 
 		return  0
 	else :
 		stop_move()
-       	return 1; 
+       	return 1 
        	#clean current job 
 	
-	return 0; 
+	return 0 

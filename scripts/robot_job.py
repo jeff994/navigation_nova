@@ -31,34 +31,34 @@ def job_generator(init_bearing):
 	global loops 
 	#handles from start to first point
 	job = job_details(0, 1)
-	robotjob.job_des.append('T');
-	robotjob.job_des.append('F');
-	robotjob.job_num.extend([job[0],job[1]])   #in the form of target bearing and distance
+	robot_job.job_des.append('T')
+	robot_job.job_des.append('F')
+	robot_job.job_num.extend([job[0],job[1]])   #in the form of target bearing and distance
 		
 	#handles how many loops
 	for i in range (loops) :
 		for k in range (gps_num):
 			if k < gps_num - 1 :
 				job = job_details(k + 1, k + 2)
-				robotjob.job_des.extend(['T','F'])
-				robotjob.job_num.extend([job[0],job[1]])
+				robot_job.job_des.extend(['T','F'])
+				robot_job.job_num.extend([job[0],job[1]])
 				
 			else : 
 				job = job_details(k + 1, 1)
-				robotjob.job_des.extend(['T','F'])
-				robotjob.job_num.extend([job[0],job[1]])
+				robot_job.job_des.extend(['T','F'])
+				robot_job.job_num.extend([job[0],job[1]])
 	
 	#handles closing loop, going back to start
 	job = job_details(1, 0)
-	robotjob.job_des.extend(['T','F'])
-	robotjob.job_num.extend([job[0],job[1]])
+	robot_job.job_des.extend(['T','F'])
+	robot_job.job_num.extend([job[0],job[1]])
 	#final turn to init_bearing
-	robotjob.job_des.append('T')
-	robotjob.job_num.append(init_bearing)
+	robot_job.job_des.append('T')
+	robot_job.job_num.append(init_bearing)
 	#ending_turn_angle = init_angle - angle_now
 	#if ending_turn_angle > 180 :
 	#	ending_turn_angle = ending_turn_angle - 360.0
-	#robotjob.job_num.append(ending_turn_angle)
+	#robot_job.job_num.append(ending_turn_angle)
 
 #based on the gps coordinates of the two location, generate jobs
 def generate_one_job(first_point, second_point):
@@ -75,6 +75,15 @@ def generate_one_job(first_point, second_point):
 	#handles forward distance in mm
 	distance = distance * 1000.0 * 1000.0
 	return ([round(angle_next), distance])
+
+# clear current job
+def remove_current_job()
+	global job_des
+	global job_num 
+	if(len(job_des) > 1): 
+		del job_des[0]
+	if(len(job_num) < 1):
+		del job_num[0]
 
 # Clear jobs 
 def clear_jobs():
