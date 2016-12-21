@@ -13,7 +13,7 @@ ser.open()
 
 def send_command():
 	#handle the format of the string
-	stringToSend = 'SS000000E\n' #might need to add \n behind the E
+	stringToSend = 'SL000003E\n' #might need to add \n behind the E
 	#sending the string
 	if ser.isOpen():
                                 #ser.write('S0000000E\n' )

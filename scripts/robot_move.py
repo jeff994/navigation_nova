@@ -35,7 +35,7 @@ def continue_move():
 	if(robot_drive.speed_now  == robot_drive.desired_speed):
 		rospy.loginfo('Still moving at the same speed...')
 	else:
-		robot_drive.send_command(move_direction, desired_speed)
+		robot_drive.send_command(move_direction, robot_drive.desired_speed)
 		robot_drive.speed_now  = robot_drive.desired_speed
 		distpub = 'Robot move speed changed from %d to %d' % (robot_drive.speed_now, robot_drive.desired_speed)
 		rospy.loginfo(distpub)
@@ -52,7 +52,6 @@ def move_distance(dist_to_run, left_encode, right_encode):
 
 	if (dist_to_run < 0):
 		move_direction = 'B'
-		dist_to_run = -dist_to_run
 	else: 
 		move_direction = 'F'
 
@@ -63,27 +62,27 @@ def move_distance(dist_to_run, left_encode, right_encode):
 
 	if(move_direction == 'F' and left_encode < -10 and right_encode < -10):
 		rospy.logwarn('Robot supposed to move forward, actually moveing backward, stop the job')
-		stop_move()
-		return 1 
+		#stop_move()
+		return 0 
 
 	if(move_direction == 'B' and left_encode > 10 and right_encode > 10):
 		rospy.logwarn('Robot supposed to move backward, acutally moveing forward, stop the job')
-		stop_move()
-		return 1 
+		#stop_move()
+		return 0 
 
 	# Exception handling, make sure robot wheels is moving the same direction 
 	if (left_encode > 10 and right_encode < 10):
 		rospy.logwarn('Robot wheel not moving as expected, stop current job')
-		stop_move()
-		return 1 
+		#stop_move()
+		return 0 
 
 	# Accumulate the running distance and check 
 	# Get each step of the distance 
 	dist_step = (left_encode + right_encode)/(2.0 * robot_drive.encode_to_mm)
 	# accumulate the distance to the completed distance 
-	dist_completed = dist_completed + dist_step   #this is in mm
+	dist_completed = dist_completed + abs(dist_step)   #this is in mm
 	#distance travelled threshold (put 2 mm thresh hold before stopping)
-	dist_threshold = dist_to_run - 2 	#0 mm, I can choose -50mm, but since there will be inefficiencies, 0 error threshold might be good enough
+	dist_threshold = abs(dist_to_run) - 2 	#0 mm, I can choose -50mm, but since there will be inefficiencies, 0 error threshold might be good enough
 	
 	distpub = 'dist-travelled: %f dist-total:%f dist-step:%f' % (dist_completed,dist_threshold,dist_step)
 	rospy.loginfo(distpub)

@@ -66,18 +66,18 @@ def turn_degree(degree_to_turn, left_encode, right_encode):
 	
 	if(turn_direction == 'R' and left_encode <- 10 and right_encode > 10):
 		rospy.logwarn('Robot wheel moving revered to the turn right command')
-		stop_turn()
-		return 1
+		#stop_turn()
+		return 0
 
 	if(turn_direction == 'L' and left_encode > 10 and right_encode < -10):
 		rospy.logwarn('Robot wheel moving revered to the turn left command')
-		stop_turn()
-		return 1
+		#stop_turn()
+		return 0
 
 	if((left_encode > 10 and right_encode > 10) or (left_encode < -10 and right_encode < -10)): 
 		rospy.logwarn('Robot wheel not moving as expected, clear current task')
-		stop_turn()
-		return 1
+		#stop_turn()
+		return 0
 
 	#Get the turned angle and then calculate 
 	distance = (abs(left_encode) + abs(right_encode))/(2.0 * robot_drive.encode_to_mm)
