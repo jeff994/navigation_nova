@@ -4,13 +4,14 @@ import serial
 import string
 from std_msgs.msg import String
 import robot_drive
+import robot_correction 
 
 #-------------------------------------------------------#
 #	Robot moving module									#
 #-------------------------------------------------------#
 
 move_direction = 'F'
-dist_completed = 0
+dist_completed = 0.0
 
 # Starts the robot for moving, put the control variables into proper value 
 def start_move():
@@ -30,8 +31,10 @@ def stop_move():
 	rospy.loginfo('Robot completed a moving job')
 
 # Update robot speed as required new speed 
-def continue_move():
+def continue_move(left_dist, right_dist):
 	global move_direction
+
+	robot_correction.update_robot_gps(left_dist, right_dist)
 	if(robot_drive.speed_now  == robot_drive.desired_speed):
 		rospy.loginfo('Still moving at the same speed...')
 	else:
@@ -39,6 +42,8 @@ def continue_move():
 		robot_drive.speed_now  = robot_drive.desired_speed
 		distpub = 'Robot move speed changed from %d to %d' % (robot_drive.speed_now, robot_drive.desired_speed)
 		rospy.loginfo(distpub)
+
+
 
 # main function to control the robot movement 
 def move_distance(dist_to_run, left_encode, right_encode):
@@ -78,7 +83,10 @@ def move_distance(dist_to_run, left_encode, right_encode):
 
 	# Accumulate the running distance and check 
 	# Get each step of the distance 
-	dist_step = (left_encode + right_encode)/(2.0 * robot_drive.encode_to_mm)
+	left_dist = left_encode / robot_drive.encode_to_mm
+	right_dist = right_encode / robot_drive.encode_to_mm
+
+	dist_step = (left_dist + right_dist) / 2.0
 	# accumulate the distance to the completed distance 
 	dist_completed = dist_completed + abs(dist_step)   #this is in mm
 	#distance travelled threshold (put 2 mm thresh hold before stopping)
@@ -90,7 +98,7 @@ def move_distance(dist_to_run, left_encode, right_encode):
 	if (dist_threshold - dist_completed > 0) :
 		#just continue moving of job not completed and no change of speed command received 
 		#if speed changed, then just change the move speed 
-		continue_move() 
+		continue_move(left_dist, right_dist) 
 		return  0
 	else :
 		stop_move()

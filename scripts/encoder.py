@@ -13,6 +13,20 @@ ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_755333536
 ser.baudrate = 9600
 ser.open()
 
+def open_serial():
+	global ser
+	if ser.isOpen():
+		return 1 
+	#real robot port
+	ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75435363138351A09171-if00"
+	#testing port
+	#ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75439333335351412220-if00"
+	ser.baudrate = 9600
+	ser.open()
+	if ser.isOpen():
+		return 1
+	return 0 
+
 def encoder():
 	pub = rospy.Publisher('encoder', String, queue_size = 10)
 	rospy.init_node('encoder', anonymous=True)
@@ -20,7 +34,7 @@ def encoder():
 	
 	rospy.loginfo("Started encoder")
 
-	while ser.isOpen():
+	while open_serial():
 		bytesToRead = ser.readline()
 		#rospy.loginfo(str(bytesToRead))
 		bytesToRead = bytesToRead.strip('\n')

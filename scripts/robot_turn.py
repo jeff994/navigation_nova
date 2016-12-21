@@ -12,6 +12,7 @@ import math
 
 turn_direction 	='L'
 degree_turned = 0
+degree_to_turn = 0 
 
 # start a turn job 
 def start_turn():
@@ -25,8 +26,18 @@ def start_turn():
 # tell the robot to complete it's turning job 
 def stop_turn():
 	global degree_turned
+	global degree_to_turn 
 	robot_drive.robot_on_mission = 0
+	
+	robot_drive.bearing_now = robot_drive.bearing_now + degree_turned
+	# make sure the angle is between [0, 360]
+	if(robot_drive.bearing_now < 0):
+		robot_drive.bearing_now = robot_drive.bearing_now + 360 
+	if(robot_drive.bearing_now > 360): 
+		robot_drive.bearing_now = robot_drive.bearing_now - 360 
+	
 	degree_turned = 0
+	degree_to_turn = 0
 	robot_drive.send_command('S',0)
 	rospy.loginfo('Robot completed a turn job')
 
@@ -42,9 +53,10 @@ def continue_turn():
 		rospy.loginfo(distpub)
 
 # let robot performs a turning job of certain degree 
-def turn_degree(degree_to_turn, left_encode, right_encode): 
+def turn_degree(left_encode, right_encode): 
  	global turn_direction
  	global degree_turned 
+ 	global degree_to_turn 
 
  	# The degree passed is not correct, just log and return 
 	if(degree_to_turn == 0): 
@@ -54,7 +66,6 @@ def turn_degree(degree_to_turn, left_encode, right_encode):
 		return 1
 
  	if (degree_to_turn < 0): #ccw turning 
- 		degree_to_turn = - degree_to_turn
  		turn_direction = 'L'
  	else:  #cw turning 
  		turn_direction = 'R'
@@ -81,14 +92,17 @@ def turn_degree(degree_to_turn, left_encode, right_encode):
 
 	#Get the turned angle and then calculate 
 	distance = (abs(left_encode) + abs(right_encode))/(2.0 * robot_drive.encode_to_mm)
-	step_angle = (360 * distance) / (math.pi * 2 * robot_drive.turn_radius)   
-	degree_turned = degree_turned + step_angle
-		
+	step_angle = (180 * distance) / (math.pi * robot_drive.turn_radius)   
+	if(turn_direction == 'L'): 
+		step_angle = - step_angle
+
+	degree_turned = degree_turned + abs(step_angle)
+	degree_threshold = abs(degree_to_turn)
 	#simple log for tracing 
 	distpub = 'Required angle:%f turned angle:%f step angle: %f' % (degree_to_turn, degree_turned, step_angle)
         rospy.loginfo(distpub)
 
-	if(degree_turned < degree_to_turn): 
+	if(degree_turned < degree_threshold): 
 		continue_turn()
 		return 0
 	else: 

@@ -75,12 +75,35 @@ def encoder_callback(data):
 			robot_drive.send_command('S',0)
         	return
 
+    #Step 2.1 
+
+
      # Step 3: Perform actually turning and moving 
 	#Peform turning job 
 	job_completed = 0 
-	if (robot_job.job_des[0] == 'T') : 	#used for temporally disable the truning part  
-		#bearing thresholds
-		job_completed =robot_turn.turn_degree(robot_job.job_num[0], left_encode, right_encode)
+	if (robot_job.job_des[0] == 'T') : 
+		# Pre-steps of turning jobs starts: calculate the required angle to turn 
+		if(robot_drive.robot_on_mission == 0):
+			# calculate the obsolute anlge 
+			robot_turn.degree_to_turn = robot_job.job_num[0] - robot_drive.bearing_now 	
+			if(robot_turn.degree_to_turn > 180): 
+				robot_turn.degree_to_turn = robot_turn.degree_to_turn - 360
+			elif(robot_turn.degree_to_turn < -180):
+				robot_turn.degree_to_turn = robot_turn.degree_to_turn + 360
+
+		# start the job 
+		job_completed =robot_turn.turn_degree(left_encode, right_encode)
+		
+		# Post-step turning jobs
+		if job_completed == 1:
+			# to do, check the compass data with robot)drive.bearing_now
+			# collect some sample data, compass data are supposetd to be the same as robot_job.job_num[0] 
+			# just to make sure it's error prue
+			a = 0
+			#check the bearing with compass 
+
+		# check whether the angle turned is enough or not 
+
 	#FSM moving of dirction
 	elif (robot_job.job_des[0] == 'F' or robot_job.job_des[0] == 'B') :
 		job_completed =robot_move.move_distance(robot_job.job_num[0], left_encode, right_encode)

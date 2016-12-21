@@ -17,6 +17,10 @@ robot_on_mission = 0	#set an indicator that robot's on a job right now
 initial_bearing = 0 	#set as north for now
 ############################################################
 
+lon_now = 0.0
+lat_now  = 0.0
+bearing_now = 0
+
 compass_data = 0		#degrees, true north is 0 degrees
 x_now = 0  				#mm
 y_now = 0				#mm
@@ -45,6 +49,7 @@ def open_serial():
 
 # Helper function which can send commands to robot 
 def send_command(command_string, speed):
+	global ser;
 	#sending the string
 	if(open_serial() == 0):
 		rospy.loginfo("Commanding Serial port not connected, failed to execute the command")
