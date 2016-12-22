@@ -3,7 +3,7 @@ import rospy
 import serial
 import string
 from datetime
-
+#add a timer to measure the serial port read line waiting time
 start = 0.0
 end = 0.0
 
