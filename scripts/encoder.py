@@ -9,26 +9,17 @@ from std_msgs.msg import String
 
 ser = serial.Serial()
 
-# Testing port
-ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75439333335351412220-if00"
-# Real robot encoder port
-#ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75533353637351616171-if00"
-ser.baudrate = 9600
-ser.open()
-
-
 #add a timer to measure the serial port read line waiting time
 start = 0.0
 end = 0.0
-
-
 
 def open_serial():
 	global ser
 	if ser.isOpen():
 		return 1 
+
 	#real robot port
-	ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75435363138351A09171-if00"
+	ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75533353637351616171-if00"
 	#testing port
 	#ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75439333335351412220-if00"
 	ser.baudrate = 9600
@@ -38,6 +29,7 @@ def open_serial():
 	return 0 
 
 def encoder():
+	global ser
 	pub = rospy.Publisher('encoder', String, queue_size = 10)
 	rospy.init_node('encoder', anonymous=True)
 	rate = rospy.Rate(20)
