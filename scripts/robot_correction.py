@@ -20,7 +20,7 @@ def update_robot_gps(left_dist, right_dist):
 	
 	# robto moving perfectly straight 
 	if(left_dist == right_dist):
-		new_gps = gpsmath.get_gps(lon1, lat1, initial_bearing, left_encode)
+		new_gps = gpsmath.get_gps(lon1, lat1, initial_bearing, left_dist)
 		robot_drive.lon_now = new_gps[0]
 		robot_drive.lat_now = new_gps[1]
 		return

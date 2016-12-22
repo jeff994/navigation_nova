@@ -32,7 +32,7 @@ def encoder():
 	global ser
 	pub = rospy.Publisher('encoder', String, queue_size = 10)
 	rospy.init_node('encoder', anonymous=True)
-	rate = rospy.Rate(20)
+	rate = rospy.Rate(100)
 	
 	rospy.loginfo("Started encoder")
 
@@ -41,11 +41,17 @@ def encoder():
 		bytesToRead = ser.readline()
 		end = datetime.now()
 		delta = end-start
-		if(delta.seconds > 0.3):
+		diff_m = delta.microseconds/1000000.0
+		diff_s = delta.seconds;
+		timemsg = "time taken: %f:%f" % (diff_s, diff_m)
+		diff = diff_m +  diff_s
+		rospy.loginfo(str(delta))
+		if(diff > 0.3):
+			rospy.loginfo(timemsg)
 			print str(delta)
 			rospy.logwarn("Time gap between data received is more than 0.3 sec")
 		
-		#rospy.loginfo(str(bytesToRead))
+		#rospy.log info(str(bytesToRead))
 		bytesToRead = bytesToRead.strip('\n')
 		if len(bytesToRead)  == 17: 
 			#separates the data into readable things
@@ -75,13 +81,17 @@ def encoder():
 				rospy.loginfo(bytesToPublish)
 			pub.publish(str(bytesToPublish))
 		else:
+			pub.publish(str("0 0"))
 			rospy.logwarn("Found data which is not in a required format")
 			rospy.logwarn(bytesToRead)
 		ser.flushInput()
 		ser.flushOutput()
 		ser.flush()
-		rate.sleep()
-
+		#rate.sleep()
+		end_2 = datetime.now()
+		delta = end_2-end
+		newmsg = 'end2: %s' % (delta)
+		rospy.loginfo(newmsg)	
 if __name__ == '__main__':
 	try:
 		encoder()
