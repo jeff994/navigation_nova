@@ -15,15 +15,15 @@ degree_turned = 0
 degree_to_turn = 0 
 
 # just make sure the angle is between [0-360)
-def correct_angle(angle)
+def correct_angle(angle):
 	if(angle < -360 or angle >= 720):
 		rospy.logerr('Waring Angle not supposed to appear')
 		return 
 
 	if(angle < 0):
 		angle = angle + 360 
-	elif(rangle >= 360): 
-		rangle = rangle - 360 
+	elif(angle >= 360): 
+		angle = angle - 360 
 	return angle
 
 # start a turn job 

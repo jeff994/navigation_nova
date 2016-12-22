@@ -32,6 +32,7 @@ def bearing(lon1, lat1, lon2, lat2):  #from position 1 to 2
 #calculate the new latitude based on the current gps coordinates and angle and distance 
 def get_gps(lon1, lat1, dist, bearing):
 	r = 6371 * 1000 * 1000 
-	lat2 = asin(sin(lat1) * cos(dist/r) + cos (lat1) * con(bearing))
-	lon2 = lon1 + atan2(sin(bearing) * sin (dist/r) * con(lat1) - sin (lat1) * sin(lat2))
+	delta = dist/r
+	lat2 = asin(sin(lat1) * cos(delta) + cos (lat1) * sin(delta)* cos(bearing))
+	lon2 = lon1 + atan2(sin(bearing) * sin (delta) * cos(lat1), cos(delta) - sin (lat1) * sin(lat2))
 	return [lon2, lat2]

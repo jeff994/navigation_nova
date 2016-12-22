@@ -2,21 +2,26 @@
 import rospy
 import serial
 import string
-from datetime
-#add a timer to measure the serial port read line waiting time
-start = 0.0
-end = 0.0
+
+from datetime import datetime
 
 from std_msgs.msg import String
 
 ser = serial.Serial()
 
 # Testing port
-#ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75439333335351412220-if00"
+ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75439333335351412220-if00"
 # Real robot encoder port
-ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75533353637351616171-if00"
+#ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75533353637351616171-if00"
 ser.baudrate = 9600
 ser.open()
+
+
+#add a timer to measure the serial port read line waiting time
+start = 0.0
+end = 0.0
+
+
 
 def open_serial():
 	global ser
@@ -69,7 +74,7 @@ def encoder():
                                 #real data 
 			bytesToPublish = '%d %d' % (nl_encoder, nr_encoder)
 				#simulated testing data 
-                                #bytesToPublish = '-1234 1234'
+			#bytesToPublish = '1234 -1234'
                                 #publishing data in string for standardization
                                 #rospy.loginfo(str(bytesToPublish))
 			if(nl_encoder != 0  or nr_encoder != 0):

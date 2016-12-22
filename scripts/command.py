@@ -11,6 +11,7 @@ from std_msgs.msg import String
 # Subscriber to keyboard topic and peform actions based on the command get  
 def keyboard_callback(data):
 	keyboard_data = data.data
+	robot_job.clear_jobs()
 	if (keyboard_data == 'Forward'):
 		rospy.loginfo("Command received: Start to move forward 1 m")
 		robot_job.generate_move(1000, 'F')
@@ -19,9 +20,11 @@ def keyboard_callback(data):
 		robot_job.generate_move(-1000, 'B')
 	elif (keyboard_data == 'Turn_Left'):
 		rospy.loginfo("Command received: Left turn received") 
+		robot_drive.bearing_now = 0
 		robot_job.generate_turn(-90)
 	elif (keyboard_data == 'Turn_Right'): 
 		rospy.loginfo('Command received: Right turn received')
+		robot_drive.bearing_now = 0
 		robot_job.generate_turn(90)
 	elif (keyboard_data == 'Stop'):
 		rospy.loginfo("Comamnd received: Clear all jobs") 
@@ -108,8 +111,7 @@ def encoder_callback(data):
 	elif (robot_job.job_des[0] == 'F' or robot_job.job_des[0] == 'B') :
 		
 
-		job_completed =robot_move.move_distance(robot_job.job_num[0], left_encode, right_encode)
-		if(job_completed == 1): 
+		job_completed =robot_move.move_distance(robot_job.job_num[0], left_encode, right_encode) 
 
 	else :
 		rospy.logwarn('warning: illegal job description found, not peform any actions')

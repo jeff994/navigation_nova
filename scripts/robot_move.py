@@ -5,6 +5,7 @@ import string
 from std_msgs.msg import String
 import robot_drive
 import robot_correction 
+import gpsmath
 
 #-------------------------------------------------------#
 #	Robot moving module									#
@@ -23,7 +24,7 @@ def start_move():
 	lon1 = robot_drive.lon_now
 	lat1 =  robot_drive.lat_now
 	initial_bearing = robot_drive.bearing_now
-	target_gps = gpsmath.get_gps(lon1, lat1, bearing, dist_to_run)
+	target_gps = gpsmath.get_gps(lon1, lat1, initial_bearing, dist_to_run)
 	robot_drive.lon_target = target_gps[0]
 	robot_drive.lat_target = target_gps[1]
 
