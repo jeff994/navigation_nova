@@ -73,6 +73,7 @@ def encoder_callback(data):
 	if(len(robot_job.job_des) < 1 or len(robot_job.job_num) < 1):
 		#rospy.loginfo('Not any jobs left')
 		# Make sure robt stop   
+		robot_drive.robot_on_mission = 0
 		if(left_encode >=1 or right_encode >=1):
 			rospy.logwarn('warning: robot is not fully stopped even though a top command issed')
 			robot_drive.send_command('S',0)
