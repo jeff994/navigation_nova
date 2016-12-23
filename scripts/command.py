@@ -6,12 +6,14 @@ import robot_drive
 import robot_move
 import robot_turn
 
+
 from std_msgs.msg import String
 
 # Subscriber to keyboard topic and peform actions based on the command get  
 def keyboard_callback(data):
 	keyboard_data = data.data
-	robot_job.clear_jobs()
+	robot_drive.speed_now = 5
+	robot_drive.desired_speed = 5
 	if (keyboard_data == 'Forward'):
 		rospy.loginfo("Command received: Start to move forward 1 m")
 		robot_job.generate_move(1000, 'F')
@@ -31,7 +33,7 @@ def keyboard_callback(data):
 		robot_job.clear_jobs()
 	elif (keyboard_data == 'Faster'):
 		rospy.loginfo('Command received: Try to increase robot speed')
-		if(robot_drive.desired_speed < 5): 
+		if(robot_drive.desired_speed < 6): 
 			rospy.loginfo('Robot speed increased')
 			robot_drive.desired_speed = robot_drive.desired_speed + 1  
 		else:
@@ -43,6 +45,10 @@ def keyboard_callback(data):
 			robot_drive.desired_speed = robot_drive.desired_speed - 1  
 		else: 
 			rospy.loginfo('Robot speed already minimized')
+	elif (keyboard_data == "demo"):
+		robot_drive.bearing_now = 0
+		rospy.loginfo("Simple job")
+		robot_job.simple_job(); 
 	else: 
 		rospy.loginfo(keyboard_data)
 		rospy.loginfo("Not recognizing command receivied")
@@ -110,10 +116,7 @@ def encoder_callback(data):
 
 	#FSM moving of dirction
 	elif (robot_job.job_des[0] == 'F' or robot_job.job_des[0] == 'B') :
-		
-
 		job_completed =robot_move.move_distance(robot_job.job_num[0], left_encode, right_encode) 
-
 	else :
 		rospy.logwarn('warning: illegal job description found, not peform any actions')
 	

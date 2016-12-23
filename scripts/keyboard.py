@@ -46,6 +46,8 @@ def KeyControl():
 			pub.publish('Faster')
 		elif choice == 6:
 			pub.publish('Slower')
+		elif(choice == 7):
+			pub.publish('demo')
 		elif choice == 8:
 			print ("Clear all the remaining tasks, stop the robot")
 		    	pub.publish('Stop')

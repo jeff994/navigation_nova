@@ -20,13 +20,18 @@ def start_move():
 	global dist_completed
 	global move_direction
 	global dist_to_run 
-
+	
 	lon1 = robot_drive.lon_now
 	lat1 =  robot_drive.lat_now
+	
+
 	initial_bearing = robot_drive.bearing_now
 	target_gps = gpsmath.get_gps(lon1, lat1, initial_bearing, dist_to_run)
 	robot_drive.lon_target = target_gps[0]
 	robot_drive.lat_target = target_gps[1]
+
+	]robot_drive.speed_now = 5
+	robot_drive.desired_speed = 5
 
 	rospy.loginfo('Robot moving job started')
 	robot_drive.robot_on_mission = 1 
@@ -42,17 +47,34 @@ def stop_move():
 	rospy.loginfo('Robot completed a moving job')
 
 # Update robot speed as required new speed 
+# Update robot speed as required new speed 
 def continue_move(left_dist, right_dist):
-	global move_direction
+    global move_direction
+    global dist_to_run
+    global dist_completed
 
-	robot_correction.update_robot_gps(left_dist, right_dist)
-	if(robot_drive.speed_now  == robot_drive.desired_speed):
-		rospy.loginfo('Still moving at the same speed...')
-	else:
-		robot_drive.send_command(move_direction, robot_drive.desired_speed)
-		robot_drive.speed_now  = robot_drive.desired_speed
-		distpub = 'Robot move speed changed from %d to %d' % (robot_drive.speed_now, robot_drive.desired_speed)
-		rospy.loginfo(distpub)
+    if(abs(dist_to_run) - abs(dist_completed) < 20):
+            robot_drive.send_command(move_direction, 3)
+            robot_drive.speed_now  = 3
+            robot_drive.desired_speed = 3
+            rospy.loginfo('Reduce speed to 3, very close to target position')
+            return
+    elif(abs(dist_to_run) - abs(dist_completed) < 50):
+            robot_drive.send_command(move_direction, 4)
+            robot_drive.speed_now  = 4
+            robot_drive.desired_speed = 4
+            rospy.loginfo('Reduce speed to 4, only 5 cm to target position')
+            return
+
+    robot_correction.update_robot_gps(left_dist, right_dist)
+    if(robot_drive.speed_now  == robot_drive.desired_speed):
+            rospy.loginfo('Still moving at the same speed...')
+    else:
+            robot_drive.send_command(move_direction, robot_drive.desired_speed)
+            robot_drive.speed_now  = robot_drive.desired_speed
+            distpub = 'Robot move speed changed from %d to %d' % (robot_drive.speed_now, robot_drive.desired_speed)
+            rospy.loginfo(distpub)
+
 
 
 

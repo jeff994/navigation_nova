@@ -3,6 +3,8 @@ Driving logic:
 For each step of encoder data received 
 	if no more job left in queue
 		return 
+	Get first job as current job 
+	
 	check the currenct job
 		if the mission is a turning job 
 			set on_mission indicator if it's not set 
@@ -16,6 +18,11 @@ For each step of encoder data received
 					continue for next step
 				else
 					command robot to rotate 
+		
+		if a turn job is completed
+			check the beaing now with the compass, see whether need necesary correction 
+
+
 		if the mission is a moving job
 			set on_mission indicator if it's not set 
 			drive forward
@@ -29,3 +36,7 @@ For each step of encoder data received
 					continue for the next step 
 				else 
 					command robot to move 
+
+		if the moving job is completed 
+			just check with desired gps with the gps_now 
+			see whether need to add command for correction 

@@ -22,7 +22,8 @@ def open_serial():
 	ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75533353637351616171-if00"
 	#testing port
 	#ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75439333335351412220-if00"
-	ser.baudrate = 9600
+	ser.baudrate = 4800
+	ser.timeout = 0.2
 	ser.open()
 	if ser.isOpen():
 		return 1
@@ -32,25 +33,15 @@ def encoder():
 	global ser
 	pub = rospy.Publisher('encoder', String, queue_size = 10)
 	rospy.init_node('encoder', anonymous=True)
-	rate = rospy.Rate(100)
+	rate = rospy.Rate(20)
 	
 	rospy.loginfo("Started encoder")
 
 	while open_serial():
+		#log the time everytime a message from serial port 
 		start = datetime.now()
+		rospy.loginfo(str(start))
 		bytesToRead = ser.readline()
-		end = datetime.now()
-		delta = end-start
-		diff_m = delta.microseconds/1000000.0
-		diff_s = delta.seconds;
-		timemsg = "time taken: %f:%f" % (diff_s, diff_m)
-		diff = diff_m +  diff_s
-		rospy.loginfo(str(delta))
-		if(diff > 0.3):
-			rospy.loginfo(timemsg)
-			print str(delta)
-			rospy.logwarn("Time gap between data received is more than 0.3 sec")
-		
 		#rospy.log info(str(bytesToRead))
 		bytesToRead = bytesToRead.strip('\n')
 		if len(bytesToRead)  == 17: 
@@ -87,11 +78,9 @@ def encoder():
 		ser.flushInput()
 		ser.flushOutput()
 		ser.flush()
-		#rate.sleep()
-		end_2 = datetime.now()
-		delta = end_2-end
-		newmsg = 'end2: %s' % (delta)
-		rospy.loginfo(newmsg)	
+		rate.sleep()
+		start = datetime.now()
+		rospy.loginfo(str(start))
 if __name__ == '__main__':
 	try:
 		encoder()

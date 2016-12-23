@@ -10,8 +10,8 @@ from std_msgs.msg import String
 
 encode_to_mm = 69.00 	#1000 encoding signals = 1 mm travelled
 turn_radius = 395 		#radius when turning in mm (half distance between the middle point of two wheels) 
-desired_speed = 3			# Global robot moving spped, 3 - 5
-speed_now = 3		# Robot moving speed now
+desired_speed = 5			# Global robot moving spped, 3 - 5
+speed_now = 5		# Robot moving speed now
 robot_on_mission = 0	#set an indicator that robot's on a job right now 
 
 initial_bearing = 0 	#set as north for now
