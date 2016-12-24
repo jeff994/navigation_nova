@@ -9,14 +9,8 @@ from datetime import datetime
 
 from std_msgs.msg import String
 
-left_encode = 0
-right_encode = 0
-
-
-def encoder():
+def encoder(left, right):
 	global ser
-	global left_encode
-	global right_encode 
 
 	pub = rospy.Publisher('encoder', String, queue_size = 10)
 	rospy.init_node('encoder', anonymous=True)
@@ -24,18 +18,18 @@ def encoder():
 
 	rospy.loginfo("Started encoder")
 	while not rospy.is_shutdown():
-		bytesToPublish = '%d %d' % (left_encode, right_encode)
+		bytesToPublish = '%d %d' % (left, right)
 		pub.publish(str(bytesToPublish))
 		rate.sleep()
 
-
-
 if __name__ == '__main__':
+	left_encode   	= 0 
+	right_encode 	= 0
 	try:
-		if len(sys.argv) == 2:
+		if len(sys.argv) == 3:
   	      		left_encode = int(sys.argv[1])
           		right_encode = int(sys.argv[2])
-		encoder()
+		encoder(left_encode, right_encode)
 	except rospy.ROSInterruptException:
 		#ser.close()  #this doesn't seem to work well
 		pass
