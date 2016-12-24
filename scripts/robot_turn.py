@@ -67,7 +67,7 @@ def continue_turn(step_angle):
 		robot_drive.desired_speed = 3
 		rospy.loginfo("Only 2 degrees left, redusing turning speed to 3")
 	elif(abs(degree_to_turn) - abs(degree_turned) < 5):
-		robot_drive.send_command(turn_direction, )
+		robot_drive.send_command(turn_direction, 4)
 		robot_drive.speed_now = 4
 		robot_drive.desired_speed = 4
 		rospy.loginfo("Only 5 degrees left, redusing turning speed to 4")
@@ -94,10 +94,10 @@ def turn_degree(left_encode, right_encode):
  	if(robot_drive.robot_on_mission == 0):
  		# calculate the obsolute anlge 
  		degree_to_turn = robot_drive.bearing_target - robot_drive.bearing_now 	
-		if(robot_turn.degree_to_turn > 180): 
-			robot_turn.degree_to_turn = robot_turn.degree_to_turn - 360
-		elif(robot_turn.degree_to_turn < -180):
-			robot_turn.degree_to_turn = robot_turn.degree_to_turn + 360
+		if(degree_to_turn > 180): 
+			degree_to_turn = degree_to_turn - 360
+		elif(degree_to_turn < -180):
+			degree_to_turn = degree_to_turn + 360
 
  	# The degree passed is not correct, just log and return 
 	if(degree_to_turn == 0): 

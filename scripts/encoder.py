@@ -34,7 +34,7 @@ def encoder():
 	global ser
 	pub = rospy.Publisher('encoder', String, queue_size = 10)
 	rospy.init_node('encoder', anonymous=True)
-	rate = rospy.Rate(20)
+	rate = rospy.Rate(10)
 	
 	rospy.loginfo("Started encoder")
 	open_serial()
