@@ -16,10 +16,15 @@ from std_msgs.msg import String
 buffer_size = 1000 
 #pairs of encoder data , l, r, l, r etc
 encoder_data = []
-# two flags indicate the processing and receiving index of the encoder data 
+
+compass_size = 10 
+compass_data = [] 
+
+# two index indicate the processing and receiving index of the encoder data 
 encoder_received = 0  # value range is from 0 - buffer_size -  
 encoder_processed = 0
-compass_data = 0
+compass_index = 0 	#current compass index
+
 last_process_time = 0 #last processing time 
 max_delay = 0.3
 last_received_time = 0.0 
@@ -30,6 +35,13 @@ def init_encoder_buffer( size=2000 ):
     	return 
     for i in range(size - len(encoder_data)):
         encoder_data.append(0)
+
+def init_compass_buffer(size = 10)
+	global compass_data 
+	if(len(compass_data) == size)
+		return 
+	for i in range(size)
+		compass_data.append(0)
 
 
 # Subscriber to keyboard topic and peform actions based on the command get  
@@ -80,8 +92,10 @@ def keyboard_callback(data):
 def compass_callback(data):
 	global compass_data
 	#update compass_data global variable
-	compass_data = int(data.data)
-	#rospy.loginfo("compass : %s", data.data)
+	compass_data[compass_index] = int(data.data)
+	rospy.loginfo("compass index: %d, angle: %d", compass_index, compass_data[compass_index])
+	compass_index = compass_index % compass_size
+	
 
 # The main call back, getting encoder data and make decision for the next move 
 def encoder_callback(data):
@@ -211,6 +225,7 @@ if __name__ == '__main__':
 		# AAron's initial one for final testing
 		#job_generator(initial_bearing, loops)
 		init_encoder_buffer()
+		init_compass_buffer()
 		main_listener()
 		while not rospy.is_shutdown():
 			main_commander()
