@@ -68,17 +68,16 @@ def encoder():
                                 #publishing data in string for standardization
                                 #rospy.loginfo(str(bytesToPublish))
 			if(nl_encoder != 0  or nr_encoder != 0):
-				rospy.loginfo("------------------")
-				rospy.loginfo("------------------")
 			 	rospy.loginfo(bytesToPublish)
 			pub.publish(str(bytesToPublish))
 		else:
-			pub.publish(str("0 0"))
 			rospy.logwarn("Found data which is not in a required format")
 			rospy.logwarn(bytesToRead)
-		rate.sleep()
 		start = datetime.now()
 		rospy.loginfo(str(start))
+		
+		#rate.sleep()
+
 if __name__ == '__main__':
 	try:
 		encoder()
