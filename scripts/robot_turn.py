@@ -90,6 +90,15 @@ def turn_degree(left_encode, right_encode):
  	global degree_turned 
  	global degree_to_turn 
 
+ 	# convered from angle to required turn angles  
+ 	if(robot_drive.robot_on_mission == 0):
+ 		# calculate the obsolute anlge 
+ 		degree_to_turn = robot_drive.bearing_target - robot_drive.bearing_now 	
+		if(robot_turn.degree_to_turn > 180): 
+			robot_turn.degree_to_turn = robot_turn.degree_to_turn - 360
+		elif(robot_turn.degree_to_turn < -180):
+			robot_turn.degree_to_turn = robot_turn.degree_to_turn + 360
+
  	# The degree passed is not correct, just log and return 
 	if(degree_to_turn == 0): 
 		#No turn is required, clear current job and rerun 
@@ -97,9 +106,9 @@ def turn_degree(left_encode, right_encode):
 		stop_turn()
 		return 1
 
- 	if (degree_to_turn < 0): #ccw turning 
+ 	if (degree_to_turn < 0): #Left turning 
  		turn_direction = 'L'
- 	else:  #cw turning 
+ 	else:  #Right turning 
  		turn_direction = 'R'
 
 	#robot has not started turning, just start the turning 

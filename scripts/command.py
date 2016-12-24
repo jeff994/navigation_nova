@@ -9,6 +9,23 @@ import robot_turn
 
 from std_msgs.msg import String
 
+#used to hold the encoder data received, init with some value  
+buffer_size = 1000 
+#pairs of encoder data , l, r, l, r etc
+encoder_data[]
+# two flags indicate the processing and receiving index of the encoder data 
+encoder_received = 0  # value range is from 0 - buffer_size -  
+encoder_processed = 0
+compass_data = 0
+
+def init_encoder_buffer( size=2000 ):
+    global encoder_data 
+    if(len(encoder_data) == size):
+    	return 
+    for i in range(size - len(encoder_data)):
+        encoder_data.append(0)
+
+
 # Subscriber to keyboard topic and peform actions based on the command get  
 def keyboard_callback(data):
 	keyboard_data = data.data
@@ -62,20 +79,34 @@ def compass_callback(data):
 
 # The main call back, getting encoder data and make decision for the next move 
 def encoder_callback(data):
+	global encoder_data 
 	#accumulate encoder data
 	#Step 1: Get encoder data and convert them to number for later use 
 	#Get left encoder and right encoder 
 	data_string = data.data
 	left_encode, right_encode = data_string.split(" ")
 
+	left_encode  = float(left_encode)
+    right_encode = float(right_encode)
+
+    index = encoder_received * 2
+    encoder_data[encoder_received * 2] = float(left_encode)
+    encoder_data[encoder_received * 2 + 1] = float(right_encode)
+
+    bytesToLog = 'Encoder sequence %d received' % (index)
+    rospy.loginfo(str(bytesToLog))
+
+    encoder_received = (index + 1) % 1000
 	#convert encoder number to floading point number, make sure all subsquent calculation is on floating point mode 
 	if (robot_drive.robot_on_mission ==1 ):
 		rospy.loginfo(str(data_string))
-	left_encode  = float(left_encode)
-    	right_encode = float(right_encode)
 
-    	# Step 2: Check whether if there's any job left for the robot
-    	# If no jobs, make sure robot stopped moving, we cannot leave robot moving there 
+
+def main_commamder():
+	global encoder_data 
+	job_completed = 0 
+	# Step 1: Check whether if there's any job left for the robot
+    # If no jobs, make sure robot stopped moving, we cannot leave robot moving there 
 	if(len(robot_job.job_des) < 1 or len(robot_job.job_num) < 1):
 		#rospy.loginfo('Not any jobs left')
 		# Make sure robt stop   
@@ -85,41 +116,39 @@ def encoder_callback(data):
 			robot_drive.send_command('S',0)
         	return
 
-    #Step 2.1 
+     if(encoder_received == encoder_processed):
+     	#waiting for next data 
+     	return
 
+     #in case data received is faster than the processing time 
+    left_encode = 0
+	right_encode = 0
+    delta_index = (encoder_received - encoder_processed + 1000)%1000
 
-     # Step 3: Perform actually turning and moving 
-	#Peform turning job 
-	job_completed = 0 
-	if (robot_job.job_des[0] == 'T') : 
+    if(encoder_received > encoder_processed): 
+    	for x in range(encoder_processed, encoder_received):
+    		left_encode += encoder_data[2 * x]
+    		right_encode += encoder_data[2 * x +1]
+
+   	if(encoder_received < encoder_processed): 
+   		for x in range(encoder_processed, 1000):
+   			left_encode 	+= encoder_data[2 * x]
+    		right_encode 	+= encoder_data[2 * x + 1]
+    	for x in range(0, encoder_received):
+    		eft_encode 	+= encoder_data[2 * x]
+    		right_encode 	+= encoder_data[2 * x + 1]
+
+    # 
+    if (robot_job.job_des[0] == 'T') : 
+    	robot_drive.bearing_target  = robot_job.job_num[0]
 		# Pre-steps of turning jobs starts: calculate the required angle to turn 
-		if(robot_drive.robot_on_mission == 0):
-			# calculate the obsolute anlge 
-			robot_turn.degree_to_turn = robot_job.job_num[0] - robot_drive.bearing_now 	
-			if(robot_turn.degree_to_turn > 180): 
-				robot_turn.degree_to_turn = robot_turn.degree_to_turn - 360
-			elif(robot_turn.degree_to_turn < -180):
-				robot_turn.degree_to_turn = robot_turn.degree_to_turn + 360
-
 		# start the job 
 		job_completed =robot_turn.turn_degree(left_encode, right_encode)
-		
-		# Post-step turning jobs
-		if job_completed == 1:
-			# to do, check the compass data with robot)drive.bearing_now
-			# collect some sample data, compass data are supposetd to be the same as robot_job.job_num[0] 
-			# just to make sure it's error prue
-			a = 0
-			#check the bearing with compass 
-
-		# check whether the angle turned is enough or not 
-
-	#FSM moving of dirction
-	elif (robot_job.job_des[0] == 'F' or robot_job.job_des[0] == 'B') :
+	elif (robot_job.job_des[0] == 'F' or robot_job.job_des[0] == 'B'):
 		job_completed =robot_move.move_distance(robot_job.job_num[0], left_encode, right_encode) 
 	else :
 		rospy.logwarn('warning: illegal job description found, not peform any actions')
-	
+
 	if job_completed == 1: 
 		robot_job.remove_current_job()
 
@@ -129,13 +158,16 @@ def main_listener():
 	rospy.Subscriber('compass', String, compass_callback)
 	rospy.Subscriber('encoder', String, encoder_callback)
 	rospy.Subscriber('keyboard', String, keyboard_callback)
-	rospy.spin()
+	
 
 if __name__ == '__main__':
 	try:
 		# AAron's initial one for final testing
 		#job_generator(initial_bearing, loops)
-		#job_generator_move_1m()
+		init_encoder_buffer()
 		main_listener()
+		main_commamder()
+		rospy.spin()
+
 	except rospy.ROSInterruptException:
 		pass
