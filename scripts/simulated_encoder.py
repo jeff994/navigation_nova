@@ -2,6 +2,8 @@
 import rospy
 import serial
 import string
+import sys
+
 
 from datetime import datetime
 
@@ -21,7 +23,7 @@ def encoder():
 	rate = rospy.Rate(20)
 
 	rospy.loginfo("Started encoder")
-	while not rospy.is_shutdown();
+	while not rospy.is_shutdown():
 		bytesToPublish = '%d %d' % (left_encode, right_encode)
 		pub.publish(str(bytesToPublish))
 		rate.sleep()
@@ -30,11 +32,9 @@ def encoder():
 
 if __name__ == '__main__':
 	try:
-		global left_encode
-		global right_encode 
 		if len(sys.argv) == 2:
-  	      left_encode = int(sys.argv[1])
-          right_encode = int(sys.argv[2])
+  	      		left_encode = int(sys.argv[1])
+          		right_encode = int(sys.argv[2])
 		encoder()
 	except rospy.ROSInterruptException:
 		#ser.close()  #this doesn't seem to work well
