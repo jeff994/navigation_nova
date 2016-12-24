@@ -37,8 +37,8 @@ def encoder():
 	rate = rospy.Rate(20)
 	
 	rospy.loginfo("Started encoder")
-
-	while open_serial():
+	open_serial()
+	while not rospy.is_shutdown():
 		#log the time everytime a message from serial port 
 		start = datetime.now()
 		rospy.loginfo(str(start))
@@ -60,7 +60,7 @@ def encoder():
 			else :
 				nl_encoder = int(nl_encoder)
 
-		#turning them into strings
+			#turning them into strings
                                 #real data 
 			bytesToPublish = '%d %d' % (nl_encoder, nr_encoder)
 				#simulated testing data 
@@ -70,15 +70,12 @@ def encoder():
 			if(nl_encoder != 0  or nr_encoder != 0):
 				rospy.loginfo("------------------")
 				rospy.loginfo("------------------")
-				rospy.loginfo(bytesToPublish)
+			 	rospy.loginfo(bytesToPublish)
 			pub.publish(str(bytesToPublish))
 		else:
 			pub.publish(str("0 0"))
 			rospy.logwarn("Found data which is not in a required format")
 			rospy.logwarn(bytesToRead)
-		ser.flushInput()
-		ser.flushOutput()
-		ser.flush()
 		rate.sleep()
 		start = datetime.now()
 		rospy.loginfo(str(start))

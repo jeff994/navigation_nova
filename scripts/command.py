@@ -83,7 +83,8 @@ def compass_callback(data):
 
 # The main call back, getting encoder data and make decision for the next move 
 def encoder_callback(data):
-	global encoder_data 
+	global encoder_data
+	global encoder_received 
 	#accumulate encoder data
 	#Step 1: Get encoder data and convert them to number for later use 
 	#Get left encoder and right encoder 
@@ -97,10 +98,10 @@ def encoder_callback(data):
     	encoder_data[encoder_received * 2] = float(left_encode)
     	encoder_data[encoder_received * 2 + 1] = float(right_encode)
 
-    	bytesToLog = 'Encoder sequence %d received' % (index)
+    	bytesToLog = 'Encoder sequence %d received' % (encoder_received)
     	rospy.loginfo(str(bytesToLog))
 
-	encoder_received = (index + 1) % 1000
+	encoder_received = (encoder_received + 1) % 1000
 	#convert encoder number to floading point number, make sure all subsquent calculation is on floating point mode 
 	if (robot_drive.robot_on_mission ==1 ):
 		rospy.loginfo(str(data_string))
@@ -125,7 +126,7 @@ def process_no_job():
 		robot_drive.send_command('S',0)
         	return
 
-def process_encoder_data(encoder_received, encoder_processed)
+def process_encoder_data(encoder_received, encoder_processed):
 	#in case data received is faster than the processing time 
     	if(encoder_received > encoder_processed): 
     		for x in range(encoder_processed, encoder_received):
@@ -142,7 +143,7 @@ def process_encoder_data(encoder_received, encoder_processed)
 	return left_encode, right_encode 
 
 
-def main_commamder():
+def main_commander():
 	global encoder_data 
 	global encoder_received
 	global encoder_processed
@@ -162,6 +163,7 @@ def main_commamder():
 	
 	# calculate the correct encode data for further proces 
 	left_encode, right_encode = process_encoder_data(encoder_received, encoder_processed)
+	encoder_processed = encoder_received
 
 	# Check whether if there's any job left for the robot
     	# If no jobs, make sure robot stopped moving, we cannot leave robot moving there 
@@ -196,7 +198,7 @@ if __name__ == '__main__':
 		#job_generator(initial_bearing, loops)
 		init_encoder_buffer()
 		main_listener()
-		main_commamder()
+		main_commander()
 		rospy.spin()
 
 	except rospy.ROSInterruptException:
