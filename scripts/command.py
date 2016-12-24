@@ -6,6 +6,8 @@ import robot_drive
 import robot_move
 import robot_turn
 import time 
+import robot_correction 
+
 from datetime import datetime
 
 from std_msgs.msg import String
@@ -174,6 +176,8 @@ def main_commander():
 	left_encode, right_encode = process_encoder_data(encoder_received, encoder_processed)
 	encoder_processed = encoder_received
 
+	robot_correction.update_robot_gps(left_encode, right_encode)
+
 	# Check whether if there's any job left for the robot
     	# If no jobs, make sure robot stopped moving, we cannot leave robot moving there 
 	if(len(robot_job.job_des) < 1 or len(robot_job.job_num) < 1):
@@ -185,6 +189,7 @@ def main_commander():
 		# Pre-steps of turning jobs starts: calculate the required angle to turn 
 		# start the job 
 		job_completed =robot_turn.turn_degree(left_encode, right_encode)
+	
 	elif (robot_job.job_des[0] == 'F' or robot_job.job_des[0] == 'B'):
 		job_completed =robot_move.move_distance(robot_job.job_num[0], left_encode, right_encode) 
 	else :

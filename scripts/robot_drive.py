@@ -25,7 +25,6 @@ lon_target = 0.0
 lat_target = 0.0
 bearing_target = 0 		#degrees
 
-compass_data = 0		#degrees, true north is 0 degrees
 
 #defining serial port to write to (the commands)
 ser = serial.Serial()
