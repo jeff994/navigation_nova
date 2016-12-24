@@ -37,7 +37,7 @@ def get_gps(lon1, lat1, dist, bearing):
 	lon2 = lon1 + atan2(sin(bearing) * sin (delta) * cos(lat1), cos(delta) - sin (lat1) * sin(lat2))
 	return [lon2, lat2]
 
-def format_bearing(bearing)
+def format_bearing(bearing):
 	if(bearing < 0):
 		while(bearing < 0):
 			bearing += 360

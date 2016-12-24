@@ -30,7 +30,7 @@ def start_move():
 	robot_drive.lon_target = target_gps[0]
 	robot_drive.lat_target = target_gps[1]
 
-	]robot_drive.speed_now = 5
+	robot_drive.speed_now = 5
 	robot_drive.desired_speed = 5
 
 	rospy.loginfo('Robot moving job started')

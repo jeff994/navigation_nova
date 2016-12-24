@@ -13,13 +13,14 @@ from std_msgs.msg import String
 #used to hold the encoder data received, init with some value  
 buffer_size = 1000 
 #pairs of encoder data , l, r, l, r etc
-encoder_data[]
+encoder_data = []
 # two flags indicate the processing and receiving index of the encoder data 
 encoder_received = 0  # value range is from 0 - buffer_size -  
 encoder_processed = 0
 compass_data = 0
 last_process_time = 0 #last processing time 
 max_deplay = 0.3
+last_received_time = 0.0 
 
 def init_encoder_buffer( size=2000 ):
     global encoder_data 
@@ -90,73 +91,86 @@ def encoder_callback(data):
 	left_encode, right_encode = data_string.split(" ")
 
 	left_encode  = float(left_encode)
-    right_encode = float(right_encode)
+    	right_encode = float(right_encode)
 
-    index = encoder_received * 2
-    encoder_data[encoder_received * 2] = float(left_encode)
-    encoder_data[encoder_received * 2 + 1] = float(right_encode)
+    	index = encoder_received * 2
+    	encoder_data[encoder_received * 2] = float(left_encode)
+    	encoder_data[encoder_received * 2 + 1] = float(right_encode)
 
-    bytesToLog = 'Encoder sequence %d received' % (index)
-    rospy.loginfo(str(bytesToLog))
+    	bytesToLog = 'Encoder sequence %d received' % (index)
+    	rospy.loginfo(str(bytesToLog))
 
-    encoder_received = (index + 1) % 1000
+	encoder_received = (index + 1) % 1000
 	#convert encoder number to floading point number, make sure all subsquent calculation is on floating point mode 
 	if (robot_drive.robot_on_mission ==1 ):
 		rospy.loginfo(str(data_string))
 
-
-def main_commamder():
-	global encoder_data 
-	job_completed = 0 
-	# Step 1: Check whether if there's any job left for the robot
-    # If no jobs, make sure robot stopped moving, we cannot leave robot moving there 
-	if(len(robot_job.job_des) < 1 or len(robot_job.job_num) < 1):
-		#rospy.loginfo('Not any jobs left')
-		# Make sure robt stop   
-		robot_drive.robot_on_mission = 0
-		if(left_encode >=1 or right_encode >=1):
-			rospy.logwarn('warning: robot is not fully stopped even though a top command issued')
+def process_encoder_delay():
+	time_now = datetime.now()
+	rospy.loginfo(time_now)
+	if(last_received_time != 0): 
+		delta = time_now - last_received_time
+		delay_seconds = delta.seconds + delta.microseconds / 1000000.0 
+		if(delay_seconds >  max_deplay):
+			bytesToLog = 'Error: Not receiving data for %f seconds: Stopping robot immediately' % (max_delay)
+     			rospy.logError(bytesToLog)
 			robot_drive.send_command('S',0)
+	else:
+     		time.sleep(0.05)
+	
+def process_no_job():
+	robot_drive.robot_on_mission = 0
+	if(left_encode >=1 or right_encode >=1):
+		rospy.logwarn('warning: robot is not fully stopped even though a top command issued')
+		robot_drive.send_command('S',0)
         	return
 
-     if(encoder_received == encoder_processed):
-     	end = datetime.now()
-     	rospy.loginfo(str(start))
-     	delta = end - start; 
-		delay = delta.microseconds / 1000000.0
-     	if(deplay > max_delay): 
-     		bytesToLog = 'Error: Not receiving data for %f seconds: Stopping robot immediately' % (max_delay)
-     		rospy.logError(bytesToLog)
-			robot_drive.send_command('S',0)
-        	return
-     	rospy.logwarn('warning: not get any encoder data from the robot now')
-     	time.sleep(0.1)
-     	return 
-     	#waiting for next data 
-   
-   	last = datetime.now()
-	rospy.loginfo(str(start))
-     #in case data received is faster than the processing time 
-    left_encode = 0
-	right_encode = 0
-    delta_index = (encoder_received - encoder_processed + 1000)%1000
-
-    if(encoder_received > encoder_processed): 
-    	for x in range(encoder_processed, encoder_received):
-    		left_encode += encoder_data[2 * x]
-    		right_encode += encoder_data[2 * x +1]
+def process_encoder_data(encoder_received, encoder_processed)
+	#in case data received is faster than the processing time 
+    	if(encoder_received > encoder_processed): 
+    		for x in range(encoder_processed, encoder_received):
+    			left_encode += encoder_data[2 * x]
+    			right_encode += encoder_data[2 * x +1]
 
    	if(encoder_received < encoder_processed): 
    		for x in range(encoder_processed, 1000):
    			left_encode 	+= encoder_data[2 * x]
-    		right_encode 	+= encoder_data[2 * x + 1]
-    	for x in range(0, encoder_received):
-    		eft_encode 	+= encoder_data[2 * x]
-    		right_encode 	+= encoder_data[2 * x + 1]
+    			right_encode 	+= encoder_data[2 * x + 1]
+    		for x in range(0, encoder_received):
+    			left_encode 	+= encoder_data[2 * x]
+    			right_encode 	+= encoder_data[2 * x + 1]
+	return left_encode, right_encode 
 
-    # 
-    if (robot_job.job_des[0] == 'T') : 
-    	robot_drive.bearing_target  = robot_job.job_num[0]
+
+def main_commamder():
+	global encoder_data 
+	global encoder_received
+	global encoder_processed
+ 
+	job_completed = 0 
+	left_encode = 0
+	right_encode = 0 
+	
+	# Not any new data comming, waiting for next data, if waiting too long need to issue warning or error	 
+	if(encoder_received == encoder_processed):
+		process_encoder_delay()
+		return
+	
+	# get new data received 
+	last_received_time = datetime.now()
+	rospy.loginfo(str(last_received_time))
+	
+	# calculate the correct encode data for further proces 
+	left_encode, right_encode = process_encoder_data(encoder_received, encoder_processed)
+
+	# Check whether if there's any job left for the robot
+    	# If no jobs, make sure robot stopped moving, we cannot leave robot moving there 
+	if(len(robot_job.job_des) < 1 or len(robot_job.job_num) < 1):
+		process_no_job()
+		return		
+     	   	 
+    	if (robot_job.job_des[0] == 'T') : 
+    		robot_drive.bearing_target  = robot_job.job_num[0]
 		# Pre-steps of turning jobs starts: calculate the required angle to turn 
 		# start the job 
 		job_completed =robot_turn.turn_degree(left_encode, right_encode)
