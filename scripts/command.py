@@ -5,7 +5,8 @@ import robot_job
 import robot_drive
 import robot_move
 import robot_turn
-
+import time 
+from datetime import datetime
 
 from std_msgs.msg import String
 
@@ -17,6 +18,8 @@ encoder_data[]
 encoder_received = 0  # value range is from 0 - buffer_size -  
 encoder_processed = 0
 compass_data = 0
+last_process_time = 0 #last processing time 
+max_deplay = 0.3
 
 def init_encoder_buffer( size=2000 ):
     global encoder_data 
@@ -112,14 +115,27 @@ def main_commamder():
 		# Make sure robt stop   
 		robot_drive.robot_on_mission = 0
 		if(left_encode >=1 or right_encode >=1):
-			rospy.logwarn('warning: robot is not fully stopped even though a top command issed')
+			rospy.logwarn('warning: robot is not fully stopped even though a top command issued')
 			robot_drive.send_command('S',0)
         	return
 
      if(encoder_received == encoder_processed):
+     	end = datetime.now()
+     	rospy.loginfo(str(start))
+     	delta = end - start; 
+		delay = delta.microseconds / 1000000.0
+     	if(deplay > max_delay): 
+     		bytesToLog = 'Error: Not receiving data for %f seconds: Stopping robot immediately' % (max_delay)
+     		rospy.logError(bytesToLog)
+			robot_drive.send_command('S',0)
+        	return
+     	rospy.logwarn('warning: not get any encoder data from the robot now')
+     	time.sleep(0.1)
+     	return 
      	#waiting for next data 
-     	return
-
+   
+   	last = datetime.now()
+	rospy.loginfo(str(start))
      #in case data received is faster than the processing time 
     left_encode = 0
 	right_encode = 0
