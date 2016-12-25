@@ -17,8 +17,8 @@ robot_on_mission = 0	#set an indicator that robot's on a job right now
 initial_bearing = 0 	#set as north for now
 ############################################################
 
-lon_now = 0.0
-lat_now  = 0.0
+lon_now = 31.205718
+lat_now  = 121.628857
 bearing_now = 0
 
 lon_target = 0.0
