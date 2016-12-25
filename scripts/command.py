@@ -26,7 +26,7 @@ encoder_processed = 0
 compass_index = 0 	#current compass index
 
 last_process_time = 0 #last processing time 
-max_delay = 0.3
+max_delay = 1.0
 last_received_time = 0.0 
 
 def init_encoder_buffer( size=2000 ):
@@ -36,11 +36,11 @@ def init_encoder_buffer( size=2000 ):
     for i in range(size - len(encoder_data)):
         encoder_data.append(0)
 
-def init_compass_buffer(size = 10)
+def init_compass_buffer(size = 10):
 	global compass_data 
-	if(len(compass_data) == size)
+	if(len(compass_data) == size):
 		return 
-	for i in range(size)
+	for i in range(size):
 		compass_data.append(0)
 
 
@@ -57,11 +57,11 @@ def keyboard_callback(data):
 		robot_job.generate_move(-1000, 'B')
 	elif (keyboard_data == 'Turn_Left'):
 		rospy.loginfo("Command received: Left turn received") 
-		robot_drive.bearing_now = 0
+		#robot_drive.bearing_now = compass_data[compass_index] 
 		robot_job.generate_turn(-90)
 	elif (keyboard_data == 'Turn_Right'): 
 		rospy.loginfo('Command received: Right turn received')
-		robot_drive.bearing_now = 0
+		#robot_drive.bearing_now = compass_data[compass_index]
 		robot_job.generate_turn(90)
 	elif (keyboard_data == 'Stop'):
 		rospy.loginfo("Comamnd received: Clear all jobs") 
@@ -81,7 +81,7 @@ def keyboard_callback(data):
 		else: 
 			rospy.loginfo('Robot speed already minimized')
 	elif (keyboard_data == "demo"):
-		robot_drive.bearing_now = 0
+		#robot_drive.bearing_now = 0
 		rospy.loginfo("Simple job")
 		robot_job.simple_job(); 
 	else: 
@@ -94,8 +94,8 @@ def compass_callback(data):
 	global compass_index
 	#update compass_data global variable
 	compass_data[compass_index] = int(data.data)
-	rospy.loginfo("compass index: %d, angle: %d", compass_index, compass_data[compass_index])
-	compass_index = compass_index % compass_size
+	#rospy.loginfo("compass index: %d, angle: %d", compass_index, compass_data[compass_index])
+	compass_index = (compass_index + 1) % compass_size
 	
 
 # The main call back, getting encoder data and make decision for the next move 
@@ -135,6 +135,8 @@ def process_encoder_delay():
 			bytesToLog = 'Error: Not receiving data for %f seconds: Stopping robot immediately' % (max_delay)
      			rospy.logerr(bytesToLog)
 			robot_drive.send_command('S',0)
+		else:
+			time.sleep(0.05)
 	else:
      		time.sleep(0.05)
 	
@@ -167,10 +169,10 @@ def process_encoder_data(encoder_received, encoder_processed):
 def correct_angle(): 
 	global compass_data 
 	global compass_index
-	rospy.loginfo("bearing now calculated: %d, compass _data: %d", (robot_drive.bearing_now, compass_data[compass_index]))
-	robot_drive.bearing_now = compass_data[compass_index]);
+	rospy.loginfo("bearing now calculated: %f, compass _data: %f", robot_drive.bearing_now, compass_data[compass_index])
+	robot_drive.bearing_now = compass_data[compass_index];
 	robot_job.generate_turn(robot_drive.bearing_target);
-	rospy.loginfo("bearing now calculated: %d, compass _data: %d", (robot_drive.bearing_now, compass_data[compass_index]))
+	rospy.loginfo("bearing now calculated: %d, compass _data: %d", robot_drive.bearing_now, compass_data[compass_index])
 
 # before this add a correction job if angle is more than 3 degrees 
 def correct_distance():
@@ -220,13 +222,16 @@ def main_commander():
     	# If no jobs, make sure robot stopped moving, we cannot leave robot moving there 
 	if(len(robot_job.job_des) < 1 or len(robot_job.job_num) < 1):
 		process_no_job(left_encode, right_encode)
+		time.sleep(0.1)
 		return		
      	   	 
     	if (robot_job.job_des[0] == 'T') : 
-    		robot_drive.bearing_target  = robot_job.job_num[0]
+    		#rospy.loginfo("Bearing now %f, bearing target %f", robot_drive.bearing_now, robot_drive.bearing_target)
+		#if(robot_drive.robot_on_mission == 0): 
+		robot_drive.bearing_target  = robot_job.job_num[0]
 		# Pre-steps of turning jobs starts: calculate the required angle to turn 
 		# start the job 
-		job_completed =robot_turn.turn_degree(left_encode, right_encode)
+		job_completed =robot_turn.turn_degree(compass_data[compass_index], left_encode, right_encode)
 	
 	elif (robot_job.job_des[0] == 'F' or robot_job.job_des[0] == 'B'):
 		job_completed =robot_move.move_distance(robot_job.job_num[0], left_encode, right_encode) 
@@ -235,8 +240,8 @@ def main_commander():
 
 	if job_completed == 1: 
 		robot_job.remove_current_job()
-		correct_angle()
-		correct_distance()
+		#correct_angle()
+		#correct_distance()
 
 #subscribes to different topic 
 def main_listener():

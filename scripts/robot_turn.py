@@ -27,16 +27,27 @@ def correct_angle(angle):
 	return angle
 
 # start a turn job 
-def start_turn():
+def start_turn(bearing_now):
 	global degree_turned
 	global turn_direction
 	global degree_to_turn
+
+	degree_to_turn = robot_drive.bearing_target - robot_drive.bearing_now 	
+	if(degree_to_turn > 180): 
+		degree_to_turn = degree_to_turn - 360
+	elif(degree_to_turn < -180):
+		degree_to_turn = degree_to_turn + 360
+	
+	if (degree_to_turn < 0): #Left turning 
+ 		turn_direction = 'L'
+ 	else:  #Right turning 
+ 		turn_direction = 'R'
 
 	# put more detailed spped definitioan 
 	if(abs(degree_to_turn) < 4):
 		robot_drive.speed_now = 3
 		robot_drive.desired_speed = 3 
-	else if(abs(degree_to_turn) < 10) :
+	elif(abs(degree_to_turn) < 10):
 		robot_drive.speed_now = 4
 		robot_drive.desired_speed = 4 
 	else:
@@ -44,13 +55,10 @@ def start_turn():
 		robot_drive.desired_speed = 5 
 	rospy.loginfo('Robot starts to execute a turn job')
 	robot_drive.robot_on_mission = 1
-	robot_drive.bearing_target = robot_drive.bearing_now + degree_to_turn
-
-	#make sure the target_bearing is between [0, 360]
-	robot_drive.bearing_target  =  correct_angle(robot_drive.bearing_target)
-
+	robot_drive.bearing_now = bearing_now
 	degree_turned = 0
 	robot_drive.send_command(turn_direction, robot_drive.speed_now)
+	rospy.loginfo("Start: Degree turned %d, degree to turn %d, bearing_now %d, bearing_target %d", degree_turned, degree_to_turn, robot_drive.bearing_now, robot_drive.bearing_target)
 
 # tell the robot to complete it's turning job 
 def stop_turn():
@@ -67,7 +75,7 @@ def continue_turn(step_angle):
 	global degree_turned
 	global turn_direction
 	global degree_to_turn
-
+	
 	
 	if(abs(degree_to_turn) - abs(degree_turned) < 4):
 		robot_drive.send_command(turn_direction, 3)
@@ -79,11 +87,9 @@ def continue_turn(step_angle):
 		robot_drive.speed_now = 4
 		robot_drive.desired_speed = 4
 		rospy.loginfo("Only 5 degrees left, redusing turning speed to 4")
-
-
+	
 	#dynamically update robot bearing 
-	robot_drive.bearing_now = robot_drive.bearing_now + step_angle
-	robot_drive.bearing_now  = correct_angle(robot_drive.bearing_now)
+	#robot_drive.bearing_now  = correct_angle(robot_drive.bearing_now)
 	
 	if(robot_drive.desired_speed == robot_drive.speed_now ): 
 			rospy.loginfo('Continue turning at same speed...')
@@ -94,19 +100,18 @@ def continue_turn(step_angle):
 		rospy.loginfo(distpub)
 
 # let robot performs a turning job of certain degree 
-def turn_degree(left_encode, right_encode): 
+def turn_degree(bearing_now, left_encode, right_encode): 
  	global turn_direction
  	global degree_turned 
  	global degree_to_turn 
 
- 	# convered from angle to required turn angles  
- 	if(robot_drive.robot_on_mission == 0):
- 		# calculate the obsolute anlge 
- 		degree_to_turn = robot_drive.bearing_target - robot_drive.bearing_now 	
-		if(degree_to_turn > 180): 
-			degree_to_turn = degree_to_turn - 360
-		elif(degree_to_turn < -180):
-			degree_to_turn = degree_to_turn + 360
+	#robot has not started turning, just start the turning 
+	if(robot_drive.robot_on_mission == 0):
+		start_turn(bearing_now)
+		return 0
+	
+	# convered from angle to required turn angles  
+ 	# calculate the obsolute anlge 
 
  	# The degree passed is not correct, just log and return 
 	if(degree_to_turn == 0): 
@@ -115,22 +120,12 @@ def turn_degree(left_encode, right_encode):
 		stop_turn()
 		return 1
 
- 	if (degree_to_turn < 0): #Left turning 
- 		turn_direction = 'L'
- 	else:  #Right turning 
- 		turn_direction = 'R'
-
-	#robot has not started turning, just start the turning 
-	if(robot_drive.robot_on_mission == 0):
-		start_turn()
-		return 0
-	
-	if(turn_direction == 'R' and left_encode <- 10 and right_encode > 10):
+	if(turn_direction == 'L' and left_encode <- 10 and right_encode > 10):
 		rospy.logwarn('Robot wheel moving revered to the turn right command')
 		#stop_turn()
 		return 0
 
-	if(turn_direction == 'L' and left_encode > 10 and right_encode < -10):
+	if(turn_direction == 'R' and left_encode > 10 and right_encode < -10):
 		rospy.logwarn('Robot wheel moving revered to the turn left command')
 		#stop_turn()
 		return 0
@@ -145,6 +140,9 @@ def turn_degree(left_encode, right_encode):
 	step_angle = (180 * distance) / (math.pi * robot_drive.turn_radius)   
 	if(turn_direction == 'L'): 
 		step_angle = - step_angle
+
+	robot_drive.bearing_now = robot_drive.bearing_now + step_angle
+	rospy.loginfo("Degree turned %d, degree to turn %d, bearing_now %d, bearing_target %d", degree_turned, degree_to_turn, robot_drive.bearing_now, robot_drive.bearing_target)
 
 	degree_turned = degree_turned + abs(step_angle)
 	degree_threshold = abs(degree_to_turn)

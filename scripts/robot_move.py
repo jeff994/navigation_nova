@@ -32,11 +32,11 @@ def start_move():
 
 	if abs(dist_to_run)<20:
 		robot_drive.speed_now  = 3
-        robot_drive.desired_speed = 3
-    elif abs(dist_to_run) < 50 
-    	robot_drive.speed_now  = 4
-        robot_drive.desired_speed = 4
-    else:
+        	robot_drive.desired_speed = 3
+	elif abs(dist_to_run) < 50: 
+    		robot_drive.speed_now  = 4
+        	robot_drive.desired_speed = 4
+    	else:
 		robot_drive.speed_now = 5
 		robot_drive.desired_speed = 5
 

@@ -19,11 +19,11 @@ def open_serial():
 		return 1 
 
 	#real robot port
-	#ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75533353637351616171-if00"
-	#ser.baudrate = 4800
+	ser.port = "/dev/serial/by-id/usb-1a86_USB2.0-Serial-if00-port0"
+	ser.baudrate = 4800
 	#testing port
-	ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75439333335351412220-if00"
-	ser.baudrate = 9600	
+	#ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75439333335351412220-if00"
+	#ser.baudrate = 9600	
 	ser.timeout = 0.3
 	ser.open()
 	if ser.isOpen():
@@ -40,8 +40,8 @@ def encoder():
 	open_serial()
 	while not rospy.is_shutdown():
 		#log the time everytime a message from serial port 
-		start = datetime.now()
-		rospy.loginfo(str(start))
+		#start = datetime.now()
+		#rospy.loginfo(str(start))
 		bytesToRead = ser.readline()
 		#rospy.log info(str(bytesToRead))
 		bytesToRead = bytesToRead.strip('\n')
@@ -73,8 +73,8 @@ def encoder():
 		else:
 			rospy.logwarn("Found data which is not in a required format")
 			rospy.logwarn(bytesToRead)
-		start = datetime.now()
-		rospy.loginfo(str(start))
+		#start = datetime.now()
+		#rospy.loginfo(str(start))
 		
 		#rate.sleep()
 

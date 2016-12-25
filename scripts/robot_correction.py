@@ -76,7 +76,7 @@ def update_robot_gps(left_dist, right_dist):
 		else:
 			bearing = initial_bearing - half_alpha
 
-	bearing = gpsmath.formatbearing(bearing)
+	bearing = gpsmath.format_bearing(bearing)
 	distance = R * sin (half_alpha) * 2
 	new_gps = gpsmath.get_gps(lon1, lat1, bearing, distance)		
 	robot_drive.bearing_now = bearing

@@ -10,9 +10,9 @@ ser = serial.Serial()
 
 
 # Real robot port
-#ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75435363138351A09171-if00"
-# Testing port
 ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_7553335363735161B1D1-if00"
+# Testing port
+#ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_7553335363735161B1D1-if00"
 
 ser.baudrate = 9600
 ser.open()
