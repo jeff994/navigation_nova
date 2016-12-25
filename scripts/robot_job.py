@@ -123,12 +123,12 @@ def add_correction_move(distance):
 		job_des.insert(0, 'B')
 
 def simple_job():
-	generate_move(2000)
+	generate_move(2000, 'F')
 	generate_turn(90)
-	generate_move(5000)
+	generate_move(5000, 'F')
 	generate_turn(270)
-	generate_move(5000)
+	generate_move(5000, 'F')
 	generate_turn(-90)
-	generate_move(2000)
+	generate_move(2000, 'F')
 
 

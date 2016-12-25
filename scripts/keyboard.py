@@ -35,7 +35,7 @@ def KeyControl():
 	        	except ValueError, e :
 	            		print ("'%s' is not a valid integer." % e.args[0].split(": ")[1])
 		if choice == 1:
-	        	pub.publish('Forward')
+	        	pub.publish('F')
 	    	elif choice == 2:
 			pub.publish('Back')
 		elif choice == 3:
