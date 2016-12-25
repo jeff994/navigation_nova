@@ -32,8 +32,16 @@ def start_turn():
 	global turn_direction
 	global degree_to_turn
 
-	robot_drive.speed_now = 5
-	robot_drive.desired_speed = 5 
+	# put more detailed spped definitioan 
+	if(abs(degree_to_turn) < 4):
+		robot_drive.speed_now = 3
+		robot_drive.desired_speed = 3 
+	else if(abs(degree_to_turn) < 10) :
+		robot_drive.speed_now = 4
+		robot_drive.desired_speed = 4 
+	else:
+		robot_drive.speed_now = 5
+		robot_drive.desired_speed = 5 
 	rospy.loginfo('Robot starts to execute a turn job')
 	robot_drive.robot_on_mission = 1
 	robot_drive.bearing_target = robot_drive.bearing_now + degree_to_turn
@@ -61,16 +69,17 @@ def continue_turn(step_angle):
 	global degree_to_turn
 
 	
-	if(abs(degree_to_turn) - abs(degree_turned) < 2):
+	if(abs(degree_to_turn) - abs(degree_turned) < 4):
 		robot_drive.send_command(turn_direction, 3)
 		robot_drive.speed_now = 3
 		robot_drive.desired_speed = 3
 		rospy.loginfo("Only 2 degrees left, redusing turning speed to 3")
-	elif(abs(degree_to_turn) - abs(degree_turned) < 5):
+	elif(abs(degree_to_turn) - abs(degree_turned) < 10):
 		robot_drive.send_command(turn_direction, 4)
 		robot_drive.speed_now = 4
 		robot_drive.desired_speed = 4
 		rospy.loginfo("Only 5 degrees left, redusing turning speed to 4")
+
 
 	#dynamically update robot bearing 
 	robot_drive.bearing_now = robot_drive.bearing_now + step_angle

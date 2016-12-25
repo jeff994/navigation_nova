@@ -91,6 +91,7 @@ def keyboard_callback(data):
 # Real time get compass data 
 def compass_callback(data):
 	global compass_data
+	global compass_index
 	#update compass_data global variable
 	compass_data[compass_index] = int(data.data)
 	rospy.loginfo("compass index: %d, angle: %d", compass_index, compass_data[compass_index])
@@ -163,6 +164,29 @@ def process_encoder_data(encoder_received, encoder_processed):
     			right_encode 	+= encoder_data[2 * x + 1]
 	return left_encode, right_encode 
 
+def correct_angle(): 
+	global compass_data 
+	global compass_index
+	rospy.loginfo("bearing now calculated: %d, compass _data: %d", (robot_drive.bearing_now, compass_data[compass_index]))
+	robot_drive.bearing_now = compass_data[compass_index]);
+	robot_job.generate_turn(robot_drive.bearing_target);
+	rospy.loginfo("bearing now calculated: %d, compass _data: %d", (robot_drive.bearing_now, compass_data[compass_index]))
+
+# before this add a correction job if angle is more than 3 degrees 
+def correct_distance():
+	rosloginf("GPS now [%d, %d], GPS target: [%d, %d]", lon_now, lat_now, lon_target, lat_target)
+	distance = gpsmath.haversine(lon_now, lat_now, lon_target, lat_target)
+	target_bearing = gpsmath.bearing(lon_now, lat_now, lon_target, lat_target)
+	diff_angle = abs(target_bearing - gpsmath.bearing_now);
+	
+	direction = 'F'
+	if(diff_angle > 90 and diff_angle < 270):
+		direction = 'B'
+
+	if(distance > 20):	
+		robot_job.generate_move(distance , direction)
+		#redefine a move job 
+		return
 
 def main_commander():
 	#rospy.loginfo("starting main commander")
@@ -211,6 +235,8 @@ def main_commander():
 
 	if job_completed == 1: 
 		robot_job.remove_current_job()
+		correct_angle()
+		correct_distance()
 
 #subscribes to different topic 
 def main_listener():

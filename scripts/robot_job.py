@@ -105,6 +105,22 @@ def generate_turn(angle):
 	job_num.extend([angle]) 
 	job_des.extend(['T'])
 
+def add_correction_turn(angle ) 
+	global job_des
+	global job_num 
+	job_des.insert(0, 'T')
+	job_des.insert(0, angle)
+
+def add_correction_move(distance)
+	global job_des 
+	global job_num 
+	if(distance == 0):
+		return; 
+	job_num.insert(0, distance)
+	if(distance > 0):
+		job_des.insert(0, 'F')
+	else: 
+		job_des.insert(0, 'B')
 
 def simple_job():
 	generate_move(2000)
