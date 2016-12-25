@@ -15,16 +15,19 @@ from math import radians, cos, sin, asin, sqrt, atan2, degrees
 # while robot's moving, dynamically update robot gps
 # still need to handle more scenarios 
 
-def update_robot_gps(left_dist, right_dist): 
+def update_robot_gps(left_encode, right_encode): 
 	#scenario 1, robot not moving 
-	if(left_dist == 0 and right_dist == 0):
+	if(left_encode == 0 and right_encode == 0):
 		#no updating of information 
 		return
 
+	left_dist = left_encode / robot_drive.encode_to_mm
+	right_dist = right_encode / robot_drive.encode_to_mm
+
 	lon1 = robot_drive.lon_now
 	lat1 =  robot_drive.lat_now
-	initial_bearing = robot_drive.bearing_now
-	
+	initial_bearing = robot_drive.bearing_now	
+
 	# scenario 02 robot moving perfectly straight, bearing won't change, while lan and lon need to be updated 
 	if(left_dist == right_dist):
 		if(right_dist > 0 ):
@@ -44,6 +47,7 @@ def update_robot_gps(left_dist, right_dist):
 	alpha = (abs(left_dist) + abs(right_dist)) / (2.0 * robot_drive.turn_radius)
 	#convert to degree 
 	half_alpha = 180 * alpha / (2.0 * math.pi)  
+	
 	bearing = 0.0
 	distance = 0.0 
 	R = 0.0; 
@@ -75,11 +79,13 @@ def update_robot_gps(left_dist, right_dist):
 			bearing = initial_bearing + half_alpha
 		else:
 			bearing = initial_bearing - half_alpha
-
+	
 	bearing = gpsmath.format_bearing(bearing)
 	distance = R * sin (half_alpha) * 2
+	rospy.loginfo("Distance moved %f, bearing %f, R %f", distance, half_alpha, R) 
 	new_gps = gpsmath.get_gps(lon1, lat1, bearing, distance)		
 	robot_drive.bearing_now = bearing
 	robot_drive.lon_now = new_gps[0]
 	robot_drive.lat_now = new_gps[1]
-
+	
+	

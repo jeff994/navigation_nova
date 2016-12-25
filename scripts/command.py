@@ -145,6 +145,7 @@ def process_no_job(left_encode, right_encode):
 	if(left_encode >=1 or right_encode >=1):
 		rospy.logwarn('warning: robot is not fully stopped even though a top command issued')
 		robot_drive.send_command('S',0)
+		time.sleep(0.05)
         	return
 
 def process_encoder_data(encoder_received, encoder_processed):
@@ -222,7 +223,6 @@ def main_commander():
     	# If no jobs, make sure robot stopped moving, we cannot leave robot moving there 
 	if(len(robot_job.job_des) < 1 or len(robot_job.job_num) < 1):
 		process_no_job(left_encode, right_encode)
-		time.sleep(0.1)
 		return		
      	   	 
     	if (robot_job.job_des[0] == 'T') : 

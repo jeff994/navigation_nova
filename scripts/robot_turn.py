@@ -32,6 +32,7 @@ def start_turn(bearing_now):
 	global turn_direction
 	global degree_to_turn
 
+	robot_drive.bearing_now = bearing_now
 	degree_to_turn = robot_drive.bearing_target - robot_drive.bearing_now 	
 	if(degree_to_turn > 180): 
 		degree_to_turn = degree_to_turn - 360
@@ -55,7 +56,6 @@ def start_turn(bearing_now):
 		robot_drive.desired_speed = 5 
 	rospy.loginfo('Robot starts to execute a turn job')
 	robot_drive.robot_on_mission = 1
-	robot_drive.bearing_now = bearing_now
 	degree_turned = 0
 	robot_drive.send_command(turn_direction, robot_drive.speed_now)
 	rospy.loginfo("Start: Degree turned %d, degree to turn %d, bearing_now %d, bearing_target %d", degree_turned, degree_to_turn, robot_drive.bearing_now, robot_drive.bearing_target)
@@ -141,7 +141,7 @@ def turn_degree(bearing_now, left_encode, right_encode):
 	if(turn_direction == 'L'): 
 		step_angle = - step_angle
 
-	robot_drive.bearing_now = robot_drive.bearing_now + step_angle
+	#robot_drive.bearing_now = robot_drive.bearing_now + step_angle
 	rospy.loginfo("Degree turned %d, degree to turn %d, bearing_now %d, bearing_target %d", degree_turned, degree_to_turn, robot_drive.bearing_now, robot_drive.bearing_target)
 
 	degree_turned = degree_turned + abs(step_angle)
