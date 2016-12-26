@@ -33,10 +33,6 @@ pub = rospy.Publisher('command', String, queue_size=10)
 def send_command(command_string, speed):
 	global ser;
 	#sending the string
-	if(open_serial() == 0):
-		rospy.loginfo("Commanding Serial port not connected, failed to execute the command")
-		return 
-
 	#handle the format of the string
 	stringToSend = 'S%s00000%dE\n' % (command_string, speed) #might need to add \n behind the E
 	pub.publish(stringToSend)

@@ -39,15 +39,15 @@ def execute_command():
         time.sleep(0.1)
         return
 
-    if(receiving_index != (executing_index + 1) % command_buffer);
+    if(receiving_index != (executing_index + 1) % command_buffer):
         rospy.logwarn("Two commans received in the same time")
 
     while(receiving_index != (executing_index + 1) % command_buffer):
         stringToSend = commands_list[executing_index]
         if open_serial():
             if ser.isOpen():
-                ser.write(stringToSend)
-                 executing_index = (executing_index + 1) % command_buffer 
+		ser.write(stringToSend)
+                executing_index = (executing_index + 1) % command_buffer 
             else: 
                 rospy.loginfo("Commanding Serial port not connected")
                 break
