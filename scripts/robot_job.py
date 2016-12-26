@@ -55,6 +55,7 @@ def generate_job(first_point, second_point):
 def generate_job_from_gps(lon1, lat1, lon2, lat2):
 	angle_next 	= gpsmath.bearing(lon1, lat1, lon2, lat2)  	# the angle that the robot must face before it moves 
 	distance 	= gpsmath.haversine(lon1, lat1, lon2, lat2)	# the distance that the robot have to move after the angle corrected
+	distance = distance * 1000.0 * 1000.0  					# convert distance to mm
 	generate_turn(angle_next)
 	generate_move(distance, 'F')
 
