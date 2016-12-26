@@ -27,7 +27,8 @@ def update_robot_gps(left_encode, right_encode):
 	lon1 = robot_drive.lon_now
 	lat1 =  robot_drive.lat_now
 	initial_bearing = robot_drive.bearing_now	
-
+	
+	rospy.loginfo("Bearing now %f,lon_now %f, lat_now %f", robot_drive.bearing_now, robot_drive.lon_now, robot_drive.lat_now)
 	# scenario 02 robot moving perfectly straight, bearing won't change, while lan and lon need to be updated 
 	if(left_dist == right_dist):
 		if(right_dist > 0 ):
