@@ -34,6 +34,8 @@ def update_robot_gps(left_encode, right_encode):
 			robot_drive.lon_now, robot_drive.lat_now = gpsmath.get_gps(lon1, lat1, initial_bearing, left_dist)
 		if(right_dist < 0):
 			robot_drive.lon_now, robot_drive.lat_now = gpsmath.get_gps(lon1, lat1, -initial_bearing, left_dist)
+		
+		rospy.loginfo("Bearing now %f,lon_now %f, lat_now %f", robot_drive.bearing_now, robot_drive.lon_now, robot_drive.lat_now)
 		stringToSend = '%f %f %f' % (robot_drive.lon_now, robot_drive.lat_now, robot_drive.bearing_now)
 		robot_drive.pub_gps.publish(stringToSend)
 		return	
