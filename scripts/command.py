@@ -50,7 +50,7 @@ def keyboard_callback(data):
 	keyboard_data = data.data
 	robot_drive.speed_now = 5
 	robot_drive.desired_speed = 5 
-	if (keyboard_data == 'F'):
+	if (keyboard_data == 'Forward'):
 		rospy.loginfo("Command received: Start to move forward 1 m")
 		robot_job.generate_move(1000, 'F')
 	elif (keyboard_data == 'Back'):
@@ -68,6 +68,13 @@ def keyboard_callback(data):
 		rospy.loginfo("Comamnd received: Clear all jobs") 
 		robot_job.clear_jobs()
 		robot_drive.robot_on_mission =  0
+	elif (keyboard_data == "Switch"):
+		if(robot_drive.robot_enabled = 1):
+			rospy.loginfo("robot disabled")  
+			robot_drive.robot_enabled = 1
+		else: 
+			rospy.loginfo("robot enabled")  
+			robot_drive.robot_enabled = 1 
 	elif (keyboard_data == 'Faster'):
 		rospy.loginfo('Command received: Try to increase robot speed')
 		if(robot_drive.desired_speed < 6): 
@@ -82,10 +89,12 @@ def keyboard_callback(data):
 			robot_drive.desired_speed = robot_drive.desired_speed - 1  
 		else: 
 			rospy.loginfo('Robot speed already minimized')
-	elif (keyboard_data == "demo"):
+	elif (keyboard_data == "Demo"):
 		#robot_drive.bearing_now = 0
 		rospy.loginfo("Simple job")
 		robot_job.simple_job(); 
+	elif (keyboard_data == "Test"):
+		robot_job.job_generator()
 	else: 
 		rospy.loginfo(keyboard_data)
 		rospy.loginfo("Not recognizing command receivied")
@@ -193,8 +202,13 @@ def correct_distance():
 		#redefine a move job 
 		return
 
+def distable_robot(): 
+	robot_drive.send_command('S',0)
+	time.sleep(0.05)
+
 def main_commander():
 	#rospy.loginfo("starting main commander")
+
 	global encoder_data 
 	global encoder_received
 	global encoder_processed
@@ -217,8 +231,13 @@ def main_commander():
 	
 	# calculate the correct encode data for further proces 
 	left_encode, right_encode = process_encoder_data(encoder_received, encoder_processed)
-	encoder_processed = encoder_received
+	
+	# add a handle to stop the robot from current task bot not remving task 
+	if(robot_drive.robot_enabled == 0): 
+		distable_robot()
+		return;
 
+	encoder_processed = encoder_received
 	robot_correction.update_robot_gps(left_encode, right_encode)
 
 	# Check whether if there's any job left for the robot

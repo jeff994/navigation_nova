@@ -15,6 +15,7 @@ def KeyControl():
 	print (30 * '-')
 	print ("   M A I N - M E N U")
 	print (30 * '-')
+	print ("0. Start|Stop robot")
 	print ("1. Move 1 meter forward")
 	print ("2. Move 1 meter back")
 	print ("3. Turn left")
@@ -30,13 +31,15 @@ def KeyControl():
 		while not is_valid:
 			#rospy.loginfo(str("Reading data from serial port"))
 			try :
-	            		choice = int ( raw_input('Enter your choice [1-9] : ') )
+	            		choice = int ( raw_input('Enter your choice [0-9] : ') )
 	            		is_valid = 1 ## set it to 1 to validate input and to terminate the while..not loop
 	        	except ValueError, e :
 	            		print ("'%s' is not a valid integer." % e.args[0].split(": ")[1])
+		if choice == 0:
+			pub.publish('Switch')
 		if choice == 1:
-	        	pub.publish('F')
-	    	elif choice == 2:
+	        pub.publish('Forward')
+	    elif choice == 2:
 			pub.publish('Back')
 		elif choice == 3:
 			pub.publish('Turn_Left')
@@ -47,12 +50,14 @@ def KeyControl():
 		elif choice == 6:
 			pub.publish('Slower')
 		elif(choice == 7):
-			pub.publish('demo')
+			pub.publish('Demo')
 		elif choice == 8:
 			print ("Clear all the remaining tasks, stop the robot")
-		    	pub.publish('Stop')
+		    pub.publish('Stop')
 		elif choice == 9:
-			break 
+			pub.publish('Test')
+		else 
+			break; 
 		else:
 		    	print ("Invalid/Not defined number. Try again...")
 	rate.sleep()
