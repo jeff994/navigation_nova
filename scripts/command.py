@@ -28,6 +28,7 @@ compass_index = 0 	#current compass index
 last_process_time = 0 #last processing time 
 max_delay = 1.0
 last_received_time = 0.0 
+robot_moving = 0
 
 def init_encoder_buffer( size=2000 ):
     global encoder_data 
@@ -113,14 +114,19 @@ def compass_callback(data):
 def encoder_callback(data):
 	global encoder_data
 	global encoder_received 
+	global robot_moving 
 	#accumulate encoder data
 	#Step 1: Get encoder data and convert them to number for later use 
 	#Get left encoder and right encoder 
 	data_string = data.data
 	left_encode, right_encode = data_string.split(" ")
 
-	left_encode  = float(left_encode)
-    	right_encode = float(right_encode)
+	left_encode  = int(left_encode)
+    	right_encode = int(right_encode)
+	if(left_encode == 0 and right_encode == 0):
+		robot_moving = 0
+	else:
+		robot_moving = 1 		
 
     	index = encoder_received * 2
     	encoder_data[encoder_received * 2] = float(left_encode)
@@ -153,7 +159,7 @@ def process_encoder_delay():
 	
 def process_no_job(left_encode, right_encode):
 	robot_drive.robot_on_mission = 0
-	if(left_encode >=1 or right_encode >=1):
+	if(left_encode !=0 or right_encode !=0):
 		rospy.logwarn('warning: robot is not fully stopped even though a top command issued')
 		robot_drive.send_command('S',0)
 		time.sleep(0.05)
@@ -202,9 +208,19 @@ def correct_distance():
 		#redefine a move job 
 		return
 
-def disable_robot(): 
-	robot_drive.send_command('S',0)
-	time.sleep(0.05)
+def disable_robot():
+	global encoder_data 
+        global encoder_received
+        global encoder_processed
+	global robot_moving
+ 
+	while True:
+		if(robot_moving == 1):
+			robot_drive.send_command('S',0)
+			time.sleep(0.05)
+		else: 
+			break; 
+			#robot_drive.robot_enabled = 1
 
 def main_commander():
 	#rospy.loginfo("starting main commander")
@@ -234,13 +250,14 @@ def main_commander():
 	#rospy.loginfo("Processing encoder data")
 	left_encode, right_encode = process_encoder_data(encoder_received, encoder_processed)
 	
+	encoder_processed = encoder_received
 	# add a handle to stop the robot from current task bot not remving task 
 	#rospy.loginfo("Robot is on %d", robot_drive.robot_enabled)
 	if(robot_drive.robot_enabled == 0): 
 		disable_robot()
 		return;
 
-	encoder_processed = encoder_received
+	
 	robot_correction.update_robot_gps(left_encode, right_encode)
 
 	# Check whether if there's any job left for the robot

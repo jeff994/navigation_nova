@@ -20,12 +20,12 @@ def open_serial():
 		return 1 
 
 	#real robot port
-	ser.port = "/dev/serial/by-id/usb-1a86_USB2.0-Serial-if00-port0"
+	ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75533353637351616171-if00"
 	ser.baudrate = 4800
 	#testing port
 	#ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75439333335351412220-if00"
 	#ser.baudrate = 9600	
-	ser.timeout = 0.3
+	ser.timeout = 1.0
 	ser.open()
 	if ser.isOpen():
 		return 1
@@ -41,7 +41,9 @@ def encoder():
 	
 	while not rospy.is_shutdown():
 		if open_serial() == 0:
-			
+			rospy.loginfo("Not able to open serail port")
+			time.sleep(0.1)
+			continue
 		#log the time everytime a message from serial port 
 		#start = datetime.now()
 		#rospy.loginfo(str(start))

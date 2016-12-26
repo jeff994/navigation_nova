@@ -37,5 +37,5 @@ def send_command(command_string, speed):
 	#handle the format of the string
 	stringToSend = 'S%s00000%dE\n' % (command_string, speed) #might need to add \n behind the E
 	pub_command.publish(stringToSend)
-	#rospy.loginfo(str(stringToSend))
+	rospy.loginfo(str(stringToSend))
 	
