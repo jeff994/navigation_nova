@@ -56,12 +56,12 @@ def keyboard_callback(data):
 	elif (keyboard_data == 'Back'):
 		rospy.loginfo("Command received: Start to move back 1 m")
 		robot_job.generate_move(-1000, 'B')
-	elif (keyboard_data == 'Turn_Left'):
-		rospy.loginfo("Command received: Left turn received") 
+	elif (keyboard_data == 'Turn_West'):
+		rospy.loginfo("Command received: turn to 270 (WEST)") 
 		#robot_drive.bearing_now = compass_data[compass_index] 
-		robot_job.generate_turn(-90)
-	elif (keyboard_data == 'Turn_Right'): 
-		rospy.loginfo('Command received: Right turn received')
+		robot_job.generate_turn(270)
+	elif (keyboard_data == 'Turn_East'): 
+		rospy.loginfo('Command received: turn to 90 (EAST)')
 		#robot_drive.bearing_now = compass_data[compass_index]
 		robot_job.generate_turn(90)
 	elif (keyboard_data == 'Stop'):

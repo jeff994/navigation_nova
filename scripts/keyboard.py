@@ -18,8 +18,8 @@ def KeyControl():
 	print ("0. Start | Stop robot")
 	print ("1. Move 1 meter forward")
 	print ("2. Move 1 meter back")
-	print ("3. Turn left")
-	print ("4. Turn right")
+	print ("3. Turn to west")
+	print ("4. Turn to east")
 	print ("5. Speed increse")
 	print ("6. Speed decrease")
 	print ("8. Stop robot from moving")
@@ -39,9 +39,9 @@ def KeyControl():
 	    	elif choice == '2':
 			pub.publish('Back')
 		elif choice == '3':
-			pub.publish('Turn_Left')
+			pub.publish('Turn_West')
 		elif choice == '4': 
-			pub.publish('Turn_Right')
+			pub.publish('Turn_East')
 		elif choice == '5': 
 			pub.publish('Faster')
 		elif choice == '6':
