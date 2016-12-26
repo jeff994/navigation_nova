@@ -37,7 +37,7 @@ def KeyControl():
 	            		print ("'%s' is not a valid integer." % e.args[0].split(": ")[1])
 		if choice == 0:
 			pub.publish('Switch')
-		if choice == 1:
+		elif choice == 1:
 	        	pub.publish('Forward')
 	    	elif choice == 2:
 			pub.publish('Back')
@@ -52,7 +52,6 @@ def KeyControl():
 		elif(choice == 7):
 			pub.publish('Demo')
 		elif choice == 8:
-			print ("Clear all the remaining tasks, stop the robot")
 		    	pub.publish('Stop')
 		elif choice == 9:
 			pub.publish('Test')

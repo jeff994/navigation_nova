@@ -23,60 +23,40 @@ job_num = []			#if job is 'T', the number is the angle of robot need to face of 
 loops = 1 				#how many rounds to go
 
 
+# generate job from pre-defined gps 
 def job_generator(init_bearing):	
-	global gps_lon
-	global gps_lat
-	global job_des
-	global job_num 
 	global gps_num 
 	global loops 
 	
 	#handles from start to first point
-	job = generate_job(0, 1)
-	job_des.append('T')
-	job_des.append('F')
-	job_num.extend([job[0],job[1]])   #in the form of target bearing and distance
-		
+	generate_job(0, 1)
+
 	#handles how many loops
 	for i in range (loops) :
 		for k in range (gps_num):
 			if k < gps_num - 1 :
-				job = generate_job(k + 1, k + 2)
-				job_des.extend(['T','F'])
-				job_num.extend([job[0],job[1]])
-				
+				generate_job(k + 1, k + 2)	
 			else : 
-				job = generate_job(k + 1, 1)
-				job_des.extend(['T','F'])
-				job_num.extend([job[0],job[1]])
+				generate_job(k + 1, 1)
 	
 	#handles closing loop, going back to start
-	job = generate_job(1, 0)
-	job_des.extend(['T','F'])
-	job_num.extend([job[0],job[1]])
+	generate_job(1, 0)
 	#final turn to init_bearing
-	job_des.append('T')
-	job_num.append(init_bearing)
-	#ending_turn_angle = init_angle - angle_now
-	#if ending_turn_angle > 180 :
-	#	ending_turn_angle = ending_turn_angle - 360.0
-	#robot_job.job_num.append(ending_turn_angle)
+	generate_turn(init_bearing)
 
 #based on the gps coordinates of the two location, generate jobs
 def generate_job(first_point, second_point):
 	global gps_lon
 	global gps_lat
 	#handles from first_point to second_point
-	distance 	= gpsmath.haversine(gps_lon[first_point],gps_lat[first_point],gps_lon[second_point],gps_lat[second_point]) #km
-	angle_next 	= gpsmath.bearing(gps_lon[first_point],gps_lat[first_point],gps_lon[second_point],gps_lat[second_point]) #deg  
-		
-	#handles turning angle		
-	#turn_angle = angle_next - angle_now
-	#if turn_angle > 180.0 :
-	#	turn_angle = turn_angle - 360.0
-	#handles forward distance in mm
-	distance = distance * 1000.0 * 1000.0
-	return ([round(angle_next), distance])
+	generate_job_from_gps(gps_lon[first_point],gps_lat[first_point],gps_lon[second_point],gps_lat[second_point]) #km 
+
+# based on two gps corrdinates, generate a turn job and a move job 
+def generate_job_from_gps(lon1, lat1, lon2, lat2):
+	angle_next 	= gpsmath.bearing(lon1, lat1, lon2, lat2)  	# the angle that the robot must face before it moves 
+	distance 	= gpsmath.haversine(lon1, lat1, lon2, lat2)	# the distance that the robot have to move after the angle corrected
+	generate_turn(angle_next)
+	generate_move(distance)
 
 # clear current job
 def remove_current_job():
