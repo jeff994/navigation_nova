@@ -27,7 +27,7 @@ def KeyControl():
 	print (30 * '-')
 	#rospy.loginfo(str("test"))
 	while True:
-	    choice = raw_input('Enter your choice [0-9] : ') 
+		choice = raw_input('Enter your choice [0-9] : ') 
 		if(len(choice) > 1):
 			print("You're supposed to enter only one key, try again...")
 			continue 
@@ -35,7 +35,7 @@ def KeyControl():
 			pub.publish('Switch')
 		elif choice == '1':
 	        	pub.publish('Forward')
-	    	elif choice == 2:
+	    	elif choice == '2':
 			pub.publish('Back')
 		elif choice == '3':
 			pub.publish('Turn_Left')

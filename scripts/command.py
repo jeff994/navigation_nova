@@ -71,7 +71,7 @@ def keyboard_callback(data):
 	elif (keyboard_data == "Switch"):
 		if(robot_drive.robot_enabled == 1):
 			rospy.loginfo("robot disabled")  
-			robot_drive.robot_enabled = 1
+			robot_drive.robot_enabled = 0
 		else: 
 			rospy.loginfo("robot enabled")  
 			robot_drive.robot_enabled = 1 
@@ -202,7 +202,7 @@ def correct_distance():
 		#redefine a move job 
 		return
 
-def distable_robot(): 
+def disable_robot(): 
 	robot_drive.send_command('S',0)
 	time.sleep(0.05)
 
@@ -233,8 +233,9 @@ def main_commander():
 	left_encode, right_encode = process_encoder_data(encoder_received, encoder_processed)
 	
 	# add a handle to stop the robot from current task bot not remving task 
+	rospy.loginfo("Robot is on %d", robot_drive.robot_enabled)
 	if(robot_drive.robot_enabled == 0): 
-		distable_robot()
+		disable_robot()
 		return;
 
 	encoder_processed = encoder_received
