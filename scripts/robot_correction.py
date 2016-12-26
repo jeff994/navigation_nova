@@ -31,17 +31,13 @@ def update_robot_gps(left_encode, right_encode):
 	# scenario 02 robot moving perfectly straight, bearing won't change, while lan and lon need to be updated 
 	if(left_dist == right_dist):
 		if(right_dist > 0 ):
-			new_gps = gpsmath.get_gps(lon1, lat1, initial_bearing, left_dist)
-			robot_drive.lon_now = new_gps[0]
-			robot_drive.lat_now = new_gps[1]
-			return
+			robot_drive.lon_now, robot_drive.lat_now = gpsmath.get_gps(lon1, lat1, initial_bearing, left_dist)
 		if(right_dist < 0):
-			new_gps = gpsmath.get_gps(lon1, lat1, -initial_bearing, left_dist)
-			robot_drive.lon_now = new_gps[0]
-			robot_drive.lat_now = new_gps[1]
-			return
+			robot_drive.lon_now, robot_drive.lat_now = gpsmath.get_gps(lon1, lat1, -initial_bearing, left_dist)
+		stringToSend = '%f %f %f' % (robot_drive.lon_now, robot_drive.lat_now, robot_drive.bearing_now)
+		robot_drive.pub_gps.publish(stringToSend)
+		return	
 
-	
 	alpha = 0.0
 	total_dist = abs(left_dist) + abs(right_dist)
 	alpha = (abs(left_dist) + abs(right_dist)) / (2.0 * robot_drive.turn_radius)
@@ -86,6 +82,6 @@ def update_robot_gps(left_encode, right_encode):
 	robot_drive.lon_now, robot_drive.lat_now  = gpsmath.get_gps(lon1, lat1, bearing, distance)		
 	robot_drive.bearing_now = bearing
 	stringToSend = '%f %f %f' % (robot_drive.lon_now, robot_drive.lat_now, robot_drive.bearing_now) #might need to add \n behind the E
-	pub_gps.publish(stringToSend)
+	robot_drive.pub_gps.publish(stringToSend)
 	rospy.loginfo("Bearing now %f,lon_now %f, lat_now %f", robot_drive.bearing_now, robot_drive.lon_now, robot_drive.lat_now)
 

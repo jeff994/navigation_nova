@@ -26,7 +26,7 @@ def KeyControl():
 	print ("9. Quit form keyboard control")
 	print (30 * '-')
 	#rospy.loginfo(str("test"))
-	while True:
+	while not rospy.is_shutdown():
 		choice = raw_input('Enter your choice [0-9] : ') 
 		if(len(choice) > 1):
 			print("You're supposed to enter only one key, try again...")

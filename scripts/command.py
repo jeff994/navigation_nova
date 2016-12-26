@@ -273,7 +273,7 @@ def main_listener():
 	rospy.Subscriber('compass', String, compass_callback)
 	rospy.Subscriber('encoder', String, encoder_callback)
 	rospy.Subscriber('keyboard', String, keyboard_callback)
-	while True:
+	while not rospy.is_shutdown():
 		main_commander()
 	rospy.spin()
 
