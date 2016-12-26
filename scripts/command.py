@@ -94,7 +94,7 @@ def keyboard_callback(data):
 		rospy.loginfo("Simple job")
 		robot_job.simple_job(); 
 	elif (keyboard_data == "Test"):
-		robot_job.job_generator()
+		robot_job.job_generator(0)
 	else: 
 		rospy.loginfo(keyboard_data)
 		rospy.loginfo("Not recognizing command receivied")

@@ -38,8 +38,8 @@ def KeyControl():
 		if choice == 0:
 			pub.publish('Switch')
 		if choice == 1:
-	        pub.publish('Forward')
-	    elif choice == 2:
+	        	pub.publish('Forward')
+	    	elif choice == 2:
 			pub.publish('Back')
 		elif choice == 3:
 			pub.publish('Turn_Left')
@@ -53,11 +53,9 @@ def KeyControl():
 			pub.publish('Demo')
 		elif choice == 8:
 			print ("Clear all the remaining tasks, stop the robot")
-		    pub.publish('Stop')
+		    	pub.publish('Stop')
 		elif choice == 9:
 			pub.publish('Test')
-		else 
-			break; 
 		else:
 		    	print ("Invalid/Not defined number. Try again...")
 	rate.sleep()

@@ -30,39 +30,40 @@ def job_generator(init_bearing):
 	global job_num 
 	global gps_num 
 	global loops 
+	
 	#handles from start to first point
-	job = job_details(0, 1)
-	robot_job.job_des.append('T')
-	robot_job.job_des.append('F')
-	robot_job.job_num.extend([job[0],job[1]])   #in the form of target bearing and distance
+	job = generate_job(0, 1)
+	job_des.append('T')
+	job_des.append('F')
+	job_num.extend([job[0],job[1]])   #in the form of target bearing and distance
 		
 	#handles how many loops
 	for i in range (loops) :
 		for k in range (gps_num):
 			if k < gps_num - 1 :
-				job = job_details(k + 1, k + 2)
-				robot_job.job_des.extend(['T','F'])
-				robot_job.job_num.extend([job[0],job[1]])
+				job = generate_job(k + 1, k + 2)
+				job_des.extend(['T','F'])
+				job_num.extend([job[0],job[1]])
 				
 			else : 
-				job = job_details(k + 1, 1)
-				robot_job.job_des.extend(['T','F'])
-				robot_job.job_num.extend([job[0],job[1]])
+				job = generate_job(k + 1, 1)
+				job_des.extend(['T','F'])
+				job_num.extend([job[0],job[1]])
 	
 	#handles closing loop, going back to start
-	job = job_details(1, 0)
-	robot_job.job_des.extend(['T','F'])
-	robot_job.job_num.extend([job[0],job[1]])
+	job = generate_job(1, 0)
+	job_des.extend(['T','F'])
+	job_num.extend([job[0],job[1]])
 	#final turn to init_bearing
-	robot_job.job_des.append('T')
-	robot_job.job_num.append(init_bearing)
+	job_des.append('T')
+	job_num.append(init_bearing)
 	#ending_turn_angle = init_angle - angle_now
 	#if ending_turn_angle > 180 :
 	#	ending_turn_angle = ending_turn_angle - 360.0
 	#robot_job.job_num.append(ending_turn_angle)
 
 #based on the gps coordinates of the two location, generate jobs
-def generate_one_job(first_point, second_point):
+def generate_job(first_point, second_point):
 	global gps_lon
 	global gps_lat
 	#handles from first_point to second_point
