@@ -15,6 +15,13 @@ def callback(data):
     commands_list[receiving_index] = str(data.data)
     receiving_index = (receiving_index + 1) % command_buffer 
 
+def init_command_buffer( size=2000 ):
+    global commands_list 
+    if(len(commands_list) == size):
+        return 
+    for i in range(size - len(commands_list)):
+        commands_list.append('SS000000E\n')
+
 def open_serial():
     global ser
     if ser.isOpen():
@@ -66,6 +73,7 @@ def executer():
 
 if __name__ == '__main__':
     try:
+        init_command_buffer(command_buffer)
         executer()
     except rospy.ROSInterruptException:
         #ser.close()  #this doesn't seem to work well
