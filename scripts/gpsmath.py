@@ -14,8 +14,10 @@ def haversine(lon1, lat1, lon2, lat2):
 	a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
 	c = 2 * asin(sqrt(a))
 	r = 6371 #radius of earth in kilometers
-
-	return c * r
+	
+	distance =  c * r
+	distance = distance * 1000.0 * 1000.0  					# convert distance to mm
+	return distance 
 
 # Calculate angle between two diffent gps positions 
 def bearing(lon1, lat1, lon2, lat2):  #from position 1 to 2
