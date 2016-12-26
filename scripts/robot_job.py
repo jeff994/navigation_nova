@@ -32,8 +32,7 @@ def job_generator(init_bearing):
 	#handles how many loops
 	for i in range (loops) :
 		for k in range (gps_num):
-			ne_k = (k + 1) / gps_num
-			print(k)
+			ne_k = (k + 1) % gps_num
 			generate_job(k, ne_k)
 	#final turn to init_bearing
 	generate_turn(init_bearing)
