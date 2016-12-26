@@ -30,10 +30,10 @@ def start_move():
 	robot_drive.lon_target = target_gps[0]
 	robot_drive.lat_target = target_gps[1]
 
-	if abs(dist_to_run)<20:
+	if abs(dist_to_run) < 50:
 		robot_drive.speed_now  = 3
         	robot_drive.desired_speed = 3
-	elif abs(dist_to_run) < 50: 
+	elif abs(dist_to_run) < 200: 
     		robot_drive.speed_now  = 4
         	robot_drive.desired_speed = 4
     	else:
@@ -60,20 +60,19 @@ def continue_move(left_dist, right_dist):
     global dist_to_run
     global dist_completed
 
-    if(abs(dist_to_run) - abs(dist_completed) < 20):
+    if(abs(dist_to_run) - abs(dist_completed) < 50):
             robot_drive.send_command(move_direction, 3)
             robot_drive.speed_now  = 3
             robot_drive.desired_speed = 3
             rospy.loginfo('Reduce speed to 3, very close to target position')
             return
-    elif(abs(dist_to_run) - abs(dist_completed) < 50):
+    elif(abs(dist_to_run) - abs(dist_completed) < 200):
             robot_drive.send_command(move_direction, 4)
             robot_drive.speed_now  = 4
             robot_drive.desired_speed = 4
-            rospy.loginfo('Reduce speed to 4, only 5 cm to target position')
+            rospy.loginfo('Reduce speed to 4, only 20 cm to target position')
             return
 
-    robot_correction.update_robot_gps(left_dist, right_dist)
     if(robot_drive.speed_now  == robot_drive.desired_speed):
             rospy.loginfo('Still moving at the same speed...')
     else:
@@ -145,7 +144,7 @@ def move_distance(dist, left_encode, right_encode):
 		return  0
 	else :
 		stop_move()
-       	return 1 
+       		return 1 
        	#clean current job 
 	
 	return 0 

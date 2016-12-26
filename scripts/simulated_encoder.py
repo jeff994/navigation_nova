@@ -14,7 +14,7 @@ def encoder(left, right):
 
 	pub = rospy.Publisher('encoder', String, queue_size = 10)
 	rospy.init_node('encoder', anonymous=True)
-	rate = rospy.Rate(20)
+	rate = rospy.Rate(10)
 
 	rospy.loginfo("Started encoder")
 	while not rospy.is_shutdown():

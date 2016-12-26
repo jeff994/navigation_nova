@@ -131,8 +131,8 @@ def encoder_callback(data):
 
 	encoder_received = (encoder_received + 1) % 1000
 	#convert encoder number to floading point number, make sure all subsquent calculation is on floating point mode 
-	if (robot_drive.robot_on_mission ==1 ):
-		rospy.loginfo(str(data_string))
+	#if (robot_drive.robot_on_mission ==1 ):
+	#	rospy.loginfo(str(data_string))
 
 def process_encoder_delay():
 	time_now = datetime.now()
@@ -222,6 +222,7 @@ def main_commander():
 	#bytsToLog = "encoder received %d, processed %d" % (encoder_received,encoder_processed)
 	#rospy.loginfo(bytsToLog)
 	if(encoder_received == encoder_processed):
+		#rospy.loginfo("Processing encoder delay")
 		process_encoder_delay()
 		return
 	
@@ -230,10 +231,11 @@ def main_commander():
 	#rospy.loginfo(str(last_received_time))
 	
 	# calculate the correct encode data for further proces 
+	#rospy.loginfo("Processing encoder data")
 	left_encode, right_encode = process_encoder_data(encoder_received, encoder_processed)
 	
 	# add a handle to stop the robot from current task bot not remving task 
-	rospy.loginfo("Robot is on %d", robot_drive.robot_enabled)
+	#rospy.loginfo("Robot is on %d", robot_drive.robot_enabled)
 	if(robot_drive.robot_enabled == 0): 
 		disable_robot()
 		return;
@@ -271,7 +273,9 @@ def main_listener():
 	rospy.Subscriber('compass', String, compass_callback)
 	rospy.Subscriber('encoder', String, encoder_callback)
 	rospy.Subscriber('keyboard', String, keyboard_callback)
-	
+	while True:
+		main_commander()
+	rospy.spin()
 
 if __name__ == '__main__':
 	try:
@@ -280,9 +284,5 @@ if __name__ == '__main__':
 		init_encoder_buffer()
 		init_compass_buffer()
 		main_listener()
-		while not rospy.is_shutdown():
-			main_commander()
-		rospy.spin()
-
 	except rospy.ROSInterruptException:
 		pass
