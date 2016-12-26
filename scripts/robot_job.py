@@ -29,18 +29,12 @@ def job_generator(init_bearing):
 	global loops 
 	
 	#handles from start to first point
-	generate_job(0, 1)
 
 	#handles how many loops
 	for i in range (loops) :
 		for k in range (gps_num):
-			if k < gps_num - 1 :
-				generate_job(k + 1, k + 2)	
-			else : 
-				generate_job(k + 1, 1)
-	
-	#handles closing loop, going back to start
-	generate_job(1, 0)
+			ne_k = (k + 1) / gps_num
+			generate_job(k, ne_k)
 	#final turn to init_bearing
 	generate_turn(init_bearing)
 
