@@ -31,6 +31,8 @@ bearing_target = 0 		#degrees
 #defining serial port to write to (the commands)
 ser = serial.Serial()
 
+pub = rospy.Publisher('command', String, queue_size=10)
+
 def open_serial():
 	global ser
 	if ser.isOpen():
@@ -55,6 +57,7 @@ def send_command(command_string, speed):
 
 	#handle the format of the string
 	stringToSend = 'S%s00000%dE\n' % (command_string, speed) #might need to add \n behind the E
+	pub.publish(stringToSend)
 	#rospy.loginfo(str(stringToSend))
 	
 	if ser.isOpen():
