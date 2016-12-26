@@ -69,7 +69,7 @@ def keyboard_callback(data):
 		robot_job.clear_jobs()
 		robot_drive.robot_on_mission =  0
 	elif (keyboard_data == "Switch"):
-		if(robot_drive.robot_enabled = 1):
+		if(robot_drive.robot_enabled == 1):
 			rospy.loginfo("robot disabled")  
 			robot_drive.robot_enabled = 1
 		else: 
