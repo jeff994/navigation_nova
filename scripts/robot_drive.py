@@ -27,7 +27,8 @@ lon_target = 0.0
 lat_target = 0.0
 bearing_target = 0 		#degrees
 
-pub = rospy.Publisher('command', String, queue_size=10)
+pub_command = rospy.Publisher('command', String, queue_size=10)
+pub_gps	= rospy.Publisher('gps', String, queue_size=10)
 
 # Helper function which can send commands to robot 
 def send_command(command_string, speed):
@@ -35,6 +36,6 @@ def send_command(command_string, speed):
 	#sending the string
 	#handle the format of the string
 	stringToSend = 'S%s00000%dE\n' % (command_string, speed) #might need to add \n behind the E
-	pub.publish(stringToSend)
+	pub_command.publish(stringToSend)
 	#rospy.loginfo(str(stringToSend))
 	
