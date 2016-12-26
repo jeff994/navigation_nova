@@ -27,33 +27,29 @@ def KeyControl():
 	print (30 * '-')
 	#rospy.loginfo(str("test"))
 	while True:
-		is_valid = 0
-		while not is_valid:
-			#rospy.loginfo(str("Reading data from serial port"))
-			try :
-	            		choice = int ( raw_input('Enter your choice [0-9] : ') )
-	            		is_valid = 1 ## set it to 1 to validate input and to terminate the while..not loop
-	        	except ValueError, e :
-	            		print ("'%s' is not a valid integer." % e.args[0].split(": ")[1])
-		if choice == 0:
+	    choice = raw_input('Enter your choice [0-9] : ') 
+		if(len(choice) > 1):
+			print("You're supposed to enter only one key, try again...")
+			continue 
+		if choice == '0':
 			pub.publish('Switch')
-		elif choice == 1:
+		elif choice == '1':
 	        	pub.publish('Forward')
 	    	elif choice == 2:
 			pub.publish('Back')
-		elif choice == 3:
+		elif choice == '3':
 			pub.publish('Turn_Left')
-		elif choice == 4: 
+		elif choice == '4': 
 			pub.publish('Turn_Right')
-		elif choice == 5: 
+		elif choice == '5': 
 			pub.publish('Faster')
-		elif choice == 6:
+		elif choice == '6':
 			pub.publish('Slower')
-		elif(choice == 7):
+		elif(choice == '7'):
 			pub.publish('Demo')
-		elif choice == 8:
+		elif choice == '8':
 		    	pub.publish('Stop')
-		elif choice == 9:
+		elif choice == '9':
 			pub.publish('Test')
 		else:
 		    	print ("Invalid/Not defined number. Try again...")
