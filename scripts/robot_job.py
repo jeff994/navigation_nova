@@ -15,12 +15,11 @@ from math import radians, cos, sin, asin, sqrt, atan2, degrees
 ###################### EDIT HERE ###########################
 #defining or acquiring the GPS coordinates
 gps_num = 4
-start 	= [103.962386,1.340549]
 gps_lon = [103.962386,103.962389,103.962456,103.962461,103.962381] #S,A,B,C,D
 gps_lat = [1.340549,1.3407,1.340696,1.340589,1.340599]
 job_des = []			#could be 'T' or 'F'
 job_num = []			#if job is 'T', the number is the angle of robot need to face of the job else it's the distance in mm 
-loops = 1 				#how many rounds to go
+loops = 2 				#how many rounds to go
 
 
 # generate job from pre-defined gps 
@@ -34,6 +33,7 @@ def job_generator(init_bearing):
 	for i in range (loops) :
 		for k in range (gps_num):
 			ne_k = (k + 1) / gps_num
+			print(k)
 			generate_job(k, ne_k)
 	#final turn to init_bearing
 	generate_turn(init_bearing)
