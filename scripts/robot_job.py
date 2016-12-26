@@ -14,15 +14,10 @@ from math import radians, cos, sin, asin, sqrt, atan2, degrees
 
 ###################### EDIT HERE ###########################
 #defining or acquiring the GPS coordinates
-gps_num = 2
-start 	= [ 101.721594,3.030130]
-#3.029410, 101.722588
-#3.030130, 101.721594
-#gps_lon = [103.962386,103.962389,103.962456,103.962461,103.962381] #S,A,B,C,D
-#gps_lat = [1.340549,1.3407,1.340696,1.340589,1.340599]
-gps_lon = [101.721594,101.722588]
-gps_lat = [3.030130, 3.029410]
-
+gps_num = 4
+start 	= [103.962386,1.340549]
+gps_lon = [103.962386,103.962389,103.962456,103.962461,103.962381] #S,A,B,C,D
+gps_lat = [1.340549,1.3407,1.340696,1.340589,1.340599]
 job_des = []			#could be 'T' or 'F'
 job_num = []			#if job is 'T', the number is the angle of robot need to face of the job else it's the distance in mm 
 loops = 1 				#how many rounds to go
