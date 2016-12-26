@@ -78,13 +78,9 @@ def continue_turn(step_angle):
 	
 	
 	if(abs(degree_to_turn) - abs(degree_turned) < 4):
-		robot_drive.send_command(turn_direction, 3)
-		robot_drive.speed_now = 3
 		robot_drive.desired_speed = 3
 		rospy.loginfo("Only 2 degrees left, redusing turning speed to 3")
 	elif(abs(degree_to_turn) - abs(degree_turned) < 10):
-		robot_drive.send_command(turn_direction, 4)
-		robot_drive.speed_now = 4
 		robot_drive.desired_speed = 4
 		rospy.loginfo("Only 5 degrees left, redusing turning speed to 4")
 	

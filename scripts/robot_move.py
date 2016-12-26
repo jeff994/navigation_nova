@@ -61,17 +61,11 @@ def continue_move(left_dist, right_dist):
     global dist_completed
 
     if(abs(dist_to_run) - abs(dist_completed) < 50):
-            robot_drive.send_command(move_direction, 3)
-            robot_drive.speed_now  = 3
             robot_drive.desired_speed = 3
             rospy.loginfo('Reduce speed to 3, very close to target position')
-            return
     elif(abs(dist_to_run) - abs(dist_completed) < 200):
-            robot_drive.send_command(move_direction, 4)
-            robot_drive.speed_now  = 4
             robot_drive.desired_speed = 4
             rospy.loginfo('Reduce speed to 4, only 20 cm to target position')
-            return
 
     if(robot_drive.speed_now  == robot_drive.desired_speed):
             rospy.loginfo('Still moving at the same speed...')
@@ -80,9 +74,6 @@ def continue_move(left_dist, right_dist):
             robot_drive.speed_now  = robot_drive.desired_speed
             distpub = 'Robot move speed changed from %d to %d' % (robot_drive.speed_now, robot_drive.desired_speed)
             rospy.loginfo(distpub)
-
-
-
 
 # main function to control the robot movement 
 def move_distance(dist, left_encode, right_encode):
