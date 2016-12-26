@@ -21,7 +21,7 @@ initial_bearing = 0 	#set as north for now
 
 lon_now = 31.205718
 lat_now  = 121.628857
-bearing_now =  90
+bearing_now =  0
 
 lon_target = 0.0
 lat_target = 0.0

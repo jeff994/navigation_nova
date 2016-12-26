@@ -15,7 +15,7 @@ def KeyControl():
 	print (30 * '-')
 	print ("   M A I N - M E N U")
 	print (30 * '-')
-	print ("0. Start|Stop robot")
+	print ("0. Start | Stop robot")
 	print ("1. Move 1 meter forward")
 	print ("2. Move 1 meter back")
 	print ("3. Turn left")
@@ -23,7 +23,8 @@ def KeyControl():
 	print ("5. Speed increse")
 	print ("6. Speed decrease")
 	print ("8. Stop robot from moving")
-	print ("9. Quit form keyboard control")
+	print ("9. Test route creating from gps")
+	print ("using ctrl + c to exit")
 	print (30 * '-')
 	#rospy.loginfo(str("test"))
 	while not rospy.is_shutdown():
