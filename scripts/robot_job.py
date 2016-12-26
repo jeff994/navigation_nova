@@ -79,20 +79,21 @@ def generate_move( distance, direction):
 	global job_num 
 	job_num.extend([distance]) 
 	job_des.extend([direction])
-	rospy.loginfo("Generated a moveing job %s of distance %f mm", direction, distance)
+	rospy.loginfo("Generated a job move %s with distance %f mm", direction, distance)
 
 def generate_turn(angle):
 	global job_des
 	global job_num 
 	job_num.extend([angle]) 
 	job_des.extend(['T'])
-	rospy.loginfo("Geneated a turning job to diection of angle %f", angle)
+	rospy.loginfo("Generated a job turn to angle %f", angle)
 
 def add_correction_turn(angle ): 
 	global job_des
 	global job_num 
 	job_des.insert(0, 'T')
 	job_des.insert(0, angle)
+	rospy.loginfo("Inserted a job turn to angle %f", angle)
 
 def add_correction_move(distance):
 	global job_des 
@@ -103,7 +104,7 @@ def add_correction_move(distance):
 	direction = 'F'
 	if(distance < 0):
 		job_des.insert(0, 'B')
-	rospy.loginfo("Added a correction move job %s of distance %f mm", direction, distance)
+	rospy.loginfo("Inserted a correction job move %s with distance %f mm", direction, distance)
 
 def simple_job():
 	generate_move(2000, 'F')
