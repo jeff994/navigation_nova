@@ -27,25 +27,7 @@ lon_target = 0.0
 lat_target = 0.0
 bearing_target = 0 		#degrees
 
-
-#defining serial port to write to (the commands)
-ser = serial.Serial()
-
 pub = rospy.Publisher('command', String, queue_size=10)
-
-def open_serial():
-	global ser
-	if ser.isOpen():
-		return 1 
-	#testing robot port
-	ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75439333335351412220-if00"
-	#real port
-	#ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75439333335351412220-if00"
-	ser.baudrate = 9600
-	ser.open()
-	if ser.isOpen():
-		return 1
-	return 0 
 
 # Helper function which can send commands to robot 
 def send_command(command_string, speed):
@@ -60,7 +42,3 @@ def send_command(command_string, speed):
 	pub.publish(stringToSend)
 	#rospy.loginfo(str(stringToSend))
 	
-	if ser.isOpen():
-		ser.write(stringToSend)
-	else:
-		rospy.loginfo("Commanding Serial port not connected")

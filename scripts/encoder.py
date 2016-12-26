@@ -9,6 +9,7 @@ from std_msgs.msg import String
 
 ser = serial.Serial()
 
+
 #add a timer to measure the serial port read line waiting time
 start = 0.0
 end = 0.0
@@ -37,8 +38,10 @@ def encoder():
 	rate = rospy.Rate(10)
 	
 	rospy.loginfo("Started encoder")
-	open_serial()
+	
 	while not rospy.is_shutdown():
+		if open_serial() == 0:
+			
 		#log the time everytime a message from serial port 
 		#start = datetime.now()
 		#rospy.loginfo(str(start))
@@ -63,10 +66,7 @@ def encoder():
 			#turning them into strings
                                 #real data 
 			bytesToPublish = '%d %d' % (nl_encoder, nr_encoder)
-				#simulated testing data 
-			#bytesToPublish = '1234 -1234'
-                                #publishing data in string for standardization
-                                #rospy.loginfo(str(bytesToPublish))
+
 			if(nl_encoder != 0  or nr_encoder != 0):
 			 	rospy.loginfo(bytesToPublish)
 			pub.publish(str(bytesToPublish))
@@ -75,8 +75,6 @@ def encoder():
 			rospy.logwarn(bytesToRead)
 		#start = datetime.now()
 		#rospy.loginfo(str(start))
-		
-		#rate.sleep()
 
 if __name__ == '__main__':
 	try:
