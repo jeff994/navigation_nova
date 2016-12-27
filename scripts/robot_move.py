@@ -26,10 +26,11 @@ def start_move():
 	
 
 	initial_bearing = robot_drive.bearing_now
-	lon, lat = gpsmath.get_gps(lon1, lat1, initial_bearing, dist_to_run)
+	lon, lat = gpsmath.get_gps(lon1, lat1, initial_bearing, abs(dist_to_run))
 	robot_drive.lon_target = lon
 	robot_drive.lat_target = lat
-
+	rospy.loginfo("Lon target %f, lat target %f", lon, lat)
+	
 	if abs(dist_to_run) < 50:
 		robot_drive.speed_now  = 3
         	robot_drive.desired_speed = 3

@@ -62,6 +62,7 @@ def execute_command():
 			#rospy.loginfo("Testing serial port")
 			rospy.loginfo(stringToSend)
 			ser.write(stringToSend)	
+			time.sleep(0.05)
 			#ser.write("/n")
             	else: 
                 	rospy.loginfo("Commanding Serial port not connected")
