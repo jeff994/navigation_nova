@@ -198,8 +198,8 @@ def correct_angle():
 # before this add a correction job if angle is more than 3 degrees 
 def correct_distance():
 	rospy.loginfo("GPS now [%d, %d], GPS target: [%d, %d]", robot_drive.lon_now, robot_drive.lat_now, robot_drieve.lon_target,robot_drive lat_target)
-	distance = gpsmath.haversine(lon_now, lat_now, lon_target, lat_target)
-	target_bearing = gpsmath.bearing(lon_now, lat_now, lon_target, lat_target)
+	distance = gpsmath.haversine(robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target, robot_drive.lat_target)
+	target_bearing = gpsmath.bearing(robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target, robot_drive.lat_target)
 	diff_angle = gpsmath.format_bearing(target_bearing - robot_drive.bearing_now);
 	
 	direction = 'F'
