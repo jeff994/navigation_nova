@@ -188,37 +188,43 @@ def correct_angle():
 	global compass_data 
 	global compass_index
 	rospy.loginfo("bearing now calculated: %f, compass _data: %f", robot_drive.bearing_now, compass_data[compass_index])
+	diff_angle = gpsmath.format_bearing(robot_drive.bearing_now - compass_data[compass_index])
 	robot_drive.bearing_now = compass_data[compass_index];
-	robot_job.generate_turn(robot_drive.bearing_target);
-	rospy.loginfo("bearing now calculated: %d, compass _data: %d", robot_drive.bearing_now, compass_data[compass_index])
+	if angle_dff > 2.0:
+		robot_job.generate_turn(robot_drive.bearing_target);
+	#rospy.loginfo("bearing now calculated: %d, compass _data: %d", robot_drive.bearing_now, compass_data[compass_index])
 
 # before this add a correction job if angle is more than 3 degrees 
 def correct_distance():
-	rosloginf("GPS now [%d, %d], GPS target: [%d, %d]", lon_now, lat_now, lon_target, lat_target)
+	rospy.loginf("GPS now [%d, %d], GPS target: [%d, %d]", lon_now, lat_now, lon_target, lat_target)
 	distance = gpsmath.haversine(lon_now, lat_now, lon_target, lat_target)
 	target_bearing = gpsmath.bearing(lon_now, lat_now, lon_target, lat_target)
-	diff_angle = abs(target_bearing - gpsmath.bearing_now);
+	diff_angle = gpsmath.format_bearing(target_bearing - robot_drive.bearing_now);
 	
 	direction = 'F'
 	if(diff_angle > 90 and diff_angle < 270):
 		direction = 'B'
 
-	if(distance > 20):	
+	if(distance > 50):	
 		robot_job.generate_move(distance , direction)
 		#redefine a move job 
 		return
 
 def disable_robot():
 	global encoder_data 
-        global encoder_received
-        global encoder_processed
+	global encoder_received
+	global encoder_processed
 	global robot_moving
  
 	while True:
+		#step 1, send the stop command every 10 milli seoncs
 		if(robot_moving == 1):
 			robot_drive.send_command('S',0)
-			time.sleep(0.05)
+			time.sleep(0.01)
 		else: 
+			# Clear all the reamining jobs
+			robot_job.clear_jobs()
+			robot_drive.robot_on_mission = 0; 
 			break; 
 			#robot_drive.robot_enabled = 1
 
@@ -281,8 +287,8 @@ def main_commander():
 
 	if job_completed == 1: 
 		robot_job.remove_current_job()
-		#correct_angle()
-		#correct_distance()
+		correct_angle()
+		correct_distance()
 
 #subscribes to different topic 
 def main_listener():
