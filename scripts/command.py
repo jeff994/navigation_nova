@@ -53,11 +53,13 @@ def keyboard_callback(data):
 	robot_drive.speed_now = 5
 	robot_drive.desired_speed = 5 
 	if (keyboard_data == 'Forward'):
+		robot_drive.init_gps()
 		rospy.loginfo("Command received: Start to move forward 1 m")
-		robot_job.generate_move(1000, 'F')
+		robot_job.generate_move(5000, 'F')
 	elif (keyboard_data == 'Back'):
+		robot_drive.init_gps() 
 		rospy.loginfo("Command received: Start to move back 1 m")
-		robot_job.generate_move(-1000, 'B')
+		robot_job.generate_move(-5000, 'B')
 	elif (keyboard_data == 'Turn_West'):
 		rospy.loginfo("Command received: turn to 270 (WEST)") 
 		#robot_drive.bearing_now = compass_data[compass_index] 
@@ -197,16 +199,17 @@ def correct_angle():
 
 # before this add a correction job if angle is more than 3 degrees 
 def correct_distance():
-	rospy.loginfo("GPS now [%f, %f], GPS target: [%f, %f]", robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target,robot_drive.lat_target)
 	distance = gpsmath.haversine(robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target, robot_drive.lat_target)
-	target_bearing = gpsmath.bearing(robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target, robot_drive.lat_target)
-	diff_angle = gpsmath.format_bearing(target_bearing - robot_drive.bearing_now);
-	
+	bearing = gpsmath.bearing(robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target, robot_drive.lat_target)
+	diff_angle = gpsmath.format_bearing(robot_drive.bearing_target - robot_drive.bearing_now)	
+	rospy.loginfo("GPS now [%f, %f], GPS target: [%f, %f]", robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target,robot_drive.lat_target)
+	rospy.loginfo("Bearing now %f, bearing target %f", robot_drive.bearing_now, robot_drive.bearing_target)
+
 	direction = 'F'
 	if(diff_angle > 90 and diff_angle < 270):
 		direction = 'B'
 
-	rospy.loginfo("There's a %f mm distance error", distance);
+	rospy.loginfo("There's a %f mm distance error, %f angle difference", distance, diff_angle)
 	#if(distance > 50):	
 		#robot_job.generate_move(distance , direction)
 		#redefine a move job 
@@ -283,6 +286,8 @@ def main_commander():
 		job_completed =robot_turn.turn_degree(compass_data[compass_index], left_encode, right_encode)
 	
 	elif (robot_job.job_des[0] == 'F' or robot_job.job_des[0] == 'B'):
+		if(robot_job.job_des[0] == 'B'):
+			robot_job.job_num[0] = -  abs(robot_job.job_num[0])
 		job_completed =robot_move.move_distance(robot_job.job_num[0], left_encode, right_encode) 
 	else :
 		rospy.logwarn('warning: illegal job description found, not peform any actions')

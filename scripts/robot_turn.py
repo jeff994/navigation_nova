@@ -33,6 +33,9 @@ def start_turn(bearing_now):
 	global degree_to_turn
 
 	robot_drive.bearing_now = bearing_now
+	robot_drive.lon_target = robot_drive.lon_now
+	robot_drive.lat_target = robot_drive.lat_now
+	
 	degree_to_turn = robot_drive.bearing_target - robot_drive.bearing_now 	
 	if(degree_to_turn > 180): 
 		degree_to_turn = degree_to_turn - 360
@@ -77,10 +80,10 @@ def continue_turn(step_angle):
 	global degree_to_turn
 	
 	
-	if(abs(degree_to_turn) - abs(degree_turned) < 4):
+	if(abs(degree_to_turn) - abs(degree_turned) < 10):
 		robot_drive.desired_speed = 3
 		rospy.loginfo("Only 2 degrees left, redusing turning speed to 3")
-	elif(abs(degree_to_turn) - abs(degree_turned) < 10):
+	elif(abs(degree_to_turn) - abs(degree_turned) < 20):
 		robot_drive.desired_speed = 4
 		rospy.loginfo("Only 5 degrees left, redusing turning speed to 4")
 	
@@ -116,12 +119,12 @@ def turn_degree(bearing_now, left_encode, right_encode):
 		stop_turn()
 		return 1
 
-	if(turn_direction == 'L' and left_encode <- 10 and right_encode > 10):
+	if(turn_direction == 'R' and left_encode <- 10 and right_encode > 10):
 		rospy.logwarn('Robot wheel moving revered to the turn right command')
 		#stop_turn()
 		return 0
 
-	if(turn_direction == 'R' and left_encode > 10 and right_encode < -10):
+	if(turn_direction == 'L' and left_encode > 10 and right_encode < -10):
 		rospy.logwarn('Robot wheel moving revered to the turn left command')
 		#stop_turn()
 		return 0
@@ -138,13 +141,13 @@ def turn_degree(bearing_now, left_encode, right_encode):
 		step_angle = - step_angle
 
 	#robot_drive.bearing_now = robot_drive.bearing_now + step_angle
-	rospy.loginfo("Degree turned %d, degree to turn %d, bearing_now %d, bearing_target %d", degree_turned, abs(degree_to_turn), robot_drive.bearing_now, robot_drive.bearing_target)
+	rospy.loginfo("Degree turned %f, degree to turn %f, bearing_now %f, bearing_target %f", degree_turned, abs(degree_to_turn), robot_drive.bearing_now, robot_drive.bearing_target)
 
 	degree_turned = degree_turned + abs(step_angle)
-	degree_threshold = abs(degree_to_turn)
+	degree_threshold = abs(degree_to_turn) - 0.7
 	#simple log for tracing 
-	#distpub = 'Required angle:%f turned angle:%f step angle: %f' % (degree_to_turn, degree_turned, step_angle)
-    #    rospy.loginfo(distpub)
+	distpub = 'Required angle:%f turned angle:%f step angle: %f' % (degree_to_turn, degree_turned, step_angle)
+    	rospy.loginfo(distpub)
 
 	if(degree_turned < degree_threshold): 
 		continue_turn(step_angle)

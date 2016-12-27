@@ -24,9 +24,9 @@ def start_move():
 	lon1 = robot_drive.lon_now
 	lat1 =  robot_drive.lat_now
 	
+	robot_drive.target_bearing = robot_drive.bearing_now 
 
-	initial_bearing = robot_drive.bearing_now
-	lon, lat = gpsmath.get_gps(lon1, lat1, initial_bearing, abs(dist_to_run))
+	lon, lat = gpsmath.get_gps(lon1, lat1, robot_drive.target_bearing, abs(dist_to_run))
 	robot_drive.lon_target = lon
 	robot_drive.lat_target = lat
 	rospy.loginfo("Lon target %f, lat target %f", lon, lat)
