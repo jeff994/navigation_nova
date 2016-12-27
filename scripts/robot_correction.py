@@ -24,12 +24,8 @@ def update_robot_gps(left_encode, right_encode):
 	# loacal vaiables 
 	left_dist 	= left_encode / robot_drive.encode_to_mm
 	right_dist 	= right_encode / robot_drive.encode_to_mm
-	lon1 		= robot_drive.lon_now
-	lat1 		= robot_drive.lat_now
 	alpha 		= 0.0
 	total_dist 	= abs(left_dist) + abs(right_dist) 
-	bearing 	= 0.0
-	distance 	= 0.0 
 	R 			= 0.0; 
 
 	# global vaiables 
@@ -40,9 +36,9 @@ def update_robot_gps(left_encode, right_encode):
 	# scenario 01, 02 robot moving perfectly straight, bearing won't change, while lan and lon need to be updated 
 	if(left_dist == right_dist):
 		if(right_dist > 0 ):
-			robot_drive.lon_now, robot_drive.lat_now = gpsmath.get_gps(lon1, lat1, robot_drive.bearing_now, right_dist)
+			robot_drive.lon_now, robot_drive.lat_now = gpsmath.get_gps(robot_drive.lon_now, robot_drive.lat_now , robot_drive.bearing_now, right_dist)
 		if(right_dist < 0):
-			robot_drive.lon_now, robot_drive.lat_now = gpsmath.get_gps(lon1, lat1, -robot_drive.bearing_now, right_dist)
+			robot_drive.lon_now, robot_drive.lat_now = gpsmath.get_gps(robot_drive.lon_now, robot_drive.lat_now , -robot_drive.bearing_now, right_dist)
 		#rospy.loginfo("Bearing now %f,lon_now %f, lat_now %f", robot_drive.bearing_now, robot_drive.lon_now, robot_drive.lat_now)
 		stringToSend = '%f %f %f' % (robot_drive.lon_now, robot_drive.lat_now, robot_drive.bearing_now)
 		robot_drive.pub_gps.publish(stringToSend)
@@ -78,7 +74,7 @@ def update_robot_gps(left_encode, right_encode):
 	bearing 				= gpsmath.format_bearing(bearing)
 	dist 					= R * sin(robot_drive.step_angle) * 2
 	rospy.loginfo("Distance moved %f, step_angle %f, R %f, step_distance %f", dist, robot_drive.step_angle, R) 
-	robot_drive.lon_now, robot_drive.lat_now 	= gpsmath.get_gps(lon1, lat1, bearing, dist)		
+	robot_drive.lon_now, robot_drive.lat_now 	= gpsmath.get_gps(robot_drive.lon_now, robot_drive.lat_now , bearing, dist)		
 	robot_drive.bearing_now 					= gpsmath.format_bearing(initial_bearing + robot_drive.step_angle)
 	stringToSend 								= '%f %f %f' % (robot_drive.lon_now, robot_drive.lat_now, robot_drive.bearing_now) #might need to add \n behind the E
 	robot_drive.pub_gps.publish(stringToSend)
