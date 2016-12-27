@@ -206,8 +206,9 @@ def correct_distance():
 	if(diff_angle > 90 and diff_angle < 270):
 		direction = 'B'
 
-	if(distance > 50):	
-		robot_job.generate_move(distance , direction)
+	rospy.loginfo("There's a %f mm distance error", distance);
+	#if(distance > 50):	
+		#robot_job.generate_move(distance , direction)
 		#redefine a move job 
 		return
 

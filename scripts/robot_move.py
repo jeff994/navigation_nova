@@ -26,9 +26,9 @@ def start_move():
 	
 
 	initial_bearing = robot_drive.bearing_now
-	target_gps = gpsmath.get_gps(lon1, lat1, initial_bearing, dist_to_run)
-	robot_drive.lon_target = target_gps[0]
-	robot_drive.lat_target = target_gps[1]
+	lon, lat = gpsmath.get_gps(lon1, lat1, initial_bearing, dist_to_run)
+	robot_drive.lon_target = lon
+	robot_drive.lat_target = lat
 
 	if abs(dist_to_run) < 50:
 		robot_drive.speed_now  = 3
