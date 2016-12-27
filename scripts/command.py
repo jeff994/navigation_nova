@@ -7,6 +7,7 @@ import robot_move
 import robot_turn
 import time 
 import robot_correction 
+import gpsmath
 
 from datetime import datetime
 
@@ -190,13 +191,13 @@ def correct_angle():
 	rospy.loginfo("bearing now calculated: %f, compass _data: %f", robot_drive.bearing_now, compass_data[compass_index])
 	diff_angle = gpsmath.format_bearing(robot_drive.bearing_now - compass_data[compass_index])
 	robot_drive.bearing_now = compass_data[compass_index];
-	if angle_dff > 2.0:
+	if diff_angle> 2.0:
 		robot_job.generate_turn(robot_drive.bearing_target);
 	#rospy.loginfo("bearing now calculated: %d, compass _data: %d", robot_drive.bearing_now, compass_data[compass_index])
 
 # before this add a correction job if angle is more than 3 degrees 
 def correct_distance():
-	rospy.loginf("GPS now [%d, %d], GPS target: [%d, %d]", lon_now, lat_now, lon_target, lat_target)
+	rospy.loginfo("GPS now [%d, %d], GPS target: [%d, %d]", robot_drive.lon_now, robot_drive.lat_now, robot_drieve.lon_target,robot_drive lat_target)
 	distance = gpsmath.haversine(lon_now, lat_now, lon_target, lat_target)
 	target_bearing = gpsmath.bearing(lon_now, lat_now, lon_target, lat_target)
 	diff_angle = gpsmath.format_bearing(target_bearing - robot_drive.bearing_now);
