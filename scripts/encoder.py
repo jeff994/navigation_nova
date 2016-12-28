@@ -53,14 +53,14 @@ def encoder():
 		if len(bytesToRead)  == 17: 
 			#separates the data into readable things
                       	#rospy.loginfo(str(bytesToRead))
-			r_encoder, r_direction, l_encoder, l_direction = bytesToRead.split(" ")
+			l_encoder, l_direction, r_encoder, r_direction = bytesToRead.split(" ")
 			nr_encoder = int(r_encoder)
 			nl_encoder = int (l_encoder)
-			if r_direction == "1" :
+			if r_direction == "0" :
 				nr_encoder = -int(nr_encoder)
 			else:
 				nr_encoder = int(nr_encoder)
-			if l_direction == "1": 
+			if l_direction == "0": 
 				nl_encoder = -int(nl_encoder)
 			else :
 				nl_encoder = int(nl_encoder)
