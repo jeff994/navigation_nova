@@ -33,8 +33,8 @@ def start_turn(bearing_now):
 	global degree_to_turn
 
 	robot_drive.bearing_now = bearing_now
-	robot_drive.lon_target = robot_drive.lon_now
-	robot_drive.lat_target = robot_drive.lat_now
+	robot_drive.lon_target	= robot_drive.lon_now
+	robot_drive.lat_target 	= robot_drive.lat_now
 	
 	degree_to_turn = robot_drive.bearing_target - robot_drive.bearing_now 	
 	if(degree_to_turn > 180): 
