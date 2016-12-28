@@ -262,6 +262,9 @@ def main_commander():
 	left_encode, right_encode = process_encoder_data(encoder_received, encoder_processed)
 	
 	encoder_processed = encoder_received
+	
+	robot_correction.update_robot_gps(left_encode, right_encode)
+
 	# add a handle to stop the robot from current task bot not remving task 
 	#rospy.loginfo("Robot is on %d", robot_drive.robot_enabled)
 	if(robot_drive.robot_enabled == 0): 
@@ -269,7 +272,7 @@ def main_commander():
 		return;
 
 	
-	robot_correction.update_robot_gps(left_encode, right_encode)
+	
 
 	# Check whether if there's any job left for the robot
     	# If no jobs, make sure robot stopped moving, we cannot leave robot moving there 
