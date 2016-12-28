@@ -30,7 +30,7 @@ def update_robot_gps(left_encode, right_encode):
 
 	# global vaiables 
 	robot_drive.step_angle 	= 0.0
-	rotot_drive.step_dist 	= (left_dist + right_dist) / 2
+	robot_drive.step_dist 	= (left_dist + right_dist) / 2
 
 	rospy.loginfo("Bearing now %f,lon_now %f, lat_now %f", robot_drive.bearing_now, robot_drive.lon_now, robot_drive.lat_now)
 	# scenario 01, 02 robot moving perfectly straight, bearing won't change, while lan and lon need to be updated 
@@ -69,14 +69,14 @@ def update_robot_gps(left_encode, right_encode):
 
 	robot_drive.step_angle 	= degrees(alpha)
 	# covnert to degree
-	bearing 				= initial_bearing + robot_drive.step_angle / 2
+	bearing 				= robot_drive.bearing_now + robot_drive.step_angle / 2
 	# convert between [0 - 360)
 	bearing 				= gpsmath.format_bearing(bearing)
 	dist 					= R * sin(robot_drive.step_angle) * 2
-	rospy.loginfo("Distance moved %f, step_angle %f, R %f, step_distance %f", dist, robot_drive.step_angle, R) 
+	rospy.loginfo("Distance moved %f, step_angle %f, R %f, step_distance %f", dist, robot_drive.step_angle, R, robot_drive.step_distance) 
 	robot_drive.lon_now, robot_drive.lat_now 	= gpsmath.get_gps(robot_drive.lon_now, robot_drive.lat_now , bearing, dist)		
-	robot_drive.bearing_now 					= gpsmath.format_bearing(initial_bearing + robot_drive.step_angle)
-	stringToSend 								= '%f %f %f' % (robot_drive.lon_now, robot_drive.lat_now, robot_drive.bearing_now) #might need to add \n behind the E
+	robot_drive.bearing_now 			= gpsmath.format_bearing(robot_drive.bearing_now + robot_drive.step_angle)
+	stringToSend 					= '%f %f %f' % (robot_drive.lon_now, robot_drive.lat_now, robot_drive.bearing_now) #might need to add \n behind the E
 	robot_drive.pub_gps.publish(stringToSend)
 	rospy.loginfo("Bearing now %f,lon_now %f, lat_now %f", robot_drive.bearing_now, robot_drive.lon_now, robot_drive.lat_now)
 
