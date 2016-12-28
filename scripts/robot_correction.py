@@ -29,8 +29,8 @@ def update_robot_gps(left_encode, right_encode):
 	R 			= 0.0; 
 
 	# global vaiables 
-	robot_drive.step_angle 	= 0.0
-	robot_drive.step_dist 	= (left_dist + right_dist) / 2
+	robot_drive.step_angle 		= 0.0
+	robot_drive.step_distance 	= (left_dist + right_dist) / 2
 
 	rospy.loginfo("Bearing now %f,lon_now %f, lat_now %f", robot_drive.bearing_now, robot_drive.lon_now, robot_drive.lat_now)
 	# scenario 01, 02 robot moving perfectly straight, bearing won't change, while lan and lon need to be updated 
@@ -48,11 +48,11 @@ def update_robot_gps(left_encode, right_encode):
 	elif(left_dist > 0 and right_dist > 0):
 		# a little bit of right turning
 		alpha 	= (left_dist - right_dist) / (2.0 * robot_drive.turn_radius) 
-		R 	= total_dist * robot_drive.turn_radius / (left_dist - right_dist)
+		R 	= total_dist * robot_drive.turn_radius / abs(left_dist - right_dist)
 	# scenario 04 robot moving backward
 	elif(left_dist < 0 and right_dist < 0):
 		alpha 	= (left_dist - right_dist) / (2.0 * robot_drive.turn_radius) 
-		R 	= total_dist * robot_drive.turn_radius / (right_dist - left_dist)
+		R 	= total_dist * robot_drive.turn_radius / abs(right_dist - left_dist)
 	# for robot two wheels not moving at the same direction or once of the thing not moving 
 	# forwaring with rotation 
 	else:

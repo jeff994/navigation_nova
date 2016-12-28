@@ -124,9 +124,9 @@ def move_distance(dist, left_encode, right_encode):
 	# accumulate the distance to the completed distance 
 	dist_completed = dist_completed + abs(dist_step)   #this is in mm
 	#distance travelled threshold (put 2 mm thresh hold before stopping)
-	dist_threshold = abs(dist_to_run) - 2 	#0 mm, I can choose -50mm, but since there will be inefficiencies, 0 error threshold might be good enough
+	dist_threshold = abs(dist_to_run) - 7 	#0 mm, I can choose -50mm, but since there will be inefficiencies, 0 error threshold might be good enough
 	
-	distpub = 'dist-travelled: %f dist-total:%f dist-step:%f' % (dist_completed,dist_threshold,dist_step)
+	distpub = 'dist-travelled: %f dist-total:%f dist-step:%f' % (dist_completed, abs(dist_to_run) ,dist_step)
 	rospy.loginfo(distpub)
 
 	if (dist_threshold - dist_completed > 0) :
