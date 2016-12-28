@@ -55,11 +55,11 @@ def keyboard_callback(data):
 	if (keyboard_data == 'Forward'):
 		robot_drive.init_gps()
 		rospy.loginfo("Command received: Start to move forward 1 m")
-		robot_job.generate_move(5000, 'F')
+		robot_job.generate_move(1000, 'F')
 	elif (keyboard_data == 'Back'):
 		robot_drive.init_gps() 
 		rospy.loginfo("Command received: Start to move back 1 m")
-		robot_job.generate_move(-5000, 'B')
+		robot_job.generate_move(-1000, 'B')
 	elif (keyboard_data == 'Turn_West'):
 		rospy.loginfo("Command received: turn to 270 (WEST)") 
 		#robot_drive.bearing_now = compass_data[compass_index] 

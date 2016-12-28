@@ -48,11 +48,11 @@ def update_robot_gps(left_encode, right_encode):
 	elif(left_dist > 0 and right_dist > 0):
 		# a little bit of right turning
 		alpha 	= (left_dist - right_dist) / (2.0 * robot_drive.turn_radius) 
-		R 		= total_dist * robot_drive.turn_radius / (left_dist - right_dist)
+		R 	= total_dist * robot_drive.turn_radius / (left_dist - right_dist)
 	# scenario 04 robot moving backward
 	elif(left_dist < 0 and right_dist < 0):
 		alpha 	= (left_dist - right_dist) / (2.0 * robot_drive.turn_radius) 
-		R 		= total_dist * robot_drive.turn_radius / (right_dist - left_dist)
+		R 	= total_dist * robot_drive.turn_radius / (right_dist - left_dist)
 	# for robot two wheels not moving at the same direction or once of the thing not moving 
 	# forwaring with rotation 
 	else:
