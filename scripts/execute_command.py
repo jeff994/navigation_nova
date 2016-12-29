@@ -35,7 +35,11 @@ def open_serial():
     #real port
     	ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75435363138351A09171-if00"
     	ser.baudrate = 9600
-    	ser.open()
+        try:
+            ser.open()
+        except serial.serialutil.SerialException as ex:
+            rospy.logerr(ex)
+            return 0 
     	if ser.isOpen():
         	return 1
     	return 0 
@@ -59,16 +63,16 @@ def execute_command():
         	stringToSend = commands_list[executing_index]
         	executing_index = (executing_index + 1) % command_buffer
 		if open_serial():
-			#rospy.loginfo("Testing serial port")
-			rospy.loginfo(stringToSend)
-			ser.write(stringToSend)	
-			time.sleep(0.05)
-			#ser.write("/n")
-            	else: 
-                	rospy.loginfo("Commanding Serial port not connected")
-                	break
+    			#rospy.loginfo("Testing serial port")
+    			rospy.loginfo(stringToSend)
+    			ser.write(stringToSend)	
+    			time.sleep(0.05)
+    			#ser.write("/n")
+            	else:  
+                	rospy.logerr("Failed to exece command: %s", stringToSend)
+			break
 		if(executing_index == receiving_index):
-			break; 
+			break 
 		
 
 def executer():

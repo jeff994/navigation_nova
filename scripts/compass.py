@@ -3,27 +3,38 @@
 import rospy
 import serial
 import string
+import time
 from std_msgs.msg import String
 
 ser = serial.Serial()
 
-
-
-# Real robot port
-ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_7553335363735161B1D1-if00"
-# Testing port
-#ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_7553335363735161B1D1-if00"
-
-ser.baudrate = 9600
-ser.open()
+def open_serial():
+    	global ser
+    	if ser.isOpen():
+        	return 1 
+    	ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75435363138351A09171-if00"
+    	ser.baudrate = 9600
+    	try:
+    		ser.open()
+    	except serial.serialutil.SerialException as ex:
+			rospy.logerr(ex)
+			return 0 
+    	if ser.isOpen():
+        	return 1
+    	return 0 
 
 def compass():
+	global ser
 	pub = rospy.Publisher('compass', String, queue_size = 100)
 	rospy.init_node('compass', anonymous=True)
 	rate = rospy.Rate(100)
 	#rospy.loginfo(str("test"))
-	while ser.isOpen():
+	while not rospy.is_shutdown():
 		#rospy.loginfo(str("Reading data from serial port"))
+		if(open_serial() == 0):
+			rospy.loginfo("Waiting serail port to open...")
+			time.sleep(0.1)
+			continue
 		bytesToRead = ser.readline()
 		#rospy.loginfo(bytesToRead)
 		bytesToRead = bytesToRead.strip('\n')
@@ -32,7 +43,7 @@ def compass():
 			all = string.maketrans('','')
 			nodigs = all.translate(all, string.digits)
 			bytesToRead = bytesToRead.translate(all, nodigs)
-			bytesToPublish = int(bytesToRead)
+			bytesToPublish = int(bytesToReadnot)
 			#publishing data in string for standardization
 			#rospy.loginfo(str(bytesToRead))
 			pub.publish(str(bytesToPublish))
