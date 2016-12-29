@@ -2,6 +2,7 @@
 import rospy
 import serial
 import string
+import time
 
 from datetime import datetime
 
@@ -25,8 +26,12 @@ def open_serial():
 	#testing port
 	#ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75439333335351412220-if00"
 	#ser.baudrate = 9600	
-	ser.timeout = 1.0
-	ser.open()
+	#ser.timeout = 1.0
+	try:
+    		ser.open()
+	except serial.serialutil.SerialException as ex:
+		rospy.logerr(ex)
+		return 0 
 	if ser.isOpen():
 		return 1
 	return 0 
