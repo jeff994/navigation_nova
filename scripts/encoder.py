@@ -61,7 +61,7 @@ def encoder():
 			l_encoder, l_direction, r_encoder, r_direction = bytesToRead.split(" ")
 			nr_encoder = int(r_encoder)
 			nl_encoder = int (l_encoder)
-			if r_direction == "0" :
+			if r_direction == "0" : # it means the reverse direction 
 				nr_encoder = -int(nr_encoder)
 			else:
 				nr_encoder = int(nr_encoder)
@@ -72,6 +72,7 @@ def encoder():
 
 			#turning them into strings
                                 #real data 
+            # Publish the data as left right format, direction of data are reflected on the sign
 			bytesToPublish = '%d %d' % (nl_encoder, nr_encoder)
 
 			if(nl_encoder != 0  or nr_encoder != 0):
