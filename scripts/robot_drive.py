@@ -19,8 +19,8 @@ robot_enabled 		= 0 		# A switch to enable or disable robot from execuing any jo
 initial_bearing 	= 0 	#set as north for now
 ############################################################
 
-lon_now 			= 121.628557
-lat_now  			= 31.205718
+lon_now 			= 121.6
+lat_now  			= 31.2
 bearing_now 		= 0
 
 lon_target 			= 0.0
@@ -34,8 +34,8 @@ pub_command 		= rospy.Publisher('command', 	String, queue_size=10)
 pub_gps				= rospy.Publisher('gps', 		String, queue_size=10)
 
 def init_gps():
-	lon_now 		= 121.628557
-	lat_now  		= 31.205718
+	lon_now 		= 121.6
+	lat_now  		= 31.2
 	bearing_now 	= 0
 	lon_target 		= 0.0
 	lat_target 		= 0.0

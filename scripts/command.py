@@ -53,12 +53,10 @@ def keyboard_callback(data):
 	robot_drive.speed_now = 5
 	robot_drive.desired_speed = 5 
 	if (keyboard_data == 'Forward'):
-		robot_drive.init_gps()
 		rospy.loginfo("Command received: Start to move forward 1 m")
 		robot_job.generate_move(1000, 'F')
 	elif (keyboard_data == 'Back'):
-		robot_drive.init_gps() 
-		rospy.loginfo("Command received: Start to move back 1 m")
+		rospy.loginfo("rospeived: Start to move back 1 m")
 		robot_job.generate_move(-1000, 'B')
 	elif (keyboard_data == 'Turn_West'):
 		rospy.loginfo("Command received: turn to 270 (WEST)") 
@@ -77,6 +75,7 @@ def keyboard_callback(data):
 			rospy.loginfo("robot disabled")  
 			robot_drive.robot_enabled = 0
 		else: 
+			robot_drive.init_gps()
 			rospy.loginfo("robot enabled")  
 			robot_drive.robot_enabled = 1 
 	elif (keyboard_data == 'Faster'):

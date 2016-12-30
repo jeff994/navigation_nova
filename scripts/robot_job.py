@@ -100,12 +100,12 @@ def add_correction_move(distance):
 	rospy.loginfo("Inserted a correction job move %s with distance %f mm", direction, distance)
 
 def simple_job():
-	generate_move(2100, 'B')
+	generate_move(10000, 'F')
+	generate_turn(90)
+	generate_move(20000, 'F')
 	generate_turn(180)
-	#generate_move(3000, 'F')
-	#generate_turn(255)
-	#generate_move(3000, 'F')
-	#generate_turn(0)
-	#generate_move(3000, 'F')
+	generate_move(10000, 'F')
+	generate_turn(270)
+	generate_move(20000, 'F')
 
 
