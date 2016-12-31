@@ -15,6 +15,9 @@ ser = serial.Serial()
 start = 0.0
 end = 0.0
 
+status_pub = rospy.Publisher('status', String, queue_size = 100)
+
+
 def open_serial():
 	global ser
 	if ser.isOpen():
@@ -47,6 +50,7 @@ def encoder():
 	while not rospy.is_shutdown():
 		if open_serial() == 0:
 			rospy.loginfo("Not able to open serail port")
+			status_pub.publish('encoder 0')
 			time.sleep(0.1)
 			continue
 		#log the time everytime a message from serial port 
@@ -78,9 +82,12 @@ def encoder():
 			if(nl_encoder != 0  or nr_encoder != 0):
 			 	rospy.loginfo(bytesToPublish)
 			pub.publish(str(bytesToPublish))
+			status_pub.publish('encoder 1')
 		else:
 			rospy.logwarn("Found data which is not in a required format")
 			rospy.logwarn(bytesToRead)
+			status_pub.publish('encoder -1')
+
 		#start = datetime.now()
 		#rospy.loginfo(str(start))
 

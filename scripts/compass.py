@@ -8,6 +8,8 @@ from std_msgs.msg import String
 
 ser = serial.Serial()
 
+status_pub = rospy.Publisher('status', String, queue_size = 100)
+
 def open_serial():
     	global ser
     	if ser.isOpen():
@@ -33,6 +35,7 @@ def compass():
 		#rospy.loginfo(str("Reading data from serial port"))
 		if(open_serial() == 0):
 			rospy.loginfo("Waiting serail port to open...")
+			status_pub.publish("compass 0")
 			time.sleep(0.1)
 			continue
 		bytesToRead = ser.readline()
@@ -47,7 +50,9 @@ def compass():
 			#publishing data in string for standardization
 			#rospy.loginfo(str(bytesToRead))
 			pub.publish(str(bytesToPublish))
-
+			status_pub.publish("compass 1")
+		else:
+			status_pub.publish("compass -1")
 		rate.sleep()
 
 if __name__ == '__main__':

@@ -23,8 +23,8 @@ lon_now 			= 121.6
 lat_now  			= 31.2
 bearing_now 		= 0
 
-lon_target 			= 0.0
-lat_target 			= 0.0
+lon_target 			= 121.6
+lat_target 			= 31.2
 bearing_target 		= 0 		#degrees
 
 step_angle 			= 0
@@ -37,8 +37,8 @@ def init_gps():
 	lon_now 		= 121.6
 	lat_now  		= 31.2
 	bearing_now 	= 0
-	lon_target 		= 0.0
-	lat_target 		= 0.0
+	lon_target 		= 121.6
+	lat_target 		= 31.2
 	bearing_target 	= 0              #degrees
 
 

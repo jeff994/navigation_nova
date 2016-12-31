@@ -11,6 +11,11 @@ receiving_index = 0
 executing_index = 0
 ser = serial.Serial()
 
+
+# a status pub, it can publish the hardwaree status while program running 
+status_pub = rospy.Publisher('status', String, queue_size = 100)
+
+
 def callback(data):
 	global commands_list
    	global receiving_index
@@ -45,7 +50,8 @@ def open_serial():
     	return 0 
 
 def execute_command():
-	global commands_list 
+	global driver_status
+    	global commands_list 
     	global executing_index
     	global receiving_index
 	global commad_buffer
@@ -53,6 +59,7 @@ def execute_command():
 	#rospy.logwarn("Serial port is not open, waiting for re-connection")
     	if(executing_index == receiving_index): 
         	#rospy.logwarn("Not receiving any commands, please wait")
+            	status_pub.publish("driver -2")
        	 	time.sleep(0.1)
         	return
 
@@ -63,12 +70,15 @@ def execute_command():
         	stringToSend = commands_list[executing_index]
         	executing_index = (executing_index + 1) % command_buffer
 		if open_serial():
+                	status_pub.publish("driver 1")
     			#rospy.loginfo("Testing serial port")
     			rospy.loginfo(stringToSend)
     			ser.write(stringToSend)	
     			time.sleep(0.05)
+
     			#ser.write("/n")
             	else:  
+			status_pub.publish("driver 0")
                 	rospy.logerr("Failed to exece command: %s", stringToSend)
 			break
 		if(executing_index == receiving_index):

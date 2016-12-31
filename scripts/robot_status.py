@@ -2,29 +2,23 @@
 import rospy
 import string
 
+from std_msgs.msg import String
 
 #designed to dynamically update the robot status 
-def publish_stats(data):
+def get_status(data):
 	#accumulate encoder data
 	#Step 1: Get encoder data and convert them to number for later use 
 	#Get left encoder and right encoder 
 	data_string = data.data
-	left_encode, right_encode = data_string.split(" ")
-
-	#convert encoder number to floading point number, make sure all subsquent calculation is on floating point mode 
-	if (robot_drive.robot_on_mission ==1 ):
-		rospy.loginfo(str(data_string))
-	left_encode  = float(left_encode)
-    	right_encode = float(right_encode)
-    
+	device, status = data_string.split(" ")
+	rospy.loginfo("Device %s is with status %s", device, status)    
 	return
-
-
 
 #subscribes to different topic 
 def main_listener():
 	rospy.init_node('robot_status')
-	rospy.Subscriber('encoder', String, publish_status)
+	rospy.Subscriber('status', String, get_status)
+	rospy.spin()
 
 if __name__ == '__main__':
 	try:
