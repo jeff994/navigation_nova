@@ -102,6 +102,17 @@ def keyboard_callback(data):
 		rospy.loginfo(keyboard_data)
 		rospy.loginfo("Not recognizing command receivied")
 
+# handle the data from the front reverse car sensor
+def rc_sensor_f_callback(data):
+	return
+
+# handle the data from the back reverse car sensor
+def rc_sensor_b_callback(data):
+	return 
+# handle the data from the job creator from our website
+def job_callback(data):
+	return 
+
 # Real time get compass data 
 def compass_callback(data):
 	global compass_data
@@ -305,6 +316,9 @@ def main_listener():
 	rospy.Subscriber('compass', String, compass_callback)
 	rospy.Subscriber('encoder', String, encoder_callback)
 	rospy.Subscriber('keyboard', String, keyboard_callback)
+	rospy.Subscriber('rc_sensor_f', String, rc_sencor_f_callback)
+	rospy.Subscriber('rc_sensor_b', String, rc_sencor_b_callback)
+	rospy.Subscriber('job', String, job_callback)
 	while not rospy.is_shutdown():
 		main_commander()
 	rospy.spin()
