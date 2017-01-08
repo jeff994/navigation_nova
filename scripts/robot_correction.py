@@ -83,24 +83,29 @@ def update_robot_gps(left_encode, right_encode):
 
 # before this add a correction job if angle is more than 3 degrees 
 def distance_correction():
-	distance = gpsmath.haversine(robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target, robot_drive.lat_target)
-	bearing = gpsmath.bearing(robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target, robot_drive.lat_target)
-	diff_angle = gpsmath.format_bearing(robot_drive.bearing_target - robot_drive.bearing_now)	
+	distance 	= gpsmath.haversine(robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target, robot_drive.lat_target)
+	bearing 	= gpsmath.bearing(robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target, robot_drive.lat_target)
+	# check the bearing now and bearing target 
+	diff_angle 	= gpsmath.format_bearing(robot_drive.bearing_target - robot_drive.bearing_now)	
 	rospy.loginfo("GPS now [%f, %f], GPS target: [%f, %f]", robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target,robot_drive.lat_target)
 	rospy.loginfo("Bearing now %f, bearing target %f", robot_drive.bearing_now, robot_drive.bearing_target)
 
-	direction = 'F'
-	if(diff_angle > 90 and diff_angle < 270):
-		direction = 'B'
+	if(bearing > 90 and bearing < 270):
+		distance = -distance 
+
+	if(diff_angle > 2):
+		robot_job.add_correction_turn(robot_drive.bearing_target)
+	if(distance > 100):
+		robot_job.add_correction_move(distance)
 
 	rospy.loginfo("There's a %f mm distance error, %f angle difference", distance, diff_angle)
 
-def angle_correction(): 
-	rospy.loginfo("bearing now calculated: %f, bearing target: %f", robot_drive.bearing_now, robot_drive.bearing_target)
-	diff_angle = gpsmath.format_bearing(robot_drive.bearing_now - robot_drive.bearing_target)
-	robot_drive.bearing_now = robot_drive.bearing_target;
-	if diff_angle> 2.0:
-		robot_job.generate_turn(robot_drive.bearing_target);
+# def angle_correction(): 
+# 	rospy.loginfo("bearing now calculated: %f, bearing target: %f", robot_drive.bearing_now, robot_drive.bearing_target)
+# 	diff_angle = gpsmath.format_bearing(robot_drive.bearing_now - robot_drive.bearing_target)
+# 	robot_drive.bearing_now = robot_drive.bearing_target;
+# 	if diff_angle> 2.0:
+# 		robot_job.generate_turn(robot_drive.bearing_target);
 	#rospy.loginfo("bearing now calculated: %d, compass _data: %d", robot_drive.bearing_now, compass_data[compass_index])
 	#if(distance > 50):	
 		#robot_job.generate_move(distance , direction)

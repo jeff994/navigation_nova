@@ -305,6 +305,9 @@ def main_commander():
 	if(robot_obstacle.robot_over_obstacle > 0):
 		# First get ready the robot for normal walking  
 		robot_obstacle.unlock_from_obstacle()
+		robot_job.remove_current_job()
+		#robot_correction.angle_correction()
+		robot_correction.distance_correction()
 		# Need to perform necessary correction 
 		rospy.loginfo("Robot on obstacle avoidence, please wait"); 
 		return 
