@@ -43,8 +43,8 @@ def start_move():
 	rospy.loginfo('Robot moving job started')
 	robot_drive.robot_on_mission = 1 
 
-    status_pub.publish("enabled 1")
-    dist_completed = 0
+    	status_pub.publish("enabled 1")
+   	dist_completed = 0
 	robot_drive.start()
 
 # Roboet complet a moving job 
@@ -54,11 +54,11 @@ def stop_move():
 	robot_drive.robot_on_mission = 0 
 	robot_drive.stop_robot()
 	rospy.loginfo('Robot completed a moving job')
-    status_pub.publish("enabled 0")
+    	status_pub.publish("enabled 0")
 
 # Update robot speed as required new speed 
 # Update robot speed as required new speed 
-def continue_move(left_dist, right_dist):
+def continue_move():
     global dist_to_run
     global dist_completed
 
@@ -126,7 +126,7 @@ def move_distance(dist, left_encode, right_encode):
 	if (dist_threshold - dist_completed > 0) :
 		#just continue moving of job not completed and no change of speed command received 
 		#if speed changed, then just change the move speed 
-		continue_move(left_dist, right_dist) 
+		continue_move() 
 		return  0
 	else :
 		stop_move()

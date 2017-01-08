@@ -99,7 +99,7 @@ def keyboard_callback(data):
 		robot_job.simple_job(); 
 	elif (keyboard_data == "Test"):
 		robot_job.job_generator(0)
-	else: 
+	else:
 		rospy.loginfo(keyboard_data)
 		rospy.loginfo("Not recognizing command receivied")
 
@@ -110,7 +110,7 @@ def rc_sensor_f_callback(data):
 	if robot_obstacle.robot_on_obstacle: 
 		if(str_right == 'CESO'):
 			robot_obstacle.obstancle_is_over()
-	else
+	else:
 		rc_sensor_front = int(str_right, 16)
 		first, second, third, forth = robot_obstacle.rc_sensor_data(rc_sensor_front)
 		ret = robot_obstacle.is_on_obstacle_avidence(first, second, third, forth)
@@ -124,7 +124,7 @@ def rc_sensor_b_callback(data):
 	if robot_obstacle.robot_on_obstancle: 
 		if(str_right == 'CESO'):
 			robot_obstacle.obstancle_is_over()
-	else
+	else:
 		rc_sensor_front = int(str_right, 16)
 
 		first, second, third, forth = robot_obstacle.rc_sensor_data(rc_sensor_front)
@@ -143,21 +143,20 @@ def job_callback(data):
 	del robot_job.gps_lon[:]
 	del robot_job.gps_lat[:]
 	try:
-	    decoded = json.loads(json_str)
-	    # pretty printing of json-formatted strin
-	    list_route  = decoded['route']
-
-	    for k in range len(list_route):
-	    	gps_pair = list_route[k]
-	    	lon = float(gps_pair['lon'])
-	    	lat = float(gps_pair['lat'])
-	    	robot_job.gps_lon.extend(lon)
-	    	robot_job.gps_lat.extend(lat)
-	    robot_drive.clear_jobs()
+		decoded = json.loads(json_str)
+	    	# pretty printing of json-formatted strin
+	    	list_route  = decoded['route']
+	    	for k in range(len(list_route)):
+	 		gps_pair = list_route[k]
+	    		lon = float(gps_pair['lon'])
+	    		lat = float(gps_pair['lat'])
+	    		robot_job.gps_lon.extend(lon)
+	    		robot_job.gps_lat.extend(lat)
+		robot_drive.clear_jobs()
 		# after parsing the gps corrdinates, now generate robot jobs 
 		robot_drive.job_generator(robot_drive.initial_bearing)
 	except (ValueError, KeyError, TypeError):
-    	print "JSON format error"
+    		print "JSON format error"
 	return 
 
 # Real time get compass data 
@@ -257,7 +256,7 @@ def disable_robot():
 		else: 
 			# Clear all the reamining jobs
 			robot_job.clear_jobs()
-			robot_drive.stop_robot()
+			#robot_drive.stop_robot()
 			break; 
 			#robot_drive.robot_enabled = 1
 
@@ -277,14 +276,14 @@ def main_commander():
 	#bytsToLog = "encoder received %d, processed %d" % (encoder_received,encoder_processed)
 	#rospy.loginfo(bytsToLog)
 	if(encoder_received == encoder_processed):
-		#rospy.loginfo("Processing encoder delay")
 		process_encoder_delay()
 		return
 	
 	# get new data received 
-	last_received_time = datetime.now()
+	#last_received_time = datetime.now()
 	#rospy.loginfo(str(last_received_time))
-	
+	#rospy.loginfo("Processing encoder delay %d, %d", encoder_received, encoder_processed)
+
 	# calculate the correct encode data for further proces 
 	#rospy.loginfo("Processing encoder data")
 	left_encode, right_encode = process_encoder_data(encoder_received, encoder_processed)
@@ -342,8 +341,8 @@ def main_listener():
 	rospy.Subscriber('compass', String, compass_callback)
 	rospy.Subscriber('encoder', String, encoder_callback)
 	rospy.Subscriber('keyboard', String, keyboard_callback)
-	rospy.Subscriber('rc_sensor_f', String, rc_sencor_f_callback)
-	rospy.Subscriber('rc_sensor_b', String, rc_sencor_b_callback)
+	rospy.Subscriber('rc_sensor_f', String, rc_sensor_f_callback)
+	rospy.Subscriber('rc_sensor_b', String, rc_sensor_b_callback)
 	rospy.Subscriber('job', String, job_callback)
 	while not rospy.is_shutdown():
 		main_commander()

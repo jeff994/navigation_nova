@@ -11,6 +11,7 @@ import math
 #-------------------------------------------------------#
 degree_turned = 0
 degree_to_turn = 0 
+status_pub = rospy.Publisher('status', String, queue_size = 100)
 
 # just make sure the angle is between [0-360)
 def correct_angle(angle):

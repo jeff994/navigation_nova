@@ -4,6 +4,7 @@ import serial
 import string
 import math 
 import gpsmath
+import robot_drive
 
 #-------------------------------------------------------#
 #	Robot jobs module									#

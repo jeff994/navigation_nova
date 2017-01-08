@@ -59,10 +59,10 @@ def stop_robot():
 def unlock_robot():
 	# send a command to unlock robot after obstacle avoidece 
 	pub_command.publish('SB00000BE\n')
-	rospy.loginfo(str('Unlock robot after avoidense ')
+	rospy.loginfo('Unlock robot after avoidense ')
 
 # change speed
-def change_speed()
+def change_speed():
 	global move_direction
 	global speed_now 
 	global desired_speed 
