@@ -63,8 +63,7 @@ def encoder():
         # need to add necessary validation of data here 
         if len(bytesToRead)  == 6: 
             #separates the data into readable thing
-            if(nl_encoder != 0  or nr_encoder != 0):
-                rospy.loginfo(bytesToPublish)
+            #rospy.loginfo(bytesToPublish)
             pub.publish(str(bytesToPublish))
             status_pub.publish('rc_sensor_b 1')
         else:

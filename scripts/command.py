@@ -102,13 +102,58 @@ def keyboard_callback(data):
 		rospy.loginfo(keyboard_data)
 		rospy.loginfo("Not recognizing command receivied")
 
+# Get the last four digit of the reverse car sendor data 
+def rever_sensor_data(rc_sensor_value):
+	first_digit = rc_sensor_value % 16
+	rc_sensor_value = rc_sensor_value / 16 
+	second_digit = rc_sensor_value % 16
+	rc_sensor_value = rc_sensor_value / 16 
+	third_digit = rc_sensor_value % 16
+	rc_sensor_value = rc_sensor_value / 16 
+	forth_digit = rc_sensor_value % 16
+	return first_digit, second_digit, third_digit, forth_digit
+
+def is_on_obstacle_avoidence(first, second, thrid, forth):
+	if(first == 0 or first == 1 or first == 2 or first == 3):
+		return 1
+	if(second ==0 or second == 2 or second ==3 or second == 1):
+		return 2 
+	if(third ==0 or third == 2 or third ==3 or third == 1):
+		return 3 
+	if(forth ==0 or forth == 2 or forth ==3 or forth == 1):
+		return 4 
+	return 0
+
+
 # handle the data from the front reverse car sensor
 def rc_sensor_f_callback(data):
+	str_right = data.data[-4:]
+	if robot_drive.robot_on_obstancle: 
+		if(str_right == 'CESO'):
+			robot_drive.robot_over_obstancle = 1
+			robot_drive.robot_on_obstancle = 0
+	else
+		rc_sensor_front = int(str_right, 16)
+		first, second, third, forth = rever_sensor_data(rc_sensor_front)
+		robot_drive.robot_on_obstancle = is_on_obstacle_avidence(first, second, third, forth)
+	robot_drive.robot_over_obstancle = 0
 	return
 
 # handle the data from the back reverse car sensor
 def rc_sensor_b_callback(data):
-	return 
+	str_right = data.data[-4:]
+	if robot_drive.robot_on_obstancle: 
+		if(str_right == 'CESO'):
+			robot_drive.robot_over_obstancle = 1
+			robot_drive.robot_on_obstancle = 0
+	else
+		rc_sensor_front = int(str_right, 16)
+
+		first, second, third, forth = rever_sensor_data(rc_sensor_front)
+		robot_drive.robot_on_obstancle = is_on_obstacle_avidence(first, second, third, forth)
+	robot_drive.robot_over_obstancle = 0
+	return
+
 # handle the data from the job creator from our website
 def job_callback(data):
 	return 
@@ -281,7 +326,9 @@ def main_commander():
 		disable_robot()
 		return;
 
-	
+	if(robot_drive.robot_on_obstancle > 0):
+		rospy.loginfo("Robot on obstacle avoidence, please wait"); 
+		return; 
 	
 
 	# Check whether if there's any job left for the robot

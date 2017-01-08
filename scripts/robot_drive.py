@@ -14,7 +14,8 @@ desired_speed 		= 5			# Global robot moving spped, 3 - 5
 speed_now 			= 5			# Robot moving speed now
 robot_on_mission 	= 0			# set an indicator that robot's on a job right now 
 robot_enabled 		= 0 		# A switch to enable or disable robot from execuing any jobs 
-
+robot_on_obstancle 	= 0			# If robot is on obstancle avoidence, then set it to be 1
+robot_over_obstacle = 0			# The robot finished obstance avodence 
 
 initial_bearing 	= 0 	#set as north for now
 ############################################################
