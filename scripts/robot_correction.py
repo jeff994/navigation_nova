@@ -86,9 +86,9 @@ def distance_correction():
 	distance 	= gpsmath.haversine(robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target, robot_drive.lat_target)
 	bearing 	= gpsmath.bearing(robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target, robot_drive.lat_target)
 	# check the bearing now and bearing target 
-	diff_angle 	= gpsmath.format_bearing(robot_drive.bearing_target - robot_drive.bearing_now)	
+	diff_angle 	= abs(robot_drive.bearing_target - robot_drive.bearing_now)	
 	rospy.loginfo("GPS now [%f, %f], GPS target: [%f, %f]", robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target,robot_drive.lat_target)
-	rospy.loginfo("Bearing now %f, bearing target %f", robot_drive.bearing_now, robot_drive.bearing_target)
+	rospy.loginfo("Bearing now %f, bearing target %f, diff_angle %f", robot_drive.bearing_now, robot_drive.bearing_target, diff_angle)
 
 	if(bearing > 90 and bearing < 270):
 		distance = -distance 

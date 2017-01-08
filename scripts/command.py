@@ -317,7 +317,8 @@ def main_commander():
 	if(len(robot_job.job_des) < 1 or len(robot_job.job_num) < 1):
 		process_no_job(left_encode, right_encode)
 		return		
-     	   	 
+     	print(robot_job.job_des[0]) 
+
     	if (robot_job.job_des[0] == 'T') : 
     		#rospy.loginfo("Bearing now %f, bearing target %f", robot_drive.bearing_now, robot_drive.bearing_target)
 		#if(robot_drive.robot_on_mission == 0): 
@@ -331,6 +332,8 @@ def main_commander():
 			robot_job.job_num[0] = -  abs(robot_job.job_num[0])
 		job_completed =robot_move.move_distance(robot_job.job_num[0], left_encode, right_encode) 
 	else :
+		print(str(robot_job.job_des[0]))
+		rospy.logwarn('job_des %s:%d', robot_job.job_des[0], robot_job.job_num[0])
 		rospy.logwarn('warning: illegal job description found, not peform any actions')
 
 	if job_completed == 1: 
