@@ -11,14 +11,13 @@ import gpsmath
 #	Robot moving module									#
 #-------------------------------------------------------#
 
-move_direction = 'F'
 dist_completed = 0.0
 dist_to_run = 0.0
 
+status_pub = rospy.Publisher('status', String, queue_size = 100)
 # Starts the robot for moving, put the control variables into proper value 
 def start_move():
 	global dist_completed
-	global move_direction
 	global dist_to_run 
 	
 	lon1 = robot_drive.lon_now
@@ -43,21 +42,23 @@ def start_move():
 
 	rospy.loginfo('Robot moving job started')
 	robot_drive.robot_on_mission = 1 
-	dist_completed = 0
-	robot_drive.send_command(move_direction, robot_drive.speed_now)
+
+    status_pub.publish("enabled 1")
+    dist_completed = 0
+	robot_drive.start()
 
 # Roboet complet a moving job 
 def stop_move():	
 	global dist_completed
 	dist_completed = 0
 	robot_drive.robot_on_mission = 0 
-	robot_drive.send_command('S',0)
+	robot_drive.stop_robot()
 	rospy.loginfo('Robot completed a moving job')
+    status_pub.publish("enabled 0")
 
 # Update robot speed as required new speed 
 # Update robot speed as required new speed 
 def continue_move(left_dist, right_dist):
-    global move_direction
     global dist_to_run
     global dist_completed
 
@@ -71,14 +72,10 @@ def continue_move(left_dist, right_dist):
     if(robot_drive.speed_now  == robot_drive.desired_speed):
             rospy.loginfo('Still moving at the same speed...')
     else:
-            robot_drive.send_command(move_direction, robot_drive.desired_speed)
-            robot_drive.speed_now  = robot_drive.desired_speed
-            distpub = 'Robot move speed changed from %d to %d' % (robot_drive.speed_now, robot_drive.desired_speed)
-            rospy.loginfo(distpub)
+            robot_drive.change_speed()
 
 # main function to control the robot movement 
 def move_distance(dist, left_encode, right_encode):
-	global move_direction 
 	global dist_completed
 	global dist_to_run 
 
@@ -90,21 +87,21 @@ def move_distance(dist, left_encode, right_encode):
 		return 1
 
 	if (dist_to_run < 0):
-		move_direction = 'B'
+		robot_drive.move_direction = 'B'
 	else: 
-		move_direction = 'F'
+		robot_drive.move_direction = 'F'
 
 	# Mission started, let robot start moving 
 	if (robot_drive.robot_on_mission == 0): 
 		start_move()
 		return 0
 
-	if(move_direction == 'F' and left_encode < -10 and right_encode < -10):
+	if(robot_drive.move_direction == 'F' and left_encode < -10 and right_encode < -10):
 		rospy.logwarn('Robot supposed to move forward, actually moveing backward, stop the job')
 		#stop_move()
 		return 0 
 
-	if(move_direction == 'B' and left_encode > 10 and right_encode > 10):
+	if(robot_drive.move_direction == 'B' and left_encode > 10 and right_encode > 10):
 		rospy.logwarn('Robot supposed to move backward, acutally moveing forward, stop the job')
 		#stop_move()
 		return 0 
@@ -117,10 +114,7 @@ def move_distance(dist, left_encode, right_encode):
 
 	# Accumulate the running distance and check 
 	# Get each step of the distance 
-	left_dist = left_encode / robot_drive.encode_to_mm
-	right_dist = right_encode / robot_drive.encode_to_mm
-
-	dist_step = (left_dist + right_dist) / 2.0
+	dist_step = robot_drive.step_distance
 	# accumulate the distance to the completed distance 
 	dist_completed = dist_completed + abs(dist_step)   #this is in mm
 	#distance travelled threshold (put 2 mm thresh hold before stopping)

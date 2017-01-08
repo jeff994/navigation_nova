@@ -8,6 +8,8 @@ import robot_turn
 import time 
 import robot_correction 
 import gpsmath
+import json 
+import robot_obstacle
 
 from datetime import datetime
 
@@ -44,7 +46,6 @@ def init_compass_buffer(size = 10):
 		return 
 	for i in range(size):
 		compass_data.append(0)
-
 
 # Subscriber to keyboard topic and peform actions based on the command get  
 def keyboard_callback(data):
@@ -102,60 +103,61 @@ def keyboard_callback(data):
 		rospy.loginfo(keyboard_data)
 		rospy.loginfo("Not recognizing command receivied")
 
-# Get the last four digit of the reverse car sendor data 
-def rever_sensor_data(rc_sensor_value):
-	first_digit = rc_sensor_value % 16
-	rc_sensor_value = rc_sensor_value / 16 
-	second_digit = rc_sensor_value % 16
-	rc_sensor_value = rc_sensor_value / 16 
-	third_digit = rc_sensor_value % 16
-	rc_sensor_value = rc_sensor_value / 16 
-	forth_digit = rc_sensor_value % 16
-	return first_digit, second_digit, third_digit, forth_digit
-
-def is_on_obstacle_avoidence(first, second, thrid, forth):
-	if(first == 0 or first == 1 or first == 2 or first == 3):
-		return 1
-	if(second ==0 or second == 2 or second ==3 or second == 1):
-		return 2 
-	if(third ==0 or third == 2 or third ==3 or third == 1):
-		return 3 
-	if(forth ==0 or forth == 2 or forth ==3 or forth == 1):
-		return 4 
-	return 0
-
 
 # handle the data from the front reverse car sensor
 def rc_sensor_f_callback(data):
 	str_right = data.data[-4:]
-	if robot_drive.robot_on_obstancle: 
+	if robot_obstacle.robot_on_obstacle: 
 		if(str_right == 'CESO'):
-			robot_drive.robot_over_obstancle = 1
-			robot_drive.robot_on_obstancle = 0
+			robot_obstacle.obstancle_is_over()
 	else
 		rc_sensor_front = int(str_right, 16)
-		first, second, third, forth = rever_sensor_data(rc_sensor_front)
-		robot_drive.robot_on_obstancle = is_on_obstacle_avidence(first, second, third, forth)
-	robot_drive.robot_over_obstancle = 0
+		first, second, third, forth = robot_obstacle.rc_sensor_data(rc_sensor_front)
+		ret = robot_obstacle.is_on_obstacle_avidence(first, second, third, forth)
+		if ret > 0:
+			robot_obstacle.start_obstacle_avidence()
 	return
 
 # handle the data from the back reverse car sensor
 def rc_sensor_b_callback(data):
 	str_right = data.data[-4:]
-	if robot_drive.robot_on_obstancle: 
+	if robot_obstacle.robot_on_obstancle: 
 		if(str_right == 'CESO'):
-			robot_drive.robot_over_obstancle = 1
-			robot_drive.robot_on_obstancle = 0
+			robot_obstacle.obstancle_is_over()
 	else
 		rc_sensor_front = int(str_right, 16)
 
-		first, second, third, forth = rever_sensor_data(rc_sensor_front)
-		robot_drive.robot_on_obstancle = is_on_obstacle_avidence(first, second, third, forth)
-	robot_drive.robot_over_obstancle = 0
+		first, second, third, forth = robot_obstacle.rc_sensor_data(rc_sensor_front)
+		ret = robot_obstacle.is_on_obstacle_avidence(first, second, third, forth)
+		if ret > 0:
+			robot_obstacle.start_obstacle_avidence()
 	return
 
-# handle the data from the job creator from our website
+# handle the data from the job creator from our website, based on the gps corrdicates provided, 
+# Generate a list of jobs 
 def job_callback(data):
+	json_str = data.data
+	rospy.loginfo(json_str)
+	# Clear the lontiude and latitude list 
+	robot_drive.robot_enabled = 0
+	del robot_job.gps_lon[:]
+	del robot_job.gps_lat[:]
+	try:
+	    decoded = json.loads(json_str)
+	    # pretty printing of json-formatted strin
+	    list_route  = decoded['route']
+
+	    for k in range len(list_route):
+	    	gps_pair = list_route[k]
+	    	lon = float(gps_pair['lon'])
+	    	lat = float(gps_pair['lat'])
+	    	robot_job.gps_lon.extend(lon)
+	    	robot_job.gps_lat.extend(lat)
+	    robot_drive.clear_jobs()
+		# after parsing the gps corrdinates, now generate robot jobs 
+		robot_drive.job_generator(robot_drive.initial_bearing)
+	except (ValueError, KeyError, TypeError):
+    	print "JSON format error"
 	return 
 
 # Real time get compass data 
@@ -166,7 +168,6 @@ def compass_callback(data):
 	compass_data[compass_index] = int(data.data)
 	#rospy.loginfo("compass index: %d, angle: %d", compass_index, compass_data[compass_index])
 	compass_index = (compass_index + 1) % compass_size
-	
 
 # The main call back, getting encoder data and make decision for the next move 
 def encoder_callback(data):
@@ -209,19 +210,19 @@ def process_encoder_delay():
 		if(delay_seconds >  max_delay):
 			bytesToLog = 'Error: Not receiving data for %f seconds: Stopping robot immediately' % (max_delay)
      			rospy.logerr(bytesToLog)
-			robot_drive.send_command('S',0)
+			robot_drive.stop_robot()
 		else:
 			time.sleep(0.05)
 	else:
-     		time.sleep(0.05)
+		time.sleep(0.05)
 	
 def process_no_job(left_encode, right_encode):
 	robot_drive.robot_on_mission = 0
 	if(left_encode !=0 or right_encode !=0):
 		rospy.logwarn('warning: robot is not fully stopped even though a top command issued')
-		robot_drive.send_command('S',0)
+		robot_drive.stop_robot()
 		time.sleep(0.05)
-        	return
+		return
 
 def process_encoder_data(encoder_received, encoder_processed):
 	global encode_data 
@@ -242,34 +243,6 @@ def process_encoder_data(encoder_received, encoder_processed):
     			right_encode 	+= encoder_data[2 * x + 1]
 	return left_encode, right_encode 
 
-def correct_angle(): 
-	global compass_data 
-	global compass_index
-	rospy.loginfo("bearing now calculated: %f, compass _data: %f", robot_drive.bearing_now, compass_data[compass_index])
-	diff_angle = gpsmath.format_bearing(robot_drive.bearing_now - compass_data[compass_index])
-	robot_drive.bearing_now = compass_data[compass_index];
-	if diff_angle> 2.0:
-		robot_job.generate_turn(robot_drive.bearing_target);
-	#rospy.loginfo("bearing now calculated: %d, compass _data: %d", robot_drive.bearing_now, compass_data[compass_index])
-
-# before this add a correction job if angle is more than 3 degrees 
-def correct_distance():
-	distance = gpsmath.haversine(robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target, robot_drive.lat_target)
-	bearing = gpsmath.bearing(robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target, robot_drive.lat_target)
-	diff_angle = gpsmath.format_bearing(robot_drive.bearing_target - robot_drive.bearing_now)	
-	rospy.loginfo("GPS now [%f, %f], GPS target: [%f, %f]", robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target,robot_drive.lat_target)
-	rospy.loginfo("Bearing now %f, bearing target %f", robot_drive.bearing_now, robot_drive.bearing_target)
-
-	direction = 'F'
-	if(diff_angle > 90 and diff_angle < 270):
-		direction = 'B'
-
-	rospy.loginfo("There's a %f mm distance error, %f angle difference", distance, diff_angle)
-	#if(distance > 50):	
-		#robot_job.generate_move(distance , direction)
-		#redefine a move job 
-		#return
-
 def disable_robot():
 	global encoder_data 
 	global encoder_received
@@ -279,12 +252,12 @@ def disable_robot():
 	while True:
 		#step 1, send the stop command every 10 milli seoncs
 		if(robot_moving == 1):
-			robot_drive.send_command('S',0)
+			robot_drive.stop_robot()
 			time.sleep(0.01)
 		else: 
 			# Clear all the reamining jobs
 			robot_job.clear_jobs()
-			robot_drive.robot_on_mission = 0; 
+			robot_drive.stop_robot()
 			break; 
 			#robot_drive.robot_enabled = 1
 
@@ -320,16 +293,22 @@ def main_commander():
 	
 	robot_correction.update_robot_gps(left_encode, right_encode)
 
-	# add a handle to stop the robot from current task bot not remving task 
-	#rospy.loginfo("Robot is on %d", robot_drive.robot_enabled)
+	# add a handle to stop the robot from current task 
 	if(robot_drive.robot_enabled == 0): 
 		disable_robot()
-		return;
+		return
 
-	if(robot_drive.robot_on_obstancle > 0):
+	# The flat would be set by hardware, we cannot do anything but blankly calculate the gps coordinates  
+	if(robot_obstacle.robot_on_obstacle > 0):
 		rospy.loginfo("Robot on obstacle avoidence, please wait"); 
-		return; 
-	
+		return 
+
+	if(robot_obstacle.robot_over_obstacle > 0):
+		# First get ready the robot for normal walking  
+		robot_obstacle.unlock_from_obstacle()
+		# Need to perform necessary correction 
+		rospy.loginfo("Robot on obstacle avoidence, please wait"); 
+		return 
 
 	# Check whether if there's any job left for the robot
     	# If no jobs, make sure robot stopped moving, we cannot leave robot moving there 
@@ -354,8 +333,8 @@ def main_commander():
 
 	if job_completed == 1: 
 		robot_job.remove_current_job()
-		#correct_angle()
-		correct_distance()
+		#robot_correction.angle_correction()
+		robot_correction.distance_correction()
 
 #subscribes to different topic 
 def main_listener():

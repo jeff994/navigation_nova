@@ -5,6 +5,7 @@ import string
 import math
 import gpsmath
 import robot_drive
+import robot_job 
 
 
 from math import radians, cos, sin, asin, sqrt, atan2, degrees
@@ -80,3 +81,28 @@ def update_robot_gps(left_encode, right_encode):
 	robot_drive.pub_gps.publish(stringToSend)
 	rospy.loginfo("Bearing now %f,lon_now %f, lat_now %f", robot_drive.bearing_now, robot_drive.lon_now, robot_drive.lat_now)
 
+# before this add a correction job if angle is more than 3 degrees 
+def distance_correction():
+	distance = gpsmath.haversine(robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target, robot_drive.lat_target)
+	bearing = gpsmath.bearing(robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target, robot_drive.lat_target)
+	diff_angle = gpsmath.format_bearing(robot_drive.bearing_target - robot_drive.bearing_now)	
+	rospy.loginfo("GPS now [%f, %f], GPS target: [%f, %f]", robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target,robot_drive.lat_target)
+	rospy.loginfo("Bearing now %f, bearing target %f", robot_drive.bearing_now, robot_drive.bearing_target)
+
+	direction = 'F'
+	if(diff_angle > 90 and diff_angle < 270):
+		direction = 'B'
+
+	rospy.loginfo("There's a %f mm distance error, %f angle difference", distance, diff_angle)
+
+def angle_correction(): 
+	rospy.loginfo("bearing now calculated: %f, bearing target: %f", robot_drive.bearing_now, robot_drive.bearing_target)
+	diff_angle = gpsmath.format_bearing(robot_drive.bearing_now - robot_drive.bearing_target)
+	robot_drive.bearing_now = robot_drive.bearing_target;
+	if diff_angle> 2.0:
+		robot_job.generate_turn(robot_drive.bearing_target);
+	#rospy.loginfo("bearing now calculated: %d, compass _data: %d", robot_drive.bearing_now, compass_data[compass_index])
+	#if(distance > 50):	
+		#robot_job.generate_move(distance , direction)
+		#redefine a move job 
+		#return

@@ -14,7 +14,7 @@ from math import radians, cos, sin, asin, sqrt, atan2, degrees
 
 ###################### EDIT HERE ###########################
 #defining or acquiring the GPS coordinates
-gps_num = 4
+gps_num = 5
 gps_lon = [103.962386,103.962389,103.962456,103.962461,103.962381] #S,A,B,C,D
 gps_lat = [1.340549,1.3407,1.340696,1.340589,1.340599]
 job_des = []			#could be 'T' or 'F'
@@ -28,7 +28,7 @@ def job_generator(init_bearing):
 	global loops 
 	
 	#handles from start to first point
-
+	gps_num = len(gps_lon) 
 	#handles how many loops
 	for i in range (loops) :
 		for k in range (gps_num):
@@ -55,6 +55,8 @@ def generate_job_from_gps(lon1, lat1, lon2, lat2):
 def remove_current_job():
 	global job_des
 	global job_num 
+	# Reset the robot job status 
+	robot_drive.robot_on_mission = 0
 	if(len(job_des) > 0): 
 		del job_des[0]
 	if(len(job_num) > 0):
