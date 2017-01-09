@@ -110,6 +110,14 @@ def add_job_from_gps(lon1, lat1, lon2, lat2):
 	add_correction_turn(angle_next)
 	add_correction_move(distance, 'F')
 
+# as discovred, the digital compass would be accurabte in true north, so to initialize the robot,
+# we need to turn one round to identify the true north 
+def initialize_job():
+	generate_turn(90)
+	generate_turn(180)
+	generate_turn(270)
+	generate_turn(0)
+	generate_turn(90)
 
 def simple_job():
 	generate_move(10000, 'F')

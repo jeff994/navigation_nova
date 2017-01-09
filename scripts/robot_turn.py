@@ -26,11 +26,10 @@ def correct_angle(angle):
 	return angle
 
 # start a turn job 
-def start_turn(bearing_now):
+def start_turn():
 	global degree_turned
 	global degree_to_turn
 
-	robot_drive.bearing_now = bearing_now
 	robot_drive.lon_target	= robot_drive.lon_now
 	robot_drive.lat_target 	= robot_drive.lat_now
 	
@@ -95,13 +94,13 @@ def continue_turn(step_angle):
 		robot_drive.change_speed()
 
 # let robot performs a turning job of certain degree 
-def turn_degree(bearing_now, left_encode, right_encode): 
+def turn_degree(): 
  	global degree_turned 
  	global degree_to_turn 
 
 	#robot has not started turning, just start the turning 
 	if(robot_drive.robot_on_mission == 0):
-		start_turn(bearing_now)
+		start_turn()
 		return 0
 	
 	# convered from angle to required turn angles  

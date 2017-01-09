@@ -75,7 +75,7 @@ def continue_move():
             robot_drive.change_speed()
 
 # main function to control the robot movement 
-def move_distance(dist, left_encode, right_encode):
+def move_distance(dist):
 	global dist_completed
 	global dist_to_run 
 
@@ -95,22 +95,6 @@ def move_distance(dist, left_encode, right_encode):
 	if (robot_drive.robot_on_mission == 0): 
 		start_move()
 		return 0
-
-	if(robot_drive.move_direction == 'F' and left_encode < -10 and right_encode < -10):
-		rospy.logwarn('Robot supposed to move forward, actually moveing backward, stop the job')
-		#stop_move()
-		return 0 
-
-	if(robot_drive.move_direction == 'B' and left_encode > 10 and right_encode > 10):
-		rospy.logwarn('Robot supposed to move backward, acutally moveing forward, stop the job')
-		#stop_move()
-		return 0 
-
-	# Exception handling, make sure robot wheels is moving the same direction 
-	if (left_encode > 10 and right_encode < 10):
-		rospy.logwarn('Robot wheel not moving as expected, stop current job')
-		#stop_move()
-		return 0 
 
 	# Accumulate the running distance and check 
 	# Get each step of the distance 

@@ -1,51 +1,156 @@
 #!/usr/bin/env python
 import rospy
 import string
+import time 
+import gpsmath
+import json 
+import robot_obstacle
 import robot_job 
 import robot_drive
 import robot_move
 import robot_turn
-import time 
 import robot_correction 
-import gpsmath
-import json 
-import robot_obstacle
-
 from datetime import datetime
-
 from std_msgs.msg import String
 
 #used to hold the encoder data received, init with some value  
-buffer_size = 1000 
-#pairs of encoder data , l, r, l, r etc
-encoder_data = []
-
-compass_size = 10 
-compass_data = [] 
-
+encoder_buffer_size = 1000 	# The buffer size for the encoder
+encoder_data 		= []	# pairs of encoder data , l, r etc
+compass_size 		= 10 	# The compas data buffer size 
+compass_data 		= [] 	# Hold the compass dat which [0 - 359] 
 # two index indicate the processing and receiving index of the encoder data 
-encoder_received = 0  # value range is from 0 - buffer_size -  
-encoder_processed = 0
-compass_index = 0 	#current compass index
+encoder_received	= 0 	# The index of the encoder received 
+encoder_processed 	= 0		# The index of the encoder signal processed 
+compass_index 		= 0 	# current compass index
+last_process_time 	= 0 	# last processing time 
+max_delay 			= 1.0	# max delay allowed for not receiving any signal from encooder 
+last_received_time 	= 0.0 	# the time of receiving the last encoer data 
+robot_moving 		= 0		# based on the encoder data to know whether the robot's moving
 
-last_process_time = 0 #last processing time 
-max_delay = 1.0
-last_received_time = 0.0 
-robot_moving = 0
-
-def init_encoder_buffer( size=2000 ):
+# init the the encoder buffer with some empty data when system starts 
+def init_encoder_buffer( size=1000 ):
     global encoder_data 
     if(len(encoder_data) == size):
     	return 
     for i in range(size - len(encoder_data)):
         encoder_data.append(0)
 
+# init the compass buffer with some empty data when sytem states 
 def init_compass_buffer(size = 10):
 	global compass_data 
 	if(len(compass_data) == size):
 		return 
 	for i in range(size):
 		compass_data.append(0)
+
+# disable robot if emergency stop button clicked (0)
+def disable_robot():
+	global encoder_data 
+	global encoder_received
+	global encoder_processed
+	global robot_moving
+	while True:
+		#step 1, send the stop command every 10 milli seoncs
+		if(robot_moving == 1):
+			robot_drive.stop_robot()
+			time.sleep(0.01)
+		else: 
+			# Clear all the reamining jobs
+			robot_job.clear_jobs()
+			#robot_drive.stop_robot()
+			break; 
+			#robot_drive.robot_enabled = 1
+
+# For each encoder signal received, log the time, if the next signal not coming for a long time, need to process 
+def process_encoder_delay():
+	global last_received_time  
+	time_now = datetime.now()
+	#rospy.loginfo(time_now)
+	#rospy.loginfo("----------------------")
+	#rospy.loginfo(last_received_time)
+	if(last_received_time != 0): 
+		delta = time_now - last_received_time
+		delay_seconds = delta.seconds + delta.microseconds / 1000000.0 
+		if(delay_seconds >  max_delay):
+			bytesToLog = 'Error: Not receiving data for %f seconds: Stopping robot immediately' % (max_delay)
+     			rospy.logerr(bytesToLog)
+			robot_drive.stop_robot()
+		else:
+			time.sleep(0.05)
+	else:
+		time.sleep(0.05)
+
+# If not any job left in the sytem 
+def process_no_job(left_encode, right_encode):
+	robot_drive.robot_on_mission = 0
+	if(left_encode !=0 or right_encode !=0):
+		rospy.logwarn('warning: robot is not fully stopped even though a top command issued')
+		robot_drive.stop_robot()
+		time.sleep(0.05)
+		return
+
+# Simple conversion, get all the encoder not processed, then convert them to the distance 
+def encoder_to_distance(encoder_received, encoder_processed):
+	global encode_data 
+	left_encode = 0
+	right_encode = 0
+	#in case data received is faster than the processing time 
+    	if(encoder_received > encoder_processed): 
+    		for x in range(encoder_processed, encoder_received):
+    			left_encode += encoder_data[2 * x]
+    			right_encode += encoder_data[2 * x +1]
+
+   	if(encoder_received < encoder_processed): 
+   		for x in range(encoder_processed, 1000):
+   			left_encode 	+= encoder_data[2 * x]
+    			right_encode 	+= encoder_data[2 * x + 1]
+    		for x in range(0, encoder_received):
+    			left_encode 	+= encoder_data[2 * x]
+    			right_encode 	+= encoder_data[2 * x + 1]
+	return left_encode, right_encode 
+
+# Process all kinds of robot job as required 
+def process_job():
+	job_completed 	= 0 
+	if (robot_job.job_des[0] == 'T') : 
+		#rospy.loginfo("Bearing now %f, bearing target %f", robot_drive.bearing_now, robot_drive.bearing_target)
+		#if(robot_drive.robot_on_mission == 0): 
+		robot_drive.bearing_target  = robot_job.job_num[0]
+		# Pre-steps of turning jobs starts: calculate the required angle to turn 
+		# start the job 
+		job_completed = robot_turn.turn_degree()
+	elif (robot_job.job_des[0] == 'F' or robot_job.job_des[0] == 'B'):
+		if(robot_job.job_des[0] == 'B'):
+			robot_job.job_num[0] = -  abs(robot_job.job_num[0])
+		job_completed =robot_move.move_distance(robot_job.job_num[0]) 
+	else :
+		print(str(robot_job.job_des[0]))
+		rospy.logwarn('job_des %s:%d', robot_job.job_des[0], robot_job.job_num[0])
+		rospy.logwarn('warning: illegal job description found, not peform any actions')
+	return job_completed
+
+# Complete the obstacle avoidence after we get a signal from the robot base  
+def complete_obstacle_avoidence(): 
+	# Need to perform necessary correction 
+	rospy.loginfo("Resume the robot from obstacle avoidence") 
+	# First get ready the robot for normal walking  
+	robot_obstacle.unlock_from_obstacle()
+	# Remove the un-finished job 
+	robot_job.remove_current_job()
+	# Re-calculate and send the corretion job 
+	robot_correction.distance_correction()
+
+# Very import step, based on the encoder data, we do the conversion and calcuation 
+def process_encoder_data():
+	global encoder_data 
+	global encoder_received
+	global encoder_processed
+	# convert the encoder data to distance 
+	left_encode, right_encode = encoder_to_distance(encoder_received, encoder_processed)
+	# After process, update the proccessed index the same as received index 
+	encoder_processed = encoder_received
+	# dynamically calculate and update the gps data, step_angle, step_distance etc while the robot moving 
+	robot_correction.update_robot_gps(left_encode, right_encode)
 
 # Subscriber to keyboard topic and peform actions based on the command get  
 def keyboard_callback(data):
@@ -103,7 +208,6 @@ def keyboard_callback(data):
 		rospy.loginfo(keyboard_data)
 		rospy.loginfo("Not recognizing command receivied")
 
-
 # handle the data from the front reverse car sensor
 def rc_sensor_f_callback(data):
 	str_right = data.data[-4:]
@@ -156,8 +260,8 @@ def job_callback(data):
 		# after parsing the gps corrdinates, now generate robot jobs 
 		robot_drive.job_generator(robot_drive.initial_bearing)
 	except (ValueError, KeyError, TypeError):
-    		print "JSON format error"
-	return 
+    		rospy.loginfo('JSON format error:')
+    		rospy.loginfo(json_str)
 
 # Real time get compass data 
 def compass_callback(data):
@@ -198,144 +302,59 @@ def encoder_callback(data):
 	#if (robot_drive.robot_on_mission ==1 ):
 	#	rospy.loginfo(str(data_string))
 
-def process_encoder_delay():
-	time_now = datetime.now()
-	#rospy.loginfo(time_now)
-	#rospy.loginfo("----------------------")
-	#rospy.loginfo(last_received_time)
-	if(last_received_time != 0): 
-		delta = time_now - last_received_time
-		delay_seconds = delta.seconds + delta.microseconds / 1000000.0 
-		if(delay_seconds >  max_delay):
-			bytesToLog = 'Error: Not receiving data for %f seconds: Stopping robot immediately' % (max_delay)
-     			rospy.logerr(bytesToLog)
-			robot_drive.stop_robot()
-		else:
-			time.sleep(0.05)
-	else:
-		time.sleep(0.05)
-	
-def process_no_job(left_encode, right_encode):
-	robot_drive.robot_on_mission = 0
-	if(left_encode !=0 or right_encode !=0):
-		rospy.logwarn('warning: robot is not fully stopped even though a top command issued')
-		robot_drive.stop_robot()
-		time.sleep(0.05)
-		return
-
-def process_encoder_data(encoder_received, encoder_processed):
-	global encode_data 
-	left_encode = 0
-	right_encode = 0
-	#in case data received is faster than the processing time 
-    	if(encoder_received > encoder_processed): 
-    		for x in range(encoder_processed, encoder_received):
-    			left_encode += encoder_data[2 * x]
-    			right_encode += encoder_data[2 * x +1]
-
-   	if(encoder_received < encoder_processed): 
-   		for x in range(encoder_processed, 1000):
-   			left_encode 	+= encoder_data[2 * x]
-    			right_encode 	+= encoder_data[2 * x + 1]
-    		for x in range(0, encoder_received):
-    			left_encode 	+= encoder_data[2 * x]
-    			right_encode 	+= encoder_data[2 * x + 1]
-	return left_encode, right_encode 
-
-def disable_robot():
-	global encoder_data 
-	global encoder_received
-	global encoder_processed
-	global robot_moving
- 
-	while True:
-		#step 1, send the stop command every 10 milli seoncs
-		if(robot_moving == 1):
-			robot_drive.stop_robot()
-			time.sleep(0.01)
-		else: 
-			# Clear all the reamining jobs
-			robot_job.clear_jobs()
-			#robot_drive.stop_robot()
-			break; 
-			#robot_drive.robot_enabled = 1
-
+# The main progream process the robot logic 
 def main_commander():
-	#rospy.loginfo("starting main commander")
 
-	global encoder_data 
+	# ----------------------------------------------------------------------------------------#
+	#  code to check and use the ecnoder data                     							  #
+	# ----------------------------------------------------------------------------------------#
 	global encoder_received
 	global encoder_processed
-	global last_received_time  
-
-	job_completed = 0 
-	left_encode = 0
-	right_encode = 0 
 	
 	# Not any new data comming, waiting for next data, if waiting too long need to issue warning or error	 
-	#bytsToLog = "encoder received %d, processed %d" % (encoder_received,encoder_processed)
-	#rospy.loginfo(bytsToLog)
 	if(encoder_received == encoder_processed):
 		process_encoder_delay()
 		return
 	
-	# get new data received 
-	#last_received_time = datetime.now()
-	#rospy.loginfo(str(last_received_time))
-	#rospy.loginfo("Processing encoder delay %d, %d", encoder_received, encoder_processed)
-
 	# calculate the correct encode data for further proces 
-	#rospy.loginfo("Processing encoder data")
-	left_encode, right_encode = process_encoder_data(encoder_received, encoder_processed)
-	
-	encoder_processed = encoder_received
-	
-	robot_correction.update_robot_gps(left_encode, right_encode)
+	# rospy.loginfo("Processing encoder data")
+	process_encoder_data()
 
-	# add a handle to stop the robot from current task 
+	# ----------------------------------------------------------------------------------------#
+	#  code to close robot when required	                    							  #
+	# ----------------------------------------------------------------------------------------#
+	# If robot not enabled, just need to disable the robot 
 	if(robot_drive.robot_enabled == 0): 
 		disable_robot()
 		return
 
+	# ----------------------------------------------------------------------------------------#
+	#  Codes for obstacle avoidence handling                     							  #
+	# ----------------------------------------------------------------------------------------#
 	# The flat would be set by hardware, we cannot do anything but blankly calculate the gps coordinates  
 	if(robot_obstacle.robot_on_obstacle > 0):
-		rospy.loginfo("Robot on obstacle avoidence, please wait"); 
+		rospy.loginfo("Robot on obstacle avoidence, please wait") 
 		return 
 
+	# Robot obstancle avoidence is over, now resumeto normal operation 
 	if(robot_obstacle.robot_over_obstacle > 0):
-		# First get ready the robot for normal walking  
-		robot_obstacle.unlock_from_obstacle()
-		robot_job.remove_current_job()
-		#robot_correction.angle_correction()
-		robot_correction.distance_correction()
-		# Need to perform necessary correction 
-		rospy.loginfo("Robot on obstacle avoidence, please wait"); 
+		complete_obstacle_avoidence()
 		return 
 
+	# ----------------------------------------------------------------------------------------#
+	#  Codes for robot normal jobs like walking and turning       							  #
+	# ----------------------------------------------------------------------------------------#
 	# Check whether if there's any job left for the robot
-    	# If no jobs, make sure robot stopped moving, we cannot leave robot moving there 
+    # If no jobs, make sure robot stopped moving, we cannot leave robot moving there 
 	if(len(robot_job.job_des) < 1 or len(robot_job.job_num) < 1):
 		process_no_job(left_encode, right_encode)
-		return		
-     	print(robot_job.job_des[0]) 
+		return
 
-    	if (robot_job.job_des[0] == 'T') : 
-    		#rospy.loginfo("Bearing now %f, bearing target %f", robot_drive.bearing_now, robot_drive.bearing_target)
-		#if(robot_drive.robot_on_mission == 0): 
-		robot_drive.bearing_target  = robot_job.job_num[0]
-		# Pre-steps of turning jobs starts: calculate the required angle to turn 
-		# start the job 
-		job_completed =robot_turn.turn_degree(compass_data[compass_index], left_encode, right_encode)
+	job_completed = process_job()
 	
-	elif (robot_job.job_des[0] == 'F' or robot_job.job_des[0] == 'B'):
-		if(robot_job.job_des[0] == 'B'):
-			robot_job.job_num[0] = -  abs(robot_job.job_num[0])
-		job_completed =robot_move.move_distance(robot_job.job_num[0], left_encode, right_encode) 
-	else :
-		print(str(robot_job.job_des[0]))
-		rospy.logwarn('job_des %s:%d', robot_job.job_des[0], robot_job.job_num[0])
-		rospy.logwarn('warning: illegal job description found, not peform any actions')
-
+	# ----------------------------------------------------------------------------------------#
+	#  Error compensation after current job completed      									  #
+	# ----------------------------------------------------------------------------------------#
 	if job_completed == 1: 
 		robot_job.remove_current_job()
 		#robot_correction.angle_correction()

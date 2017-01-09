@@ -16,7 +16,8 @@ robot_on_mission 	= 0			# set an indicator that robot's on a job right now
 robot_enabled 		= 0 		# A switch to enable or disable robot from execuing any jobs 
 robot_on_obstancle 	= 0			# If robot is on obstancle avoidence, then set it to be 1
 robot_over_obstacle = 0			# The robot finished obstance avodence 
-move_direction 		= 'F'
+move_direction 		= 'F'		# Global robot walking/turning direction
+robot_initialized	= 0 		# Confirm whehter the robot has initialized the true north 
 
 initial_bearing 	= 0 	#set as north for now
 ############################################################
@@ -53,7 +54,9 @@ def start():
 def stop_robot():
 	speed_now = 0
 	desired_speed = 0
-	move_direction = 'S'
+	# move_direction = 'S'
+	# updated the stop command from 'S' to 'P'
+	move_direction = 'P'
 	send_command(move_direction,speed_now)
 
 def unlock_robot():

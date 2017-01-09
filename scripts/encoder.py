@@ -66,13 +66,13 @@ def encoder():
 			nr_encoder = int(r_encoder)
 			nl_encoder = int (l_encoder)
 			if r_direction == "0" : # it means the reverse direction 
-				nr_encoder = -int(nr_encoder)
-			else:
 				nr_encoder = int(nr_encoder)
+			else:
+				nr_encoder = -int(nr_encoder)
 			if l_direction == "0": 
-				nl_encoder = -int(nl_encoder)
-			else :
 				nl_encoder = int(nl_encoder)
+			else :
+				nl_encoder = -int(nl_encoder)
 
 			#turning them into strings
                                 #real data 
