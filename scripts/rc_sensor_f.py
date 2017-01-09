@@ -58,9 +58,9 @@ def encoder():
         #rospy.loginfo(str(start))
         bytesToRead = ser.readline()
         #rospy.log info(str(bytesToRead))
-	rospy.loginfo('Number of bytes %d', len(bytesToRead))
+	#rospy.loginfo('Number of bytes %d', len(bytesToRead))
         bytesToRead = bytesToRead.strip('\r\n')
-	rospy.loginfo('Number of bytes %d', len(bytesToRead))
+	#rospy.loginfo('Number of bytes %d', len(bytesToRead))
         # need to add necessary validation of data here 
         if len(bytesToRead)  == 7: 
             #separates the data into readable thing
