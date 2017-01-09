@@ -25,7 +25,7 @@ def open_serial():
 
     #real robot port
     ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_8543836303935120B031-if00"
-    ser.baudrate = 4800
+    ser.baudrate = 9600
     #testing port
     #ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75439333335351412220-if00"
     #ser.baudrate = 9600    
@@ -45,7 +45,7 @@ def encoder():
     rospy.init_node('rc_sensor_f', anonymous=True)
     rate = rospy.Rate(10)
     
-    rospy.loginfo("Started encoder")
+    rospy.loginfo("Started reverse car sensor (front)")
     
     while not rospy.is_shutdown():
         if open_serial() == 0:
@@ -58,13 +58,14 @@ def encoder():
         #rospy.loginfo(str(start))
         bytesToRead = ser.readline()
         #rospy.log info(str(bytesToRead))
-        bytesToRead = bytesToRead.strip('\n')
-
+	rospy.loginfo('Number of bytes %d', len(bytesToRead))
+        bytesToRead = bytesToRead.strip('\r\n')
+	rospy.loginfo('Number of bytes %d', len(bytesToRead))
         # need to add necessary validation of data here 
-        if len(bytesToRead)  == 6: 
+        if len(bytesToRead)  == 7: 
             #separates the data into readable thing
             #rospy.loginfo(bytesToPublish)
-            pub.publish(str(bytesToPublish))
+            pub.publish(str(bytesToRead))
             status_pub.publish('rc_sensor_f 1')
         else:
             rospy.logwarn("Found data which is not in a required format")
