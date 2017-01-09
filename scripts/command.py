@@ -355,14 +355,6 @@ def main_commander():
 	job_completed = process_job()
 	
 	# ----------------------------------------------------------------------------------------#
-	#  Error compensation after current job completed      									  #
-	# ----------------------------------------------------------------------------------------#
-	if job_completed == 1: 
-		robot_job.remove_current_job()
-		#robot_correction.angle_correction()
-		robot_correction.distance_correction()
-
-	# ----------------------------------------------------------------------------------------#
 	#  Robot's doing the initialization jobs, not normal jobs      							  #
 	# ----------------------------------------------------------------------------------------# 
 	if robot_drive.robot_initialized == 0:
@@ -378,6 +370,15 @@ def main_commander():
 		 	# need to add a correction job after the current job finished
 		 	# update the robot bearing to the compass given one 
 		 	robot_drive.bearing_now = compass_data[compass_index]
+
+	# ----------------------------------------------------------------------------------------#
+	#  Error compensation after current job completed      									  #
+	# ----------------------------------------------------------------------------------------#
+	if job_completed == 1: 
+		robot_job.remove_current_job()
+		#robot_correction.angle_correction()
+		robot_correction.distance_correction()
+
 
 #subscribes to different topic 
 def main_listener():
