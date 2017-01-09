@@ -310,6 +310,8 @@ def main_commander():
 	# ----------------------------------------------------------------------------------------#
 	global encoder_received
 	global encoder_processed
+	global compass_data 
+	global compass_index
 	
 	# Not any new data comming, waiting for next data, if waiting too long need to issue warning or error	 
 	if(encoder_received == encoder_processed):
@@ -359,6 +361,23 @@ def main_commander():
 		robot_job.remove_current_job()
 		#robot_correction.angle_correction()
 		robot_correction.distance_correction()
+
+	# ----------------------------------------------------------------------------------------#
+	#  Robot's doing the initialization jobs, not normal jobs      							  #
+	# ----------------------------------------------------------------------------------------# 
+	if robot_drive.robot_initialized == 0:
+		if abs(compass_data[compass_index]) <=2 or abs(compass_data[compass_index]) >= 358:
+			#Clear the remainging initialization jobs 
+			robot_drive.bearing_now = compass_data[compass_index]
+			robot_job.clear_jobs()
+			rospy.loginfo("Robot initlization completed")
+		return
+	else: 
+		 if abs(compass_data[compass_index]) <=2 or abs(compass_data[compass_index]) >= 358:
+		 	rospy.loginfo("Compass reached true north %d, calculated beraing now is %f", compass_data[compass_index], robot_drive.bearing_now)
+		 	# need to add a correction job after the current job finished
+		 	# update the robot bearing to the compass given one 
+		 	robot_drive.bearing_now = compass_data[compass_index]
 
 #subscribes to different topic 
 def main_listener():
