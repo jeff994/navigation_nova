@@ -24,7 +24,7 @@ def open_serial():
         return 1 
 
     #real robot port
-    ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75533353637351616171-if00"
+    ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_8543836303935120B031-if00"
     ser.baudrate = 4800
     #testing port
     #ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75439333335351412220-if00"
