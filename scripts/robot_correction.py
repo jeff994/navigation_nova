@@ -86,17 +86,18 @@ def distance_correction():
 	distance 	= gpsmath.haversine(robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target, robot_drive.lat_target)
 	bearing 	= gpsmath.bearing(robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target, robot_drive.lat_target)
 	# check the bearing now and bearing target 
-	diff_angle 	= abs(robot_drive.bearing_target - robot_drive.bearing_now)	
 	rospy.loginfo("GPS now [%f, %f], GPS target: [%f, %f]", robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target,robot_drive.lat_target)
-	rospy.loginfo("Bearing now %f, bearing target %f, diff_angle %f", robot_drive.bearing_now, robot_drive.bearing_target, diff_angle)
+	rospy.loginfo("Bearing move %f, Bearing now %f, bearing target %f, diff_angle %f", bearing, robot_drive.bearing_now, robot_drive.bearing_target, diff_angle)
 
 	if(bearing > 90 and bearing < 270):
 		distance = -distance 
 
-	if(diff_angle > 2):
-		robot_job.add_correction_turn(robot_drive.bearing_target)
+	robot_job.add_correction_turn(bearing)
 	if(distance > 100):
 		robot_job.add_correction_move(distance)
+	diff_angle 	= abs(robot_drive.bearing_target - bearing)
+	if(diff_angle > 2 and diff_angle < 358)
+		robot_job.add_correction_turn(robot_drive.bearing_target)
 
 	rospy.loginfo("There's a %f mm distance error, %f angle difference", distance, diff_angle)
 
