@@ -370,12 +370,12 @@ def main_commander():
 			robot_drive.robot_initialized = 1
 			rospy.loginfo("Robot initlization completed")
 		return
-	else: 
-		 if abs(compass_data[compass_index]) <=2 or abs(compass_data[compass_index]) >= 358:
-		 	rospy.loginfo("Compass reached true north %d, calculated beraing now is %f", compass_data[compass_index], robot_drive.bearing_now)
+	#else: 
+		# if abs(compass_data[compass_index]) <=2 or abs(compass_data[compass_index]) >= 358:
+		 #	rospy.loginfo("Compass reached true north %d, calculated beraing now is %f", compass_data[compass_index], robot_drive.bearing_now)
 		 	# need to add a correction job after the current job finished
 		 	# update the robot bearing to the compass given one 
-		 	robot_drive.bearing_now = compass_data[compass_index]
+		 #	robot_drive.bearing_now = compass_data[compass_index]
 
 	# ----------------------------------------------------------------------------------------#
 	#  Error compensation after current job completed      									  #

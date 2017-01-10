@@ -113,21 +113,6 @@ def turn_degree():
 		stop_turn()
 		return 1
 
-	if(robot_drive.move_direction == 'R' and left_encode <- 10 and right_encode > 10):
-		rospy.logwarn('Robot wheel moving revered to the turn right command')
-		#stop_turn()
-		return 0
-
-	if(robot_drive.move_direction == 'L' and left_encode > 10 and right_encode < -10):
-		rospy.logwarn('Robot wheel moving revered to the turn left command')
-		#stop_turn()
-		return 0
-
-	if((left_encode > 10 and right_encode > 10) or (left_encode < -10 and right_encode < -10)): 
-		rospy.logwarn('Robot wheel not moving as expected, clear current task')
-		#stop_turn()
-		return 0
-
 	#Get the turned angle and then calculate 
 	step_angle = robot_drive.step_angle  
 	#robot_drive.bearing_now = robot_drive.bearing_now + step_angle

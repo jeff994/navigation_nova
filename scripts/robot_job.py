@@ -88,7 +88,7 @@ def add_correction_turn(angle ):
 	global job_des
 	global job_num 
 	job_des.insert(0, 'T')
-	job_des.insert(0, angle)
+	job_num.insert(0, angle)
 	rospy.loginfo("Inserted a job turn to angle %f", angle)
 
 def add_correction_move(distance):
@@ -100,6 +100,7 @@ def add_correction_move(distance):
 	direction = 'F'
 	if(distance < 0):
 		job_des.insert(0, 'B')
+	job_des.insert(0, 'F')
 	rospy.loginfo("Inserted a correction job move %s with distance %f mm", direction, distance)
 
 # based on two gps corrdinates, generate a turn job and a move job 
