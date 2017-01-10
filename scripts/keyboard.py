@@ -32,7 +32,9 @@ def KeyControl():
 		if(len(choice) > 1):
 			print("You're supposed to enter only one key, try again...")
 			continue 
-		if choice == '0':
+		if (choice == 'i'):
+			pub.publish('Init')
+		elif choice == '0':
 			pub.publish('Switch')
 		elif choice == '1':
 	        	pub.publish('Forward')

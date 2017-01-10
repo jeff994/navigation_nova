@@ -28,7 +28,7 @@ last_received_time 	= 0.0 	# the time of receiving the last encoer data
 robot_moving 		= 0		# based on the encoder data to know whether the robot's moving
 
 # init the the encoder buffer with some empty data when system starts 
-def init_encoder_buffer( size=1000 ):
+def init_encoder_buffer( size=2000 ):
     global encoder_data 
     if(len(encoder_data) == size):
     	return 
@@ -81,9 +81,9 @@ def process_encoder_delay():
 		time.sleep(0.05)
 
 # If not any job left in the sytem 
-def process_no_job(left_encode, right_encode):
+def process_no_job():
 	robot_drive.robot_on_mission = 0
-	if(left_encode !=0 or right_encode !=0):
+	if(robot_moving == 1):
 		rospy.logwarn('warning: robot is not fully stopped even though a top command issued')
 		robot_drive.stop_robot()
 		time.sleep(0.05)
@@ -158,7 +158,10 @@ def keyboard_callback(data):
 	keyboard_data = data.data
 	robot_drive.speed_now = 5
 	robot_drive.desired_speed = 5 
-	if (keyboard_data == 'Forward'):
+	if (keyboard_data == 'Init'):
+		rospy.loginfo("Testing init job");
+		robot_job.initialize_job()
+	elif (keyboard_data == 'Forward'):
 		rospy.loginfo("Command received: Start to move forward 1 m")
 		robot_job.generate_move(1000, 'F')
 	elif (keyboard_data == 'Back'):
@@ -351,7 +354,7 @@ def main_commander():
 	# Check whether if there's any job left for the robot
     # If no jobs, make sure robot stopped moving, we cannot leave robot moving there 
 	if(len(robot_job.job_des) < 1 or len(robot_job.job_num) < 1):
-		process_no_job(left_encode, right_encode)
+		process_no_job()
 		return
 
 	job_completed = process_job()
@@ -364,6 +367,7 @@ def main_commander():
 			#Clear the remainging initialization jobs 
 			robot_drive.bearing_now = compass_data[compass_index]
 			robot_job.clear_jobs()
+			robot_drive.robot_initialized = 1
 			rospy.loginfo("Robot initlization completed")
 		return
 	else: 
