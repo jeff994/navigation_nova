@@ -210,7 +210,8 @@ def keyboard_callback(data):
 
 # handle the data from the front reverse car sensor
 def rc_sensor_f_callback(data):
-	str_right = data.data[-4:]
+	str_right = data.data[-5:]
+	str_right = str_rithg.strip('E')
 	if robot_obstacle.robot_on_obstacle: 
 		if(str_right == 'CESO'):
 			robot_obstacle.obstancle_is_over()
@@ -224,7 +225,8 @@ def rc_sensor_f_callback(data):
 
 # handle the data from the back reverse car sensor
 def rc_sensor_b_callback(data):
-	str_right = data.data[-4:]
+	str_right = data.data[-5:]
+	str_right = str_rithg.strip('E')
 	if robot_obstacle.robot_on_obstancle: 
 		if(str_right == 'CESO'):
 			robot_obstacle.obstancle_is_over()
