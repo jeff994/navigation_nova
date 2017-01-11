@@ -56,7 +56,6 @@ def encoder():
         rospy.loginfo(bytesToRead)
         
         pub.publish(str(bytesToRead))
-        rospy.loginfo(bytesToRead)
         status_pub.publish('driver obstacle 1')
         
 

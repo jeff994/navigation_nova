@@ -226,10 +226,11 @@ def driver_obstacle_callback(data):
 def rc_sensor_f_callback(data):
 	str_right = data.data[-5:]
 	str_right = str_right.strip('E')
-	if robot_obstacle.robot_on_obstacle: 
-		if(str_right == 'CESO'):
-			robot_obstacle.obstancle_is_over()
-	else:
+	#@yuqing_obstacledriverread
+	#if robot_obstacle.robot_on_obstacle: 
+		#if(str_right == 'CESO'):
+			#robot_obstacle.obstancle_is_over()
+	#else:
 		rc_sensor_front = int(str_right, 16)
 		first, second, third, forth = robot_obstacle.rc_sensor_data(rc_sensor_front)
 		ret = robot_obstacle.is_on_obstacle_avidence(first, second, third, forth)
@@ -241,10 +242,11 @@ def rc_sensor_f_callback(data):
 def rc_sensor_b_callback(data):
 	str_right = data.data[-5:]
 	str_right = str_right.strip('E')
-	if robot_obstacle.robot_on_obstancle: 
-		if(str_right == 'CESO'):
-			robot_obstacle.obstancle_is_over()
-	else:
+	#@yuqing_obstacledriverread
+	#if robot_obstacle.robot_on_obstancle: 
+		#if(str_right == 'CESO'):
+			#robot_obstacle.obstancle_is_over()
+	#else:
 		rc_sensor_front = int(str_right, 16)
 
 		first, second, third, forth = robot_obstacle.rc_sensor_data(rc_sensor_front)
