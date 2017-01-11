@@ -211,10 +211,21 @@ def keyboard_callback(data):
 		rospy.loginfo(keyboard_data)
 		rospy.loginfo("Not recognizing command receivied")
 
+#read obstacle finish data thro driver node
+def driver_obstacle_callback(data):
+	string = data.data
+	rospy.loginfo(string)
+	if robot_obstacle.robot_on_obstacle: 
+		if(string == 'finished'):
+			robot_obstacle.obstancle_is_over()
+	else:
+		pass
+	return
+
 # handle the data from the front reverse car sensor
 def rc_sensor_f_callback(data):
 	str_right = data.data[-5:]
-	str_right = str_rithg.strip('E')
+	str_right = str_right.strip('E')
 	if robot_obstacle.robot_on_obstacle: 
 		if(str_right == 'CESO'):
 			robot_obstacle.obstancle_is_over()
@@ -229,7 +240,7 @@ def rc_sensor_f_callback(data):
 # handle the data from the back reverse car sensor
 def rc_sensor_b_callback(data):
 	str_right = data.data[-5:]
-	str_right = str_rithg.strip('E')
+	str_right = str_right.strip('E')
 	if robot_obstacle.robot_on_obstancle: 
 		if(str_right == 'CESO'):
 			robot_obstacle.obstancle_is_over()
@@ -394,6 +405,8 @@ def main_listener():
 	rospy.Subscriber('keyboard', String, keyboard_callback)
 	rospy.Subscriber('rc_sensor_f', String, rc_sensor_f_callback)
 	rospy.Subscriber('rc_sensor_b', String, rc_sensor_b_callback)
+	#@yuqing_obstacledriverread
+	rospy.Subscriber('driver_obstacle', String, driver_obstacle_callback)
 	rospy.Subscriber('job', String, job_callback)
 	while not rospy.is_shutdown():
 		main_commander()
