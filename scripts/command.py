@@ -231,11 +231,11 @@ def rc_sensor_f_callback(data):
 		#if(str_right == 'CESO'):
 			#robot_obstacle.obstancle_is_over()
 	#else:
-		rc_sensor_front = int(str_right, 16)
-		first, second, third, forth = robot_obstacle.rc_sensor_data(rc_sensor_front)
-		ret = robot_obstacle.is_on_obstacle_avidence(first, second, third, forth)
-		if ret > 0:
-			robot_obstacle.start_obstacle_avidence()
+	rc_sensor_front = int(str_right, 16)
+	first, second, third, forth = robot_obstacle.rc_sensor_data(rc_sensor_front)
+	ret = robot_obstacle.is_on_obstacle_avidence(first, second, third, forth)
+	if ret > 0:
+		robot_obstacle.start_obstacle_avidence()
 	return
 
 # handle the data from the back reverse car sensor
@@ -247,12 +247,12 @@ def rc_sensor_b_callback(data):
 		#if(str_right == 'CESO'):
 			#robot_obstacle.obstancle_is_over()
 	#else:
-		rc_sensor_front = int(str_right, 16)
+	rc_sensor_front = int(str_right, 16)
 
-		first, second, third, forth = robot_obstacle.rc_sensor_data(rc_sensor_front)
-		ret = robot_obstacle.is_on_obstacle_avidence(first, second, third, forth)
-		if ret > 0:
-			robot_obstacle.start_obstacle_avidence()
+	first, second, third, forth = robot_obstacle.rc_sensor_data(rc_sensor_front)
+	ret = robot_obstacle.is_on_obstacle_avidence(first, second, third, forth)
+	if ret > 0:
+		robot_obstacle.start_obstacle_avidence()
 	return
 
 # handle the data from the job creator from our website, based on the gps corrdicates provided, 
