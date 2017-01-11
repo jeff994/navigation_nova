@@ -18,7 +18,7 @@ from math import radians, cos, sin, asin, sqrt, atan2, degrees
 # while robot's moving, dynamically update robot gps
 # still need to handle more scenarios 
 
-def is_on_obstacle_avoidence(first, second, thrid, forth):
+def is_on_obstacle_avoidence(first, second, third, forth):
 	if(first == 0 or first == 1 or first == 2 or first == 3):
 		return 1
 	if(second ==0 or second == 2 or second ==3 or second == 1):
