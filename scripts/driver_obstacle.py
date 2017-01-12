@@ -53,7 +53,9 @@ def encoder():
             continue
 
         bytesToRead = ser.readline()
+        bytesToRead = bytesToRead.strip('\r\n')
         rospy.loginfo(bytesToRead)
+        rospy.loginfo('length: %d' + len(bytesToRead))
         
         pub.publish(str(bytesToRead))
         status_pub.publish('driver obstacle 1')

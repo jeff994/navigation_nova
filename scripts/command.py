@@ -215,12 +215,14 @@ def keyboard_callback(data):
 def driver_obstacle_callback(data):
 	string = data.data
 	rospy.loginfo('driver callback: ' + string)
-	rospy.loginfo('%d', robot_obstacle.robot_on_obstacle)
+	rospy.loginfo('robot_on_obstacle: %d', robot_obstacle.robot_on_obstacle)
 	if robot_obstacle.robot_on_obstacle: 
+		rospy.loginfo('here finish')
 		if(string == 'FINISH'):
 			rospy.loginfo('callback: obstacle finish')
 			robot_obstacle.obstancle_is_over()
 	else:
+		rospy.loginfo('here obstacle')
 		if(string == 'OBSTACLE'):
 			rospy.loginfo('callback: obstacle start')
 			robot_obstacle.start_obstacle_avidence()

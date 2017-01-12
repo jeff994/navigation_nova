@@ -30,15 +30,18 @@ def is_on_obstacle_avoidence(first, second, third, forth):
 	return 0
 
 def start_obstacle_avidence():
-	robot_on_obstacle 	= 1
-	robot_over_obstacle	= 0
+	rospy.loginfo('start_obstacle_avidence')
+	global robot_on_obstacle 	= 1
+	global robot_over_obstacle	= 0
 
 # if obstacle avoidence is over
 def obstacle_is_over():
-	robot_on_obstacle 	= 0
-	robot_over_obstacle	= 1
+	rospy.loginfo('obstacle_is_over')
+	global robot_on_obstacle 	= 0
+	global robot_over_obstacle	= 1
 
-def unlock_from_obstacle(): 
+def unlock_from_obstacle():
+ 	rospy.loginfo('unlock_from_obstacle')
 	robot_drive.unlock_robot()
 	robot_over_obstacle	= 0
 
