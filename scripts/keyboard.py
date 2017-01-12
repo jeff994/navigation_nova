@@ -22,8 +22,10 @@ def KeyControl():
 	print ("4. Turn to east")
 	print ("5. Speed increse")
 	print ("6. Speed decrease")
+	print ("7. Define a simple job for testing")
 	print ("8. Stop robot from moving")
 	print ("9. Test route creating from gps")
+	print ("i. Initialize the true north of the robot")
 	print ("using ctrl + c to exit")
 	print (30 * '-')
 	#rospy.loginfo(str("test"))
@@ -32,7 +34,7 @@ def KeyControl():
 		if(len(choice) > 1):
 			print("You're supposed to enter only one key, try again...")
 			continue 
-		if (choice == 'i'):
+		elif (choice == 'i'):
 			pub.publish('Init')
 		elif choice == '0':
 			pub.publish('Switch')
