@@ -264,28 +264,25 @@ def rc_sensor_b_callback(data):
 # handle the data from the job creator from our website, based on the gps corrdicates provided, 
 # Generate a list of jobs 
 def job_callback(data):
-	json_str = data.data
-	rospy.loginfo(json_str)
+	json_str = str(data.data)
 	# Clear the lontiude and latitude list 
-	robot_drive.robot_enabled = 0
 	del robot_job.gps_lon[:]
 	del robot_job.gps_lat[:]
 	try:
 		decoded = json.loads(json_str)
-	    	# pretty printing of json-formatted strin
-	    	list_route  = decoded['route']
-	    	for k in range(len(list_route)):
-	 		gps_pair = list_route[k]
-	    		lon = float(gps_pair['lon'])
-	    		lat = float(gps_pair['lat'])
-	    		robot_job.gps_lon.extend(lon)
-	    		robot_job.gps_lat.extend(lat)
-		robot_drive.clear_jobs()
+		# pretty printing of json-formatted strin
+		list_route  = decoded['route']
+		for item in list_route:
+			lon = float(gps_pair.get(u'lon'))
+			lat = float(gps_pair.get(u'lat'))
+			robot_job.gps_lon.extend([lon])
+			robot_job.gps_lat.extend([lat])
+		robot_job.clear_jobs()
 		# after parsing the gps corrdinates, now generate robot jobs 
-		robot_drive.job_generator(robot_drive.initial_bearing)
+		robot_job.job_generator(robot_drive.initial_bearing)
 	except (ValueError, KeyError, TypeError):
-    		rospy.loginfo('JSON format error:')
-    		rospy.loginfo(json_str)
+		rospy.loginfo('JSON format error:')
+		rospy.loginfo(json_str)
 
 # Real time get compass data 
 def compass_callback(data):
