@@ -31,19 +31,24 @@ def is_on_obstacle_avoidence(first, second, third, forth):
 
 def start_obstacle_avidence():
 	rospy.loginfo('start_obstacle_avidence')
-	global robot_on_obstacle 	= 1
-	global robot_over_obstacle	= 0
+	global robot_on_obstacle
+	global robot_over_obstacle
+	robot_on_obstace 	= 1
+	robot_over_obstacle 	= 0
 
 # if obstacle avoidence is over
 def obstacle_is_over():
 	rospy.loginfo('obstacle_is_over')
-	global robot_on_obstacle 	= 0
-	global robot_over_obstacle	= 1
+	global robot_on_obstacle
+	global robot_over_obstacle
+	robot_on_obstacle 	= 0 
+	robot_over_obstacle 	= 1
 
 def unlock_from_obstacle():
  	rospy.loginfo('unlock_from_obstacle')
 	robot_drive.unlock_robot()
-	robot_over_obstacle	= 0
+	global robot_over_obstacle
+	robot_over_obstacle = 0
 
 	# Get the last four digit of the reverse car sendor data 
 def rc_sensor_data(rc_sensor_value):

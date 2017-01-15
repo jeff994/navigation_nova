@@ -113,7 +113,7 @@ def turn_degree():
 		#No turn is required, clear current job and rerun 
 		rospy.logwarn('Robot has been assigned a meaning less 0 degree turn task')
 		stop_turn()
-		return not robot_drive.robot_on_mission 
+		return 1
 
 	#Get the turned angle and then calculate 
 	step_angle = robot_drive.step_angle  
@@ -132,5 +132,5 @@ def turn_degree():
 	else: 
 		#finishe the turning 
 		stop_turn()
-		return not robot_drive.robot_on_mission
+		return 1
 	return 0 
