@@ -55,7 +55,8 @@ def start_turn():
 		robot_drive.speed_now = 5
 		robot_drive.desired_speed = 5 
 	rospy.loginfo('Robot starts to execute a turn job')
-	robot_drive.robot_on_mission = 1
+	if robot_drive.robot_moving == 1:
+		robot_drive.robot_on_mission = 1
 	degree_turned = 0
 	status_pub.publish("enabled 1")
 	robot_drive.start()

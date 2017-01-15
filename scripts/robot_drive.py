@@ -18,6 +18,7 @@ robot_on_obstancle 	= 0			# If robot is on obstancle avoidence, then set it to b
 robot_over_obstacle = 0			# The robot finished obstance avodence 
 move_direction 		= 'F'		# Global robot walking/turning direction
 robot_initialized	= 0 		# Confirm whehter the robot has initialized the true north 
+robot_moving 		= 0		# based on the encoder data to know whether the robot's moving
 
 initial_bearing 	= 0 	#set as north for now
 ############################################################

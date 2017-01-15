@@ -25,7 +25,6 @@ compass_index 		= 0 	# current compass index
 last_process_time 	= 0 	# last processing time 
 max_delay 			= 1.0	# max delay allowed for not receiving any signal from encooder 
 last_received_time 	= 0.0 	# the time of receiving the last encoer data 
-robot_moving 		= 0		# based on the encoder data to know whether the robot's moving
 
 # init the the encoder buffer with some empty data when system starts 
 def init_encoder_buffer( size=2000 ):
@@ -48,10 +47,9 @@ def disable_robot():
 	global encoder_data 
 	global encoder_received
 	global encoder_processed
-	global robot_moving
 	while True:
 		#step 1, send the stop command every 10 milli seoncs
-		if(robot_moving == 1):
+		if(robot_drive.robot_moving == 1):
 			robot_drive.stop_robot()
 			time.sleep(0.01)
 		else: 
@@ -83,7 +81,7 @@ def process_encoder_delay():
 # If not any job left in the sytem 
 def process_no_job():
 	robot_drive.robot_on_mission = 0
-	if(robot_moving == 1):
+	if(robot_drive.robot_moving == 1):
 		rospy.logwarn('warning: robot is not fully stopped even though a top command issued')
 		robot_drive.stop_robot()
 		time.sleep(0.05)
@@ -297,7 +295,6 @@ def compass_callback(data):
 def encoder_callback(data):
 	global encoder_data
 	global encoder_received 
-	global robot_moving 
 	#accumulate encoder data
 	#Step 1: Get encoder data and convert them to number for later use 
 	#Get left encoder and right encoder 
@@ -307,9 +304,9 @@ def encoder_callback(data):
 	left_encode  = int(left_encode)
     	right_encode = int(right_encode)
 	if(left_encode == 0 and right_encode == 0):
-		robot_moving = 0
+		robot_drive.robot_moving = 0
 	else:
-		robot_moving = 1 		
+		robot_drive.robot_moving = 1 		
 
     	index = encoder_received * 2
     	encoder_data[encoder_received * 2] = float(left_encode)

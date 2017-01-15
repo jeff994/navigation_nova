@@ -41,7 +41,10 @@ def start_move():
 		robot_drive.desired_speed = 5
 
 	rospy.loginfo('Robot moving job started')
-	robot_drive.robot_on_mission = 1 
+
+    # only if the robot starts to move then change the status
+    if(robot_drive.robot_moving == 1):
+	   robot_drive.robot_on_mission = 1 
 
     	status_pub.publish("enabled 1")
    	dist_completed = 0
