@@ -120,11 +120,14 @@ def process_job():
 	elif (robot_job.job_des[0] == 'F' or robot_job.job_des[0] == 'B'):
 		if(robot_job.job_des[0] == 'B'):
 			robot_job.job_num[0] = -  abs(robot_job.job_num[0])
-		job_completed =robot_move.move_distance(robot_job.job_num[0]) 
+		job_completed =robot_move.move_distance(robot_job.job_num[0])
+		rospy.loginfo("Bearing target before correction %f", robot_drive.bearing_target)
+ 
 	else :
 		print(str(robot_job.job_des[0]))
 		rospy.logwarn('job_des %s:%d', robot_job.job_des[0], robot_job.job_num[0])
 		rospy.logwarn('warning: illegal job description found, not peform any actions')
+	rospy.loginfo("Bearing target before correction %f", robot_drive.bearing_target)
 	return job_completed
 
 # Complete the obstacle avoidence after we get a signal from the robot base  

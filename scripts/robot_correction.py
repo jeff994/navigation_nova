@@ -17,12 +17,13 @@ from math import radians, cos, sin, asin, sqrt, atan2, degrees
 # still need to handle more scenarios 
 
 def update_robot_gps(left_encode, right_encode): 
+	robot_drive.step_angle = 0.0
+	robot_drive.step_distance = 0.0
+
 	#scenario 1, robot not moving 
 	if(left_encode == 0 and right_encode == 0):
 		#no updating of information 
                 #@yuqing_continueturn
-                robot_drive.step_angle = 0.0
-                robot_drive.step_distance = 0.0
 		return
 
 	# loacal vaiables 
@@ -36,7 +37,7 @@ def update_robot_gps(left_encode, right_encode):
 	robot_drive.step_angle 		= 0.0
 	robot_drive.step_distance 	= (left_dist + right_dist) / 2
 
-	rospy.loginfo("Bearing now %f,lon_now %f, lat_now %f", robot_drive.bearing_now, robot_drive.lon_now, robot_drive.lat_now)
+	rospy.loginfo("Bearing now %f,lon_now %f, lat_now %f, target_bearing %f", robot_drive.bearing_now, robot_drive.lon_now, robot_drive.lat_now, robot_drive.bearing_target)
 	# scenario 01, 02 robot moving perfectly straight, bearing won't change, while lan and lon need to be updated 
 	if(left_dist == right_dist):
 		if(right_dist > 0 ):
