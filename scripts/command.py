@@ -121,13 +121,13 @@ def process_job():
 		if(robot_job.job_des[0] == 'B'):
 			robot_job.job_num[0] = -  abs(robot_job.job_num[0])
 		job_completed =robot_move.move_distance(robot_job.job_num[0])
-		rospy.loginfo("Bearing target before correction %f", robot_drive.bearing_target)
+		#rospy.loginfo("Bearing target before correction %f", robot_drive.bearing_target)
  
 	else :
 		print(str(robot_job.job_des[0]))
 		rospy.logwarn('job_des %s:%d', robot_job.job_des[0], robot_job.job_num[0])
 		rospy.logwarn('warning: illegal job description found, not peform any actions')
-	rospy.loginfo("Bearing target before correction %f", robot_drive.bearing_target)
+	#rospy.loginfo("Bearing target before correction %f", robot_drive.bearing_target)
 	return job_completed
 
 # Complete the obstacle avoidence after we get a signal from the robot base  
@@ -164,10 +164,10 @@ def keyboard_callback(data):
 		robot_job.initialize_job()
 	elif (keyboard_data == 'Forward'):
 		rospy.loginfo("Command received: Start to move forward 1 m")
-		robot_job.generate_move(1000, 'F')
+		robot_job.generate_move(20000, 'F')
 	elif (keyboard_data == 'Back'):
 		rospy.loginfo("rospeived: Start to move back 1 m")
-		robot_job.generate_move(-1000, 'B')
+		robot_job.generate_move(-20000, 'B')
 	elif (keyboard_data == 'Turn_West'):
 		rospy.loginfo("Command received: turn to 270 (WEST)") 
 		#robot_drive.bearing_now = compass_data[compass_index] 

@@ -98,11 +98,11 @@ def distance_correction():
 		distance = -distance 
 
 	if(distance > 100):
-		robot_job.add_correction_turn(bearing)
-		robot_job.add_correction_move(distance)
 		diff_angle 	= abs(robot_drive.bearing_target - bearing)
 		if(diff_angle > 2 and  diff_angle < 358):
 			robot_job.add_correction_turn(robot_drive.bearing_target)
+		robot_job.add_correction_move(distance)
+		robot_job.add_correction_turn(bearing)
 
 	diff_angle = abs(robot_drive.bearing_target - robot_drive.bearing_now)
 	if(diff_angle > 2  and diff_angle < 358): 
