@@ -36,17 +36,17 @@ def start_move():
 	elif abs(dist_to_run) < 200: 
     		robot_drive.speed_now  = 4
         	robot_drive.desired_speed = 4
-    else:
+        else:
 		robot_drive.speed_now = 5
 		robot_drive.desired_speed = 5
 
 	rospy.loginfo('Robot moving job started')
 
     # only if the robot starts to move then change the status
-    if(robot_drive.robot_moving == 1):
-	   	robot_drive.robot_on_mission = 1 
+	if(robot_drive.robot_moving == 1):
+   		robot_drive.robot_on_mission = 1 
 
-    status_pub.publish("enabled 1")
+        status_pub.publish("enabled 1")
    	dist_completed = 0
 	robot_drive.start()
 
@@ -54,11 +54,11 @@ def start_move():
 def stop_move():	
 	global dist_completed
 	dist_completed = 0
-    if robot_drive.robot_moving == 0:
+        if robot_drive.robot_moving == 0:
 	   	robot_drive.robot_on_mission = 0 
        	rospy.loginfo('Robot completed a moving job')
-		robot_drive.stop_robot()
-    status_pub.publish("enabled 0")
+	robot_drive.stop_robot()
+        status_pub.publish("enabled 0")
 
 # Update robot speed as required new speed 
 # Update robot speed as required new speed 

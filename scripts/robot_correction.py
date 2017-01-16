@@ -20,6 +20,9 @@ def update_robot_gps(left_encode, right_encode):
 	#scenario 1, robot not moving 
 	if(left_encode == 0 and right_encode == 0):
 		#no updating of information 
+                #@yuqing_continueturn
+                robot_drive.step_angle = 0.0
+                robot_drive.step_distance = 0.0
 		return
 
 	# loacal vaiables 
@@ -103,7 +106,8 @@ def distance_correction():
 	diff_angle = abs(robot_drive.bearing_target - robot_drive.bearing_now)
 	if(diff_angle > 2  and diff_angle < 358): 
 		robot_job.add_correction_turn(robot_drive.bearing_target)
-
+        rospy.loginfo("**************************************")
+        rospy.loginfo("**************correction**************")
 	rospy.loginfo("There's a %f mm distance error, %f angle difference", distance, diff_angle)
 
 # def angle_correction(): 

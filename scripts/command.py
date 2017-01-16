@@ -224,7 +224,7 @@ def driver_obstacle_callback(data):
 	if(string == 'FINISH'):
 		rospy.loginfo('callback: obstacle finish')
 		robot_obstacle.obstacle_is_over()
-	elif:
+	else:
 		if (robot_obstacle.robot_on_obstacle==0):
 			rospy.loginfo('here obstacle')
 			if(string == 'OBSTACLE'):
@@ -310,7 +310,7 @@ def encoder_callback(data):
 	left_encode  = int(left_encode)
     	right_encode = int(right_encode)
 	if(left_encode == 0 and right_encode == 0):
-		rospy.loginfo("encoder 0,0")
+		#rospy.loginfo("encoder 0,0")
 		robot_drive.robot_moving = 0
 	else:
 		robot_drive.robot_moving = 1 		
