@@ -26,6 +26,8 @@ def KeyControl():
 	print ("8. Stop robot from moving")
 	print ("9. Test route creating from gps")
 	print ("i. Initialize the true north of the robot")
+	print ("w. Enter no obstacle mode")
+	print ("o. Enter obstacle mode")
 	print ("using ctrl + c to exit")
 	print (30 * '-')
 	#rospy.loginfo(str("test"))
@@ -56,6 +58,10 @@ def KeyControl():
 		    	pub.publish('Stop')
 		elif choice == '9':
 			pub.publish('Test')
+		elif choice == 'w':#@yuqing_toggleobstaclemode
+			pub.publish('No_obstacle')
+		elif choice == 'o':#@yuqing_toggleobstaclemode
+			pub.publish('Obstacle')
 		else:
 		    	print ("Invalid/Not defined number. Try again...")
 	rate.sleep()

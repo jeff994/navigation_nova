@@ -83,3 +83,13 @@ def send_command(command_string, speed):
 	pub_command.publish(stringToSend)
 	rospy.loginfo(str(stringToSend))
 	
+
+#@yuqing_toggleobstaclemode
+def enter_no_obstacle():
+	pub_command.publish('SW00000WE\n')
+	rospy.loginfo('SW00000WE enter no obstacle mode')
+
+#@yuqing_toggleobstaclemode
+def enter_obstacle():
+	pub_command.publish('SO00000OE\n')
+	rospy.loginfo('SO00000OE enter no obstacle mode')

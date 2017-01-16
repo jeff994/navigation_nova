@@ -72,7 +72,7 @@ def execute_command():
 		if open_serial():
                 	status_pub.publish("driver 1")
     			#rospy.loginfo("Testing serial port")
-    			rospy.loginfo(stringToSend)
+    			rospy.loginfo("command :" + stringToSend + " written to port")
     			ser.write(stringToSend)	
     			time.sleep(0.05)
 

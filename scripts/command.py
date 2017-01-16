@@ -56,7 +56,7 @@ def disable_robot():
 			# Clear all the reamining jobs
 			robot_job.clear_jobs()
 			#robot_drive.stop_robot()
-			break; 
+			break
 			#robot_drive.robot_enabled = 1
 
 # For each encoder signal received, log the time, if the next signal not coming for a long time, need to process 
@@ -152,12 +152,12 @@ def process_encoder_data():
 
 # Subscriber to keyboard topic and peform actions based on the command get  
 def keyboard_callback(data):
-	keyboard_data = '';
+	keyboard_data = ''
 	keyboard_data = data.data
 	robot_drive.speed_now = 5
 	robot_drive.desired_speed = 5 
 	if (keyboard_data == 'Init'):
-		rospy.loginfo("Testing init job");
+		rospy.loginfo("Testing init job")
 		robot_job.initialize_job()
 	elif (keyboard_data == 'Forward'):
 		rospy.loginfo("Command received: Start to move forward 1 m")
@@ -202,9 +202,15 @@ def keyboard_callback(data):
 	elif (keyboard_data == "Demo"):
 		#robot_drive.bearing_now = 0
 		rospy.loginfo("Simple job")
-		robot_job.simple_job(); 
+		robot_job.simple_job()
 	elif (keyboard_data == "Test"):
 		robot_job.job_generator(0)
+	elif (keyboard_data == "No_obstacle"):#@yuqing_toggleobstaclemode
+		rospy.loginfo('keyboard No_obstacle')
+		robot_drive.enter_no_obstacle()
+	elif (keyboard_data == "Obstacle"):#@yuqing_toggleobstaclemode
+		rospy.loginfo('keyboard Obstacle')
+		robot_drive.enter_obstacle()
 	else:
 		rospy.loginfo(keyboard_data)
 		rospy.loginfo("Not recognizing command receivied")
@@ -214,16 +220,16 @@ def driver_obstacle_callback(data):
 	string = data.data
 	rospy.loginfo('driver callback: ' + string)
 	rospy.loginfo('robot_on_obstacle: %d', robot_obstacle.robot_on_obstacle)
-	if robot_obstacle.robot_on_obstacle: 
-		rospy.loginfo('here finish')
-		if(string == 'FINISH'):
-			rospy.loginfo('callback: obstacle finish')
-			robot_obstacle.obstancle_is_over()
-	else:
-		rospy.loginfo('here obstacle')
-		if(string == 'OBSTACLE'):
-			rospy.loginfo('callback: obstacle start')
-			robot_obstacle.start_obstacle_avidence()
+	#if robot_obstacle.robot_on_obstacle: 
+	if(string == 'FINISH'):
+		rospy.loginfo('callback: obstacle finish')
+		robot_obstacle.obstacle_is_over()
+	elif:
+		if (robot_obstacle.robot_on_obstacle==0):
+			rospy.loginfo('here obstacle')
+			if(string == 'OBSTACLE'):
+				rospy.loginfo('callback: obstacle start')
+				robot_obstacle.start_obstacle_avidence()
 	return
 
 # handle the data from the front reverse car sensor
@@ -304,6 +310,7 @@ def encoder_callback(data):
 	left_encode  = int(left_encode)
     	right_encode = int(right_encode)
 	if(left_encode == 0 and right_encode == 0):
+		rospy.loginfo("encoder 0,0")
 		robot_drive.robot_moving = 0
 	else:
 		robot_drive.robot_moving = 1 		

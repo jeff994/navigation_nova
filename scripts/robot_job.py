@@ -95,7 +95,7 @@ def add_correction_move(distance):
 	global job_des 
 	global job_num 
 	if(distance == 0):
-		return; 
+		return
 	job_num.insert(0, abs(distance))
 	direction = 'F'
 	if(distance < 0):
@@ -128,5 +128,8 @@ def simple_job():
 	generate_move(10000, 'F')
 	generate_turn(270)
 	generate_move(20000, 'F')
+
+
+
 
 

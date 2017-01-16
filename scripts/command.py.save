@@ -58,7 +58,7 @@ def disable_robot():
 			# Clear all the reamining jobs
 			robot_job.clear_jobs()
 			#robot_drive.stop_robot()
-			break; 
+			break
 			#robot_drive.robot_enabled = 1
 
 # For each encoder signal received, log the time, if the next signal not coming for a long time, need to process 
@@ -154,12 +154,12 @@ def process_encoder_data():
 
 # Subscriber to keyboard topic and peform actions based on the command get  
 def keyboard_callback(data):
-	keyboard_data = '';
+	keyboard_data = ''
 	keyboard_data = data.data
 	robot_drive.speed_now = 5
 	robot_drive.desired_speed = 5 
 	if (keyboard_data == 'Init'):
-		rospy.loginfo("Testing init job");
+		rospy.loginfo("Testing init job")
 		robot_job.initialize_job()
 	elif (keyboard_data == 'Forward'):
 		rospy.loginfo("Command received: Start to move forward 1 m")
@@ -204,7 +204,7 @@ def keyboard_callback(data):
 	elif (keyboard_data == "Demo"):
 		#robot_drive.bearing_now = 0
 		rospy.loginfo("Simple job")
-		robot_job.simple_job(); 
+		robot_job.simple_job()
 	elif (keyboard_data == "Test"):
 		robot_job.job_generator(0)
 	else:

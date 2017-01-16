@@ -27,7 +27,7 @@ def update_robot_gps(left_encode, right_encode):
 	right_dist 	= right_encode / robot_drive.encode_to_mm
 	alpha 		= 0.0
 	total_dist 	= abs(left_dist) + abs(right_dist) 
-	R 			= 0.0; 
+	R 			= 0.0
 
 	# global vaiables 
 	robot_drive.step_angle 		= 0.0
