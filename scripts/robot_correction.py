@@ -87,7 +87,9 @@ def update_robot_gps(left_encode, right_encode):
 
 # before this add a correction job if angle is more than 3 degrees 
 def distance_correction():
+        rospy.loginfo("**************correction**************")
 	distance 	= gpsmath.haversine(robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target, robot_drive.lat_target)
+	rospy.loginfo("distance error: %f", distance)
 	bearing 	= gpsmath.bearing(robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target, robot_drive.lat_target)
 	# check the bearing now and bearing target 
 	rospy.loginfo("GPS now [%f, %f], GPS target: [%f, %f]", robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target,robot_drive.lat_target)
@@ -96,19 +98,25 @@ def distance_correction():
 
 	if(bearing > 90 and bearing < 270):
 		distance = -distance 
+		bearing = (bearing+180)%360
 
-	if(distance > 100):
+	if(abs(distance) > 100):
+		rospy.loginfo("correct distance.......................")
 		diff_angle 	= abs(robot_drive.bearing_target - bearing)
+		rospy.loginfo("distance: %f, angle: %f", distance, diff_angle)
 		if(diff_angle > 2 and  diff_angle < 358):
 			robot_job.add_correction_turn(robot_drive.bearing_target)
 		robot_job.add_correction_move(distance)
 		robot_job.add_correction_turn(bearing)
 	else: 
+		rospy.loginfo("no need to correct distance.....................")
 		diff_angle = abs(robot_drive.bearing_target - robot_drive.bearing_now)
+		rospy.loginfo("angle: %f", diff_angle)
 		if(diff_angle > 2  and diff_angle < 358): 
+			rospy.loginfo("correct angle............................")
 			robot_job.add_correction_turn(robot_drive.bearing_target)
-        	rospy.loginfo("**************************************")
-        	rospy.loginfo("**************correction**************")
+		else:
+			rospy.loginfo("no need to correct angle.................")
 	rospy.loginfo("There's a %f mm distance error, %f angle difference", distance, diff_angle)
 
 # def angle_correction(): 
