@@ -103,12 +103,12 @@ def distance_correction():
 			robot_job.add_correction_turn(robot_drive.bearing_target)
 		robot_job.add_correction_move(distance)
 		robot_job.add_correction_turn(bearing)
-
-	diff_angle = abs(robot_drive.bearing_target - robot_drive.bearing_now)
-	if(diff_angle > 2  and diff_angle < 358): 
-		robot_job.add_correction_turn(robot_drive.bearing_target)
-        rospy.loginfo("**************************************")
-        rospy.loginfo("**************correction**************")
+	else: 
+		diff_angle = abs(robot_drive.bearing_target - robot_drive.bearing_now)
+		if(diff_angle > 2  and diff_angle < 358): 
+			robot_job.add_correction_turn(robot_drive.bearing_target)
+        	rospy.loginfo("**************************************")
+        	rospy.loginfo("**************correction**************")
 	rospy.loginfo("There's a %f mm distance error, %f angle difference", distance, diff_angle)
 
 # def angle_correction(): 
