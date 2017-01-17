@@ -91,7 +91,8 @@ def move_distance(dist):
 	# if robot received a meaning less job, just signal, clear the job and return 
 	if (dist_to_run == 0):
 		rospy.logwarn('Robot received a meaningless moving job')
-		stop_move()
+        if robot_drive.robot_moving: 
+          stop_move()
 		return 1
 
 	if (dist_to_run < 0):
@@ -121,8 +122,9 @@ def move_distance(dist):
 		continue_move() 
 		return  0
 	else :
-		stop_move()
-		return 1
+        if robot_drive.robot_moving: 
+		  stop_move()
+        return robot_drive.robot_on_mission
        	#clean current job 
 	
 	return 0 
