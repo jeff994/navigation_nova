@@ -53,10 +53,13 @@ def start_move():
 # Roboet complet a moving job 
 def stop_move():	
 	global dist_completed
-	dist_completed = 0
-	robot_drive.robot_on_mission = 0 
-       	rospy.loginfo('Robot completed a moving job')
-	robot_drive.stop_robot()
+	if robot_drive.robot_moving == 0:
+		dist_completed = 0
+		robot_drive.robot_on_mission = 0 
+       		rospy.loginfo('Robot completed a moving job')
+	else:
+		rospy.loginfo('Robot still moving, stopping robot')
+		robot_drive.stop_robot()
         status_pub.publish("enabled 0")
 
 # Update robot speed as required new speed 
@@ -90,8 +93,7 @@ def move_distance(dist):
 	# if robot received a meaning less job, just signal, clear the job and return 
 	if (dist_to_run == 0):
 		rospy.logwarn('Robot received a meaningless moving job')
-        	if robot_drive.robot_moving: 
-          		stop_move()
+          	stop_move()
 		return not robot_drive.robot_on_mission
 
 	if (dist_to_run < 0):
@@ -113,7 +115,7 @@ def move_distance(dist):
 	#distance travelled threshold (put 2 mm thresh hold before stopping)
 	dist_threshold = abs(dist_to_run) - 7 	#0 mm, I can choose -50mm, but since there will be inefficiencies, 0 error threshold might be good enough
 	
-	distpub = 'dist-travelled: %f dist-total:%f dist-step:%f' % (dist_completed, abs(dist_to_run) ,dist_step)
+	distpub = 'Dist-travelled: %f dist-total:%f dist-step:%f' % (dist_completed, abs(dist_to_run) ,dist_step)
 	rospy.loginfo(distpub)
 
 	if (dist_threshold - dist_completed > 0) :
@@ -122,9 +124,8 @@ def move_distance(dist):
 		continue_move() 
 		return  0
 	else :
-	        if robot_drive.robot_moving: 
-		  stop_move()
-        	return 1
+		stop_move()
+        	return not robot_drive.robot_on_mission
        	#clean current job 
 	
 	return 0 

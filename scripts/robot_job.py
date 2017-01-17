@@ -100,7 +100,8 @@ def add_correction_move(distance):
 	direction = 'F'
 	if(distance < 0):
 		job_des.insert(0, 'B')
-	job_des.insert(0, 'F')
+	else:
+		job_des.insert(0, 'F')
 	rospy.loginfo("Inserted a correction job move %s with distance %f mm", direction, distance)
 
 # based on two gps corrdinates, generate a turn job and a move job 

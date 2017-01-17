@@ -38,7 +38,7 @@ def get_gps(lon1, lat1, dist, bearing):
 	delta = dist/r
 	lat2 = asin(sin(lat1) * cos(delta) + cos (lat1) * sin(delta)* cos(bearing))
 	lon2 = lon1 + atan2(sin(bearing) * sin (delta) * cos(lat1), cos(delta) - sin (lat1) * sin(lat2))
-	rospy.loginfo("TEST: %f, %f", lon2, lat2)
+	#rospy.loginfo("TEST: %f, %f", lon2, lat2)
 	lon2 = degrees(lon2)
 	lat2 = degrees(lat2)
 	return lon2, lat2
