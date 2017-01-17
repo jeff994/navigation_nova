@@ -78,7 +78,7 @@ def update_robot_gps(left_encode, right_encode):
 	# convert between [0 - 360)
 	bearing 				= gpsmath.format_bearing(bearing)
 	dist 					= R * sin(abs(alpha/2)) * 2
-	rospy.loginfo("Distance moved %f, step_angle %f, R %f, step_distance %f", dist, robot_drive.step_angle, R, robot_drive.step_distance) 
+	rospy.loginfo("Step Distance moved %f, step_angle %f, R %f, step_distance %f", dist, robot_drive.step_angle, R, robot_drive.step_distance) 
 	robot_drive.lon_now, robot_drive.lat_now 	= gpsmath.get_gps(robot_drive.lon_now, robot_drive.lat_now, dist, bearing)		
 	robot_drive.bearing_now 			= gpsmath.format_bearing(robot_drive.bearing_now + robot_drive.step_angle)
 	stringToSend 					= '%f %f %f' % (robot_drive.lon_now, robot_drive.lat_now, robot_drive.bearing_now) #might need to add \n behind the E
