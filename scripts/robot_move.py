@@ -66,9 +66,9 @@ def continue_move():
     global dist_to_run
     global dist_completed
 
-    if robot_drive.robot_moving == 0:
-        rospy.loginfo("Robot stopped during the mission, start to move again")
-        robot_drive.start()
+    #if robot_drive.robot_moving == 0:
+    #    rospy.loginfo("Robot stopped during the mission, start to move again")
+    #    robot_drive.start()
 
     if(abs(dist_to_run) - abs(dist_completed) < 50):
             robot_drive.desired_speed = 3
