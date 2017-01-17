@@ -164,10 +164,10 @@ def keyboard_callback(data):
 		robot_job.initialize_job()
 	elif (keyboard_data == 'Forward'):
 		rospy.loginfo("Command received: Start to move forward 1 m")
-		robot_job.generate_move(20000, 'F')
+		robot_job.generate_move(1000, 'F')
 	elif (keyboard_data == 'Back'):
 		rospy.loginfo("rospeived: Start to move back 1 m")
-		robot_job.generate_move(-20000, 'B')
+		robot_job.generate_move(-1000, 'B')
 	elif (keyboard_data == 'Turn_West'):
 		rospy.loginfo("Command received: turn to 270 (WEST)") 
 		#robot_drive.bearing_now = compass_data[compass_index] 
@@ -214,6 +214,12 @@ def keyboard_callback(data):
 	elif (keyboard_data == "Obstacle"):#@yuqing_toggleobstaclemode
 		rospy.loginfo('keyboard Obstacle')
 		robot_drive.enter_obstacle()
+	elif (keyboard_data == "20m"):#@yuqing_toggleobstaclemode
+		rospy.loginfo('forward 20m')
+		robot_job.generate_move(20000, 'F')
+	elif (keyboard_data == "-20m"):#@yuqing_toggleobstaclemode
+		rospy.loginfo('back 20m')
+		robot_job.generate_move(-20000, 'B')
 	else:
 		rospy.loginfo(keyboard_data)
 		rospy.loginfo("Not recognizing command receivied")

@@ -28,6 +28,8 @@ def KeyControl():
 	print ("i. Initialize the true north of the robot")
 	print ("w. Enter no obstacle mode")
 	print ("o. Enter obstacle mode")
+	print ("f. Move 20m forward")
+	print ("b. Move 20m back")
 	print ("using ctrl + c to exit")
 	print (30 * '-')
 	#rospy.loginfo(str("test"))
@@ -62,6 +64,10 @@ def KeyControl():
 			pub.publish('No_obstacle')
 		elif choice == 'o':#@yuqing_toggleobstaclemode
 			pub.publish('Obstacle')
+		elif choice == 'f':#@yuqing_toggleobstaclemode
+			pub.publish('20m')
+		elif choice == 'b':#@yuqing_toggleobstaclemode
+			pub.publish('-20m')
 		else:
 		    	print ("Invalid/Not defined number. Try again...")
 	rate.sleep()
