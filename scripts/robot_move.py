@@ -54,8 +54,7 @@ def start_move():
 def stop_move():	
 	global dist_completed
 	dist_completed = 0
-        if robot_drive.robot_moving == 0:
-	   	robot_drive.robot_on_mission = 0 
+	robot_drive.robot_on_mission = 0 
        	rospy.loginfo('Robot completed a moving job')
 	robot_drive.stop_robot()
         status_pub.publish("enabled 0")
@@ -93,7 +92,7 @@ def move_distance(dist):
 		rospy.logwarn('Robot received a meaningless moving job')
         	if robot_drive.robot_moving: 
           		stop_move()
-		return robot_drive.robot_on_mission
+		return not robot_drive.robot_on_mission
 
 	if (dist_to_run < 0):
 		robot_drive.move_direction = 'B'
@@ -125,7 +124,7 @@ def move_distance(dist):
 	else :
 	        if robot_drive.robot_moving: 
 		  stop_move()
-        	return robot_drive.robot_on_mission
+        	return 1
        	#clean current job 
 	
 	return 0 
