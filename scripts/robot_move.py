@@ -66,9 +66,9 @@ def continue_move():
     global dist_to_run
     global dist_completed
 
-    #if robot_drive.robot_moving == 0:
-    #    rospy.loginfo("Robot stopped during the mission, start to move again")
-    #    robot_drive.start()
+    if robot_drive.robot_moving == 0:
+        rospy.loginfo("Robot stopped during the mission, start to move again")
+        robot_drive.start()
 
     if(abs(dist_to_run) - abs(dist_completed) < 50):
             robot_drive.desired_speed = 3
@@ -91,8 +91,8 @@ def move_distance(dist):
 	# if robot received a meaning less job, just signal, clear the job and return 
 	if (dist_to_run == 0):
 		rospy.logwarn('Robot received a meaningless moving job')
-        if robot_drive.robot_moving: 
-          stop_move()
+        	if robot_drive.robot_moving: 
+          		stop_move()
 		return robot_drive.robot_on_mission
 
 	if (dist_to_run < 0):
@@ -101,7 +101,8 @@ def move_distance(dist):
 		robot_drive.move_direction = 'F'
 
 	# Mission started, let robot start moving 
-	if (robot_drive.robot_on_mission == 0): 
+	if (robot_drive.robot_on_mission == 0):
+		rospy.loginfo("robot move start move") 
 		start_move()
 		return 0
 
@@ -122,9 +123,9 @@ def move_distance(dist):
 		continue_move() 
 		return  0
 	else :
-        if robot_drive.robot_moving: 
+	        if robot_drive.robot_moving: 
 		  stop_move()
-        return robot_drive.robot_on_mission
+        	return robot_drive.robot_on_mission
        	#clean current job 
 	
 	return 0 

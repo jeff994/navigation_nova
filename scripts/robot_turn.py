@@ -29,7 +29,8 @@ def correct_angle(angle):
 def start_turn():
 	global degree_turned
 	global degree_to_turn
-
+	
+	rospy.loginfo("start turn...........................")
 	robot_drive.lon_target	= robot_drive.lon_now
 	robot_drive.lat_target 	= robot_drive.lat_now
 	
@@ -79,9 +80,9 @@ def continue_turn(step_angle):
 	global degree_turned
 	global degree_to_turn
 	
-	#if robot_drive.robot_moving == 0:
-	#	rospy.loginfo("Robot stopped during the mission, start to turn again")
-    #   robot_drive.start()
+	if robot_drive.robot_moving == 0:
+		rospy.loginfo("Robot stopped during the mission, start to turn again")
+	        robot_drive.start()
 
 	if(abs(degree_to_turn) - abs(degree_turned) < 10):
 		robot_drive.desired_speed = 3

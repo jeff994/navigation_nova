@@ -120,6 +120,7 @@ def process_job():
 	elif (robot_job.job_des[0] == 'F' or robot_job.job_des[0] == 'B'):
 		if(robot_job.job_des[0] == 'B'):
 			robot_job.job_num[0] = -  abs(robot_job.job_num[0])
+		rospy.loginfo("process_job move......")
 		job_completed =robot_move.move_distance(robot_job.job_num[0])
 		#rospy.loginfo("Bearing target before correction %f", robot_drive.bearing_target)
  
