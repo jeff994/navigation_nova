@@ -25,7 +25,7 @@ def start_move():
 	
 	robot_drive.bearing_target = robot_drive.bearing_now 
 	rospy.loginfo("Bearing target  %f", robot_drive.bearing_target)
-	lon, lat = gpsmath.get_gps(lon1, lat1,abs(dist_to_run), robot_drive.bearing_target)
+	lon, lat = gpsmath.get_gps(lon1, lat1, dist_to_run, robot_drive.bearing_target)
 	robot_drive.lon_target = lon
 	robot_drive.lat_target = lat
 	rospy.loginfo("Lon target %f, lat target %f", lon, lat)
@@ -60,7 +60,7 @@ def stop_move():
 	#else:
 	rospy.loginfo('Robot still moving, stopping robot')
 	robot_drive.stop_robot()
-    status_pub.publish("enabled 0")
+    	status_pub.publish("enabled 0")
 
 # Update robot speed as required new speed 
 # Update robot speed as required new speed 

@@ -57,7 +57,7 @@ def update_robot_gps(left_encode, right_encode):
 	# scenario 04 robot moving backward
 	elif(left_dist < 0 and right_dist < 0):
 		alpha 	= (left_dist - right_dist) / (2.0 * robot_drive.turn_radius) 
-		R 	= total_dist * robot_drive.turn_radius / abs(right_dist - left_dist)
+		R 	= -total_dist * robot_drive.turn_radius / abs(right_dist - left_dist)
 	# for robot two wheels not moving at the same direction or once of the thing not moving 
 	# forwaring with rotation 
 	else:
@@ -80,8 +80,8 @@ def update_robot_gps(left_encode, right_encode):
 	dist 					= R * sin(abs(alpha/2)) * 2
 	rospy.loginfo("Step Distance moved %f, step_angle %f, R %f, step_distance %f", dist, robot_drive.step_angle, R, robot_drive.step_distance) 
 	robot_drive.lon_now, robot_drive.lat_now 	= gpsmath.get_gps(robot_drive.lon_now, robot_drive.lat_now, dist, bearing)		
-	robot_drive.bearing_now 			= gpsmath.format_bearing(robot_drive.bearing_now + robot_drive.step_angle)
-	stringToSend 					= '%f %f %f' % (robot_drive.lon_now, robot_drive.lat_now, robot_drive.bearing_now) #might need to add \n behind the E
+	robot_drive.bearing_now 					= gpsmath.format_bearing(robot_drive.bearing_now + robot_drive.step_angle)
+	stringToSend 								= '%f %f %f' % (robot_drive.lon_now, robot_drive.lat_now, robot_drive.bearing_now) #might need to add \n behind the E
 	robot_drive.pub_gps.publish(stringToSend)
 	rospy.loginfo("Bearing now %f,lon_now %f, lat_now %f", robot_drive.bearing_now, robot_drive.lon_now, robot_drive.lat_now)
 
