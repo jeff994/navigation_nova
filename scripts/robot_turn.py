@@ -73,8 +73,7 @@ def stop_turn():
 	degree_to_turn = 0
 	rospy.loginfo('Robot completed a turn job')
 	status_pub.publish("enabled 0")
-	else:
-		robot_drive.stop_robot()
+	robot_drive.stop_robot()
 
 # change the speed of turing 
 def continue_turn(step_angle):
