@@ -1,0 +1,2181 @@
+
+[INFO] [1484645211.942349]: Command received: Start to move forward 1 m
+[INFO] [1484645211.945860]: Generated a job move F with distance 1000.000000 mm
+[INFO] [1484645211.964005]: robot move start move
+[INFO] [1484645211.967194]: Bearing target  1.980375
+[INFO] [1484645211.970798]: Lon target 121.600000, lat target 31.200009
+[INFO] [1484645211.973715]: Robot moving job started
+[INFO] [1484645211.977370]: SF000005E
+
+[INFO] [1484645212.088342]: robot move start move
+[INFO] [1484645212.091651]: Bearing target  1.980375
+[INFO] [1484645212.096739]: Lon target 121.600000, lat target 31.200009
+[INFO] [1484645212.100046]: Robot moving job started
+[INFO] [1484645212.107214]: SF000005E
+
+[INFO] [1484645212.161741]: Bearing now 1.980375,lon_now 121.600000, lat_now 31.200000, target_bearing 1.980375
+[INFO] [1484645212.165042]: Step Distance moved 11.057971, step_angle 0.030755, R 20601.000000, step_distance 11.057971
+[INFO] [1484645212.171900]: Bearing now 2.011130,lon_now 121.600000, lat_now 31.200001
+[INFO] [1484645212.175092]: robot move start move
+[INFO] [1484645212.177915]: Bearing target  2.011130
+[INFO] [1484645212.181127]: Lon target 121.600000, lat target 31.200010
+[INFO] [1484645212.184348]: Robot moving job started
+[INFO] [1484645212.190584]: SF000005E
+
+[INFO] [1484645212.296751]: Bearing now 2.011130,lon_now 121.600000, lat_now 31.200001, target_bearing 2.011130
+[INFO] [1484645212.300267]: Step Distance moved 33.224634, step_angle 0.088969, R 21396.666667, step_distance 33.224638
+[INFO] [1484645212.305290]: Bearing now 2.100098,lon_now 121.600000, lat_now 31.200001
+[INFO] [1484645212.309184]: Dist-travelled: 33.224638 dist-total:1000.000000 dist-step:33.224638
+[INFO] [1484645212.314962]: Still moving at the same speed...
+[INFO] [1484645212.368706]: Bearing now 2.100098,lon_now 121.600000, lat_now 31.200001, target_bearing 2.011130
+[INFO] [1484645212.371857]: Step Distance moved 33.471014, step_angle 0.040640, R 47188.702703, step_distance 33.471014
+[INFO] [1484645212.375454]: Bearing now 2.140738,lon_now 121.600000, lat_now 31.200001
+[INFO] [1484645212.378582]: Dist-travelled: 66.695652 dist-total:1000.000000 dist-step:33.471014
+[INFO] [1484645212.381756]: Still moving at the same speed...
+[INFO] [1484645212.485965]: Bearing now 2.140738,lon_now 121.600000, lat_now 31.200001, target_bearing 2.011130
+[INFO] [1484645212.489525]: Step Distance moved 34.079709, step_angle 0.049427, R 39505.200000, step_distance 34.079710
+[INFO] [1484645212.493525]: Bearing now 2.190165,lon_now 121.600000, lat_now 31.200001
+[INFO] [1484645212.497304]: Dist-travelled: 100.775362 dist-total:1000.000000 dist-step:34.079710
+[INFO] [1484645212.501223]: Still moving at the same speed...
+[INFO] [1484645212.605619]: Bearing now 2.190165,lon_now 121.600000, lat_now 31.200001, target_bearing 2.011130
+[INFO] [1484645212.608954]: Step Distance moved 33.746377, step_angle 0.016476, R 117356.400000, step_distance 33.746377
+[INFO] [1484645212.614178]: Bearing now 2.206641,lon_now 121.600000, lat_now 31.200002
+[INFO] [1484645212.619026]: Dist-travelled: 134.521739 dist-total:1000.000000 dist-step:33.746377
+[INFO] [1484645212.622937]: Still moving at the same speed...
+[INFO] [1484645212.677355]: Bearing now 2.206641,lon_now 121.600000, lat_now 31.200002, target_bearing 2.011130
+[INFO] [1484645212.681250]: Step Distance moved 33.775362, step_angle -0.038443, R 50338.800000, step_distance 33.775362
+[INFO] [1484645212.685648]: Bearing now 2.168198,lon_now 121.600000, lat_now 31.200002
+[INFO] [1484645212.689949]: Dist-travelled: 168.297101 dist-total:1000.000000 dist-step:33.775362
+[INFO] [1484645212.694306]: Still moving at the same speed...
+[INFO] [1484645212.799191]: Bearing now 2.168198,lon_now 121.600000, lat_now 31.200002, target_bearing 2.011130
+[INFO] [1484645212.802553]: Step Distance moved 34.463768, step_angle -0.004394, R 449442.000000, step_distance 34.463768
+[INFO] [1484645212.806790]: Bearing now 2.163804,lon_now 121.600000, lat_now 31.200002
+[INFO] [1484645212.810651]: Dist-travelled: 202.760870 dist-total:1000.000000 dist-step:34.463768
+[INFO] [1484645212.814823]: Still moving at the same speed...
+[INFO] [1484645212.869648]: Bearing now 2.163804,lon_now 121.600000, lat_now 31.200002, target_bearing 2.011130
+[INFO] [1484645212.873065]: Step Distance moved 34.065216, step_angle -0.047230, R 41325.069767, step_distance 34.065217
+[INFO] [1484645212.877463]: Bearing now 2.116574,lon_now 121.600000, lat_now 31.200003
+[INFO] [1484645212.881448]: Dist-travelled: 236.826087 dist-total:1000.000000 dist-step:34.065217
+[INFO] [1484645212.885239]: Still moving at the same speed...
+[INFO] [1484645212.993431]: Bearing now 2.116574,lon_now 121.600000, lat_now 31.200003, target_bearing 2.011130
+[INFO] [1484645212.996587]: Step Distance moved 34.456522, step_angle 0.016476, R 119826.000000, step_distance 34.456522
+[INFO] [1484645213.001944]: Bearing now 2.133050,lon_now 121.600000, lat_now 31.200003
+[INFO] [1484645213.005370]: Dist-travelled: 271.282609 dist-total:1000.000000 dist-step:34.456522
+[INFO] [1484645213.008661]: Still moving at the same speed...
+[INFO] [1484645213.062991]: Bearing now 2.133050,lon_now 121.600000, lat_now 31.200003, target_bearing 2.011130
+[INFO] [1484645213.071907]: Step Distance moved 34.797101, step_angle 0.046132, R 43218.000000, step_distance 34.797101
+[INFO] [1484645213.078031]: Bearing now 2.179182,lon_now 121.600000, lat_now 31.200003
+[INFO] [1484645213.085699]: Dist-travelled: 306.079710 dist-total:1000.000000 dist-step:34.797101
+[INFO] [1484645213.088996]: Still moving at the same speed...
+[INFO] [1484645213.193169]: Bearing now 2.179182,lon_now 121.600000, lat_now 31.200003, target_bearing 2.011130
+[INFO] [1484645213.196298]: Step Distance moved 34.413043, step_angle 0.018672, R 105595.411765, step_distance 34.413043
+[INFO] [1484645213.200292]: Bearing now 2.197854,lon_now 121.600000, lat_now 31.200004
+[INFO] [1484645213.204529]: Dist-travelled: 340.492754 dist-total:1000.000000 dist-step:34.413043
+[INFO] [1484645213.207892]: Still moving at the same speed...
+[INFO] [1484645213.262060]: Bearing now 2.197854,lon_now 121.600000, lat_now 31.200004, target_bearing 2.011130
+[INFO] [1484645213.265224]: Step Distance moved 34.463768, step_angle 0.028558, R 69144.923077, step_distance 34.463768
+[INFO] [1484645213.269728]: Bearing now 2.226412,lon_now 121.600000, lat_now 31.200004
+[INFO] [1484645213.273465]: Dist-travelled: 374.956522 dist-total:1000.000000 dist-step:34.463768
+[INFO] [1484645213.277187]: Still moving at the same speed...
+[INFO] [1484645213.382002]: Bearing now 2.226412,lon_now 121.600000, lat_now 31.200004, target_bearing 2.011130
+[INFO] [1484645213.385449]: Step Distance moved 34.797099, step_angle 0.072493, R 27502.363636, step_distance 34.797101
+[INFO] [1484645213.389694]: Bearing now 2.298905,lon_now 121.600000, lat_now 31.200004
+[INFO] [1484645213.393223]: Dist-travelled: 409.753623 dist-total:1000.000000 dist-step:34.797101
+[INFO] [1484645213.396468]: Still moving at the same speed...
+[INFO] [1484645213.500756]: Bearing now 2.298905,lon_now 121.600000, lat_now 31.200004, target_bearing 2.011130
+[INFO] [1484645213.503795]: Step Distance moved 34.847824, step_angle 0.073591, R 27131.373134, step_distance 34.847826
+[INFO] [1484645213.508313]: Bearing now 2.372496,lon_now 121.600000, lat_now 31.200005
+[INFO] [1484645213.512640]: Dist-travelled: 444.601449 dist-total:1000.000000 dist-step:34.847826
+[INFO] [1484645213.522259]: Still moving at the same speed...
+[INFO] [1484645213.577950]: Bearing now 2.372496,lon_now 121.600000, lat_now 31.200005, target_bearing 2.011130
+[INFO] [1484645213.582223]: Step Distance moved 34.260861, step_angle 0.136199, R 14412.774194, step_distance 34.260870
+[INFO] [1484645213.590389]: Bearing now 2.508695,lon_now 121.600000, lat_now 31.200005
+[INFO] [1484645213.594558]: Dist-travelled: 478.862319 dist-total:1000.000000 dist-step:34.260870
+[INFO] [1484645213.598431]: Still moving at the same speed...
+[INFO] [1484645213.702836]: Bearing now 2.508695,lon_now 121.600000, lat_now 31.200005, target_bearing 2.011130
+[INFO] [1484645213.706016]: Step Distance moved 34.550721, step_angle 0.090067, R 21979.317073, step_distance 34.550725
+[INFO] [1484645213.712307]: Bearing now 2.598762,lon_now 121.600000, lat_now 31.200005
+[INFO] [1484645213.717347]: Dist-travelled: 513.413043 dist-total:1000.000000 dist-step:34.550725
+[INFO] [1484645213.721836]: Still moving at the same speed...
+[INFO] [1484645213.776232]: Bearing now 2.598762,lon_now 121.600000, lat_now 31.200005, target_bearing 2.011130
+[INFO] [1484645213.779164]: Step Distance moved 34.333329, step_angle 0.101051, R 19467.000000, step_distance 34.333333
+[INFO] [1484645213.783395]: Bearing now 2.699813,lon_now 121.600000, lat_now 31.200006
+[INFO] [1484645213.787555]: Dist-travelled: 547.746377 dist-total:1000.000000 dist-step:34.333333
+[INFO] [1484645213.791772]: Still moving at the same speed...
+[INFO] [1484645213.897681]: Bearing now 2.699813,lon_now 121.600000, lat_now 31.200006, target_bearing 2.011130
+[INFO] [1484645213.900923]: Step Distance moved 35.130434, step_angle 0.037345, R 53898.352941, step_distance 35.130435
+[INFO] [1484645213.904898]: Bearing now 2.737157,lon_now 121.600000, lat_now 31.200006
+[INFO] [1484645213.908305]: Dist-travelled: 582.876812 dist-total:1000.000000 dist-step:35.130435
+[INFO] [1484645213.911855]: Still moving at the same speed...
+[INFO] [1484645213.978834]: Bearing now 2.737157,lon_now 121.600000, lat_now 31.200006, target_bearing 2.011130
+[INFO] [1484645213.981931]: Step Distance moved 34.550716, step_angle 0.142789, R 13863.876923, step_distance 34.550725
+[INFO] [1484645213.986005]: Bearing now 2.879947,lon_now 121.600000, lat_now 31.200006
+[INFO] [1484645213.995735]: Dist-travelled: 617.427536 dist-total:1000.000000 dist-step:34.550725
+[INFO] [1484645213.999382]: Still moving at the same speed...
+[INFO] [1484645214.104298]: Bearing now 2.879947,lon_now 121.600000, lat_now 31.200006, target_bearing 2.011130
+[INFO] [1484645214.108167]: Step Distance moved 34.891297, step_angle 0.132904, R 15041.900826, step_distance 34.891304
+[INFO] [1484645214.112501]: Bearing now 3.012850,lon_now 121.600000, lat_now 31.200006
+[INFO] [1484645214.116515]: Dist-travelled: 652.318841 dist-total:1000.000000 dist-step:34.891304
+[INFO] [1484645214.120328]: Still moving at the same speed...
+[INFO] [1484645214.174561]: Bearing now 3.012850,lon_now 121.600000, lat_now 31.200006, target_bearing 2.011130
+[INFO] [1484645214.177972]: Step Distance moved 35.275356, step_angle 0.116428, R 17359.471698, step_distance 35.275362
+[INFO] [1484645214.181480]: Bearing now 3.129278,lon_now 121.600000, lat_now 31.200007
+[INFO] [1484645214.184494]: Dist-travelled: 687.594203 dist-total:1000.000000 dist-step:35.275362
+[INFO] [1484645214.187422]: Still moving at the same speed...
+[INFO] [1484645214.291747]: Bearing now 3.129278,lon_now 121.600000, lat_now 31.200007, target_bearing 2.011130
+[INFO] [1484645214.296636]: Step Distance moved 35.557970, step_angle 0.056017, R 36369.529412, step_distance 35.557971
+[INFO] [1484645214.301657]: Bearing now 3.185296,lon_now 121.600000, lat_now 31.200007
+[INFO] [1484645214.306542]: Dist-travelled: 723.152174 dist-total:1000.000000 dist-step:35.557971
+[INFO] [1484645214.310753]: Still moving at the same speed...
+[INFO] [1484645214.365211]: Bearing now 3.185296,lon_now 121.600000, lat_now 31.200007, target_bearing 2.011130
+[INFO] [1484645214.370634]: Step Distance moved 35.260865, step_angle 0.101051, R 19992.913043, step_distance 35.260870
+[INFO] [1484645214.375678]: Bearing now 3.286346,lon_now 121.600000, lat_now 31.200007
+[INFO] [1484645214.380764]: Dist-travelled: 758.413043 dist-total:1000.000000 dist-step:35.260870
+[INFO] [1484645214.384484]: Still moving at the same speed...
+[INFO] [1484645214.495024]: Bearing now 3.286346,lon_now 121.600000, lat_now 31.200007, target_bearing 2.011130
+[INFO] [1484645214.500155]: Step Distance moved 35.434782, step_angle 0.035148, R 57763.125000, step_distance 35.434783
+[INFO] [1484645214.504769]: Bearing now 3.321494,lon_now 121.600000, lat_now 31.200008
+[INFO] [1484645214.510021]: Dist-travelled: 793.847826 dist-total:1000.000000 dist-step:35.434783
+[INFO] [1484645214.514329]: Still moving at the same speed...
+[INFO] [1484645214.569034]: Bearing now 3.321494,lon_now 121.600000, lat_now 31.200008, target_bearing 2.011130
+[INFO] [1484645214.573955]: Step Distance moved 35.557971, step_angle 0.018672, R 109108.588235, step_distance 35.557971
+[INFO] [1484645214.579004]: Bearing now 3.340167,lon_now 121.600000, lat_now 31.200008
+[INFO] [1484645214.583101]: Dist-travelled: 829.405797 dist-total:1000.000000 dist-step:35.557971
+[INFO] [1484645214.586819]: Reduce speed to 4, only 20 cm to target position
+[INFO] [1484645214.599457]: SF000004E
+
+[INFO] [1484645214.603149]: Robot speed changed from 4 to 4
+[INFO] [1484645214.707267]: Bearing now 3.340167,lon_now 121.600000, lat_now 31.200008, target_bearing 2.011130
+[INFO] [1484645214.710449]: Step Distance moved 35.463768, step_angle -0.015377, R 132138.000000, step_distance 35.463768
+[INFO] [1484645214.716084]: Bearing now 3.324790,lon_now 121.600000, lat_now 31.200008
+[INFO] [1484645214.721028]: Dist-travelled: 864.869565 dist-total:1000.000000 dist-step:35.463768
+[INFO] [1484645214.725597]: Reduce speed to 4, only 20 cm to target position
+[INFO] [1484645214.729479]: Still moving at the same speed...
+[INFO] [1484645214.783821]: Bearing now 3.324790,lon_now 121.600000, lat_now 31.200008, target_bearing 2.011130
+[INFO] [1484645214.787758]: Step Distance moved 35.478261, step_angle 0.021968, R 92534.400000, step_distance 35.478261
+[INFO] [1484645214.791899]: Bearing now 3.346757,lon_now 121.600000, lat_now 31.200009
+[INFO] [1484645214.795521]: Dist-travelled: 900.347826 dist-total:1000.000000 dist-step:35.478261
+[INFO] [1484645214.799051]: Reduce speed to 4, only 20 cm to target position
+[INFO] [1484645214.803085]: Still moving at the same speed...
+[INFO] [1484645214.857253]: Bearing now 3.346757,lon_now 121.600000, lat_now 31.200009, target_bearing 2.011130
+[INFO] [1484645214.861430]: Step Distance moved 35.500000, step_angle 0.031853, R 63855.931034, step_distance 35.500000
+[INFO] [1484645214.865511]: Bearing now 3.378610,lon_now 121.600000, lat_now 31.200009
+[INFO] [1484645214.869436]: Dist-travelled: 935.847826 dist-total:1000.000000 dist-step:35.500000
+[INFO] [1484645214.873116]: Reduce speed to 4, only 20 cm to target position
+[INFO] [1484645214.877141]: Still moving at the same speed...
+[INFO] [1484645214.981717]: Bearing now 3.378610,lon_now 121.600000, lat_now 31.200009, target_bearing 2.011130
+[INFO] [1484645214.985114]: Step Distance moved 34.905795, step_angle 0.071395, R 28012.707692, step_distance 34.905797
+[INFO] [1484645214.990315]: Bearing now 3.450005,lon_now 121.600000, lat_now 31.200009
+[INFO] [1484645214.994036]: Dist-travelled: 970.753623 dist-total:1000.000000 dist-step:34.905797
+[INFO] [1484645214.996780]: Reduce speed to 3, very close to target position
+[INFO] [1484645215.000705]: SF000003E
+
+[INFO] [1484645215.004019]: Robot speed changed from 3 to 3
+[INFO] [1484645215.057186]: Bearing now 3.450005,lon_now 121.600000, lat_now 31.200009, target_bearing 2.011130
+[INFO] [1484645215.062305]: Step Distance moved 34.630435, step_angle 0.012082, R 164223.818182, step_distance 34.630435
+[INFO] [1484645215.066167]: Bearing now 3.462087,lon_now 121.600001, lat_now 31.200010
+[INFO] [1484645215.069828]: Dist-travelled: 1005.384058 dist-total:1000.000000 dist-step:34.630435
+[INFO] [1484645215.073750]: Robot still moving, stopping robot
+[INFO] [1484645215.078396]: SP000000E
+
+[INFO] [1484645215.187488]: Bearing now 3.462087,lon_now 121.600001, lat_now 31.200010, target_bearing 2.011130
+[INFO] [1484645215.190608]: Step Distance moved 35.224637, step_angle -0.023066, R 87498.000000, step_distance 35.224638
+[INFO] [1484645215.193695]: Bearing now 3.439021,lon_now 121.600001, lat_now 31.200010
+[INFO] [1484645215.196829]: Dist-travelled: 1040.608696 dist-total:1000.000000 dist-step:35.224638
+[INFO] [1484645215.199739]: Robot still moving, stopping robot
+[INFO] [1484645215.203490]: SP000000E
+
+[INFO] [1484645215.262397]: Bearing now 3.439021,lon_now 121.600001, lat_now 31.200010, target_bearing 2.011130
+[INFO] [1484645215.265958]: Step Distance moved 34.688402, step_angle -0.091165, R 21801.036145, step_distance 34.688406
+[INFO] [1484645215.269672]: Bearing now 3.347856,lon_now 121.600001, lat_now 31.200010
+[INFO] [1484645215.273083]: Dist-travelled: 1075.297101 dist-total:1000.000000 dist-step:34.688406
+[INFO] [1484645215.276345]: Robot still moving, stopping robot
+[INFO] [1484645215.280811]: SP000000E
+
+[INFO] [1484645215.385781]: Bearing now 3.347856,lon_now 121.600001, lat_now 31.200010, target_bearing 2.011130
+[INFO] [1484645215.391600]: Step Distance moved 34.949274, step_angle -0.062608, R 31984.105263, step_distance 34.949275
+[INFO] [1484645215.395571]: Bearing now 3.285248,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645215.399269]: Dist-travelled: 1110.246377 dist-total:1000.000000 dist-step:34.949275
+[INFO] [1484645215.403368]: Robot still moving, stopping robot
+[INFO] [1484645215.409938]: SP000000E
+
+[INFO] [1484645215.518173]: Bearing now 3.285248,lon_now 121.600001, lat_now 31.200011, target_bearing 2.011130
+[INFO] [1484645215.521538]: Step Distance moved 22.043478, step_angle -0.017574, R 71867.250000, step_distance 22.043478
+[INFO] [1484645215.533048]: Bearing now 3.267674,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645215.537873]: Dist-travelled: 1132.289855 dist-total:1000.000000 dist-step:22.043478
+[INFO] [1484645215.543453]: Robot still moving, stopping robot
+[INFO] [1484645215.550124]: SP000000E
+
+[INFO] [1484645215.604917]: Bearing now 3.267674,lon_now 121.600001, lat_now 31.200011, target_bearing 2.011130
+[INFO] [1484645215.607775]: Step Distance moved 0.072464, step_angle -0.006590, R 630.000000, step_distance 0.072464
+[INFO] [1484645215.614599]: Bearing now 3.261084,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645215.618475]: Dist-travelled: 1132.362319 dist-total:1000.000000 dist-step:0.072464
+[INFO] [1484645215.622321]: Robot still moving, stopping robot
+[INFO] [1484645215.627151]: SP000000E
+
+[INFO] [1484645215.685765]: Bearing now 3.261084,lon_now 121.600001, lat_now 31.200011, target_bearing 2.011130
+[INFO] [1484645215.689755]: Step Distance moved 0.057971, step_angle -0.004394, R 756.000000, step_distance 0.028986
+[INFO] [1484645215.694799]: Bearing now 3.256690,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645215.698056]: Dist-travelled: 1132.391304 dist-total:1000.000000 dist-step:0.028986
+[INFO] [1484645215.701067]: Robot still moving, stopping robot
+[INFO] [1484645215.705193]: SP000000E
+
+[INFO] [1484645215.759274]: Bearing now 3.256690,lon_now 121.600001, lat_now 31.200011, target_bearing 2.011130
+[INFO] [1484645215.763185]: Step Distance moved 0.014493, step_angle -0.001098, R 756.000000, step_distance 0.007246
+[INFO] [1484645215.767302]: Bearing now 3.255592,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645215.771001]: Dist-travelled: 1132.398551 dist-total:1000.000000 dist-step:0.007246
+[INFO] [1484645215.774455]: Robot still moving, stopping robot
+[INFO] [1484645215.779747]: SP000000E
+
+[INFO] [1484645215.885275]: Dist-travelled: 1132.398551 dist-total:1000.000000 dist-step:0.000000
+[INFO] [1484645215.888556]: Robot completed a moving job
+[INFO] [1484645215.892013]: **************correction**************
+[INFO] [1484645215.895362]: distance error: 133.105469
+[INFO] [1484645215.898595]: GPS now [121.600001, 31.200011], GPS target: [121.600000, 31.200010]
+[INFO] [1484645215.901954]: Bearing move 188.350419, Bearing now 3.255592, bearing target 2.011130
+[INFO] [1484645215.905137]: correct distance.......................
+[INFO] [1484645215.908427]: distance: -133.105469, angle: 6.339289
+[INFO] [1484645215.911939]: Inserted a job turn to angle 2.011130
+[INFO] [1484645215.915557]: Inserted a correction job move F with distance -133.105469 mm
+[INFO] [1484645215.919245]: Inserted a job turn to angle 8.350419
+[INFO] [1484645215.922889]: There's a -133.105469 mm distance error, 6.339289 angle difference
+[INFO] [1484645215.976409]: start turn...........................
+[INFO] [1484645215.979334]: Robot starts to execute a turn job
+[INFO] [1484645215.983680]: SR000004E
+
+[INFO] [1484645215.986990]: Start: Degree turned 0, degree to turn 5, bearing_now 3, bearing_target 8
+[INFO] [1484645216.093789]: start turn...........................
+[INFO] [1484645216.096495]: Robot starts to execute a turn job
+[INFO] [1484645216.100293]: SR000004E
+
+[INFO] [1484645216.103420]: Start: Degree turned 0, degree to turn 5, bearing_now 3, bearing_target 8
+[INFO] [1484645216.156998]: Bearing now 3.255592,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645216.160191]: Step Distance moved 11.021739, step_angle -0.036246, R 17422.363636, step_distance 11.021739
+[INFO] [1484645216.163562]: Bearing now 3.219345,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645216.166651]: start turn...........................
+[INFO] [1484645216.169874]: Robot starts to execute a turn job
+[INFO] [1484645216.173772]: SR000004E
+
+[INFO] [1484645216.177098]: Start: Degree turned 0, degree to turn 5, bearing_now 3, bearing_target 8
+[INFO] [1484645216.281060]: Bearing now 3.219345,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645216.284367]: Step Distance moved 0.593987, step_angle 5.352395, R 6.360763, step_distance -0.297101
+[INFO] [1484645216.288052]: Bearing now 8.571740,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645216.291126]: Degree turned 0.000000, degree to turn 5.131073, bearing_now 8.571740, bearing_target 8.350419
+[INFO] [1484645216.294142]: Required angle:5.131073 turned angle:5.352395 step angle: 5.352395
+[INFO] [1484645216.298054]: SP000000E
+
+[INFO] [1484645216.402516]: Bearing now 8.571740,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645216.405702]: Step Distance moved 0.144875, step_angle 5.368871, R 1.546645, step_distance -0.072464
+[INFO] [1484645216.409000]: Bearing now 13.940611,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645216.412039]: Degree turned 5.352395, degree to turn 5.131073, bearing_now 13.940611, bearing_target 8.350419
+[INFO] [1484645216.415222]: Required angle:5.131073 turned angle:10.721266 step angle: 5.368871
+[INFO] [1484645216.419102]: SP000000E
+
+[INFO] [1484645216.473280]: Bearing now 13.940611,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645216.476698]: Step Distance moved 0.188337, step_angle 5.345805, R 2.019314, step_distance -0.094203
+[INFO] [1484645216.480472]: Bearing now 19.286416,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645216.483962]: Degree turned 10.721266, degree to turn 5.131073, bearing_now 19.286416, bearing_target 8.350419
+[INFO] [1484645216.487517]: Required angle:5.131073 turned angle:16.067070 step angle: 5.345805
+[INFO] [1484645216.491510]: SP000000E
+
+[INFO] [1484645216.595902]: Bearing now 19.286416,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645216.599160]: Step Distance moved 0.434716, step_angle 3.470874, R 7.177215, step_distance 0.217391
+[INFO] [1484645216.602772]: Bearing now 22.757290,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645216.605891]: Degree turned 16.067070, degree to turn 5.131073, bearing_now 22.757290, bearing_target 8.350419
+[INFO] [1484645216.609072]: Required angle:5.131073 turned angle:19.537944 step angle: 3.470874
+[INFO] [1484645216.613068]: SP000000E
+
+[INFO] [1484645216.670356]: Bearing now 22.757290,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645216.673912]: Step Distance moved 0.028986, step_angle 0.004394, R 378.000000, step_distance -0.014493
+[INFO] [1484645216.677498]: Bearing now 22.761683,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645216.681143]: Degree turned 19.537944, degree to turn 5.131073, bearing_now 22.761683, bearing_target 8.350419
+[INFO] [1484645216.684666]: Required angle:5.131073 turned angle:19.542338 step angle: 0.004394
+[INFO] [1484645216.688990]: SP000000E
+
+[INFO] [1484645216.792724]: Degree turned 19.542338, degree to turn 5.131073, bearing_now 22.761683, bearing_target 8.350419
+[INFO] [1484645216.795654]: Required angle:5.131073 turned angle:19.542338 step angle: 0.000000
+[INFO] [1484645216.798607]: Robot completed a turn job
+[INFO] [1484645216.813174]: **************correction**************
+[INFO] [1484645216.817807]: distance error: 1.381225
+[INFO] [1484645216.821703]: GPS now [121.600001, 31.200011], GPS target: [121.600001, 31.200011]
+[INFO] [1484645216.824678]: Bearing move 192.982507, Bearing now 22.761683, bearing target 8.350419
+[INFO] [1484645216.827879]: no need to correct distance.....................
+[INFO] [1484645216.831172]: angle: 14.411265
+[INFO] [1484645216.834468]: correct angle............................
+[INFO] [1484645216.839822]: Inserted a job turn to angle 8.350419
+[INFO] [1484645216.845529]: There's a -1.381225 mm distance error, 14.411265 angle difference
+[INFO] [1484645216.899910]: start turn...........................
+[INFO] [1484645216.903499]: Robot starts to execute a turn job
+[INFO] [1484645216.908195]: SL000005E
+
+[INFO] [1484645216.911943]: Start: Degree turned 0, degree to turn -14, bearing_now 22, bearing_target 8
+[INFO] [1484645216.966893]: start turn...........................
+[INFO] [1484645216.970401]: Robot starts to execute a turn job
+[INFO] [1484645216.974604]: SL000005E
+
+[INFO] [1484645216.977806]: Start: Degree turned 0, degree to turn -14, bearing_now 22, bearing_target 8
+[INFO] [1484645217.083296]: start turn...........................
+[INFO] [1484645217.086665]: Robot starts to execute a turn job
+[INFO] [1484645217.090699]: SL000005E
+
+[INFO] [1484645217.094862]: Start: Degree turned 0, degree to turn -14, bearing_now 22, bearing_target 8
+[INFO] [1484645217.208866]: Bearing now 22.761683,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645217.214807]: Step Distance moved 0.159415, step_angle -1.648665, R 5.540306, step_distance 0.079710
+[INFO] [1484645217.218786]: Bearing now 21.113018,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645217.222503]: start turn...........................
+[INFO] [1484645217.225585]: Robot starts to execute a turn job
+[INFO] [1484645217.232562]: SL000005E
+
+[INFO] [1484645217.239247]: Start: Degree turned 0, degree to turn -12, bearing_now 21, bearing_target 8
+[INFO] [1484645217.293105]: Bearing now 21.113018,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645217.296495]: Step Distance moved 0.130386, step_angle -5.402920, R 1.383208, step_distance -0.065217
+[INFO] [1484645217.300040]: Bearing now 15.710098,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645217.303514]: Degree turned 0.000000, degree to turn 12.762599, bearing_now 15.710098, bearing_target 8.350419
+[INFO] [1484645217.306709]: Required angle:-12.762599 turned angle:5.402920 step angle: -5.402920
+[INFO] [1484645217.310172]: Only 2 degrees left, redusing turning speed to 3
+[INFO] [1484645217.313707]: SL000003E
+
+[INFO] [1484645217.316716]: Robot speed changed from 3 to 3
+[INFO] [1484645217.370568]: Bearing now 15.710098,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645217.373882]: Step Distance moved 0.622957, step_angle -5.407314, R 6.603291, step_distance -0.311594
+[INFO] [1484645217.377461]: Bearing now 10.302784,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645217.383655]: Degree turned 5.402920, degree to turn 12.762599, bearing_now 10.302784, bearing_target 8.350419
+[INFO] [1484645217.386723]: Required angle:-12.762599 turned angle:10.810234 step angle: -5.407314
+[INFO] [1484645217.389891]: Only 2 degrees left, redusing turning speed to 3
+[INFO] [1484645217.393076]: Continue turning at same speed...
+[INFO] [1484645217.497127]: Bearing now 10.302784,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645217.501823]: Step Distance moved 0.318726, step_angle -5.322739, R 3.432109, step_distance 0.159420
+[INFO] [1484645217.506657]: Bearing now 4.980045,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645217.510124]: Degree turned 10.810234, degree to turn 12.762599, bearing_now 4.980045, bearing_target 8.350419
+[INFO] [1484645217.513422]: Required angle:-12.762599 turned angle:16.132973 step angle: -5.322739
+[INFO] [1484645217.517043]: SP000000E
+
+[INFO] [1484645217.574420]: Bearing now 4.980045,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645217.579117]: Step Distance moved 0.289750, step_angle -5.338116, R 3.111111, step_distance -0.144928
+[INFO] [1484645217.583251]: Bearing now 359.641929,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645217.586344]: Degree turned 16.132973, degree to turn 12.762599, bearing_now 359.641929, bearing_target 8.350419
+[INFO] [1484645217.589810]: Required angle:-12.762599 turned angle:21.471089 step angle: -5.338116
+[INFO] [1484645217.593567]: SP000000E
+
+[INFO] [1484645217.697177]: Bearing now 359.641929,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645217.700564]: Step Distance moved 0.362262, step_angle -3.515907, R 5.904405, step_distance -0.181159
+[INFO] [1484645217.704572]: Bearing now 356.126022,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645217.708153]: Degree turned 21.471089, degree to turn 12.762599, bearing_now 356.126022, bearing_target 8.350419
+[INFO] [1484645217.721820]: Required angle:-12.762599 turned angle:24.986997 step angle: -3.515907
+[INFO] [1484645217.727990]: SP000000E
+
+[INFO] [1484645217.788452]: Bearing now 356.126022,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645217.792093]: Step Distance moved 0.028986, step_angle -0.021968, R 75.600000, step_distance -0.014493
+[INFO] [1484645217.796113]: Bearing now 356.104054,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645217.799679]: Degree turned 24.986997, degree to turn 12.762599, bearing_now 356.104054, bearing_target 8.350419
+[INFO] [1484645217.802886]: Required angle:-12.762599 turned angle:25.008964 step angle: -0.021968
+[INFO] [1484645217.806222]: SP000000E
+
+[INFO] [1484645217.861041]: Bearing now 356.104054,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645217.866416]: Step Distance moved 0.000000, step_angle -0.002197, R 0.000000, step_distance 0.000000
+[INFO] [1484645217.870394]: Bearing now 356.101857,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645217.873823]: Degree turned 25.008964, degree to turn 12.762599, bearing_now 356.101857, bearing_target 8.350419
+[INFO] [1484645217.877191]: Required angle:-12.762599 turned angle:25.011161 step angle: -0.002197
+[INFO] [1484645217.881872]: SP000000E
+
+[INFO] [1484645217.986451]: Degree turned 25.011161, degree to turn 12.762599, bearing_now 356.101857, bearing_target 8.350419
+[INFO] [1484645217.989618]: Required angle:-12.762599 turned angle:25.011161 step angle: 0.000000
+[INFO] [1484645217.992717]: Robot completed a turn job
+[INFO] [1484645217.996143]: **************correction**************
+[INFO] [1484645217.999237]: distance error: 1.741003
+[INFO] [1484645218.002515]: GPS now [121.600001, 31.200011], GPS target: [121.600001, 31.200011]
+[INFO] [1484645218.005696]: Bearing move 187.263282, Bearing now 356.101857, bearing target 8.350419
+[INFO] [1484645218.008536]: no need to correct distance.....................
+[INFO] [1484645218.012137]: angle: 347.751439
+[INFO] [1484645218.015308]: correct angle............................
+[INFO] [1484645218.018353]: Inserted a job turn to angle 8.350419
+[INFO] [1484645218.024738]: There's a -1.741003 mm distance error, 347.751439 angle difference
+[INFO] [1484645218.080928]: start turn...........................
+[INFO] [1484645218.084053]: Robot starts to execute a turn job
+[INFO] [1484645218.087660]: SR000005E
+
+[INFO] [1484645218.095706]: Start: Degree turned 0, degree to turn 12, bearing_now 356, bearing_target 8
+[INFO] [1484645218.151916]: start turn...........................
+[INFO] [1484645218.160112]: Robot starts to execute a turn job
+[INFO] [1484645218.167856]: SR000005E
+
+[INFO] [1484645218.172673]: Start: Degree turned 0, degree to turn 12, bearing_now 356, bearing_target 8
+[INFO] [1484645218.278754]: Bearing now 356.101857,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645218.282105]: Step Distance moved 0.043477, step_angle -1.573975, R 1.582694, step_distance 0.021739
+[INFO] [1484645218.286207]: Bearing now 354.527882,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645218.289922]: start turn...........................
+[INFO] [1484645218.293555]: Robot starts to execute a turn job
+[INFO] [1484645218.301712]: SR000005E
+
+[INFO] [1484645218.305262]: Start: Degree turned 0, degree to turn 13, bearing_now 354, bearing_target 8
+[INFO] [1484645218.359272]: Bearing now 354.527882,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645218.362743]: Step Distance moved 0.043462, step_angle 5.418298, R 0.459761, step_distance 0.021739
+[INFO] [1484645218.366467]: Bearing now 359.946179,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645218.369617]: Degree turned 0.000000, degree to turn 13.822537, bearing_now 359.946179, bearing_target 8.350419
+[INFO] [1484645218.374298]: Required angle:13.822537 turned angle:5.418298 step angle: 5.418298
+[INFO] [1484645218.380258]: Only 2 degrees left, redusing turning speed to 3
+[INFO] [1484645218.384683]: SR000003E
+
+[INFO] [1484645218.395160]: Robot speed changed from 3 to 3
+[INFO] [1484645218.499685]: Bearing now 359.946179,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645218.503548]: Step Distance moved 0.318723, step_angle 5.401822, R 3.381863, step_distance 0.159420
+[INFO] [1484645218.507646]: Bearing now 5.348002,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645218.514725]: Degree turned 5.418298, degree to turn 13.822537, bearing_now 5.348002, bearing_target 8.350419
+[INFO] [1484645218.518463]: Required angle:13.822537 turned angle:10.820120 step angle: 5.401822
+[INFO] [1484645218.522343]: Only 2 degrees left, redusing turning speed to 3
+[INFO] [1484645218.525950]: Continue turning at same speed...
+[INFO] [1484645218.580302]: Bearing now 5.348002,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645218.583545]: Step Distance moved 0.434622, step_angle 5.397429, R 4.615385, step_distance 0.217391
+[INFO] [1484645218.587144]: Bearing now 10.745430,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645218.590721]: Degree turned 10.820120, degree to turn 13.822537, bearing_now 10.745430, bearing_target 8.350419
+[INFO] [1484645218.594250]: Required angle:13.822537 turned angle:16.217548 step angle: 5.397429
+[INFO] [1484645218.597449]: SP000000E
+
+[INFO] [1484645218.703165]: Bearing now 10.745430,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645218.706567]: Step Distance moved 0.115900, step_angle 5.368871, R 1.237316, step_distance 0.057971
+[INFO] [1484645218.710719]: Bearing now 16.114301,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645218.714317]: Degree turned 16.217548, degree to turn 13.822537, bearing_now 16.114301, bearing_target 8.350419
+[INFO] [1484645218.717421]: Required angle:13.822537 turned angle:21.586419 step angle: 5.368871
+[INFO] [1484645218.721337]: SP000000E
+
+[INFO] [1484645218.775626]: Bearing now 16.114301,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645218.779011]: Step Distance moved 0.666554, step_angle 3.648811, R 10.468393, step_distance 0.333333
+[INFO] [1484645218.782936]: Bearing now 19.763112,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645218.786657]: Degree turned 21.586419, degree to turn 13.822537, bearing_now 19.763112, bearing_target 8.350419
+[INFO] [1484645218.791349]: Required angle:13.822537 turned angle:25.235230 step angle: 3.648811
+[INFO] [1484645218.796038]: SP000000E
+
+[INFO] [1484645218.901862]: Bearing now 19.763112,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645218.905116]: Step Distance moved 0.028986, step_angle 0.008787, R 189.000000, step_distance -0.014493
+[INFO] [1484645218.911396]: Bearing now 19.771899,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645218.914617]: Degree turned 25.235230, degree to turn 13.822537, bearing_now 19.771899, bearing_target 8.350419
+[INFO] [1484645218.917783]: Required angle:13.822537 turned angle:25.244017 step angle: 0.008787
+[INFO] [1484645218.921976]: SP000000E
+
+[INFO] [1484645218.975283]: Bearing now 19.771899,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645218.978340]: Step Distance moved 0.014493, step_angle 0.001098, R 756.000000, step_distance 0.007246
+[INFO] [1484645218.982849]: Bearing now 19.772997,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645218.986202]: Degree turned 25.244017, degree to turn 13.822537, bearing_now 19.772997, bearing_target 8.350419
+[INFO] [1484645218.989973]: Required angle:13.822537 turned angle:25.245115 step angle: 0.001098
+[INFO] [1484645218.995819]: SP000000E
+
+[INFO] [1484645219.100188]: Degree turned 25.245115, degree to turn 13.822537, bearing_now 19.772997, bearing_target 8.350419
+[INFO] [1484645219.103613]: Required angle:13.822537 turned angle:25.245115 step angle: 0.000000
+[INFO] [1484645219.110590]: Robot completed a turn job
+[INFO] [1484645219.114746]: **************correction**************
+[INFO] [1484645219.118252]: distance error: 1.612090
+[INFO] [1484645219.121596]: GPS now [121.600001, 31.200011], GPS target: [121.600001, 31.200011]
+[INFO] [1484645219.125104]: Bearing move 191.463187, Bearing now 19.772997, bearing target 8.350419
+[INFO] [1484645219.128609]: no need to correct distance.....................
+[INFO] [1484645219.132283]: angle: 11.422579
+[INFO] [1484645219.135994]: correct angle............................
+[INFO] [1484645219.153590]: Inserted a job turn to angle 8.350419
+[INFO] [1484645219.157726]: There's a -1.612090 mm distance error, 11.422579 angle difference
+[INFO] [1484645219.161408]: start turn...........................
+[INFO] [1484645219.166465]: Robot starts to execute a turn job
+[INFO] [1484645219.171366]: SL000005E
+
+[INFO] [1484645219.174226]: Start: Degree turned 0, degree to turn -11, bearing_now 19, bearing_target 8
+[INFO] [1484645219.278041]: start turn...........................
+[INFO] [1484645219.280872]: Robot starts to execute a turn job
+[INFO] [1484645219.285729]: SL000005E
+
+[INFO] [1484645219.289566]: Start: Degree turned 0, degree to turn -11, bearing_now 19, bearing_target 8
+[INFO] [1484645219.394142]: Bearing now 19.772997,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645219.397867]: Step Distance moved 0.159416, step_angle -1.503679, R 6.074507, step_distance 0.079710
+[INFO] [1484645219.401823]: Bearing now 18.269318,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645219.405578]: start turn...........................
+[INFO] [1484645219.409138]: Robot starts to execute a turn job
+[INFO] [1484645219.413801]: SL000004E
+
+[INFO] [1484645219.417296]: Start: Degree turned 0, degree to turn -9, bearing_now 18, bearing_target 8
+[INFO] [1484645219.471317]: Bearing now 18.269318,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645219.474274]: Step Distance moved 0.101412, step_angle -5.411707, R 1.074082, step_distance -0.050725
+[INFO] [1484645219.478438]: Bearing now 12.857611,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645219.482524]: Degree turned 0.000000, degree to turn 9.918899, bearing_now 12.857611, bearing_target 8.350419
+[INFO] [1484645219.486612]: Required angle:-9.918899 turned angle:5.411707 step angle: -5.411707
+[INFO] [1484645219.493655]: Only 2 degrees left, redusing turning speed to 3
+[INFO] [1484645219.497885]: SL000003E
+
+[INFO] [1484645219.503527]: Robot speed changed from 3 to 3
+[INFO] [1484645219.558612]: Bearing now 12.857611,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645219.562086]: Step Distance moved 0.579494, step_angle -5.415003, R 6.133874, step_distance -0.289855
+[INFO] [1484645219.565540]: Bearing now 7.442608,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645219.568635]: Degree turned 5.411707, degree to turn 9.918899, bearing_now 7.442608, bearing_target 8.350419
+[INFO] [1484645219.572096]: Required angle:-9.918899 turned angle:10.826710 step angle: -5.415003
+[INFO] [1484645219.576268]: SP000000E
+
+[INFO] [1484645219.680161]: Bearing now 7.442608,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645219.684410]: Step Distance moved 0.333213, step_angle -5.332624, R 3.581462, step_distance 0.166667
+[INFO] [1484645219.701679]: Bearing now 2.109984,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645219.706092]: Degree turned 10.826710, degree to turn 9.918899, bearing_now 2.109984, bearing_target 8.350419
+[INFO] [1484645219.710116]: Required angle:-9.918899 turned angle:16.159334 step angle: -5.332624
+[INFO] [1484645219.716996]: SP000000E
+
+[INFO] [1484645219.772204]: Bearing now 2.109984,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645219.778931]: Step Distance moved 0.086925, step_angle -5.338116, R 0.933333, step_distance -0.043478
+[INFO] [1484645219.782166]: Bearing now 356.771868,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645219.785095]: Degree turned 16.159334, degree to turn 9.918899, bearing_now 356.771868, bearing_target 8.350419
+[INFO] [1484645219.788104]: Required angle:-9.918899 turned angle:21.497450 step angle: -5.338116
+[INFO] [1484645219.791544]: SP000000E
+
+[INFO] [1484645219.898928]: Bearing now 356.771868,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645219.902187]: Step Distance moved 0.028975, step_angle -5.320542, R 0.312139, step_distance -0.014493
+[INFO] [1484645219.905601]: Bearing now 351.451326,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645219.908493]: Degree turned 21.497450, degree to turn 9.918899, bearing_now 351.451326, bearing_target 8.350419
+[INFO] [1484645219.911510]: Required angle:-9.918899 turned angle:26.817992 step angle: -5.320542
+[INFO] [1484645219.918059]: SP000000E
+
+[INFO] [1484645219.971660]: Bearing now 351.451326,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645219.974706]: Step Distance moved 0.173883, step_angle -3.694943, R 2.696790, step_distance -0.086957
+[INFO] [1484645219.977838]: Bearing now 347.756383,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645219.981005]: Degree turned 26.817992, degree to turn 9.918899, bearing_now 347.756383, bearing_target 8.350419
+[INFO] [1484645219.983789]: Required angle:-9.918899 turned angle:30.512935 step angle: -3.694943
+[INFO] [1484645219.995153]: SP000000E
+
+[INFO] [1484645220.099039]: Bearing now 347.756383,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645220.102905]: Step Distance moved 0.072464, step_angle -0.009885, R 420.000000, step_distance 0.036232
+[INFO] [1484645220.107072]: Bearing now 347.746497,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645220.110666]: Degree turned 30.512935, degree to turn 9.918899, bearing_now 347.746497, bearing_target 8.350419
+[INFO] [1484645220.114045]: Required angle:-9.918899 turned angle:30.522821 step angle: -0.009885
+[INFO] [1484645220.120556]: SP000000E
+
+[INFO] [1484645220.175257]: Degree turned 30.522821, degree to turn 9.918899, bearing_now 347.746497, bearing_target 8.350419
+[INFO] [1484645220.177968]: Required angle:-9.918899 turned angle:30.522821 step angle: 0.000000
+[INFO] [1484645220.185759]: Robot completed a turn job
+[INFO] [1484645220.192471]: **************correction**************
+[INFO] [1484645220.195898]: distance error: 1.361931
+[INFO] [1484645220.199124]: GPS now [121.600001, 31.200011], GPS target: [121.600001, 31.200011]
+[INFO] [1484645220.202812]: Bearing move 184.485301, Bearing now 347.746497, bearing target 8.350419
+[INFO] [1484645220.206261]: no need to correct distance.....................
+[INFO] [1484645220.209980]: angle: 339.396079
+[INFO] [1484645220.213618]: correct angle............................
+[INFO] [1484645220.217161]: Inserted a job turn to angle 8.350419
+[INFO] [1484645220.220743]: There's a -1.361931 mm distance error, 339.396079 angle difference
+[INFO] [1484645220.275625]: Bearing now 347.746497,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645220.278862]: Step Distance moved 0.014493, step_angle -0.001098, R 756.000000, step_distance 0.007246
+[INFO] [1484645220.282532]: Bearing now 347.745399,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645220.285715]: start turn...........................
+[INFO] [1484645220.289102]: Robot starts to execute a turn job
+[INFO] [1484645220.292972]: SR000005E
+
+[INFO] [1484645220.297495]: Start: Degree turned 0, degree to turn 20, bearing_now 347, bearing_target 8
+[INFO] [1484645220.351378]: Degree turned 0.000000, degree to turn 20.605020, bearing_now 347.745399, bearing_target 8.350419
+[INFO] [1484645220.354557]: Required angle:20.605020 turned angle:0.000000 step angle: 0.000000
+[INFO] [1484645220.357618]: Robot stopped during the mission, start to turn again
+[INFO] [1484645220.365321]: SR000005E
+
+[INFO] [1484645220.370468]: Continue turning at same speed...
+[INFO] [1484645220.474096]: Degree turned 0.000000, degree to turn 20.605020, bearing_now 347.745399, bearing_target 8.350419
+[INFO] [1484645220.477194]: Required angle:20.605020 turned angle:0.000000 step angle: 0.000000
+[INFO] [1484645220.487511]: Robot stopped during the mission, start to turn again
+[INFO] [1484645220.499155]: SR000005E
+
+[INFO] [1484645220.502336]: Continue turning at same speed...
+[INFO] [1484645220.555513]: Bearing now 347.745399,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645220.564985]: Step Distance moved 0.202893, step_angle 1.414711, R 8.217391, step_distance -0.101449
+[INFO] [1484645220.574215]: Bearing now 349.160110,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645220.590290]: Degree turned 0.000000, degree to turn 20.605020, bearing_now 349.160110, bearing_target 8.350419
+[INFO] [1484645220.593607]: Required angle:20.605020 turned angle:1.414711 step angle: 1.414711
+[INFO] [1484645220.596748]: Only 5 degrees left, redusing turning speed to 4
+[INFO] [1484645220.604108]: SR000004E
+
+[INFO] [1484645220.607277]: Robot speed changed from 4 to 4
+[INFO] [1484645220.660755]: Bearing now 349.160110,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645220.663744]: Step Distance moved 0.115899, step_angle 5.399625, R 1.230269, step_distance 0.057971
+[INFO] [1484645220.666843]: Bearing now 354.559735,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645220.670090]: Degree turned 1.414711, degree to turn 20.605020, bearing_now 354.559735, bearing_target 8.350419
+[INFO] [1484645220.673697]: Required angle:20.605020 turned angle:6.814336 step angle: 5.399625
+[INFO] [1484645220.679573]: Only 5 degrees left, redusing turning speed to 4
+[INFO] [1484645220.682261]: Continue turning at same speed...
+[INFO] [1484645220.785362]: Bearing now 354.559735,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645220.788054]: Step Distance moved 0.101412, step_angle 5.398527, R 1.076704, step_distance -0.050725
+[INFO] [1484645220.792108]: Bearing now 359.958262,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645220.796240]: Degree turned 6.814336, degree to turn 20.605020, bearing_now 359.958262, bearing_target 8.350419
+[INFO] [1484645220.801019]: Required angle:20.605020 turned angle:12.212863 step angle: 5.398527
+[INFO] [1484645220.804572]: Only 2 degrees left, redusing turning speed to 3
+[INFO] [1484645220.808442]: SR000003E
+
+[INFO] [1484645220.812186]: Robot speed changed from 3 to 3
+[INFO] [1484645220.867013]: Bearing now 359.958262,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645220.871039]: Step Distance moved 0.246286, step_angle 5.391937, R 2.618048, step_distance 0.123188
+[INFO] [1484645220.875657]: Bearing now 5.350198,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645220.880882]: Degree turned 12.212863, degree to turn 20.605020, bearing_now 5.350198, bearing_target 8.350419
+[INFO] [1484645220.884371]: Required angle:20.605020 turned angle:17.604799 step angle: 5.391937
+[INFO] [1484645220.887796]: Only 2 degrees left, redusing turning speed to 3
+[INFO] [1484645220.891824]: Continue turning at same speed...
+[INFO] [1484645220.996081]: Bearing now 5.350198,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645220.999070]: Step Distance moved 0.376672, step_angle 5.399625, R 3.998373, step_distance 0.188406
+[INFO] [1484645221.009669]: Bearing now 10.749824,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645221.013299]: Degree turned 17.604799, degree to turn 20.605020, bearing_now 10.749824, bearing_target 8.350419
+[INFO] [1484645221.016816]: Required angle:20.605020 turned angle:23.004425 step angle: 5.399625
+[INFO] [1484645221.020644]: SP000000E
+
+[INFO] [1484645221.074282]: Bearing now 10.749824,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645221.078799]: Step Distance moved 0.028975, step_angle 5.375461, R 0.308950, step_distance 0.014493
+[INFO] [1484645221.083411]: Bearing now 16.125284,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645221.087499]: Degree turned 23.004425, degree to turn 20.605020, bearing_now 16.125284, bearing_target 8.350419
+[INFO] [1484645221.091154]: Required angle:20.605020 turned angle:28.379886 step angle: 5.375461
+[INFO] [1484645221.096583]: SP000000E
+
+[INFO] [1484645221.205681]: Bearing now 16.125284,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645221.209076]: Step Distance moved 0.681035, step_angle 3.790502, R 10.296146, step_distance 0.340580
+[INFO] [1484645221.213161]: Bearing now 19.915786,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645221.218789]: Degree turned 28.379886, degree to turn 20.605020, bearing_now 19.915786, bearing_target 8.350419
+[INFO] [1484645221.224383]: Required angle:20.605020 turned angle:32.170387 step angle: 3.790502
+[INFO] [1484645221.229770]: SP000000E
+
+[INFO] [1484645221.283800]: Bearing now 19.915786,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645221.287553]: Step Distance moved 0.043478, step_angle 0.012082, R 206.181818, step_distance -0.021739
+[INFO] [1484645221.291660]: Bearing now 19.927868,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645221.296699]: Degree turned 32.170387, degree to turn 20.605020, bearing_now 19.927868, bearing_target 8.350419
+[INFO] [1484645221.301909]: Required angle:20.605020 turned angle:32.182470 step angle: 0.012082
+[INFO] [1484645221.306977]: SP000000E
+
+[INFO] [1484645221.361740]: Bearing now 19.927868,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645221.366686]: Step Distance moved 0.014493, step_angle 0.001098, R 756.000000, step_distance 0.007246
+[INFO] [1484645221.372089]: Bearing now 19.928967,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645221.378188]: Degree turned 32.182470, degree to turn 20.605020, bearing_now 19.928967, bearing_target 8.350419
+[INFO] [1484645221.383132]: Required angle:20.605020 turned angle:32.183568 step angle: 0.001098
+[INFO] [1484645221.387791]: SP000000E
+
+[INFO] [1484645221.492867]: Degree turned 32.183568, degree to turn 20.605020, bearing_now 19.928967, bearing_target 8.350419
+[INFO] [1484645221.496571]: Required angle:20.605020 turned angle:32.183568 step angle: 0.000000
+[INFO] [1484645221.500785]: Robot completed a turn job
+[INFO] [1484645221.513710]: **************correction**************
+[INFO] [1484645221.517845]: distance error: 1.780282
+[INFO] [1484645221.522569]: GPS now [121.600001, 31.200011], GPS target: [121.600001, 31.200011]
+[INFO] [1484645221.526945]: Bearing move 187.729836, Bearing now 19.928967, bearing target 8.350419
+[INFO] [1484645221.532112]: no need to correct distance.....................
+[INFO] [1484645221.539024]: angle: 11.578548
+[INFO] [1484645221.544020]: correct angle............................
+[INFO] [1484645221.548220]: Inserted a job turn to angle 8.350419
+[INFO] [1484645221.555859]: There's a -1.780282 mm distance error, 11.578548 angle difference
+[INFO] [1484645221.562932]: start turn...........................
+[INFO] [1484645221.568708]: Robot starts to execute a turn job
+[INFO] [1484645221.574121]: SL000005E
+
+[INFO] [1484645221.577892]: Start: Degree turned 0, degree to turn -11, bearing_now 19, bearing_target 8
+[INFO] [1484645221.684750]: start turn...........................
+[INFO] [1484645221.690365]: Robot starts to execute a turn job
+[INFO] [1484645221.696016]: SL000005E
+
+[INFO] [1484645221.698561]: Start: Degree turned 0, degree to turn -11, bearing_now 19, bearing_target 8
+[INFO] [1484645221.756964]: Bearing now 19.928967,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645221.760659]: Step Distance moved 8.927536, step_angle -0.010984, R 46569.600000, step_distance 8.927536
+[INFO] [1484645221.770179]: Bearing now 19.917983,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645221.773614]: start turn...........................
+[INFO] [1484645221.781070]: Robot starts to execute a turn job
+[INFO] [1484645221.789171]: SL000005E
+
+[INFO] [1484645221.792315]: Start: Degree turned 0, degree to turn -11, bearing_now 19, bearing_target 8
+[INFO] [1484645221.896124]: Bearing now 19.917983,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645221.898763]: Step Distance moved 0.028975, step_angle -5.417199, R 0.306569, step_distance 0.014493
+[INFO] [1484645221.902277]: Bearing now 14.500784,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645221.906996]: Degree turned 0.000000, degree to turn 11.567564, bearing_now 14.500784, bearing_target 8.350419
+[INFO] [1484645221.910607]: Required angle:-11.567564 turned angle:5.417199 step angle: -5.417199
+[INFO] [1484645221.914754]: Only 2 degrees left, redusing turning speed to 3
+[INFO] [1484645221.919174]: SL000003E
+
+[INFO] [1484645221.924217]: Robot speed changed from 3 to 3
+[INFO] [1484645221.978251]: Bearing now 14.500784,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645221.981393]: Step Distance moved 0.550519, step_angle -5.419396, R 5.822456, step_distance -0.275362
+[INFO] [1484645221.984476]: Bearing now 9.081388,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645221.987332]: Degree turned 5.417199, degree to turn 11.567564, bearing_now 9.081388, bearing_target 8.350419
+[INFO] [1484645221.990331]: Required angle:-11.567564 turned angle:10.836595 step angle: -5.419396
+[INFO] [1484645221.993507]: Only 2 degrees left, redusing turning speed to 3
+[INFO] [1484645221.996669]: Continue turning at same speed...
+[INFO] [1484645222.057119]: Bearing now 9.081388,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645222.062269]: Step Distance moved 0.376675, step_angle -5.351297, R 4.034483, step_distance 0.188406
+[INFO] [1484645222.067013]: Bearing now 3.730091,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645222.071406]: Degree turned 10.836595, degree to turn 11.567564, bearing_now 3.730091, bearing_target 8.350419
+[INFO] [1484645222.082650]: Required angle:-11.567564 turned angle:16.187892 step angle: -5.351297
+[INFO] [1484645222.086829]: SP000000E
+
+[INFO] [1484645222.194204]: Bearing now 3.730091,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645222.198298]: Step Distance moved 0.043462, step_angle -5.345805, R 0.465995, step_distance 0.021739
+[INFO] [1484645222.202405]: Bearing now 358.384286,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645222.205472]: Degree turned 16.187892, degree to turn 11.567564, bearing_now 358.384286, bearing_target 8.350419
+[INFO] [1484645222.208350]: Required angle:-11.567564 turned angle:21.533697 step angle: -5.345805
+[INFO] [1484645222.215847]: SP000000E
+
+[INFO] [1484645222.274647]: Bearing now 358.384286,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645222.278492]: Step Distance moved 0.014490, step_angle -3.847617, R 0.215815, step_distance -0.007246
+[INFO] [1484645222.282449]: Bearing now 354.536669,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645222.285541]: Degree turned 21.533697, degree to turn 11.567564, bearing_now 354.536669, bearing_target 8.350419
+[INFO] [1484645222.288670]: Required angle:-11.567564 turned angle:25.381314 step angle: -3.847617
+[INFO] [1484645222.292332]: SP000000E
+
+[INFO] [1484645222.397218]: Bearing now 354.536669,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645222.400550]: Step Distance moved 0.173913, step_angle -0.021968, R 453.600000, step_distance -0.086957
+[INFO] [1484645222.403962]: Bearing now 354.514701,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645222.407013]: Degree turned 25.381314, degree to turn 11.567564, bearing_now 354.514701, bearing_target 8.350419
+[INFO] [1484645222.409904]: Required angle:-11.567564 turned angle:25.403282 step angle: -0.021968
+[INFO] [1484645222.413161]: SP000000E
+
+[INFO] [1484645222.467005]: Bearing now 354.514701,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645222.470133]: Step Distance moved 0.028986, step_angle -0.004394, R 378.000000, step_distance -0.014493
+[INFO] [1484645222.473581]: Bearing now 354.510308,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645222.476776]: Degree turned 25.403282, degree to turn 11.567564, bearing_now 354.510308, bearing_target 8.350419
+[INFO] [1484645222.480062]: Required angle:-11.567564 turned angle:25.407675 step angle: -0.004394
+[INFO] [1484645222.483555]: SP000000E
+
+[INFO] [1484645222.587653]: Degree turned 25.407675, degree to turn 11.567564, bearing_now 354.510308, bearing_target 8.350419
+[INFO] [1484645222.591196]: Required angle:-11.567564 turned angle:25.407675 step angle: 0.000000
+[INFO] [1484645222.594947]: Robot completed a turn job
+[INFO] [1484645222.598270]: **************correction**************
+[INFO] [1484645222.601516]: distance error: 1.209353
+[INFO] [1484645222.605129]: GPS now [121.600001, 31.200011], GPS target: [121.600001, 31.200011]
+[INFO] [1484645222.608796]: Bearing move 186.821079, Bearing now 354.510308, bearing target 8.350419
+[INFO] [1484645222.612223]: no need to correct distance.....................
+[INFO] [1484645222.615631]: angle: 346.159889
+[INFO] [1484645222.618886]: correct angle............................
+[INFO] [1484645222.622432]: Inserted a job turn to angle 8.350419
+[INFO] [1484645222.626072]: There's a -1.209353 mm distance error, 346.159889 angle difference
+[INFO] [1484645222.680048]: Bearing now 354.510308,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645222.683155]: Step Distance moved 0.014493, step_angle -0.001098, R 756.000000, step_distance -0.007246
+[INFO] [1484645222.686529]: Bearing now 354.509209,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645222.690267]: start turn...........................
+[INFO] [1484645222.693102]: Robot starts to execute a turn job
+[INFO] [1484645222.697066]: SR000005E
+
+[INFO] [1484645222.701377]: Start: Degree turned 0, degree to turn 13, bearing_now 354, bearing_target 8
+[INFO] [1484645222.755342]: Degree turned 0.000000, degree to turn 13.841209, bearing_now 354.509209, bearing_target 8.350419
+[INFO] [1484645222.758205]: Required angle:13.841209 turned angle:0.000000 step angle: 0.000000
+[INFO] [1484645222.761551]: Robot stopped during the mission, start to turn again
+[INFO] [1484645222.774415]: SR000005E
+
+[INFO] [1484645222.778162]: Only 5 degrees left, redusing turning speed to 4
+[INFO] [1484645222.793313]: SR000004E
+
+[INFO] [1484645222.797329]: Robot speed changed from 4 to 4
+[INFO] [1484645222.901408]: Bearing now 354.509209,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645222.904409]: Step Distance moved 0.057970, step_angle -1.282905, R 2.589041, step_distance 0.028986
+[INFO] [1484645222.908361]: Bearing now 353.226304,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645222.921250]: Degree turned 0.000000, degree to turn 13.841209, bearing_now 353.226304, bearing_target 8.350419
+[INFO] [1484645222.926113]: Required angle:13.841209 turned angle:1.282905 step angle: -1.282905
+[INFO] [1484645222.930362]: Only 5 degrees left, redusing turning speed to 4
+[INFO] [1484645222.933862]: Continue turning at same speed...
+[INFO] [1484645222.987941]: Bearing now 353.226304,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645222.992711]: Step Distance moved 0.101411, step_angle 5.418298, R 1.072775, step_distance -0.050725
+[INFO] [1484645222.998206]: Bearing now 358.644602,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645223.001893]: Degree turned 1.282905, degree to turn 13.841209, bearing_now 358.644602, bearing_target 8.350419
+[INFO] [1484645223.007254]: Required angle:13.841209 turned angle:6.701203 step angle: 5.418298
+[INFO] [1484645223.013959]: Only 2 degrees left, redusing turning speed to 3
+[INFO] [1484645223.020219]: SR000003E
+
+[INFO] [1484645223.023674]: Robot speed changed from 3 to 3
+[INFO] [1484645223.077644]: Bearing now 358.644602,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645223.081410]: Step Distance moved 0.304235, step_angle 5.416101, R 3.219631, step_distance 0.152174
+[INFO] [1484645223.085452]: Bearing now 4.060703,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645223.088878]: Degree turned 6.701203, degree to turn 13.841209, bearing_now 4.060703, bearing_target 8.350419
+[INFO] [1484645223.092565]: Required angle:13.841209 turned angle:12.117304 step angle: 5.416101
+[INFO] [1484645223.100089]: Only 2 degrees left, redusing turning speed to 3
+[INFO] [1484645223.103515]: Continue turning at same speed...
+[INFO] [1484645223.157120]: Bearing now 4.060703,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645223.160067]: Step Distance moved 0.347697, step_angle 5.404019, R 3.687805, step_distance 0.173913
+[INFO] [1484645223.164349]: Bearing now 9.464721,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645223.167760]: Degree turned 12.117304, degree to turn 13.841209, bearing_now 9.464721, bearing_target 8.350419
+[INFO] [1484645223.171338]: Required angle:13.841209 turned angle:17.521323 step angle: 5.404019
+[INFO] [1484645223.180293]: SP000000E
+
+[INFO] [1484645223.284464]: Bearing now 9.464721,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645223.287773]: Step Distance moved 0.000000, step_angle 5.386445, R 0.000000, step_distance 0.000000
+[INFO] [1484645223.291512]: Bearing now 14.851166,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645223.294953]: Degree turned 17.521323, degree to turn 13.841209, bearing_now 14.851166, bearing_target 8.350419
+[INFO] [1484645223.308251]: Required angle:13.841209 turned angle:22.907767 step angle: 5.386445
+[INFO] [1484645223.312453]: SP000000E
+
+[INFO] [1484645223.366543]: Bearing now 14.851166,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645223.370107]: Step Distance moved 0.710003, step_angle 3.968439, R 10.252975, step_distance 0.355072
+[INFO] [1484645223.373726]: Bearing now 18.819605,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645223.377348]: Degree turned 22.907767, degree to turn 13.841209, bearing_now 18.819605, bearing_target 8.350419
+[INFO] [1484645223.380782]: Required angle:13.841209 turned angle:26.876206 step angle: 3.968439
+[INFO] [1484645223.397643]: SP000000E
+
+[INFO] [1484645223.501997]: Bearing now 18.819605,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645223.504931]: Step Distance moved 0.028986, step_angle 0.015377, R 108.000000, step_distance 0.014493
+[INFO] [1484645223.508603]: Bearing now 18.834982,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645223.512708]: Degree turned 26.876206, degree to turn 13.841209, bearing_now 18.834982, bearing_target 8.350419
+[INFO] [1484645223.518717]: Required angle:13.841209 turned angle:26.891584 step angle: 0.015377
+[INFO] [1484645223.527886]: SP000000E
+
+[INFO] [1484645223.581699]: Degree turned 26.891584, degree to turn 13.841209, bearing_now 18.834982, bearing_target 8.350419
+[INFO] [1484645223.584949]: Required angle:13.841209 turned angle:26.891584 step angle: 0.000000
+[INFO] [1484645223.588735]: Robot completed a turn job
+[INFO] [1484645223.593579]: **************correction**************
+[INFO] [1484645223.599499]: distance error: 1.535672
+[INFO] [1484645223.603676]: GPS now [121.600001, 31.200011], GPS target: [121.600001, 31.200011]
+[INFO] [1484645223.607030]: Bearing move 189.359056, Bearing now 18.834982, bearing target 8.350419
+[INFO] [1484645223.610611]: no need to correct distance.....................
+[INFO] [1484645223.622175]: angle: 10.484564
+[INFO] [1484645223.625559]: correct angle............................
+[INFO] [1484645223.629966]: Inserted a job turn to angle 8.350419
+[INFO] [1484645223.633359]: There's a -1.535672 mm distance error, 10.484564 angle difference
+[INFO] [1484645223.688280]: start turn...........................
+[INFO] [1484645223.691346]: Robot starts to execute a turn job
+[INFO] [1484645223.700562]: SL000005E
+
+[INFO] [1484645223.703261]: Start: Degree turned 0, degree to turn -10, bearing_now 18, bearing_target 8
+[INFO] [1484645223.762310]: start turn...........................
+[INFO] [1484645223.765657]: Robot starts to execute a turn job
+[INFO] [1484645223.768997]: SL000005E
+
+[INFO] [1484645223.772393]: Start: Degree turned 0, degree to turn -10, bearing_now 18, bearing_target 8
+[INFO] [1484645223.876389]: start turn...........................
+[INFO] [1484645223.879180]: Robot starts to execute a turn job
+[INFO] [1484645223.882643]: SL000005E
+
+[INFO] [1484645223.886156]: Start: Degree turned 0, degree to turn -10, bearing_now 18, bearing_target 8
+[INFO] [1484645223.990414]: Bearing now 18.834982,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645223.993765]: Step Distance moved 7.826087, step_angle -0.010984, R 40824.000000, step_distance 7.826087
+[INFO] [1484645223.997104]: Bearing now 18.823999,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645224.000638]: start turn...........................
+[INFO] [1484645224.014174]: Robot starts to execute a turn job
+[INFO] [1484645224.020765]: SL000005E
+
+[INFO] [1484645224.024211]: Start: Degree turned 0, degree to turn -10, bearing_now 18, bearing_target 8
+[INFO] [1484645224.077913]: Bearing now 18.823999,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645224.081083]: Step Distance moved 0.159361, step_angle -5.416101, R 1.686473, step_distance 0.079710
+[INFO] [1484645224.084344]: Bearing now 13.407898,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645224.087252]: Degree turned 0.000000, degree to turn 10.473580, bearing_now 13.407898, bearing_target 8.350419
+[INFO] [1484645224.090106]: Required angle:-10.473580 turned angle:5.416101 step angle: -5.416101
+[INFO] [1484645224.103264]: Only 2 degrees left, redusing turning speed to 3
+[INFO] [1484645224.107373]: SL000003E
+
+[INFO] [1484645224.110687]: Robot speed changed from 3 to 3
+[INFO] [1484645224.164914]: Bearing now 13.407898,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645224.173725]: Step Distance moved 0.420133, step_angle -5.422691, R 4.440753, step_distance -0.210145
+[INFO] [1484645224.178966]: Bearing now 7.985207,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645224.183800]: Degree turned 5.416101, degree to turn 10.473580, bearing_now 7.985207, bearing_target 8.350419
+[INFO] [1484645224.187852]: Required angle:-10.473580 turned angle:10.838792 step angle: -5.422691
+[INFO] [1484645224.192414]: SP000000E
+
+[INFO] [1484645224.295956]: Bearing now 7.985207,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645224.299072]: Step Distance moved 0.304237, step_angle -5.361182, R 3.252612, step_distance 0.152174
+[INFO] [1484645224.302550]: Bearing now 2.624025,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645224.305438]: Degree turned 10.838792, degree to turn 10.473580, bearing_now 2.624025, bearing_target 8.350419
+[INFO] [1484645224.321901]: Required angle:-10.473580 turned angle:16.199974 step angle: -5.361182
+[INFO] [1484645224.326746]: SP000000E
+
+[INFO] [1484645224.384364]: Bearing now 2.624025,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645224.392139]: Step Distance moved 0.144875, step_angle -5.344706, R 1.553637, step_distance 0.072464
+[INFO] [1484645224.396065]: Bearing now 357.279318,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645224.401117]: Degree turned 16.199974, degree to turn 10.473580, bearing_now 357.279318, bearing_target 8.350419
+[INFO] [1484645224.404497]: Required angle:-10.473580 turned angle:21.544681 step angle: -5.344706
+[INFO] [1484645224.408613]: SP000000E
+
+[INFO] [1484645224.468740]: Bearing now 357.279318,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645224.472289]: Step Distance moved 0.130408, step_angle -4.014571, R 1.861560, step_distance -0.065217
+[INFO] [1484645224.476229]: Bearing now 353.264747,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645224.480222]: Degree turned 21.544681, degree to turn 10.473580, bearing_now 353.264747, bearing_target 8.350419
+[INFO] [1484645224.484142]: Required angle:-10.473580 turned angle:25.559251 step angle: -4.014571
+[INFO] [1484645224.488248]: SP000000E
+
+[INFO] [1484645224.600564]: Bearing now 353.264747,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645224.603900]: Step Distance moved 0.043478, step_angle -0.016476, R 151.200000, step_distance -0.021739
+[INFO] [1484645224.607222]: Bearing now 353.248272,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645224.612606]: Degree turned 25.559251, degree to turn 10.473580, bearing_now 353.248272, bearing_target 8.350419
+[INFO] [1484645224.617859]: Required angle:-10.473580 turned angle:25.575727 step angle: -0.016476
+[INFO] [1484645224.626183]: SP000000E
+
+[INFO] [1484645224.680490]: Bearing now 353.248272,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645224.684029]: Step Distance moved 0.086957, step_angle -0.006590, R 756.000000, step_distance -0.043478
+[INFO] [1484645224.687161]: Bearing now 353.241681,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645224.690475]: Degree turned 25.575727, degree to turn 10.473580, bearing_now 353.241681, bearing_target 8.350419
+[INFO] [1484645224.693601]: Required angle:-10.473580 turned angle:25.582317 step angle: -0.006590
+[INFO] [1484645224.697163]: SP000000E
+
+[INFO] [1484645224.801434]: Bearing now 353.241681,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645224.804691]: Step Distance moved 0.086957, step_angle -0.006590, R 756.000000, step_distance -0.043478
+[INFO] [1484645224.808195]: Bearing now 353.235091,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645224.811672]: Degree turned 25.582317, degree to turn 10.473580, bearing_now 353.235091, bearing_target 8.350419
+[INFO] [1484645224.815538]: Required angle:-10.473580 turned angle:25.588908 step angle: -0.006590
+[INFO] [1484645224.823254]: SP000000E
+
+[INFO] [1484645224.876740]: Bearing now 353.235091,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645224.879797]: Step Distance moved 0.057971, step_angle -0.004394, R 756.000000, step_distance -0.028986
+[INFO] [1484645224.883030]: Bearing now 353.230698,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645224.886122]: Degree turned 25.588908, degree to turn 10.473580, bearing_now 353.230698, bearing_target 8.350419
+[INFO] [1484645224.888976]: Required angle:-10.473580 turned angle:25.593301 step angle: -0.004394
+[INFO] [1484645224.892592]: SP000000E
+
+[INFO] [1484645224.997655]: Bearing now 353.230698,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645225.002527]: Step Distance moved 0.043478, step_angle -0.003295, R 756.000000, step_distance -0.021739
+[INFO] [1484645225.005783]: Bearing now 353.227402,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645225.010217]: Degree turned 25.593301, degree to turn 10.473580, bearing_now 353.227402, bearing_target 8.350419
+[INFO] [1484645225.013870]: Required angle:-10.473580 turned angle:25.596596 step angle: -0.003295
+[INFO] [1484645225.017867]: SP000000E
+
+[INFO] [1484645225.079669]: Bearing now 353.227402,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645225.084039]: Step Distance moved 0.014493, step_angle -0.001098, R 756.000000, step_distance -0.007246
+[INFO] [1484645225.088198]: Bearing now 353.226304,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645225.092290]: Degree turned 25.596596, degree to turn 10.473580, bearing_now 353.226304, bearing_target 8.350419
+[INFO] [1484645225.095926]: Required angle:-10.473580 turned angle:25.597695 step angle: -0.001098
+[INFO] [1484645225.100009]: SP000000E
+
+[INFO] [1484645225.158514]: Degree turned 25.597695, degree to turn 10.473580, bearing_now 353.226304, bearing_target 8.350419
+[INFO] [1484645225.161970]: Required angle:-10.473580 turned angle:25.597695 step angle: 0.000000
+[INFO] [1484645225.166175]: Robot completed a turn job
+[INFO] [1484645225.170122]: **************correction**************
+[INFO] [1484645225.173539]: distance error: 1.478122
+[INFO] [1484645225.177162]: GPS now [121.600001, 31.200011], GPS target: [121.600001, 31.200011]
+[INFO] [1484645225.180894]: Bearing move 183.888241, Bearing now 353.226304, bearing target 8.350419
+[INFO] [1484645225.184675]: no need to correct distance.....................
+[INFO] [1484645225.188391]: angle: 344.875886
+[INFO] [1484645225.191914]: correct angle............................
+[INFO] [1484645225.196458]: Inserted a job turn to angle 8.350419
+[INFO] [1484645225.200478]: There's a -1.478122 mm distance error, 344.875886 angle difference
+[INFO] [1484645225.305228]: Bearing now 353.226304,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645225.309346]: Step Distance moved 0.014493, step_angle -0.001098, R 756.000000, step_distance -0.007246
+[INFO] [1484645225.315159]: Bearing now 353.225206,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645225.318291]: start turn...........................
+[INFO] [1484645225.321500]: Robot starts to execute a turn job
+[INFO] [1484645225.325258]: SR000005E
+
+[INFO] [1484645225.328294]: Start: Degree turned 0, degree to turn 15, bearing_now 353, bearing_target 8
+[INFO] [1484645225.381949]: Degree turned 0.000000, degree to turn 15.125213, bearing_now 353.225206, bearing_target 8.350419
+[INFO] [1484645225.386152]: Required angle:15.125213 turned angle:0.000000 step angle: 0.000000
+[INFO] [1484645225.394727]: Robot stopped during the mission, start to turn again
+[INFO] [1484645225.407169]: SR000005E
+
+[INFO] [1484645225.410973]: Only 5 degrees left, redusing turning speed to 4
+[INFO] [1484645225.415046]: SR000004E
+
+[INFO] [1484645225.419477]: Robot speed changed from 4 to 4
+[INFO] [1484645225.479814]: Bearing now 353.225206,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645225.483499]: Step Distance moved 0.086955, step_angle -1.078607, R 4.619145, step_distance 0.043478
+[INFO] [1484645225.487658]: Bearing now 352.146599,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645225.491535]: Degree turned 0.000000, degree to turn 15.125213, bearing_now 352.146599, bearing_target 8.350419
+[INFO] [1484645225.500915]: Required angle:15.125213 turned angle:1.078607 step angle: -1.078607
+[INFO] [1484645225.504718]: Only 5 degrees left, redusing turning speed to 4
+[INFO] [1484645225.510827]: Continue turning at same speed...
+[INFO] [1484645225.566098]: Bearing now 352.146599,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645225.569538]: Step Distance moved 0.086924, step_angle 5.390838, R 0.924205, step_distance -0.043478
+[INFO] [1484645225.573956]: Bearing now 357.537437,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645225.580050]: Degree turned 1.078607, degree to turn 15.125213, bearing_now 357.537437, bearing_target 8.350419
+[INFO] [1484645225.588800]: Required angle:15.125213 turned angle:6.469445 step angle: 5.390838
+[INFO] [1484645225.594061]: Only 2 degrees left, redusing turning speed to 3
+[INFO] [1484645225.598366]: SR000003E
+
+[INFO] [1484645225.602084]: Robot speed changed from 3 to 3
+[INFO] [1484645225.664169]: Bearing now 357.537437,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645225.675012]: Step Distance moved 0.289748, step_angle 5.401822, R 3.074420, step_distance 0.144928
+[INFO] [1484645225.679772]: Bearing now 2.939259,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645225.683183]: Degree turned 6.469445, degree to turn 15.125213, bearing_now 2.939259, bearing_target 8.350419
+[INFO] [1484645225.688127]: Required angle:15.125213 turned angle:11.871267 step angle: 5.401822
+[INFO] [1484645225.697468]: Only 2 degrees left, redusing turning speed to 3
+[INFO] [1484645225.700926]: Continue turning at same speed...
+[INFO] [1484645225.804933]: Bearing now 2.939259,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645225.808016]: Step Distance moved 0.391160, step_angle 5.394133, R 4.156384, step_distance 0.195652
+[INFO] [1484645225.811564]: Bearing now 8.333392,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645225.815540]: Degree turned 11.871267, degree to turn 15.125213, bearing_now 8.333392, bearing_target 8.350419
+[INFO] [1484645225.819166]: Required angle:15.125213 turned angle:17.265401 step angle: 5.394133
+[INFO] [1484645225.823935]: SP000000E
+
+[INFO] [1484645225.884278]: Bearing now 8.333392,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645225.888533]: Step Distance moved 0.043462, step_angle 5.378756, R 0.463141, step_distance 0.021739
+[INFO] [1484645225.892144]: Bearing now 13.712148,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645225.895707]: Degree turned 17.265401, degree to turn 15.125213, bearing_now 13.712148, bearing_target 8.350419
+[INFO] [1484645225.899516]: Required angle:15.125213 turned angle:22.644157 step angle: 5.378756
+[INFO] [1484645225.904058]: SP000000E
+
+[INFO] [1484645225.960230]: Bearing now 13.712148,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645225.963462]: Step Distance moved 0.695396, step_angle 5.384248, R 7.402693, step_distance 0.347826
+[INFO] [1484645225.966710]: Bearing now 19.096396,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645225.969909]: Degree turned 22.644157, degree to turn 15.125213, bearing_now 19.096396, bearing_target 8.350419
+[INFO] [1484645225.972685]: Required angle:15.125213 turned angle:28.028405 step angle: 5.384248
+[INFO] [1484645225.978469]: SP000000E
+
+[INFO] [1484645226.084363]: Bearing now 19.096396,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645226.087656]: Step Distance moved 0.130406, step_angle 4.155163, R 1.798573, step_distance 0.065217
+[INFO] [1484645226.091361]: Bearing now 23.251560,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645226.094934]: Degree turned 28.028405, degree to turn 15.125213, bearing_now 23.251560, bearing_target 8.350419
+[INFO] [1484645226.109652]: Required angle:15.125213 turned angle:32.183568 step angle: 4.155163
+[INFO] [1484645226.115364]: SP000000E
+
+[INFO] [1484645226.180101]: Bearing now 23.251560,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645226.183682]: Step Distance moved 0.188406, step_angle 0.020869, R 517.263158, step_distance 0.094203
+[INFO] [1484645226.186813]: Bearing now 23.272429,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645226.190577]: Degree turned 32.183568, degree to turn 15.125213, bearing_now 23.272429, bearing_target 8.350419
+[INFO] [1484645226.193859]: Required angle:15.125213 turned angle:32.204437 step angle: 0.020869
+[INFO] [1484645226.197702]: SP000000E
+
+[INFO] [1484645226.302948]: Bearing now 23.272429,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645226.306045]: Step Distance moved 0.173913, step_angle 0.013181, R 756.000000, step_distance 0.086957
+[INFO] [1484645226.321328]: Bearing now 23.285609,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645226.325279]: Degree turned 32.204437, degree to turn 15.125213, bearing_now 23.285609, bearing_target 8.350419
+[INFO] [1484645226.328535]: Required angle:15.125213 turned angle:32.217618 step angle: 0.013181
+[INFO] [1484645226.332771]: SP000000E
+
+[INFO] [1484645226.386681]: Bearing now 23.285609,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645226.390391]: Step Distance moved 0.028986, step_angle 0.002197, R 756.000000, step_distance 0.014493
+[INFO] [1484645226.398567]: Bearing now 23.287806,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645226.401598]: Degree turned 32.217618, degree to turn 15.125213, bearing_now 23.287806, bearing_target 8.350419
+[INFO] [1484645226.404834]: Required angle:15.125213 turned angle:32.219814 step angle: 0.002197
+[INFO] [1484645226.412252]: SP000000E
+
+[INFO] [1484645226.465963]: Bearing now 23.287806,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645226.470117]: Step Distance moved 0.014493, step_angle 0.001098, R 756.000000, step_distance 0.007246
+[INFO] [1484645226.475101]: Bearing now 23.288904,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645226.478279]: Degree turned 32.219814, degree to turn 15.125213, bearing_now 23.288904, bearing_target 8.350419
+[INFO] [1484645226.481326]: Required angle:15.125213 turned angle:32.220913 step angle: 0.001098
+[INFO] [1484645226.484708]: SP000000E
+
+[INFO] [1484645226.592398]: Degree turned 32.220913, degree to turn 15.125213, bearing_now 23.288904, bearing_target 8.350419
+[INFO] [1484645226.595341]: Required angle:15.125213 turned angle:32.220913 step angle: 0.000000
+[INFO] [1484645226.598441]: Robot completed a turn job
+[INFO] [1484645226.604266]: **************correction**************
+[INFO] [1484645226.609494]: distance error: 2.101041
+[INFO] [1484645226.613594]: GPS now [121.600001, 31.200011], GPS target: [121.600001, 31.200011]
+[INFO] [1484645226.617946]: Bearing move 191.889571, Bearing now 23.288904, bearing target 8.350419
+[INFO] [1484645226.621096]: no need to correct distance.....................
+[INFO] [1484645226.624134]: angle: 14.938486
+[INFO] [1484645226.627049]: correct angle............................
+[INFO] [1484645226.630067]: Inserted a job turn to angle 8.350419
+[INFO] [1484645226.633354]: There's a -2.101041 mm distance error, 14.938486 angle difference
+[INFO] [1484645226.687324]: start turn...........................
+[INFO] [1484645226.690697]: Robot starts to execute a turn job
+[INFO] [1484645226.694896]: SL000005E
+
+[INFO] [1484645226.698754]: Start: Degree turned 0, degree to turn -14, bearing_now 23, bearing_target 8
+[INFO] [1484645226.753229]: start turn...........................
+[INFO] [1484645226.756227]: Robot starts to execute a turn job
+[INFO] [1484645226.761904]: SL000005E
+
+[INFO] [1484645226.765655]: Start: Degree turned 0, degree to turn -14, bearing_now 23, bearing_target 8
+[INFO] [1484645226.876631]: Bearing now 23.288904,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645226.880024]: Step Distance moved 0.101448, step_angle 0.974261, R 5.966178, step_distance 0.050725
+[INFO] [1484645226.883384]: Bearing now 24.263166,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645226.886794]: start turn...........................
+[INFO] [1484645226.890436]: Robot starts to execute a turn job
+[INFO] [1484645226.894655]: SL000005E
+
+[INFO] [1484645226.898895]: Start: Degree turned 0, degree to turn -15, bearing_now 24, bearing_target 8
+[INFO] [1484645227.003407]: Bearing now 24.263166,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645227.006803]: Step Distance moved 0.420137, step_angle -5.358985, R 4.493544, step_distance -0.210145
+[INFO] [1484645227.011988]: Bearing now 18.904180,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645227.016157]: Degree turned 0.000000, degree to turn 15.912747, bearing_now 18.904180, bearing_target 8.350419
+[INFO] [1484645227.019500]: Required angle:-15.912747 turned angle:5.358985 step angle: -5.358985
+[INFO] [1484645227.022992]: Only 5 degrees left, redusing turning speed to 4
+[INFO] [1484645227.026845]: SL000004E
+
+[INFO] [1484645227.031875]: Robot speed changed from 4 to 4
+[INFO] [1484645227.085906]: Bearing now 18.904180,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645227.090437]: Step Distance moved 0.144874, step_angle -5.375461, R 1.544749, step_distance 0.072464
+[INFO] [1484645227.094827]: Bearing now 13.528719,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645227.098536]: Degree turned 5.358985, degree to turn 15.912747, bearing_now 13.528719, bearing_target 8.350419
+[INFO] [1484645227.102037]: Required angle:-15.912747 turned angle:10.734446 step angle: -5.375461
+[INFO] [1484645227.105382]: Only 2 degrees left, redusing turning speed to 3
+[INFO] [1484645227.109066]: SL000003E
+
+[INFO] [1484645227.112585]: Robot speed changed from 3 to 3
+[INFO] [1484645227.167501]: Bearing now 13.528719,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645227.170726]: Step Distance moved 0.434621, step_angle -5.415003, R 4.600406, step_distance -0.217391
+[INFO] [1484645227.173843]: Bearing now 8.113717,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645227.183148]: Degree turned 10.734446, degree to turn 15.912747, bearing_now 8.113717, bearing_target 8.350419
+[INFO] [1484645227.186847]: Required angle:-15.912747 turned angle:16.149449 step angle: -5.415003
+[INFO] [1484645227.191185]: SP000000E
+
+[INFO] [1484645227.294847]: Bearing now 8.113717,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645227.298166]: Step Distance moved 0.231799, step_angle -5.366674, R 2.475645, step_distance 0.115942
+[INFO] [1484645227.301596]: Bearing now 2.747043,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645227.305626]: Degree turned 16.149449, degree to turn 15.912747, bearing_now 2.747043, bearing_target 8.350419
+[INFO] [1484645227.308900]: Required angle:-15.912747 turned angle:21.516123 step angle: -5.366674
+[INFO] [1484645227.313306]: SP000000E
+
+[INFO] [1484645227.368530]: Bearing now 2.747043,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645227.378736]: Step Distance moved 0.130405, step_angle -4.225459, R 1.768651, step_distance 0.065217
+[INFO] [1484645227.387264]: Bearing now 358.521583,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645227.391045]: Degree turned 21.516123, degree to turn 15.912747, bearing_now 358.521583, bearing_target 8.350419
+[INFO] [1484645227.399592]: Required angle:-15.912747 turned angle:25.741582 step angle: -4.225459
+[INFO] [1484645227.405983]: SP000000E
+
+[INFO] [1484645227.460051]: Bearing now 358.521583,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645227.464273]: Step Distance moved 0.043478, step_angle -0.012082, R 206.181818, step_distance 0.021739
+[INFO] [1484645227.468976]: Bearing now 358.509501,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645227.473056]: Degree turned 25.741582, degree to turn 15.912747, bearing_now 358.509501, bearing_target 8.350419
+[INFO] [1484645227.478539]: Required angle:-15.912747 turned angle:25.753664 step angle: -0.012082
+[INFO] [1484645227.483488]: SP000000E
+
+[INFO] [1484645227.587711]: Degree turned 25.753664, degree to turn 15.912747, bearing_now 358.509501, bearing_target 8.350419
+[INFO] [1484645227.591345]: Required angle:-15.912747 turned angle:25.753664 step angle: 0.000000
+[INFO] [1484645227.594665]: Robot completed a turn job
+[INFO] [1484645227.598775]: **************correction**************
+[INFO] [1484645227.603651]: distance error: 1.393721
+[INFO] [1484645227.608874]: GPS now [121.600001, 31.200011], GPS target: [121.600001, 31.200011]
+[INFO] [1484645227.613555]: Bearing move 192.382377, Bearing now 358.509501, bearing target 8.350419
+[INFO] [1484645227.617468]: no need to correct distance.....................
+[INFO] [1484645227.621475]: angle: 350.159083
+[INFO] [1484645227.626690]: correct angle............................
+[INFO] [1484645227.631345]: Inserted a job turn to angle 8.350419
+[INFO] [1484645227.635284]: There's a -1.393721 mm distance error, 350.159083 angle difference
+[INFO] [1484645227.689917]: start turn...........................
+[INFO] [1484645227.695301]: Robot starts to execute a turn job
+[INFO] [1484645227.702511]: SR000004E
+
+[INFO] [1484645227.710803]: Start: Degree turned 0, degree to turn 9, bearing_now 358, bearing_target 8
+[INFO] [1484645227.766646]: start turn...........................
+[INFO] [1484645227.772376]: Robot starts to execute a turn job
+[INFO] [1484645227.776849]: SR000004E
+
+[INFO] [1484645227.781692]: Start: Degree turned 0, degree to turn 9, bearing_now 358, bearing_target 8
+[INFO] [1484645227.889893]: Bearing now 358.509501,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645227.896385]: Step Distance moved 0.144926, step_angle -0.909457, R 9.130435, step_distance 0.072464
+[INFO] [1484645227.900649]: Bearing now 357.600045,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645227.904416]: start turn...........................
+[INFO] [1484645227.908148]: Robot starts to execute a turn job
+[INFO] [1484645227.912910]: SR000005E
+
+[INFO] [1484645227.916566]: Start: Degree turned 0, degree to turn 10, bearing_now 357, bearing_target 8
+[INFO] [1484645227.972203]: Bearing now 357.600045,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645227.975452]: Step Distance moved 0.260772, step_angle 5.434773, R 2.750202, step_distance 0.130435
+[INFO] [1484645227.979363]: Bearing now 3.034818,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645227.983389]: Degree turned 0.000000, degree to turn 10.750374, bearing_now 3.034818, bearing_target 8.350419
+[INFO] [1484645227.988457]: Required angle:10.750374 turned angle:5.434773 step angle: 5.434773
+[INFO] [1484645227.993413]: Only 2 degrees left, redusing turning speed to 3
+[INFO] [1484645227.998306]: SR000003E
+
+[INFO] [1484645228.002280]: Robot speed changed from 3 to 3
+[INFO] [1484645228.106955]: Bearing now 3.034818,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645228.110986]: Step Distance moved 0.260772, step_angle 5.417199, R 2.759124, step_distance 0.130435
+[INFO] [1484645228.115505]: Bearing now 8.452017,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645228.121524]: Degree turned 5.434773, degree to turn 10.750374, bearing_now 8.452017, bearing_target 8.350419
+[INFO] [1484645228.125355]: Required angle:10.750374 turned angle:10.851973 step angle: 5.417199
+[INFO] [1484645228.131727]: SP000000E
+
+[INFO] [1484645228.187316]: Bearing now 8.452017,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645228.191705]: Step Distance moved 0.043462, step_angle 5.396330, R 0.461632, step_distance 0.021739
+[INFO] [1484645228.196448]: Bearing now 13.848347,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645228.205010]: Degree turned 10.851973, degree to turn 10.750374, bearing_now 13.848347, bearing_target 8.350419
+[INFO] [1484645228.212553]: Required angle:10.750374 turned angle:16.248303 step angle: 5.396330
+[INFO] [1484645228.217243]: SP000000E
+
+[INFO] [1484645228.272198]: Bearing now 13.848347,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645228.275889]: Step Distance moved 0.738857, step_angle 5.400724, R 7.841367, step_distance 0.369565
+[INFO] [1484645228.280225]: Bearing now 19.249071,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645228.284749]: Degree turned 16.248303, degree to turn 10.750374, bearing_now 19.249071, bearing_target 8.350419
+[INFO] [1484645228.289789]: Required angle:10.750374 turned angle:21.649026 step angle: 5.400724
+[INFO] [1484645228.294851]: SP000000E
+
+[INFO] [1484645228.400514]: Bearing now 19.249071,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645228.408642]: Step Distance moved 0.072437, step_angle 5.396330, R 0.769387, step_distance -0.036232
+[INFO] [1484645228.421500]: Bearing now 24.645401,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645228.425118]: Degree turned 21.649026, degree to turn 10.750374, bearing_now 24.645401, bearing_target 8.350419
+[INFO] [1484645228.429228]: Required angle:10.750374 turned angle:27.045357 step angle: 5.396330
+[INFO] [1484645228.433659]: SP000000E
+
+[INFO] [1484645228.489876]: Bearing now 24.645401,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645228.494583]: Step Distance moved 0.275296, step_angle 4.355068, R 3.622699, step_distance -0.137681
+[INFO] [1484645228.505088]: Bearing now 29.000469,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645228.508415]: Degree turned 27.045357, degree to turn 10.750374, bearing_now 29.000469, bearing_target 8.350419
+[INFO] [1484645228.511973]: Required angle:10.750374 turned angle:31.400425 step angle: 4.355068
+[INFO] [1484645228.516694]: SP000000E
+
+[INFO] [1484645228.576500]: Bearing now 29.000469,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645228.583158]: Step Distance moved 0.028986, step_angle 0.019771, R 84.000000, step_distance 0.014493
+[INFO] [1484645228.585895]: Bearing now 29.020240,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645228.589479]: Degree turned 31.400425, degree to turn 10.750374, bearing_now 29.020240, bearing_target 8.350419
+[INFO] [1484645228.592746]: Required angle:10.750374 turned angle:31.420195 step angle: 0.019771
+[INFO] [1484645228.596684]: SP000000E
+
+[INFO] [1484645228.704496]: Bearing now 29.020240,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645228.707556]: Step Distance moved 0.014493, step_angle 0.001098, R 756.000000, step_distance -0.007246
+[INFO] [1484645228.711038]: Bearing now 29.021338,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645228.713931]: Degree turned 31.420195, degree to turn 10.750374, bearing_now 29.021338, bearing_target 8.350419
+[INFO] [1484645228.716794]: Required angle:10.750374 turned angle:31.421294 step angle: 0.001098
+[INFO] [1484645228.720054]: SP000000E
+
+[INFO] [1484645228.773630]: Bearing now 29.021338,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645228.776737]: Step Distance moved 0.014493, step_angle 0.001098, R 756.000000, step_distance -0.007246
+[INFO] [1484645228.780864]: Bearing now 29.022437,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645228.786688]: Degree turned 31.421294, degree to turn 10.750374, bearing_now 29.022437, bearing_target 8.350419
+[INFO] [1484645228.794054]: Required angle:10.750374 turned angle:31.422392 step angle: 0.001098
+[INFO] [1484645228.797738]: SP000000E
+
+[INFO] [1484645228.901583]: Degree turned 31.422392, degree to turn 10.750374, bearing_now 29.022437, bearing_target 8.350419
+[INFO] [1484645228.904686]: Required angle:10.750374 turned angle:31.422392 step angle: 0.000000
+[INFO] [1484645228.907470]: Robot completed a turn job
+[INFO] [1484645228.913528]: **************correction**************
+[INFO] [1484645228.919143]: distance error: 1.689231
+[INFO] [1484645228.929703]: GPS now [121.600001, 31.200011], GPS target: [121.600001, 31.200011]
+[INFO] [1484645228.933714]: Bearing move 194.600226, Bearing now 29.022437, bearing target 8.350419
+[INFO] [1484645228.936964]: no need to correct distance.....................
+[INFO] [1484645228.940464]: angle: 20.672018
+[INFO] [1484645228.943690]: correct angle............................
+[INFO] [1484645228.947026]: Inserted a job turn to angle 8.350419
+[INFO] [1484645228.958477]: There's a -1.689231 mm distance error, 20.672018 angle difference
+[INFO] [1484645228.962255]: start turn...........................
+[INFO] [1484645228.966035]: Robot starts to execute a turn job
+[INFO] [1484645228.974153]: SL000005E
+
+[INFO] [1484645228.977622]: Start: Degree turned 0, degree to turn -20, bearing_now 29, bearing_target 8
+[INFO] [1484645229.085657]: start turn...........................
+[INFO] [1484645229.089341]: Robot starts to execute a turn job
+[INFO] [1484645229.093653]: SL000005E
+
+[INFO] [1484645229.111734]: Start: Degree turned 0, degree to turn -20, bearing_now 29, bearing_target 8
+[INFO] [1484645229.168325]: Bearing now 29.022437,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645229.171529]: Step Distance moved 0.043478, step_angle 0.805111, R 3.094134, step_distance -0.021739
+[INFO] [1484645229.177088]: Bearing now 29.827548,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645229.180020]: start turn...........................
+[INFO] [1484645229.182950]: Robot starts to execute a turn job
+[INFO] [1484645229.187797]: SL000005E
+
+[INFO] [1484645229.191762]: Start: Degree turned 0, degree to turn -21, bearing_now 29, bearing_target 8
+[INFO] [1484645229.296948]: Bearing now 29.827548,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645229.300244]: Step Distance moved 0.738858, step_angle -5.387543, R 7.860550, step_distance -0.369565
+[INFO] [1484645229.310839]: Bearing now 24.440004,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645229.315014]: Degree turned 0.000000, degree to turn 21.477129, bearing_now 24.440004, bearing_target 8.350419
+[INFO] [1484645229.318859]: Required angle:-21.477129 turned angle:5.387543 step angle: -5.387543
+[INFO] [1484645229.322229]: Only 5 degrees left, redusing turning speed to 4
+[INFO] [1484645229.326407]: SL000004E
+
+[INFO] [1484645229.330330]: Robot speed changed from 4 to 4
+[INFO] [1484645229.383763]: Bearing now 24.440004,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645229.387515]: Step Distance moved 0.550525, step_angle -5.344706, R 5.903822, step_distance -0.275362
+[INFO] [1484645229.392496]: Bearing now 19.095298,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645229.396373]: Degree turned 5.387543, degree to turn 21.477129, bearing_now 19.095298, bearing_target 8.350419
+[INFO] [1484645229.399575]: Required angle:-21.477129 turned angle:10.732249 step angle: -5.344706
+[INFO] [1484645229.402632]: Only 5 degrees left, redusing turning speed to 4
+[INFO] [1484645229.405695]: Continue turning at same speed...
+[INFO] [1484645229.459321]: Bearing now 19.095298,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645229.462630]: Step Distance moved 0.173849, step_angle -5.375461, R 1.853698, step_distance 0.086957
+[INFO] [1484645229.466255]: Bearing now 13.719837,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645229.469587]: Degree turned 10.732249, degree to turn 21.477129, bearing_now 13.719837, bearing_target 8.350419
+[INFO] [1484645229.482191]: Required angle:-21.477129 turned angle:16.107710 step angle: -5.375461
+[INFO] [1484645229.484995]: Only 2 degrees left, redusing turning speed to 3
+[INFO] [1484645229.488467]: SL000003E
+
+[INFO] [1484645229.493009]: Robot speed changed from 3 to 3
+[INFO] [1484645229.599902]: Bearing now 13.719837,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645229.603249]: Step Distance moved 0.260772, step_angle -5.415003, R 2.760243, step_distance -0.130435
+[INFO] [1484645229.607434]: Bearing now 8.304835,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645229.611636]: Degree turned 16.107710, degree to turn 21.477129, bearing_now 8.304835, bearing_target 8.350419
+[INFO] [1484645229.618427]: Required angle:-21.477129 turned angle:21.522713 step angle: -5.415003
+[INFO] [1484645229.622045]: SP000000E
+
+[INFO] [1484645229.677291]: Bearing now 8.304835,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645229.681559]: Step Distance moved 0.333211, step_angle -5.385346, R 3.546400, step_distance 0.166667
+[INFO] [1484645229.685639]: Bearing now 2.919488,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645229.689473]: Degree turned 21.522713, degree to turn 21.477129, bearing_now 2.919488, bearing_target 8.350419
+[INFO] [1484645229.693719]: Required angle:-21.477129 turned angle:26.908059 step angle: -5.385346
+[INFO] [1484645229.697768]: SP000000E
+
+[INFO] [1484645229.807561]: Bearing now 2.919488,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645229.817216]: Step Distance moved 0.434676, step_angle -4.404495, R 5.655860, step_distance 0.217391
+[INFO] [1484645229.822059]: Bearing now 358.514993,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645229.826681]: Degree turned 26.908059, degree to turn 21.477129, bearing_now 358.514993, bearing_target 8.350419
+[INFO] [1484645229.831080]: Required angle:-21.477129 turned angle:31.312554 step angle: -4.404495
+[INFO] [1484645229.835778]: SP000000E
+
+[INFO] [1484645229.889754]: Bearing now 358.514993,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645229.894452]: Step Distance moved 0.043478, step_angle -0.023066, R 108.000000, step_distance -0.021739
+[INFO] [1484645229.898222]: Bearing now 358.491927,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645229.902838]: Degree turned 31.312554, degree to turn 21.477129, bearing_now 358.491927, bearing_target 8.350419
+[INFO] [1484645229.908414]: Required angle:-21.477129 turned angle:31.335620 step angle: -0.023066
+[INFO] [1484645229.913377]: SP000000E
+
+[INFO] [1484645229.967132]: Bearing now 358.491927,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645229.970718]: Step Distance moved 0.028986, step_angle -0.008787, R 189.000000, step_distance -0.014493
+[INFO] [1484645229.977132]: Bearing now 358.483140,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645229.981663]: Degree turned 31.335620, degree to turn 21.477129, bearing_now 358.483140, bearing_target 8.350419
+[INFO] [1484645229.985345]: Required angle:-21.477129 turned angle:31.344407 step angle: -0.008787
+[INFO] [1484645229.989254]: SP000000E
+
+[INFO] [1484645230.094211]: Bearing now 358.483140,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645230.098145]: Step Distance moved 0.000000, step_angle -0.004394, R 0.000000, step_distance 0.000000
+[INFO] [1484645230.102593]: Bearing now 358.478747,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645230.106503]: Degree turned 31.344407, degree to turn 21.477129, bearing_now 358.478747, bearing_target 8.350419
+[INFO] [1484645230.110539]: Required angle:-21.477129 turned angle:31.348801 step angle: -0.004394
+[INFO] [1484645230.114870]: SP000000E
+
+[INFO] [1484645230.169344]: Bearing now 358.478747,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645230.173505]: Step Distance moved 0.000000, step_angle -0.002197, R 0.000000, step_distance 0.000000
+[INFO] [1484645230.177842]: Bearing now 358.476550,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645230.181847]: Degree turned 31.348801, degree to turn 21.477129, bearing_now 358.476550, bearing_target 8.350419
+[INFO] [1484645230.185364]: Required angle:-21.477129 turned angle:31.350998 step angle: -0.002197
+[INFO] [1484645230.201657]: SP000000E
+
+[INFO] [1484645230.256414]: Degree turned 31.350998, degree to turn 21.477129, bearing_now 358.476550, bearing_target 8.350419
+[INFO] [1484645230.259543]: Required angle:-21.477129 turned angle:31.350998 step angle: 0.000000
+[INFO] [1484645230.262456]: Robot completed a turn job
+[INFO] [1484645230.265616]: **************correction**************
+[INFO] [1484645230.268761]: distance error: 2.522560
+[INFO] [1484645230.271920]: GPS now [121.600001, 31.200011], GPS target: [121.600001, 31.200011]
+[INFO] [1484645230.274955]: Bearing move 195.548300, Bearing now 358.476550, bearing target 8.350419
+[INFO] [1484645230.278123]: no need to correct distance.....................
+[INFO] [1484645230.281276]: angle: 350.126131
+[INFO] [1484645230.284056]: correct angle............................
+[INFO] [1484645230.287045]: Inserted a job turn to angle 8.350419
+[INFO] [1484645230.290071]: There's a -2.522560 mm distance error, 350.126131 angle difference
+[INFO] [1484645230.394134]: Bearing now 358.476550,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645230.397194]: Step Distance moved 0.014493, step_angle -0.001098, R 756.000000, step_distance 0.007246
+[INFO] [1484645230.400484]: Bearing now 358.475452,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645230.404095]: start turn...........................
+[INFO] [1484645230.407061]: Robot starts to execute a turn job
+[INFO] [1484645230.410618]: SR000004E
+
+[INFO] [1484645230.415055]: Start: Degree turned 0, degree to turn 9, bearing_now 358, bearing_target 8
+[INFO] [1484645230.468634]: Degree turned 0.000000, degree to turn 9.874967, bearing_now 358.475452, bearing_target 8.350419
+[INFO] [1484645230.471894]: Required angle:9.874967 turned angle:0.000000 step angle: 0.000000
+[INFO] [1484645230.474868]: Robot stopped during the mission, start to turn again
+[INFO] [1484645230.478468]: SR000004E
+
+[INFO] [1484645230.481622]: Only 2 degrees left, redusing turning speed to 3
+[INFO] [1484645230.486110]: SR000003E
+
+[INFO] [1484645230.490355]: Robot speed changed from 3 to 3
+[INFO] [1484645230.596592]: Bearing now 358.475452,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645230.599953]: Step Distance moved 0.086956, step_angle -0.700765, R 7.109718, step_distance 0.043478
+[INFO] [1484645230.603592]: Bearing now 357.774687,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645230.607486]: Degree turned 0.000000, degree to turn 9.874967, bearing_now 357.774687, bearing_target 8.350419
+[INFO] [1484645230.621613]: Required angle:9.874967 turned angle:0.700765 step angle: -0.700765
+[INFO] [1484645230.625905]: Only 2 degrees left, redusing turning speed to 3
+[INFO] [1484645230.629734]: Continue turning at same speed...
+[INFO] [1484645230.683475]: Bearing now 357.774687,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645230.688613]: Step Distance moved 0.202823, step_angle 5.412806, R 2.147727, step_distance 0.101449
+[INFO] [1484645230.693554]: Bearing now 3.187492,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645230.697983]: Degree turned 0.700765, degree to turn 9.874967, bearing_now 3.187492, bearing_target 8.350419
+[INFO] [1484645230.702814]: Required angle:9.874967 turned angle:6.113571 step angle: 5.412806
+[INFO] [1484645230.705855]: Only 2 degrees left, redusing turning speed to 3
+[INFO] [1484645230.709257]: Continue turning at same speed...
+[INFO] [1484645230.763142]: Bearing now 3.187492,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645230.767431]: Step Distance moved 0.217311, step_angle 5.407314, R 2.303473, step_distance 0.108696
+[INFO] [1484645230.771734]: Bearing now 8.594806,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645230.776475]: Degree turned 6.113571, degree to turn 9.874967, bearing_now 8.594806, bearing_target 8.350419
+[INFO] [1484645230.780508]: Required angle:9.874967 turned angle:11.520885 step angle: 5.407314
+[INFO] [1484645230.788269]: SP000000E
+
+[INFO] [1484645230.892107]: Bearing now 8.594806,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645230.895177]: Step Distance moved 0.014487, step_angle 5.391937, R 0.154003, step_distance 0.007246
+[INFO] [1484645230.898545]: Bearing now 13.986743,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645230.909808]: Degree turned 11.520885, degree to turn 9.874967, bearing_now 13.986743, bearing_target 8.350419
+[INFO] [1484645230.913121]: Required angle:9.874967 turned angle:16.912821 step angle: 5.391937
+[INFO] [1484645230.917347]: SP000000E
+
+[INFO] [1484645230.977827]: Bearing now 13.986743,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645230.981885]: Step Distance moved 0.869335, step_angle 4.564858, R 10.914341, step_distance 0.434783
+[INFO] [1484645230.988065]: Bearing now 18.551601,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645230.999376]: Degree turned 16.912821, degree to turn 9.874967, bearing_now 18.551601, bearing_target 8.350419
+[INFO] [1484645231.002826]: Required angle:9.874967 turned angle:21.477679 step angle: 4.564858
+[INFO] [1484645231.007338]: SP000000E
+
+[INFO] [1484645231.060949]: Bearing now 18.551601,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645231.063807]: Step Distance moved 0.188406, step_angle 0.014279, R 756.000000, step_distance -0.094203
+[INFO] [1484645231.072499]: Bearing now 18.565880,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645231.082079]: Degree turned 21.477679, degree to turn 9.874967, bearing_now 18.565880, bearing_target 8.350419
+[INFO] [1484645231.086764]: Required angle:9.874967 turned angle:21.491958 step angle: 0.014279
+[INFO] [1484645231.091443]: SP000000E
+
+[INFO] [1484645231.196609]: Bearing now 18.565880,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645231.200899]: Step Distance moved 0.115942, step_angle 0.008787, R 756.000000, step_distance -0.057971
+[INFO] [1484645231.205462]: Bearing now 18.574667,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645231.219082]: Degree turned 21.491958, degree to turn 9.874967, bearing_now 18.574667, bearing_target 8.350419
+[INFO] [1484645231.222816]: Required angle:9.874967 turned angle:21.500745 step angle: 0.008787
+[INFO] [1484645231.226310]: SP000000E
+
+[INFO] [1484645231.279892]: Bearing now 18.574667,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645231.283148]: Step Distance moved 0.043478, step_angle 0.003295, R 756.000000, step_distance -0.021739
+[INFO] [1484645231.286621]: Bearing now 18.577962,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645231.299378]: Degree turned 21.500745, degree to turn 9.874967, bearing_now 18.577962, bearing_target 8.350419
+[INFO] [1484645231.303037]: Required angle:9.874967 turned angle:21.504041 step angle: 0.003295
+[INFO] [1484645231.306859]: SP000000E
+
+[INFO] [1484645231.360441]: Bearing now 18.577962,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645231.363660]: Step Distance moved 0.057971, step_angle 0.004394, R 756.000000, step_distance -0.028986
+[INFO] [1484645231.376265]: Bearing now 18.582356,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645231.379964]: Degree turned 21.504041, degree to turn 9.874967, bearing_now 18.582356, bearing_target 8.350419
+[INFO] [1484645231.382981]: Required angle:9.874967 turned angle:21.508434 step angle: 0.004394
+[INFO] [1484645231.387195]: SP000000E
+
+[INFO] [1484645231.498593]: Bearing now 18.582356,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645231.501907]: Step Distance moved 0.072464, step_angle 0.005492, R 756.000000, step_distance -0.036232
+[INFO] [1484645231.505239]: Bearing now 18.587847,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645231.508349]: Degree turned 21.508434, degree to turn 9.874967, bearing_now 18.587847, bearing_target 8.350419
+[INFO] [1484645231.521773]: Required angle:9.874967 turned angle:21.513926 step angle: 0.005492
+[INFO] [1484645231.526189]: SP000000E
+
+[INFO] [1484645231.588990]: Degree turned 21.513926, degree to turn 9.874967, bearing_now 18.587847, bearing_target 8.350419
+[INFO] [1484645231.592536]: Required angle:9.874967 turned angle:21.513926 step angle: 0.000000
+[INFO] [1484645231.598452]: Robot completed a turn job
+[INFO] [1484645231.603535]: **************correction**************
+[INFO] [1484645231.606815]: distance error: 1.856088
+[INFO] [1484645231.610050]: GPS now [121.600001, 31.200011], GPS target: [121.600001, 31.200011]
+[INFO] [1484645231.617387]: Bearing move 193.073441, Bearing now 18.587847, bearing target 8.350419
+[INFO] [1484645231.621262]: no need to correct distance.....................
+[INFO] [1484645231.624602]: angle: 10.237429
+[INFO] [1484645231.627924]: correct angle............................
+[INFO] [1484645231.631192]: Inserted a job turn to angle 8.350419
+[INFO] [1484645231.634508]: There's a -1.856088 mm distance error, 10.237429 angle difference
+[INFO] [1484645231.688602]: start turn...........................
+[INFO] [1484645231.691980]: Robot starts to execute a turn job
+[INFO] [1484645231.695729]: SL000005E
+
+[INFO] [1484645231.699504]: Start: Degree turned 0, degree to turn -10, bearing_now 18, bearing_target 8
+[INFO] [1484645231.753252]: start turn...........................
+[INFO] [1484645231.757292]: Robot starts to execute a turn job
+[INFO] [1484645231.764483]: SL000005E
+
+[INFO] [1484645231.767499]: Start: Degree turned 0, degree to turn -10, bearing_now 18, bearing_target 8
+[INFO] [1484645231.871051]: start turn...........................
+[INFO] [1484645231.873517]: Robot starts to execute a turn job
+[INFO] [1484645231.884981]: SL000005E
+
+[INFO] [1484645231.888170]: Start: Degree turned 0, degree to turn -10, bearing_now 18, bearing_target 8
+[INFO] [1484645231.993622]: Bearing now 18.587847,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645231.996917]: Step Distance moved 0.115941, step_angle 0.619485, R 10.723404, step_distance -0.057971
+[INFO] [1484645232.001136]: Bearing now 19.207333,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645232.005842]: start turn...........................
+[INFO] [1484645232.010648]: Robot starts to execute a turn job
+[INFO] [1484645232.014422]: SL000005E
+
+[INFO] [1484645232.022119]: Start: Degree turned 0, degree to turn -10, bearing_now 19, bearing_target 8
+[INFO] [1484645232.078334]: Bearing now 19.207333,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645232.082754]: Step Distance moved 0.144875, step_angle -5.353493, R 1.551087, step_distance 0.072464
+[INFO] [1484645232.087363]: Bearing now 13.853839,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645232.091899]: Degree turned 0.000000, degree to turn 10.856914, bearing_now 13.853839, bearing_target 8.350419
+[INFO] [1484645232.095790]: Required angle:-10.856914 turned angle:5.353493 step angle: -5.353493
+[INFO] [1484645232.099863]: Only 2 degrees left, redusing turning speed to 3
+[INFO] [1484645232.104385]: SL000003E
+
+[INFO] [1484645232.108845]: Robot speed changed from 3 to 3
+[INFO] [1484645232.163570]: Bearing now 13.853839,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645232.167558]: Step Distance moved 0.260773, step_angle -5.406216, R 2.764730, step_distance -0.130435
+[INFO] [1484645232.173206]: Bearing now 8.447624,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645232.177430]: Degree turned 5.353493, degree to turn 10.856914, bearing_now 8.447624, bearing_target 8.350419
+[INFO] [1484645232.181142]: Required angle:-10.856914 turned angle:10.759709 step angle: -5.406216
+[INFO] [1484645232.195290]: SP000000E
+
+[INFO] [1484645232.300191]: Bearing now 8.447624,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645232.303352]: Step Distance moved 0.014487, step_angle -5.391937, R 0.154003, step_distance -0.007246
+[INFO] [1484645232.306932]: Bearing now 3.055687,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645232.311444]: Degree turned 10.759709, degree to turn 10.856914, bearing_now 3.055687, bearing_target 8.350419
+[INFO] [1484645232.314758]: Required angle:-10.856914 turned angle:16.151646 step angle: -5.391937
+[INFO] [1484645232.318111]: SP000000E
+
+[INFO] [1484645232.371694]: Bearing now 3.055687,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645232.374560]: Step Distance moved 0.347701, step_angle -5.318345, R 3.747212, step_distance 0.173913
+[INFO] [1484645232.378723]: Bearing now 357.737342,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645232.382214]: Degree turned 16.151646, degree to turn 10.856914, bearing_now 357.737342, bearing_target 8.350419
+[INFO] [1484645232.385502]: Required angle:-10.856914 turned angle:21.469991 step angle: -5.318345
+[INFO] [1484645232.389039]: SP000000E
+
+[INFO] [1484645232.493439]: Bearing now 357.737342,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645232.496981]: Step Distance moved 0.000000, step_angle -5.302968, R 0.000000, step_distance 0.000000
+[INFO] [1484645232.503559]: Bearing now 352.434374,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645232.511113]: Degree turned 21.469991, degree to turn 10.856914, bearing_now 352.434374, bearing_target 8.350419
+[INFO] [1484645232.515914]: Required angle:-10.856914 turned angle:26.772959 step angle: -5.302968
+[INFO] [1484645232.521673]: SP000000E
+
+[INFO] [1484645232.576637]: Bearing now 352.434374,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645232.580526]: Step Distance moved 0.130401, step_angle -4.550579, R 1.642288, step_distance 0.065217
+[INFO] [1484645232.591733]: Bearing now 347.883794,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645232.596351]: Degree turned 26.772959, degree to turn 10.856914, bearing_now 347.883794, bearing_target 8.350419
+[INFO] [1484645232.600143]: Required angle:-10.856914 turned angle:31.323538 step angle: -4.550579
+[INFO] [1484645232.604668]: SP000000E
+
+[INFO] [1484645232.709635]: Bearing now 347.883794,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645232.712608]: Step Distance moved 0.072464, step_angle -0.005492, R 756.000000, step_distance 0.036232
+[INFO] [1484645232.716012]: Bearing now 347.878303,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645232.719311]: Degree turned 31.323538, degree to turn 10.856914, bearing_now 347.878303, bearing_target 8.350419
+[INFO] [1484645232.722821]: Required angle:-10.856914 turned angle:31.329030 step angle: -0.005492
+[INFO] [1484645232.727185]: SP000000E
+
+[INFO] [1484645232.781183]: Degree turned 31.329030, degree to turn 10.856914, bearing_now 347.878303, bearing_target 8.350419
+[INFO] [1484645232.784051]: Required angle:-10.856914 turned angle:31.329030 step angle: 0.000000
+[INFO] [1484645232.787199]: Robot completed a turn job
+[INFO] [1484645232.791072]: **************correction**************
+[INFO] [1484645232.794838]: distance error: 0.957932
+[INFO] [1484645232.798435]: GPS now [121.600001, 31.200011], GPS target: [121.600001, 31.200011]
+[INFO] [1484645232.801969]: Bearing move 183.471909, Bearing now 347.878303, bearing target 8.350419
+[INFO] [1484645232.805177]: no need to correct distance.....................
+[INFO] [1484645232.808519]: angle: 339.527884
+[INFO] [1484645232.811791]: correct angle............................
+[INFO] [1484645232.815239]: Inserted a job turn to angle 8.350419
+[INFO] [1484645232.819154]: There's a -0.957932 mm distance error, 339.527884 angle difference
+[INFO] [1484645232.873066]: start turn...........................
+[INFO] [1484645232.876714]: Robot starts to execute a turn job
+[INFO] [1484645232.884026]: SR000005E
+
+[INFO] [1484645232.887489]: Start: Degree turned 0, degree to turn 20, bearing_now 347, bearing_target 8
+[INFO] [1484645232.991910]: start turn...........................
+[INFO] [1484645232.995799]: Robot starts to execute a turn job
+[INFO] [1484645233.002535]: SR000005E
+
+[INFO] [1484645233.005997]: Start: Degree turned 0, degree to turn 20, bearing_now 347, bearing_target 8
+[INFO] [1484645233.059871]: Bearing now 347.878303,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645233.062858]: Step Distance moved 3.782609, step_angle 0.008787, R 24664.500000, step_distance -3.782609
+[INFO] [1484645233.066552]: Bearing now 347.887090,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645233.070071]: start turn...........................
+[INFO] [1484645233.080302]: Robot starts to execute a turn job
+[INFO] [1484645233.085066]: SR000005E
+
+[INFO] [1484645233.088834]: Start: Degree turned 0, degree to turn 20, bearing_now 347, bearing_target 8
+[INFO] [1484645233.193383]: Bearing now 347.887090,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645233.196671]: Step Distance moved 0.043462, step_angle 5.385346, R 0.462574, step_distance 0.021739
+[INFO] [1484645233.200607]: Bearing now 353.272436,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645233.204107]: Degree turned 0.000000, degree to turn 20.463329, bearing_now 353.272436, bearing_target 8.350419
+[INFO] [1484645233.207827]: Required angle:20.463329 turned angle:5.385346 step angle: 5.385346
+[INFO] [1484645233.211480]: Only 5 degrees left, redusing turning speed to 4
+[INFO] [1484645233.222099]: SR000004E
+
+[INFO] [1484645233.225811]: Robot speed changed from 4 to 4
+[INFO] [1484645233.279851]: Bearing now 353.272436,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645233.282981]: Step Distance moved 0.260773, step_angle 5.412806, R 2.761364, step_distance -0.130435
+[INFO] [1484645233.286627]: Bearing now 358.685242,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645233.290367]: Degree turned 5.385346, degree to turn 20.463329, bearing_now 358.685242, bearing_target 8.350419
+[INFO] [1484645233.293962]: Required angle:20.463329 turned angle:10.798152 step angle: 5.412806
+[INFO] [1484645233.297468]: Only 2 degrees left, redusing turning speed to 3
+[INFO] [1484645233.301634]: SR000003E
+
+[INFO] [1484645233.305261]: Robot speed changed from 3 to 3
+[INFO] [1484645233.359323]: Bearing now 358.685242,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645233.362312]: Step Distance moved 0.130386, step_angle 5.420494, R 1.378723, step_distance 0.065217
+[INFO] [1484645233.366031]: Bearing now 4.105736,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645233.369815]: Degree turned 10.798152, degree to turn 20.463329, bearing_now 4.105736, bearing_target 8.350419
+[INFO] [1484645233.373429]: Required angle:20.463329 turned angle:16.218647 step angle: 5.420494
+[INFO] [1484645233.377097]: Only 2 degrees left, redusing turning speed to 3
+[INFO] [1484645233.380640]: Continue turning at same speed...
+[INFO] [1484645233.484721]: Bearing now 4.105736,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645233.487502]: Step Distance moved 0.246285, step_angle 5.409511, R 2.609543, step_distance 0.123188
+[INFO] [1484645233.491266]: Bearing now 9.515247,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645233.494202]: Degree turned 16.218647, degree to turn 20.463329, bearing_now 9.515247, bearing_target 8.350419
+[INFO] [1484645233.498247]: Required angle:20.463329 turned angle:21.628157 step angle: 5.409511
+[INFO] [1484645233.502217]: SP000000E
+
+[INFO] [1484645233.555673]: Bearing now 9.515247,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645233.558839]: Step Distance moved 0.086924, step_angle 5.397429, R 0.923077, step_distance -0.043478
+[INFO] [1484645233.563074]: Bearing now 14.912675,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645233.566445]: Degree turned 21.628157, degree to turn 20.463329, bearing_now 14.912675, bearing_target 8.350419
+[INFO] [1484645233.569910]: Required angle:20.463329 turned angle:27.025586 step angle: 5.397429
+[INFO] [1484645233.575278]: SP000000E
+
+[INFO] [1484645233.678954]: Bearing now 14.912675,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645233.682010]: Step Distance moved 0.651931, step_angle 5.413904, R 6.902009, step_distance 0.326087
+[INFO] [1484645233.685447]: Bearing now 20.326580,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645233.688623]: Degree turned 27.025586, degree to turn 20.463329, bearing_now 20.326580, bearing_target 8.350419
+[INFO] [1484645233.703373]: Required angle:20.463329 turned angle:32.439490 step angle: 5.413904
+[INFO] [1484645233.708553]: SP000000E
+
+[INFO] [1484645233.765102]: Bearing now 20.326580,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645233.773008]: Step Distance moved 0.028977, step_angle 4.720828, R 0.351792, step_distance -0.014493
+[INFO] [1484645233.780794]: Bearing now 25.047407,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645233.794270]: Degree turned 32.439490, degree to turn 20.463329, bearing_now 25.047407, bearing_target 8.350419
+[INFO] [1484645233.797483]: Required angle:20.463329 turned angle:37.160318 step angle: 4.720828
+[INFO] [1484645233.801261]: SP000000E
+
+[INFO] [1484645233.904776]: Bearing now 25.047407,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645233.907708]: Step Distance moved 0.188406, step_angle 0.023066, R 468.000000, step_distance 0.094203
+[INFO] [1484645233.911557]: Bearing now 25.070473,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645233.914725]: Degree turned 37.160318, degree to turn 20.463329, bearing_now 25.070473, bearing_target 8.350419
+[INFO] [1484645233.917983]: Required angle:20.463329 turned angle:37.183384 step angle: 0.023066
+[INFO] [1484645233.929934]: SP000000E
+
+[INFO] [1484645233.986327]: Bearing now 25.070473,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645233.991586]: Step Distance moved 0.101449, step_angle 0.007689, R 756.000000, step_distance 0.050725
+[INFO] [1484645233.995804]: Bearing now 25.078162,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645234.009631]: Degree turned 37.183384, degree to turn 20.463329, bearing_now 25.078162, bearing_target 8.350419
+[INFO] [1484645234.015638]: Required angle:20.463329 turned angle:37.191072 step angle: 0.007689
+[INFO] [1484645234.021631]: SP000000E
+
+[INFO] [1484645234.074922]: Degree turned 37.191072, degree to turn 20.463329, bearing_now 25.078162, bearing_target 8.350419
+[INFO] [1484645234.077986]: Required angle:20.463329 turned angle:37.191072 step angle: 0.000000
+[INFO] [1484645234.081029]: Robot completed a turn job
+[INFO] [1484645234.084153]: **************correction**************
+[INFO] [1484645234.087603]: distance error: 1.711089
+[INFO] [1484645234.094803]: GPS now [121.600001, 31.200011], GPS target: [121.600001, 31.200011]
+[INFO] [1484645234.097546]: Bearing move 192.031578, Bearing now 25.078162, bearing target 8.350419
+[INFO] [1484645234.101018]: no need to correct distance.....................
+[INFO] [1484645234.107839]: angle: 16.727743
+[INFO] [1484645234.111714]: correct angle............................
+[INFO] [1484645234.115148]: Inserted a job turn to angle 8.350419
+[INFO] [1484645234.118525]: There's a -1.711089 mm distance error, 16.727743 angle difference
+[INFO] [1484645234.172832]: start turn...........................
+[INFO] [1484645234.175641]: Robot starts to execute a turn job
+[INFO] [1484645234.180411]: SL000005E
+
+[INFO] [1484645234.183846]: Start: Degree turned 0, degree to turn -16, bearing_now 25, bearing_target 8
+[INFO] [1484645234.287978]: start turn...........................
+[INFO] [1484645234.291225]: Robot starts to execute a turn job
+[INFO] [1484645234.294490]: SL000005E
+
+[INFO] [1484645234.299835]: Start: Degree turned 0, degree to turn -16, bearing_now 25, bearing_target 8
+[INFO] [1484645234.404811]: Bearing now 25.078162,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645234.408019]: Step Distance moved 0.014493, step_angle 0.486581, R 1.706546, step_distance -0.007246
+[INFO] [1484645234.412286]: Bearing now 25.564743,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645234.416488]: start turn...........................
+[INFO] [1484645234.421296]: Robot starts to execute a turn job
+[INFO] [1484645234.436897]: SL000005E
+
+[INFO] [1484645234.441217]: Start: Degree turned 0, degree to turn -17, bearing_now 25, bearing_target 8
+[INFO] [1484645234.495381]: Bearing now 25.564743,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645234.498588]: Step Distance moved 0.666424, step_angle -5.355690, R 7.132075, step_distance -0.333333
+[INFO] [1484645234.502988]: Bearing now 20.209053,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645234.508626]: Degree turned 0.000000, degree to turn 17.214325, bearing_now 20.209053, bearing_target 8.350419
+[INFO] [1484645234.516235]: Required angle:-17.214325 turned angle:5.355690 step angle: -5.355690
+[INFO] [1484645234.520887]: Only 5 degrees left, redusing turning speed to 4
+[INFO] [1484645234.531307]: SL000004E
+
+[INFO] [1484645234.535204]: Robot speed changed from 4 to 4
+[INFO] [1484645234.589352]: Bearing now 20.209053,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645234.593540]: Step Distance moved 0.260774, step_angle -5.379854, R 2.778277, step_distance 0.130435
+[INFO] [1484645234.597636]: Bearing now 14.829199,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645234.601454]: Degree turned 5.355690, degree to turn 17.214325, bearing_now 14.829199, bearing_target 8.350419
+[INFO] [1484645234.605411]: Required angle:-17.214325 turned angle:10.735545 step angle: -5.379854
+[INFO] [1484645234.608868]: Only 2 degrees left, redusing turning speed to 3
+[INFO] [1484645234.613801]: SL000003E
+
+[INFO] [1484645234.617958]: Robot speed changed from 3 to 3
+[INFO] [1484645234.673732]: Bearing now 14.829199,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645234.677584]: Step Distance moved 0.231798, step_angle -5.412806, R 2.454545, step_distance -0.115942
+[INFO] [1484645234.681191]: Bearing now 9.416393,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645234.684184]: Degree turned 10.735545, degree to turn 17.214325, bearing_now 9.416393, bearing_target 8.350419
+[INFO] [1484645234.687816]: Required angle:-17.214325 turned angle:16.148350 step angle: -5.412806
+[INFO] [1484645234.691647]: Only 2 degrees left, redusing turning speed to 3
+[INFO] [1484645234.695303]: Continue turning at same speed...
+[INFO] [1484645234.799103]: Bearing now 9.416393,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645234.802510]: Step Distance moved 0.057949, step_angle -5.408412, R 0.614135, step_distance 0.028986
+[INFO] [1484645234.807388]: Bearing now 4.007981,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645234.823673]: Degree turned 16.148350, degree to turn 17.214325, bearing_now 4.007981, bearing_target 8.350419
+[INFO] [1484645234.828406]: Required angle:-17.214325 turned angle:21.556763 step angle: -5.408412
+[INFO] [1484645234.833626]: SP000000E
+
+[INFO] [1484645234.889341]: Bearing now 4.007981,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645234.892823]: Step Distance moved 0.637451, step_angle -5.333723, R 6.850082, step_distance 0.318841
+[INFO] [1484645234.898562]: Bearing now 358.674258,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645234.906541]: Degree turned 21.556763, degree to turn 17.214325, bearing_now 358.674258, bearing_target 8.350419
+[INFO] [1484645234.914507]: Required angle:-17.214325 turned angle:26.890485 step angle: -5.333723
+[INFO] [1484645234.919812]: SP000000E
+
+[INFO] [1484645234.975445]: Bearing now 358.674258,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645234.984681]: Step Distance moved 0.115900, step_angle -5.349100, R 1.241889, step_distance 0.057971
+[INFO] [1484645234.991055]: Bearing now 353.325158,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645234.996303]: Degree turned 26.890485, degree to turn 17.214325, bearing_now 353.325158, bearing_target 8.350419
+[INFO] [1484645235.000295]: Required angle:-17.214325 turned angle:32.239585 step angle: -5.349100
+[INFO] [1484645235.004223]: SP000000E
+
+[INFO] [1484645235.109182]: Bearing now 353.325158,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645235.113246]: Step Distance moved 0.434658, step_angle -4.760369, R 5.233041, step_distance 0.217391
+[INFO] [1484645235.117171]: Bearing now 348.564789,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645235.122828]: Degree turned 32.239585, degree to turn 17.214325, bearing_now 348.564789, bearing_target 8.350419
+[INFO] [1484645235.135736]: Required angle:-17.214325 turned angle:36.999955 step angle: -4.760369
+[INFO] [1484645235.146002]: SP000000E
+
+[INFO] [1484645235.199264]: Bearing now 348.564789,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645235.202996]: Step Distance moved 0.000000, step_angle -0.002197, R 0.000000, step_distance 0.000000
+[INFO] [1484645235.212454]: Bearing now 348.562592,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645235.215462]: Degree turned 36.999955, degree to turn 17.214325, bearing_now 348.562592, bearing_target 8.350419
+[INFO] [1484645235.221951]: Required angle:-17.214325 turned angle:37.002151 step angle: -0.002197
+[INFO] [1484645235.227427]: SP000000E
+
+[INFO] [1484645235.283026]: Degree turned 37.002151, degree to turn 17.214325, bearing_now 348.562592, bearing_target 8.350419
+[INFO] [1484645235.285733]: Required angle:-17.214325 turned angle:37.002151 step angle: 0.000000
+[INFO] [1484645235.288416]: Robot completed a turn job
+[INFO] [1484645235.291433]: **************correction**************
+[INFO] [1484645235.295965]: distance error: 2.352437
+[INFO] [1484645235.299776]: GPS now [121.600001, 31.200011], GPS target: [121.600001, 31.200011]
+[INFO] [1484645235.303281]: Bearing move 188.102429, Bearing now 348.562592, bearing target 8.350419
+[INFO] [1484645235.306934]: no need to correct distance.....................
+[INFO] [1484645235.310449]: angle: 340.212173
+[INFO] [1484645235.313727]: correct angle............................
+[INFO] [1484645235.316418]: Inserted a job turn to angle 8.350419
+[INFO] [1484645235.319683]: There's a -2.352437 mm distance error, 340.212173 angle difference
+[INFO] [1484645235.373362]: start turn...........................
+[INFO] [1484645235.377173]: Robot starts to execute a turn job
+[INFO] [1484645235.381481]: SR000005E
+
+[INFO] [1484645235.385432]: Start: Degree turned 0, degree to turn 19, bearing_now 348, bearing_target 8
+[INFO] [1484645235.490744]: start turn...........................
+[INFO] [1484645235.493966]: Robot starts to execute a turn job
+[INFO] [1484645235.498414]: SR000005E
+
+[INFO] [1484645235.502232]: Start: Degree turned 0, degree to turn 19, bearing_now 348, bearing_target 8
+[INFO] [1484645235.556110]: start turn...........................
+[INFO] [1484645235.558923]: Robot starts to execute a turn job
+[INFO] [1484645235.562950]: SR000005E
+
+[INFO] [1484645235.566114]: Start: Degree turned 0, degree to turn 19, bearing_now 348, bearing_target 8
+[INFO] [1484645235.670534]: Bearing now 348.562592,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645235.674092]: Step Distance moved 0.130435, step_angle -0.405301, R 18.439024, step_distance 0.065217
+[INFO] [1484645235.678130]: Bearing now 348.157291,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645235.681649]: start turn...........................
+[INFO] [1484645235.684804]: Robot starts to execute a turn job
+[INFO] [1484645235.688413]: SR000005E
+
+[INFO] [1484645235.691990]: Start: Degree turned 0, degree to turn 20, bearing_now 348, bearing_target 8
+[INFO] [1484645235.796214]: Bearing now 348.157291,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645235.798981]: Step Distance moved 0.043462, step_angle 5.365576, R 0.464278, step_distance -0.021739
+[INFO] [1484645235.802633]: Bearing now 353.522866,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645235.805687]: Degree turned 0.000000, degree to turn 20.193128, bearing_now 353.522866, bearing_target 8.350419
+[INFO] [1484645235.808569]: Required angle:20.193128 turned angle:5.365576 step angle: 5.365576
+[INFO] [1484645235.811681]: Only 5 degrees left, redusing turning speed to 4
+[INFO] [1484645235.822264]: SR000004E
+
+[INFO] [1484645235.828530]: Robot speed changed from 4 to 4
+[INFO] [1484645235.884135]: Bearing now 353.522866,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645235.888563]: Step Distance moved 0.362184, step_angle 5.413904, R 3.834449, step_distance -0.181159
+[INFO] [1484645235.893524]: Bearing now 358.936770,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645235.898604]: Degree turned 5.365576, degree to turn 20.193128, bearing_now 358.936770, bearing_target 8.350419
+[INFO] [1484645235.902875]: Required angle:20.193128 turned angle:10.779480 step angle: 5.413904
+[INFO] [1484645235.913094]: Only 2 degrees left, redusing turning speed to 3
+[INFO] [1484645235.918222]: SR000003E
+
+[INFO] [1484645235.923226]: Robot speed changed from 3 to 3
+[INFO] [1484645235.978521]: Bearing now 358.936770,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645235.983476]: Step Distance moved 0.130386, step_angle 5.427085, R 1.377049, step_distance 0.065217
+[INFO] [1484645235.988718]: Bearing now 4.363855,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645235.992928]: Degree turned 10.779480, degree to turn 20.193128, bearing_now 4.363855, bearing_target 8.350419
+[INFO] [1484645235.996944]: Required angle:20.193128 turned angle:16.206564 step angle: 5.427085
+[INFO] [1484645236.000595]: Only 2 degrees left, redusing turning speed to 3
+[INFO] [1484645236.005651]: Continue turning at same speed...
+[INFO] [1484645236.061276]: Bearing now 4.363855,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645236.066414]: Step Distance moved 0.188336, step_angle 5.411707, R 1.994723, step_distance 0.094203
+[INFO] [1484645236.071694]: Bearing now 9.775562,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645236.081926]: Degree turned 16.206564, degree to turn 20.193128, bearing_now 9.775562, bearing_target 8.350419
+[INFO] [1484645236.086757]: Required angle:20.193128 turned angle:21.618272 step angle: 5.411707
+[INFO] [1484645236.091544]: SP000000E
+
+[INFO] [1484645236.196476]: Bearing now 9.775562,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645236.200893]: Step Distance moved 0.086924, step_angle 5.399625, R 0.922701, step_distance -0.043478
+[INFO] [1484645236.203941]: Bearing now 15.175188,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645236.207110]: Degree turned 21.618272, degree to turn 20.193128, bearing_now 15.175188, bearing_target 8.350419
+[INFO] [1484645236.210081]: Required angle:20.193128 turned angle:27.017897 step angle: 5.399625
+[INFO] [1484645236.213710]: SP000000E
+
+[INFO] [1484645236.272875]: Bearing now 15.175188,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645236.276519]: Step Distance moved 0.927251, step_angle 4.918536, R 10.804824, step_distance 0.463768
+[INFO] [1484645236.280546]: Bearing now 20.093723,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645236.284380]: Degree turned 27.017897, degree to turn 20.193128, bearing_now 20.093723, bearing_target 8.350419
+[INFO] [1484645236.288000]: Required angle:20.193128 turned angle:31.936433 step angle: 4.918536
+[INFO] [1484645236.291818]: SP000000E
+
+[INFO] [1484645236.400382]: Bearing now 20.093723,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645236.403403]: Step Distance moved 0.188406, step_angle 0.016476, R 655.200000, step_distance -0.094203
+[INFO] [1484645236.407412]: Bearing now 20.110199,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645236.411321]: Degree turned 31.936433, degree to turn 20.193128, bearing_now 20.110199, bearing_target 8.350419
+[INFO] [1484645236.423426]: Required angle:20.193128 turned angle:31.952909 step angle: 0.016476
+[INFO] [1484645236.427635]: SP000000E
+
+[INFO] [1484645236.485379]: Bearing now 20.110199,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645236.488211]: Step Distance moved 0.057971, step_angle 0.004394, R 756.000000, step_distance -0.028986
+[INFO] [1484645236.492153]: Bearing now 20.114593,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645236.503682]: Degree turned 31.952909, degree to turn 20.193128, bearing_now 20.114593, bearing_target 8.350419
+[INFO] [1484645236.506989]: Required angle:20.193128 turned angle:31.957302 step angle: 0.004394
+[INFO] [1484645236.511339]: SP000000E
+
+[INFO] [1484645236.565076]: Degree turned 31.957302, degree to turn 20.193128, bearing_now 20.114593, bearing_target 8.350419
+[INFO] [1484645236.568200]: Required angle:20.193128 turned angle:31.957302 step angle: 0.000000
+[INFO] [1484645236.571427]: Robot completed a turn job
+[INFO] [1484645236.574939]: **************correction**************
+[INFO] [1484645236.577994]: distance error: 1.958784
+[INFO] [1484645236.581011]: GPS now [121.600001, 31.200011], GPS target: [121.600001, 31.200011]
+[INFO] [1484645236.583832]: Bearing move 191.203226, Bearing now 20.114593, bearing target 8.350419
+[INFO] [1484645236.586599]: no need to correct distance.....................
+[INFO] [1484645236.589578]: angle: 11.764174
+[INFO] [1484645236.592787]: correct angle............................
+[INFO] [1484645236.596180]: Inserted a job turn to angle 8.350419
+[INFO] [1484645236.599140]: There's a -1.958784 mm distance error, 11.764174 angle difference
+[INFO] [1484645236.702940]: start turn...........................
+[INFO] [1484645236.705712]: Robot starts to execute a turn job
+[INFO] [1484645236.709568]: SL000005E
+
+[INFO] [1484645236.712633]: Start: Degree turned 0, degree to turn -11, bearing_now 20, bearing_target 8
+[INFO] [1484645236.766185]: start turn...........................
+[INFO] [1484645236.769301]: Robot starts to execute a turn job
+[INFO] [1484645236.773154]: SL000005E
+
+[INFO] [1484645236.776293]: Start: Degree turned 0, degree to turn -11, bearing_now 20, bearing_target 8
+[INFO] [1484645236.882471]: start turn...........................
+[INFO] [1484645236.886130]: Robot starts to execute a turn job
+[INFO] [1484645236.890415]: SL000005E
+
+[INFO] [1484645236.898255]: Start: Degree turned 0, degree to turn -11, bearing_now 20, bearing_target 8
+[INFO] [1484645236.959153]: Bearing now 20.114593,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645236.962579]: Step Distance moved 0.057971, step_angle 0.329513, R 10.080000, step_distance -0.028986
+[INFO] [1484645236.966759]: Bearing now 20.444106,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645236.971981]: start turn...........................
+[INFO] [1484645236.975925]: Robot starts to execute a turn job
+[INFO] [1484645236.992042]: SL000005E
+
+[INFO] [1484645236.995405]: Start: Degree turned 0, degree to turn -12, bearing_now 20, bearing_target 8
+[INFO] [1484645237.099627]: Bearing now 20.444106,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645237.104997]: Step Distance moved 0.289750, step_angle -5.335919, R 3.112392, step_distance 0.144928
+[INFO] [1484645237.109343]: Bearing now 15.108187,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645237.112955]: Degree turned 0.000000, degree to turn 12.093687, bearing_now 15.108187, bearing_target 8.350419
+[INFO] [1484645237.117027]: Required angle:-12.093687 turned angle:5.335919 step angle: -5.335919
+[INFO] [1484645237.120601]: Only 2 degrees left, redusing turning speed to 3
+[INFO] [1484645237.124844]: SL000003E
+
+[INFO] [1484645237.129121]: Robot speed changed from 3 to 3
+[INFO] [1484645237.188898]: Bearing now 15.108187,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645237.192610]: Step Distance moved 0.072437, step_angle -5.416101, R 0.766579, step_distance -0.036232
+[INFO] [1484645237.196827]: Bearing now 9.692086,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645237.200361]: Degree turned 5.335919, degree to turn 12.093687, bearing_now 9.692086, bearing_target 8.350419
+[INFO] [1484645237.204580]: Required angle:-12.093687 turned angle:10.752020 step angle: -5.416101
+[INFO] [1484645237.217705]: Only 2 degrees left, redusing turning speed to 3
+[INFO] [1484645237.220634]: Continue turning at same speed...
+[INFO] [1484645237.273973]: Bearing now 9.692086,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645237.276820]: Step Distance moved 0.101411, step_angle -5.420494, R 1.072340, step_distance -0.050725
+[INFO] [1484645237.293697]: Bearing now 4.271591,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645237.296879]: Degree turned 10.752020, degree to turn 12.093687, bearing_now 4.271591, bearing_target 8.350419
+[INFO] [1484645237.300114]: Required angle:-12.093687 turned angle:16.172515 step angle: -5.420494
+[INFO] [1484645237.304762]: SP000000E
+
+[INFO] [1484645237.411021]: Bearing now 4.271591,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645237.414491]: Step Distance moved 0.695400, step_angle -5.344706, R 7.457460, step_distance 0.347826
+[INFO] [1484645237.418053]: Bearing now 358.926885,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645237.421482]: Degree turned 16.172515, degree to turn 12.093687, bearing_now 358.926885, bearing_target 8.350419
+[INFO] [1484645237.424703]: Required angle:-12.093687 turned angle:21.517221 step angle: -5.344706
+[INFO] [1484645237.431492]: SP000000E
+
+[INFO] [1484645237.484979]: Bearing now 358.926885,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645237.488294]: Step Distance moved 0.144875, step_angle -5.360084, R 1.549180, step_distance 0.072464
+[INFO] [1484645237.492263]: Bearing now 353.566801,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645237.495988]: Degree turned 21.517221, degree to turn 12.093687, bearing_now 353.566801, bearing_target 8.350419
+[INFO] [1484645237.500127]: Required angle:-12.093687 turned angle:26.877305 step angle: -5.360084
+[INFO] [1484645237.504170]: SP000000E
+
+[INFO] [1484645237.557478]: Bearing now 353.566801,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645237.561298]: Step Distance moved 0.478113, step_angle -4.937208, R 5.550167, step_distance 0.239130
+[INFO] [1484645237.565079]: Bearing now 348.629593,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645237.568366]: Degree turned 26.877305, degree to turn 12.093687, bearing_now 348.629593, bearing_target 8.350419
+[INFO] [1484645237.571926]: Required angle:-12.093687 turned angle:31.814513 step angle: -4.937208
+[INFO] [1484645237.575775]: SP000000E
+
+[INFO] [1484645237.679839]: Bearing now 348.629593,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645237.682834]: Step Distance moved 0.057971, step_angle -0.006590, R 504.000000, step_distance -0.028986
+[INFO] [1484645237.686947]: Bearing now 348.623003,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645237.693491]: Degree turned 31.814513, degree to turn 12.093687, bearing_now 348.623003, bearing_target 8.350419
+[INFO] [1484645237.702434]: Required angle:-12.093687 turned angle:31.821103 step angle: -0.006590
+[INFO] [1484645237.706267]: SP000000E
+
+[INFO] [1484645237.760266]: Bearing now 348.623003,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645237.763446]: Step Distance moved 0.014493, step_angle -0.001098, R 756.000000, step_distance -0.007246
+[INFO] [1484645237.767686]: Bearing now 348.621904,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645237.771495]: Degree turned 31.821103, degree to turn 12.093687, bearing_now 348.621904, bearing_target 8.350419
+[INFO] [1484645237.775382]: Required angle:-12.093687 turned angle:31.822202 step angle: -0.001098
+[INFO] [1484645237.779279]: SP000000E
+
+[INFO] [1484645237.890258]: Bearing now 348.621904,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645237.894403]: Step Distance moved 0.014493, step_angle -0.001098, R 756.000000, step_distance -0.007246
+[INFO] [1484645237.897989]: Bearing now 348.620806,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645237.901574]: Degree turned 31.822202, degree to turn 12.093687, bearing_now 348.620806, bearing_target 8.350419
+[INFO] [1484645237.905362]: Required angle:-12.093687 turned angle:31.823300 step angle: -0.001098
+[INFO] [1484645237.911210]: SP000000E
+
+[INFO] [1484645237.967098]: Bearing now 348.620806,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645237.970504]: Step Distance moved 0.014493, step_angle -0.001098, R 756.000000, step_distance -0.007246
+[INFO] [1484645237.975226]: Bearing now 348.619708,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645237.979333]: Degree turned 31.823300, degree to turn 12.093687, bearing_now 348.619708, bearing_target 8.350419
+[INFO] [1484645237.983350]: Required angle:-12.093687 turned angle:31.824398 step angle: -0.001098
+[INFO] [1484645237.987795]: SP000000E
+
+[INFO] [1484645238.093262]: Degree turned 31.824398, degree to turn 12.093687, bearing_now 348.619708, bearing_target 8.350419
+[INFO] [1484645238.096206]: Required angle:-12.093687 turned angle:31.824398 step angle: 0.000000
+[INFO] [1484645238.100673]: Robot completed a turn job
+[INFO] [1484645238.104465]: **************correction**************
+[INFO] [1484645238.108499]: distance error: 1.859107
+[INFO] [1484645238.112770]: GPS now [121.600001, 31.200011], GPS target: [121.600001, 31.200011]
+[INFO] [1484645238.116565]: Bearing move 180.994631, Bearing now 348.619708, bearing target 8.350419
+[INFO] [1484645238.120469]: no need to correct distance.....................
+[INFO] [1484645238.124423]: angle: 340.269289
+[INFO] [1484645238.127992]: correct angle............................
+[INFO] [1484645238.131863]: Inserted a job turn to angle 8.350419
+[INFO] [1484645238.135723]: There's a -1.859107 mm distance error, 340.269289 angle difference
+[INFO] [1484645238.190338]: start turn...........................
+[INFO] [1484645238.194215]: Robot starts to execute a turn job
+[INFO] [1484645238.198578]: SR000005E
+
+[INFO] [1484645238.203397]: Start: Degree turned 0, degree to turn 19, bearing_now 348, bearing_target 8
+[INFO] [1484645238.257915]: start turn...........................
+[INFO] [1484645238.260881]: Robot starts to execute a turn job
+[INFO] [1484645238.265265]: SR000005E
+
+[INFO] [1484645238.269749]: Start: Degree turned 0, degree to turn 19, bearing_now 348, bearing_target 8
+[INFO] [1484645238.374310]: Bearing now 348.619708,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645238.377334]: Step Distance moved 0.086956, step_angle -0.252627, R 19.721739, step_distance 0.043478
+[INFO] [1484645238.381530]: Bearing now 348.367081,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645238.384333]: start turn...........................
+[INFO] [1484645238.387483]: Robot starts to execute a turn job
+[INFO] [1484645238.399847]: SR000005E
+
+[INFO] [1484645238.403237]: Start: Degree turned 0, degree to turn 19, bearing_now 348, bearing_target 8
+[INFO] [1484645238.458915]: Bearing now 348.367081,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645238.462703]: Step Distance moved 0.014488, step_angle 5.326034, R 0.155908, step_distance 0.007246
+[INFO] [1484645238.466519]: Bearing now 353.693115,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645238.470098]: Degree turned 0.000000, degree to turn 19.983338, bearing_now 353.693115, bearing_target 8.350419
+[INFO] [1484645238.477242]: Required angle:19.983338 turned angle:5.326034 step angle: 5.326034
+[INFO] [1484645238.481735]: Only 5 degrees left, redusing turning speed to 4
+[INFO] [1484645238.489314]: SR000004E
+
+[INFO] [1484645238.493714]: Robot speed changed from 4 to 4
+[INFO] [1484645238.570408]: Bearing now 353.693115,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645238.573789]: Step Distance moved 0.333210, step_angle 5.402920, R 3.534865, step_distance -0.166667
+[INFO] [1484645238.577410]: Bearing now 359.096035,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645238.581534]: Degree turned 5.326034, degree to turn 19.983338, bearing_now 359.096035, bearing_target 8.350419
+[INFO] [1484645238.585192]: Required angle:19.983338 turned angle:10.728954 step angle: 5.402920
+[INFO] [1484645238.589105]: Only 2 degrees left, redusing turning speed to 3
+[INFO] [1484645238.593360]: SR000003E
+
+[INFO] [1484645238.596667]: Robot speed changed from 3 to 3
+[INFO] [1484645238.700434]: Bearing now 359.096035,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645238.703546]: Step Distance moved 0.144873, step_angle 5.430380, R 1.529126, step_distance 0.072464
+[INFO] [1484645238.706695]: Bearing now 4.526415,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645238.709676]: Degree turned 10.728954, degree to turn 19.983338, bearing_now 4.526415, bearing_target 8.350419
+[INFO] [1484645238.713032]: Required angle:19.983338 turned angle:16.159334 step angle: 5.430380
+[INFO] [1484645238.716270]: Only 2 degrees left, redusing turning speed to 3
+[INFO] [1484645238.719316]: Continue turning at same speed...
+[INFO] [1484645238.773714]: Bearing now 4.526415,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645238.776561]: Step Distance moved 0.188336, step_angle 5.407314, R 1.996344, step_distance 0.094203
+[INFO] [1484645238.779841]: Bearing now 9.933729,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645238.783012]: Degree turned 16.159334, degree to turn 19.983338, bearing_now 9.933729, bearing_target 8.350419
+[INFO] [1484645238.786111]: Required angle:19.983338 turned angle:21.566648 step angle: 5.407314
+[INFO] [1484645238.789882]: SP000000E
+
+[INFO] [1484645238.893831]: Bearing now 9.933729,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645238.896819]: Step Distance moved 0.086924, step_angle 5.401822, R 0.922326, step_distance -0.043478
+[INFO] [1484645238.916786]: Bearing now 15.335551,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645238.921520]: Degree turned 21.566648, degree to turn 19.983338, bearing_now 15.335551, bearing_target 8.350419
+[INFO] [1484645238.925407]: Required angle:19.983338 turned angle:26.968470 step angle: 5.401822
+[INFO] [1484645238.930138]: SP000000E
+
+[INFO] [1484645238.994870]: Bearing now 15.335551,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645238.997972]: Step Distance moved 0.883763, step_angle 5.126129, R 9.881294, step_distance 0.442029
+[INFO] [1484645239.001251]: Bearing now 20.461680,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645239.004535]: Degree turned 26.968470, degree to turn 19.983338, bearing_now 20.461680, bearing_target 8.350419
+[INFO] [1484645239.007660]: Required angle:19.983338 turned angle:32.094599 step angle: 5.126129
+[INFO] [1484645239.011345]: SP000000E
+
+[INFO] [1484645239.071270]: Bearing now 20.461680,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645239.074253]: Step Distance moved 0.188406, step_angle 0.020869, R 517.263158, step_distance -0.094203
+[INFO] [1484645239.077388]: Bearing now 20.482549,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645239.080665]: Degree turned 32.094599, degree to turn 19.983338, bearing_now 20.482549, bearing_target 8.350419
+[INFO] [1484645239.083796]: Required angle:19.983338 turned angle:32.115468 step angle: 0.020869
+[INFO] [1484645239.087336]: SP000000E
+
+[INFO] [1484645239.194567]: Bearing now 20.482549,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645239.197680]: Step Distance moved 0.014493, step_angle 0.003295, R 252.000000, step_distance -0.007246
+[INFO] [1484645239.212824]: Bearing now 20.485844,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645239.216705]: Degree turned 32.115468, degree to turn 19.983338, bearing_now 20.485844, bearing_target 8.350419
+[INFO] [1484645239.220289]: Required angle:19.983338 turned angle:32.118764 step angle: 0.003295
+[INFO] [1484645239.224012]: SP000000E
+
+[INFO] [1484645239.278650]: Degree turned 32.118764, degree to turn 19.983338, bearing_now 20.485844, bearing_target 8.350419
+[INFO] [1484645239.281907]: Required angle:19.983338 turned angle:32.118764 step angle: 0.000000
+[INFO] [1484645239.284706]: Robot completed a turn job
+[INFO] [1484645239.287778]: **************correction**************
+[INFO] [1484645239.291016]: distance error: 1.831470
+[INFO] [1484645239.293836]: GPS now [121.600001, 31.200011], GPS target: [121.600001, 31.200011]
+[INFO] [1484645239.301516]: Bearing move 191.548671, Bearing now 20.485844, bearing target 8.350419
+[INFO] [1484645239.307050]: no need to correct distance.....................
+[INFO] [1484645239.311404]: angle: 12.135426
+[INFO] [1484645239.314440]: correct angle............................
+[INFO] [1484645239.317432]: Inserted a job turn to angle 8.350419
+[INFO] [1484645239.320601]: There's a -1.831470 mm distance error, 12.135426 angle difference
+[INFO] [1484645239.374044]: start turn...........................
+[INFO] [1484645239.377085]: Robot starts to execute a turn job
+[INFO] [1484645239.385496]: SL000005E
+
+[INFO] [1484645239.391114]: Start: Degree turned 0, degree to turn -12, bearing_now 20, bearing_target 8
+[INFO] [1484645239.496327]: start turn...........................
+[INFO] [1484645239.499039]: Robot starts to execute a turn job
+[INFO] [1484645239.504064]: SL000005E
+
+[INFO] [1484645239.507769]: Start: Degree turned 0, degree to turn -12, bearing_now 20, bearing_target 8
+[INFO] [1484645239.562101]: Bearing now 20.485844,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645239.565358]: Step Distance moved 0.014493, step_angle 0.174642, R 4.754717, step_distance 0.007246
+[INFO] [1484645239.569387]: Bearing now 20.660486,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645239.572938]: start turn...........................
+[INFO] [1484645239.576217]: Robot starts to execute a turn job
+[INFO] [1484645239.580132]: SL000005E
+
+[INFO] [1484645239.583891]: Start: Degree turned 0, degree to turn -12, bearing_now 20, bearing_target 8
+[INFO] [1484645239.688282]: Bearing now 20.660486,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645239.696890]: Step Distance moved 0.391165, step_angle -5.295279, R 4.233976, step_distance 0.195652
+[INFO] [1484645239.702786]: Bearing now 15.365207,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645239.709051]: Degree turned 0.000000, degree to turn 12.310068, bearing_now 15.365207, bearing_target 8.350419
+[INFO] [1484645239.712767]: Required angle:-12.310068 turned angle:5.295279 step angle: -5.295279
+[INFO] [1484645239.716134]: Only 2 degrees left, redusing turning speed to 3
+[INFO] [1484645239.720383]: SL000003E
+
+[INFO] [1484645239.725236]: Robot speed changed from 3 to 3
+[INFO] [1484645239.783838]: Bearing now 15.365207,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645239.789544]: Step Distance moved 0.028975, step_angle -5.415003, R 0.306694, step_distance 0.014493
+[INFO] [1484645239.801970]: Bearing now 9.950204,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645239.805802]: Degree turned 5.295279, degree to turn 12.310068, bearing_now 9.950204, bearing_target 8.350419
+[INFO] [1484645239.809948]: Required angle:-12.310068 turned angle:10.710282 step angle: -5.415003
+[INFO] [1484645239.813834]: Only 2 degrees left, redusing turning speed to 3
+[INFO] [1484645239.817594]: Continue turning at same speed...
+[INFO] [1484645239.871827]: Bearing now 9.950204,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645239.874934]: Step Distance moved 0.173848, step_angle -5.432577, R 1.834209, step_distance -0.086957
+[INFO] [1484645239.878704]: Bearing now 4.517628,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645239.881945]: Degree turned 10.710282, degree to turn 12.310068, bearing_now 4.517628, bearing_target 8.350419
+[INFO] [1484645239.884887]: Required angle:-12.310068 turned angle:16.142859 step angle: -5.432577
+[INFO] [1484645239.892433]: SP000000E
+
+[INFO] [1484645239.996467]: Bearing now 4.517628,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645239.999666]: Step Distance moved 0.724375, step_angle -5.344706, R 7.768187, step_distance 0.362319
+[INFO] [1484645240.002889]: Bearing now 359.172922,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645240.005847]: Degree turned 16.142859, degree to turn 12.310068, bearing_now 359.172922, bearing_target 8.350419
+[INFO] [1484645240.008589]: Required angle:-12.310068 turned angle:21.487565 step angle: -5.344706
+[INFO] [1484645240.012090]: SP000000E
+
+[INFO] [1484645240.065623]: Bearing now 359.172922,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645240.068655]: Step Distance moved 0.057951, step_angle -5.164572, R 0.643131, step_distance 0.028986
+[INFO] [1484645240.071895]: Bearing now 354.008349,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645240.074766]: Degree turned 21.487565, degree to turn 12.310068, bearing_now 354.008349, bearing_target 8.350419
+[INFO] [1484645240.077537]: Required angle:-12.310068 turned angle:26.652137 step angle: -5.164572
+[INFO] [1484645240.081142]: SP000000E
+
+[INFO] [1484645240.186944]: Bearing now 354.008349,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645240.191235]: Step Distance moved 0.014493, step_angle -0.007689, R 108.000000, step_distance 0.007246
+[INFO] [1484645240.196808]: Bearing now 354.000660,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645240.199888]: Degree turned 26.652137, degree to turn 12.310068, bearing_now 354.000660, bearing_target 8.350419
+[INFO] [1484645240.202749]: Required angle:-12.310068 turned angle:26.659826 step angle: -0.007689
+[INFO] [1484645240.206057]: SP000000E
+
+[INFO] [1484645240.259268]: Bearing now 354.000660,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645240.262684]: Step Distance moved 0.014493, step_angle -0.001098, R 756.000000, step_distance 0.007246
+[INFO] [1484645240.266056]: Bearing now 353.999562,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645240.278173]: Degree turned 26.659826, degree to turn 12.310068, bearing_now 353.999562, bearing_target 8.350419
+[INFO] [1484645240.282729]: Required angle:-12.310068 turned angle:26.660924 step angle: -0.001098
+[INFO] [1484645240.289514]: SP000000E
+
+[INFO] [1484645240.394861]: Degree turned 26.660924, degree to turn 12.310068, bearing_now 353.999562, bearing_target 8.350419
+[INFO] [1484645240.397777]: Required angle:-12.310068 turned angle:26.660924 step angle: 0.000000
+[INFO] [1484645240.401503]: Robot completed a turn job
+[INFO] [1484645240.404568]: **************correction**************
+[INFO] [1484645240.408082]: distance error: 1.393332
+[INFO] [1484645240.411792]: GPS now [121.600001, 31.200011], GPS target: [121.600001, 31.200011]
+[INFO] [1484645240.414989]: Bearing move 186.844527, Bearing now 353.999562, bearing target 8.350419
+[INFO] [1484645240.418543]: no need to correct distance.....................
+[INFO] [1484645240.422141]: angle: 345.649143
+[INFO] [1484645240.425777]: correct angle............................
+[INFO] [1484645240.429207]: Inserted a job turn to angle 8.350419
+[INFO] [1484645240.433009]: There's a -1.393332 mm distance error, 345.649143 angle difference
+[INFO] [1484645240.486399]: start turn...........................
+[INFO] [1484645240.489134]: Robot starts to execute a turn job
+[INFO] [1484645240.497295]: SR000005E
+
+[INFO] [1484645240.500803]: Start: Degree turned 0, degree to turn 14, bearing_now 353, bearing_target 8
+[INFO] [1484645240.554746]: start turn...........................
+[INFO] [1484645240.558155]: Robot starts to execute a turn job
+[INFO] [1484645240.566088]: SR000005E
+
+[INFO] [1484645240.569285]: Start: Degree turned 0, degree to turn 14, bearing_now 353, bearing_target 8
+[INFO] [1484645240.673505]: start turn...........................
+[INFO] [1484645240.676402]: Robot starts to execute a turn job
+[INFO] [1484645240.679251]: SR000005E
+
+[INFO] [1484645240.684907]: Start: Degree turned 0, degree to turn 14, bearing_now 353, bearing_target 8
+[INFO] [1484645240.789494]: Bearing now 353.999562,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645240.793106]: Step Distance moved 0.000000, step_angle -0.127412, R 0.000000, step_distance 0.000000
+[INFO] [1484645240.796790]: Bearing now 353.872150,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645240.800388]: start turn...........................
+[INFO] [1484645240.804015]: Robot starts to execute a turn job
+[INFO] [1484645240.807950]: SR000005E
+
+[INFO] [1484645240.814608]: Start: Degree turned 0, degree to turn 14, bearing_now 353, bearing_target 8
+[INFO] [1484645240.868664]: Bearing now 353.872150,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645240.872115]: Step Distance moved 0.289752, step_angle 5.287591, R 3.140839, step_distance -0.144928
+[INFO] [1484645240.875544]: Bearing now 359.159741,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645240.878780]: Degree turned 0.000000, degree to turn 14.478268, bearing_now 359.159741, bearing_target 8.350419
+[INFO] [1484645240.881975]: Required angle:14.478268 turned angle:5.287591 step angle: 5.287591
+[INFO] [1484645240.884953]: Only 2 degrees left, redusing turning speed to 3
+[INFO] [1484645240.888630]: SR000003E
+
+[INFO] [1484645240.892068]: Robot speed changed from 3 to 3
+[INFO] [1484645240.996281]: Bearing now 359.159741,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645240.999240]: Step Distance moved 0.144873, step_angle 5.447954, R 1.524194, step_distance 0.072464
+[INFO] [1484645241.006273]: Bearing now 4.607695,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645241.009374]: Degree turned 5.287591, degree to turn 14.478268, bearing_now 4.607695, bearing_target 8.350419
+[INFO] [1484645241.012573]: Required angle:14.478268 turned angle:10.735545 step angle: 5.447954
+[INFO] [1484645241.015431]: Only 2 degrees left, redusing turning speed to 3
+[INFO] [1484645241.018383]: Continue turning at same speed...
+[INFO] [1484645241.071919]: Bearing now 4.607695,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645241.075016]: Step Distance moved 0.144874, step_angle 5.415003, R 1.533469, step_distance 0.072464
+[INFO] [1484645241.078631]: Bearing now 10.022697,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645241.081748]: Degree turned 10.735545, degree to turn 14.478268, bearing_now 10.022697, bearing_target 8.350419
+[INFO] [1484645241.084617]: Required angle:14.478268 turned angle:16.150547 step angle: 5.415003
+[INFO] [1484645241.087904]: SP000000E
+
+[INFO] [1484645241.191640]: Bearing now 10.022697,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645241.194569]: Step Distance moved 0.028975, step_angle 5.401822, R 0.307442, step_distance -0.014493
+[INFO] [1484645241.197691]: Bearing now 15.424519,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645241.200686]: Degree turned 16.150547, degree to turn 14.478268, bearing_now 15.424519, bearing_target 8.350419
+[INFO] [1484645241.203498]: Required angle:14.478268 turned angle:21.552369 step angle: 5.401822
+[INFO] [1484645241.207095]: SP000000E
+
+[INFO] [1484645241.268118]: Bearing now 15.424519,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645241.272183]: Step Distance moved 0.738868, step_angle 5.288689, R 8.007477, step_distance 0.369565
+[INFO] [1484645241.275827]: Bearing now 20.713209,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645241.278851]: Degree turned 21.552369, degree to turn 14.478268, bearing_now 20.713209, bearing_target 8.350419
+[INFO] [1484645241.281829]: Required angle:14.478268 turned angle:26.841058 step angle: 5.288689
+[INFO] [1484645241.285043]: SP000000E
+
+[INFO] [1484645241.388743]: Bearing now 20.713209,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645241.391911]: Step Distance moved 0.014493, step_angle 0.018672, R 44.470588, step_distance -0.007246
+[INFO] [1484645241.395992]: Bearing now 20.731881,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645241.400491]: Degree turned 26.841058, degree to turn 14.478268, bearing_now 20.731881, bearing_target 8.350419
+[INFO] [1484645241.403954]: Required angle:14.478268 turned angle:26.859731 step angle: 0.018672
+[INFO] [1484645241.407865]: SP000000E
+
+[INFO] [1484645241.462044]: Bearing now 20.731881,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645241.465164]: Step Distance moved 0.014493, step_angle 0.001098, R 756.000000, step_distance -0.007246
+[INFO] [1484645241.468551]: Bearing now 20.732979,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645241.471642]: Degree turned 26.859731, degree to turn 14.478268, bearing_now 20.732979, bearing_target 8.350419
+[INFO] [1484645241.474453]: Required angle:14.478268 turned angle:26.860829 step angle: 0.001098
+[INFO] [1484645241.478420]: SP000000E
+
+[INFO] [1484645241.584899]: Degree turned 26.860829, degree to turn 14.478268, bearing_now 20.732979, bearing_target 8.350419
+[INFO] [1484645241.588201]: Required angle:14.478268 turned angle:26.860829 step angle: 0.000000
+[INFO] [1484645241.591385]: Robot completed a turn job
+[INFO] [1484645241.594579]: **************correction**************
+[INFO] [1484645241.597532]: distance error: 1.358966
+[INFO] [1484645241.600931]: GPS now [121.600001, 31.200011], GPS target: [121.600001, 31.200011]
+[INFO] [1484645241.604136]: Bearing move 190.661064, Bearing now 20.732979, bearing target 8.350419
+[INFO] [1484645241.607229]: no need to correct distance.....................
+[INFO] [1484645241.610391]: angle: 12.382561
+[INFO] [1484645241.613476]: correct angle............................
+[INFO] [1484645241.616817]: Inserted a job turn to angle 8.350419
+[INFO] [1484645241.619874]: There's a -1.358966 mm distance error, 12.382561 angle difference
+[INFO] [1484645241.673219]: start turn...........................
+[INFO] [1484645241.676532]: Robot starts to execute a turn job
+[INFO] [1484645241.684036]: SL000005E
+
+[INFO] [1484645241.687102]: Start: Degree turned 0, degree to turn -12, bearing_now 20, bearing_target 8
+[INFO] [1484645241.797911]: start turn...........................
+[INFO] [1484645241.801208]: Robot starts to execute a turn job
+[INFO] [1484645241.811102]: SL000005E
+
+[INFO] [1484645241.814313]: Start: Degree turned 0, degree to turn -12, bearing_now 20, bearing_target 8
+[INFO] [1484645241.869719]: Bearing now 20.732979,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645241.873399]: Step Distance moved 0.000000, step_angle 0.065903, R 0.000000, step_distance 0.000000
+[INFO] [1484645241.877013]: Bearing now 20.798882,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645241.880348]: start turn...........................
+[INFO] [1484645241.883190]: Robot starts to execute a turn job
+[INFO] [1484645241.887301]: SL000005E
+
+[INFO] [1484645241.890686]: Start: Degree turned 0, degree to turn -12, bearing_now 20, bearing_target 8
+[INFO] [1484645241.997538]: Bearing now 20.798882,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645242.000810]: Step Distance moved 0.376682, step_angle -5.215098, R 4.139848, step_distance 0.188406
+[INFO] [1484645242.004067]: Bearing now 15.583784,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645242.007202]: Degree turned 0.000000, degree to turn 12.448463, bearing_now 15.583784, bearing_target 8.350419
+[INFO] [1484645242.019266]: Required angle:-12.448463 turned angle:5.215098 step angle: -5.215098
+[INFO] [1484645242.022550]: Only 2 degrees left, redusing turning speed to 3
+[INFO] [1484645242.028667]: SL000003E
+
+[INFO] [1484645242.031697]: Robot speed changed from 3 to 3
+[INFO] [1484645242.085075]: Bearing now 15.583784,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645242.088086]: Step Distance moved 0.115899, step_angle -5.412806, R 1.227273, step_distance 0.057971
+[INFO] [1484645242.091510]: Bearing now 10.170978,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645242.095305]: Degree turned 5.215098, degree to turn 12.448463, bearing_now 10.170978, bearing_target 8.350419
+[INFO] [1484645242.099049]: Required angle:-12.448463 turned angle:10.627904 step angle: -5.412806
+[INFO] [1484645242.103073]: Only 2 degrees left, redusing turning speed to 3
+[INFO] [1484645242.113049]: Continue turning at same speed...
+[INFO] [1484645242.167638]: Bearing now 10.170978,lon_now 121.600001, lat_now 31.200011, target_bearing 8.350419
+[INFO] [1484645242.170726]: Step Distance moved 0.246284, step_angle -5.438068, R 2.595839, step_distance -0.123188
+[INFO] [1484645242.174253]: Bearing now 4.732910,lon_now 121.600001, lat_now 31.200011
+[INFO] [1484645242.177294]: Degree turned 10.627904, degree to turn 12.448463, bearing_now 4.732910, bearing_target 8.350419
+[INFO] [1484645242.180297]: Required angle:-12.448463 turned angle:16.065972 step angle: -5.438068
