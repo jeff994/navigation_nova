@@ -56,13 +56,12 @@ def start_move():
 def stop_move():	
 	global dist_completed
 	if robot_drive.robot_moving == 0:
-        dist_completed = 0
-        robot_drive.robot_on_mission = 0
-        rospy.loginfo('Robot completed a moving job')
+        	dist_completed = 0
+        	robot_drive.robot_on_mission = 0
+        	rospy.loginfo('Robot completed a moving job')
 	else:
-        rospy.loginfo('Robot still moving, stopping robot')
-        robot_drive.stop_robot()
-    status_pub.publish("enabled 0")
+        	rospy.loginfo('Robot still moving, stopping robot')
+        	robot_drive.stop_robot()
 
 # Update robot speed as required new speed 
 # Update robot speed as required new speed 
@@ -134,8 +133,8 @@ def move_distance(dist):
 		return  0
 	else :
 		stop_move()
-        # make sure the robot is stopped before next job
-        return not robot_drive.robot_on_mission
+        	# make sure the robot is stopped before next job
+        	return not robot_drive.robot_on_mission
        	#clean current job 
 	
 	return 0 
