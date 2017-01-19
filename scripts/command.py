@@ -222,7 +222,7 @@ def keyboard_callback(data):
 		robot_drive.enter_obstacle()
 	elif (keyboard_data == "20m"):#@yuqing_toggleobstaclemode
 		rospy.loginfo('forward 20m')
-		robot_job.generate_move(20000, 'F')
+		robot_job.generate_move(30000, 'F')
 	elif (keyboard_data == "-20m"):#@yuqing_toggleobstaclemode
 		rospy.loginfo('back 20m')
 		robot_job.generate_move(-20000, 'B')
