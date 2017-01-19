@@ -224,12 +224,15 @@ def keyboard_callback(data):
 	elif (keyboard_data == "Obstacle"):#@yuqing_toggleobstaclemode
 		rospy.loginfo('keyboard Obstacle')
 		robot_drive.enter_obstacle()
-	elif (keyboard_data == "20m"):#@yuqing_toggleobstaclemode
-		rospy.loginfo('forward 20m')
+	elif (keyboard_data == "30m"):#@yuqing_toggleobstaclemode
+		rospy.loginfo('forward 30m')
 		robot_job.generate_move(30000, 'F')
-	elif (keyboard_data == "-20m"):#@yuqing_toggleobstaclemode
-		rospy.loginfo('back 20m')
-		robot_job.generate_move(-20000, 'B')
+	elif (keyboard_data == "180"):#@yuqing_toggleobstaclemode
+		rospy.loginfo('turn 180')
+		robot_job.generate_turn(180)
+	elif (keyboard_data == "zero"):#@yuqing_toggleobstaclemode
+		rospy.loginfo('turn 0')
+		robot_job.generate_turn(0)
 	else:
 		rospy.loginfo(keyboard_data)
 		rospy.loginfo("Not recognizing command receivied")
