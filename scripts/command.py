@@ -152,7 +152,7 @@ def complete_obstacle_avoidence():
 		#forward distance by angle from sensor
 		rospy.loginfo("forward 0.5m after obstacle") 
 		robot_job.add_correction_move(dist_forward_after_obstacle)
-		
+
 # Very import step, based on the encoder data, we do the conversion and calcuation 
 def process_encoder_data():
 	global encoder_data 
