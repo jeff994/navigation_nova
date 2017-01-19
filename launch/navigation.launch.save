@@ -1,6 +1,0 @@
-<launch>
-		<!--<node pkg="navigation_nova" name="navigation_compass" type="compass.py"/>-->
-		<node pkg="navigation_nova" name="navigation_encoder" type="encoder.py"/>
-		<!--<node pkg="navigation_nova" name="navigation_command" type="command.py"/>-->
-	</group>
-</launch>

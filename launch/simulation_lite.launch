@@ -1,7 +1,8 @@
 <launch>
-	<!--<group ns ="navigation">-->
-	<!--<node pkg="navigation_nova" name="navigation_compass" type="compass.py"/>-->
-	<node pkg="navigation_nova" name="simulator" type="simulator.py"/>
-	<node pkg="navigation_nova" name="command" type="command.py"/>
-	<!--</group>-->
+        <!--<group ns ="navigation">-->
+        <!--<node pkg="navigation_nova" name="navigation_compass" type="compass.py"/>-->
+        <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch"/>
+        <node pkg="navigation_nova" name="simulator" type="simulator.py"/>
+        <node pkg="navigation_nova" name="command" type="command.py"/>
+        <!--</group>-->
 </launch>
