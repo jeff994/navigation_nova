@@ -144,13 +144,15 @@ def complete_obstacle_avoidence():
 	# First get ready the robot for normal walking  
 	robot_obstacle.unlock_from_obstacle()
 	# Remove the un-finished job 
-	robot_job.remove_current_job()
-	# Re-calculate and send the corretion job 
-	robot_correction.distance_correction()
-	#@yuqing_forwardafterobstacle
-	#forward distance by angle from sensor
-	rospy.loginfo("forward 0.5m after obstacle") 
-	robot_job.add_correction_move(dist_forward_after_obstacle)
+	if robot_drive.robot_on_mission:
+		robot_job.remove_current_job()
+		# Re-calculate and send the corretion job 
+		robot_correction.distance_correction()
+		#@yuqing_forwardafterobstacle
+		#forward distance by angle from sensor
+		rospy.loginfo("forward 0.5m after obstacle") 
+		robot_job.add_correction_move(dist_forward_after_obstacle)
+		
 # Very import step, based on the encoder data, we do the conversion and calcuation 
 def process_encoder_data():
 	global encoder_data 
