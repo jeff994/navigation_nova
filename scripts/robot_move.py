@@ -13,6 +13,8 @@ import gpsmath
 
 dist_completed = 0.0
 dist_to_run = 0.0
+#@yuqing_correctionper10m
+dist_to_correct = 10000.0
 
 status_pub = rospy.Publisher('status', String, queue_size = 100)
 # Starts the robot for moving, put the control variables into proper value 
@@ -118,6 +120,13 @@ def move_distance(dist):
 	distpub = 'Dist-travelled: %f dist-total:%f dist-step:%f' % (dist_completed, abs(dist_to_run) ,dist_step)
 	rospy.loginfo(distpub)
 
+	#@yuqing_correctionper10m
+	#if travel over 10m, job_completed to 1, start to correct
+	if (dist_completed > dist_to_correct):
+		rospy.loginfo("-----------------dist_completed: %f, start to correct", dist_completed)
+		stop_move()
+		return 1
+		
 	if (dist_threshold - dist_completed > 0) :
 		#just continue moving of job not completed and no change of speed command received 
 		#if speed changed, then just change the move speed 

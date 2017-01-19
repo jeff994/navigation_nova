@@ -25,6 +25,8 @@ compass_index 		= 0 	# current compass index
 last_process_time 	= 0 	# last processing time 
 max_delay 			= 1.0	# max delay allowed for not receiving any signal from encooder 
 last_received_time 	= 0.0 	# the time of receiving the last encoer data 
+#@yuqing_forwardafterobstacle
+dist_forward_after_obstacle = 500
 
 # init the the encoder buffer with some empty data when system starts 
 def init_encoder_buffer( size=2000 ):
@@ -141,7 +143,9 @@ def complete_obstacle_avoidence():
 	robot_job.remove_current_job()
 	# Re-calculate and send the corretion job 
 	robot_correction.distance_correction()
-
+	#@yuqing_forwardafterobstacle
+	#forward distance by angle from sensor 
+	robot_job.add_correction_move(dist_forward_after_obstacle)
 # Very import step, based on the encoder data, we do the conversion and calcuation 
 def process_encoder_data():
 	global encoder_data 
