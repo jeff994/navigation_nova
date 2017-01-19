@@ -10,6 +10,7 @@ import robot_drive
 import robot_move
 import robot_turn
 import robot_correction 
+import json
 from datetime import datetime
 from std_msgs.msg import String
 
@@ -27,6 +28,9 @@ max_delay 			= 1.0	# max delay allowed for not receiving any signal from encoode
 last_received_time 	= 0.0 	# the time of receiving the last encoer data 
 #@yuqing_forwardafterobstacle
 dist_forward_after_obstacle = 500
+
+#@yuqing_publishparam
+pub_param = rospy.Publisher('parameters', String, queue_size = 10)
 
 # init the the encoder buffer with some empty data when system starts 
 def init_encoder_buffer( size=2000 ):
@@ -353,6 +357,25 @@ def main_commander():
 	global compass_data 
 	global compass_index
 	
+	#@yuqing_publishparam
+	info={}  
+	info["ENABLE"]      =    robot_drive.robot_enabled
+	info["MOVING"]      =    robot_drive.robot_moving 
+	info["MISSION"]     =    robot_drive.robot_on_mission 
+	info["OBSTACLE"]    =    robot_obstacle.robot_on_obstacle  
+	info["DIRECTION"]   =    robot_drive.move_direction
+	info["SPEED"]       =    robot_drive.speed_now  
+	info["LONG"]        =    robot_drive.lon_now
+	info["LAT"]         =    robot_drive.lat_now
+	info["BEARING"]     =    robot_drive.bearing_now
+	data={}
+	data["parameters"]  =    info
+	  
+	parameters = json.dumps(data)
+	#rospy.loginfo(parameters)
+	pub_param.publish(parameters)
+
+
 	# Not any new data comming, waiting for next data, if waiting too long need to issue warning or error	 
 	if(encoder_received == encoder_processed):
 		process_encoder_delay()
