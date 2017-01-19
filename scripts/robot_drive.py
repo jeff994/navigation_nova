@@ -23,12 +23,12 @@ robot_moving 		= 0		# based on the encoder data to know whether the robot's movi
 initial_bearing 	= 0 	#set as north for now
 ############################################################
 
-lon_now 			= 121.6
-lat_now  			= 31.2
+lon_now 			= 121.635139
+lat_now  			= 31.2112262
 bearing_now 		= 0
 
-lon_target 			= 121.6
-lat_target 			= 31.2
+lon_target 			= 121.635139
+lat_target 			= 31.2112262
 bearing_target 		= 0 		#degrees
 
 step_angle 			= 0

@@ -129,6 +129,7 @@ def simple_job():
 	generate_move(10000, 'F')
 	generate_turn(270)
 	generate_move(20000, 'F')
+	generate_turn(0)
 
 
 
