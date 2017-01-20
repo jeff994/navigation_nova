@@ -20,7 +20,10 @@ def executor_simulator(data):
 	global left_encode
 	global right_encode
 	command_str = str(data.data)
-    	if  (command_str == 'SF000005E\n'):
+        if  (command_str == 'SF000006E\n'):
+            left_encode = 2000
+            right_encode  = 2017
+    	elif  (command_str == 'SF000005E\n'):
     		left_encode = 1444
     		right_encode  = 1430
     	elif(command_str == 'SF000004E\n'):
