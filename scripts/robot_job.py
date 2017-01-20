@@ -181,7 +181,7 @@ def simple_job():
 	bearing_target 		= simple_job_turn(180, lon_new, lat_new)
 	lon_new, lat_new 	=simple_job_move(10000, 'F', lon_new, lat_new, bearing_target)
 	bearing_target 		= simple_job_turn(270, lon_new, lat_new)
-	lon_new, lat_new 	=simple_job_move(20000, 'F', on_new, lat_new, bearing_target)
+	lon_new, lat_new 	=simple_job_move(20000, 'F', lon_new, lat_new, bearing_target)
 	bearing_target 		= simple_job_turn(0, lon_new, lat_new)
 
 
