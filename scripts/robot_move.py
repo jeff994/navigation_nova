@@ -33,14 +33,14 @@ def start_move():
 	rospy.loginfo("Lon target %f, lat target %f", lon, lat)
 	
 	if abs(dist_to_run) < 50:
-		robot_drive.speed_now  = 3
-        	robot_drive.desired_speed = 3
-	elif abs(dist_to_run) < 200: 
-    		robot_drive.speed_now  = 4
+		robot_drive.speed_now  = 4
         	robot_drive.desired_speed = 4
+	elif abs(dist_to_run) < 200: 
+    		robot_drive.speed_now  = 5
+        	robot_drive.desired_speed = 5
         else:
-		robot_drive.speed_now = 5
-		robot_drive.desired_speed = 5
+		robot_drive.speed_now = 6
+		robot_drive.desired_speed = 6
 
 	rospy.loginfo('Robot moving job started')
 
@@ -74,11 +74,11 @@ def continue_move():
         robot_drive.start()
 
     if(abs(dist_to_run) - abs(dist_completed) < 50):
-            robot_drive.desired_speed = 3
-            rospy.loginfo('Reduce speed to 3, very close to target position')
-    elif(abs(dist_to_run) - abs(dist_completed) < 200):
             robot_drive.desired_speed = 4
-            rospy.loginfo('Reduce speed to 4, only 20 cm to target position')
+            rospy.loginfo('Reduce speed to 4, very close to target position')
+    elif(abs(dist_to_run) - abs(dist_completed) < 200):
+            robot_drive.desired_speed = 5
+            rospy.loginfo('Reduce speed to 5, only 20 cm to target position')
 
     if(robot_drive.speed_now  == robot_drive.desired_speed):
             rospy.loginfo('Still moving at the same speed...')

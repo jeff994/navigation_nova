@@ -169,8 +169,8 @@ def process_encoder_data():
 def keyboard_callback(data):
 	keyboard_data = ''
 	keyboard_data = data.data
-	robot_drive.speed_now = 5
-	robot_drive.desired_speed = 5 
+	robot_drive.speed_now = 6
+	robot_drive.desired_speed = 6 
 	if (keyboard_data == 'Init'):
 		rospy.loginfo("Testing init job")
 		robot_job.initialize_job()
