@@ -157,6 +157,10 @@ def complete_obstacle_avoidence():
 		if needForward:
 			rospy.loginfo("need to forward 0.5m after obstacle") 
 			robot_job.add_correction_move(dist_forward_after_obstacle)
+			lon2, lat2 = gpsmath.get_gps(robot_drive.lon_now, robot_drive.lat_now, dist_forward_after_obstacle, robot_drive.bearing_now)
+			distance 	= gpsmath.haversine(lon2, lat2, robot_drive.lon_target, robot_drive.lat_target)
+			bearing 	= gpsmath.bearing(lon2, lat2, robot_drive.lon_target, robot_drive.lat_target)
+			robot_job.add_target_gps(lon2, lat2, bearing)
 		else:
 			rospy.loginfo("no need to forward 0.5m after obstacle")
 
@@ -235,7 +239,7 @@ def keyboard_callback(data):
 		robot_drive.enter_obstacle()
 	elif (keyboard_data == "30m"):#@yuqing_toggleobstaclemode
 		rospy.loginfo('forward 30m')
-		robot_job.simple_job_move(30000, 'F', robot_drive.lon_now, robot_drive.lat_now, robot_drive.bearing_now)
+		robot_job.simple_job_move(10000, 'F', robot_drive.lon_now, robot_drive.lat_now, robot_drive.bearing_now)
 	elif (keyboard_data == "180"):#@yuqing_toggleobstaclemode
 		rospy.loginfo('turn 180')
 		robot_job.simple_job_turn(180, robot_drive.lon_now, robot_drive.lat_now)
