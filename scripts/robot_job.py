@@ -147,10 +147,11 @@ def add_target_gps(lon, lat, bearing):
 def add_job_from_gps(lon1, lat1, lon2, lat2):
 	angle_next 	= gpsmath.bearing(lon1, lat1, lon2, lat2)  	# the angle that the robot must face before it moves 
 	distance 	= gpsmath.haversine(lon1, lat1, lon2, lat2)	# the distance that the robot have to move after the angle corrected
-	add_correction_turn(angle_next)
-	add_target_gps(lon1, lat1, angle_next)
 	add_correction_move(distance, 'F')
 	add_target_gps(lon2, lat2, angle_next)
+	add_correction_turn(angle_next)
+	add_target_gps(lon1, lat1, angle_next)
+
 
 # as discovred, the digital compass would be accurabte in true north, so to initialize the robot,
 # we need to turn one round to identify the true north 
