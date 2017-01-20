@@ -16,7 +16,7 @@ start = 0.0
 end = 0.0
 
 status_pub = rospy.Publisher('status', String, queue_size = 100)
-
+needForward = False
 
 def open_serial():
     global ser
@@ -36,7 +36,7 @@ def open_serial():
         return 1
     return 0 
 
-def encoder():
+def driver():
     global ser
     pub = rospy.Publisher('driver_obstacle', String, queue_size = 10)
     rospy.init_node('driver_obstacle', anonymous=True)
@@ -63,7 +63,7 @@ def encoder():
 
 if __name__ == '__main__':
     try:
-        encoder()
+        driver()
     except rospy.ROSInterruptException:
         #ser.close()  #this doesn't seem to work well
         pass

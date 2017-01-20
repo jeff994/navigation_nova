@@ -150,8 +150,12 @@ def complete_obstacle_avoidence():
 		robot_correction.distance_correction()
 		#@yuqing_forwardafterobstacle
 		#forward distance by angle from sensor
-		rospy.loginfo("forward 0.5m after obstacle") 
-		robot_job.add_correction_move(dist_forward_after_obstacle)
+		#rospy.loginfo("forward 0.5m after obstacle") 
+		if needForward:
+			rospy.loginfo("need to forward 0.5m after obstacle") 
+			robot_job.add_correction_move(dist_forward_after_obstacle)
+		else:
+			rospy.loginfo("no need to forward 0.5m after obstacle")
 
 # Very import step, based on the encoder data, we do the conversion and calcuation 
 def process_encoder_data():
@@ -241,6 +245,7 @@ def keyboard_callback(data):
 
 #read obstacle finish data thro driver node
 def driver_obstacle_callback(data):
+	global needForward
 	string = data.data
 	rospy.loginfo('driver callback: ' + string)
 	rospy.loginfo('robot_on_obstacle: %d', robot_obstacle.robot_on_obstacle)
@@ -250,12 +255,15 @@ def driver_obstacle_callback(data):
 		robot_obstacle.obstacle_is_over()
 	else:
 		if (robot_obstacle.robot_on_obstacle==0):
-			rospy.loginfo('here obstacle')
-			if(string == 'OBSTACLE'):
-				rospy.loginfo('callback: obstacle start')
+			if(string.find('OBSTACLE') != -1):
+				rospy.loginfo('callback: obstacle start %s', string)
+				direction = string[-1]
+				if ((direction == 'L') or (direction =='R')):
+					needForward = True
+				else:
+					needForward = False
 				robot_obstacle.start_obstacle_avidence()
 	return
-
 # handle the data from the front reverse car sensor
 def rc_sensor_f_callback(data):
 	str_right = data.data[-5:]

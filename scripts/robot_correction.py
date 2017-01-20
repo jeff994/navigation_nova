@@ -112,7 +112,7 @@ def distance_correction():
 		rospy.loginfo("no need to correct distance.....................")
 		diff_angle = abs(robot_drive.bearing_target - robot_drive.bearing_now)
 		rospy.loginfo("angle: %f", diff_angle)
-		if(diff_angle > 2  and diff_angle < 358): 
+		if(diff_angle > 3  and diff_angle < 357): 
 			rospy.loginfo("correct angle............................")
 			robot_job.add_correction_turn(robot_drive.bearing_target)
 		else:

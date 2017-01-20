@@ -126,7 +126,7 @@ def turn_degree():
 
 	degree_turned = degree_turned + abs(step_angle)
     # 1 step before the robot turn, stop the robot
-	degree_threshold = abs(degree_to_turn) - 1 * abs(step_angle)
+	degree_threshold = abs(degree_to_turn) - 5
 	#simple log for tracing 
 	distpub = 'Required angle:%f turned angle:%f step angle: %f' % (degree_to_turn, degree_turned, step_angle)
     	rospy.loginfo(distpub)
