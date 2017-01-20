@@ -62,7 +62,7 @@ def generate_job_from_gps(lon1, lat1, lon2, lat2):
 	angle_next 	= gpsmath.bearing(lon1, lat1, lon2, lat2)  	# the angle that the robot must face before it moves 
 	distance 	= gpsmath.haversine(lon1, lat1, lon2, lat2)	# the distance that the robot have to move after the angle corrected
 	generate_turn(angle_next)
-	set_target_gps(lon1, lat1, angle_next);
+	set_target_gps(lon1, lat1, angle_next)
 	generate_move(distance, 'F')
 	set_target_gps(lon2, lat2, angle_next)
 
@@ -164,12 +164,12 @@ def initialize_job():
 def simple_job_move(dist, dire, lon, lat, bearing):
 	generate_move(dist, dire)
 	lon_new, lat_new  = gpsmath.get_gps(lon, lat, dist, bearing)
-	add_target_gps(lon_new, lat_new, bearing)
+	set_target_gps(lon_new, lat_new, bearing)
 	return lon_new, lat_new
 
 def simple_job_turn(bearing_target, lon_now, lat_now):
 	generate_turn(bearing_target)
-	add_target_gps(lon_now, lat_now, bearing_target)
+	set_target_gps(lon_now, lat_now, bearing_target)
 	return bearing_target
 
 def simple_job():
