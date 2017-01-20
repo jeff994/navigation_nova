@@ -53,9 +53,10 @@ def set_target_gps(lon, lat, bearing):
 	global job_lon_target
 	global job_lat_target
 	global job_bearing_target
-	job_lon_target.extend(lon)
-	job_lat_target.extend(lat)
-	job_bearing_target.extend(bearing)
+	job_lon_target.extend([lon])
+	job_lat_target.extend([lat])
+	job_bearing_target.extend([bearing])
+	rospy.loginfo("Added a target gps %d", len(job_lon_target))
 
 # based on two gps corrdinates, generate a turn job and a move job 
 def generate_job_from_gps(lon1, lat1, lon2, lat2):

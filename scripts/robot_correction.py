@@ -88,9 +88,6 @@ def update_robot_gps(left_encode, right_encode):
 # before this add a correction job if angle is more than 3 degrees 
 def distance_correction():
         rospy.loginfo("**************correction**************")
-        robot_drive.lon_target 		= robot_job.job_lon_target[0]
-        robot_drive.lat_target 		= robot_job.job_lat_target[0]
-        robot_drive.bearing_target 	= robot_job.job_bearing_target[0]
 	distance 	= gpsmath.haversine(robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target, robot_drive.lat_target)
 	rospy.loginfo("distance error: %f", distance)
 	bearing 	= gpsmath.bearing(robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target, robot_drive.lat_target)
