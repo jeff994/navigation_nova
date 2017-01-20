@@ -21,17 +21,7 @@ status_pub = rospy.Publisher('status', String, queue_size = 100)
 def start_move():
 	global dist_completed
 	global dist_to_run 
-	
-	lon1 = robot_drive.lon_now
-	lat1 =  robot_drive.lat_now
-	
-	robot_drive.bearing_target = robot_drive.bearing_now 
-	rospy.loginfo("Bearing target  %f", robot_drive.bearing_target)
-	lon, lat = gpsmath.get_gps(lon1, lat1, dist_to_run, robot_drive.bearing_target)
-	robot_drive.lon_target = lon
-	robot_drive.lat_target = lat
-	rospy.loginfo("Lon target %f, lat target %f", lon, lat)
-	
+
 	if abs(dist_to_run) < 100:
 		robot_drive.speed_now  = 4
         	robot_drive.desired_speed = 4
@@ -42,15 +32,15 @@ def start_move():
 		robot_drive.speed_now = 6
 		robot_drive.desired_speed = 6
 
-	rospy.loginfo('Robot moving job started')
+	rospy.loginfo('Start a move job')
 
     # only if the robot starts to move then change the status
 	if(robot_drive.robot_moving == 1):
    		robot_drive.robot_on_mission = 1 
-
-        status_pub.publish("enabled 1")
-   	dist_completed = 0
-	robot_drive.start()
+   	    dist_completed = 0
+        rospy.loginfo('Robot moving job started')
+    else:
+	   robot_drive.start()
 
 # Roboet complet a moving job 
 def stop_move():	

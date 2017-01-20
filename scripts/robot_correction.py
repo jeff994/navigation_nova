@@ -37,7 +37,7 @@ def update_robot_gps(left_encode, right_encode):
 	robot_drive.step_angle 		= 0.0
 	robot_drive.step_distance 	= (left_dist + right_dist) / 2
 
-	rospy.loginfo("Bearing now %f,lon_now %f, lat_now %f, target_bearing %f", robot_drive.bearing_now, robot_drive.lon_now, robot_drive.lat_now, robot_drive.bearing_target)
+	rospy.loginfo("Bearing now %f,lon_now %f, lat_now %f", robot_drive.bearing_now, robot_drive.lon_now, robot_drive.lat_now)
 	# scenario 01, 02 robot moving perfectly straight, bearing won't change, while lan and lon need to be updated 
 	if(left_dist == right_dist):
 		if(right_dist > 0 ):
@@ -78,7 +78,7 @@ def update_robot_gps(left_encode, right_encode):
 	# convert between [0 - 360)
 	bearing 				= gpsmath.format_bearing(bearing)
 	dist 					= R * sin(abs(alpha/2)) * 2
-	rospy.loginfo("Step Distance moved %f, step_angle %f, R %f, step_distance %f", dist, robot_drive.step_angle, R, robot_drive.step_distance) 
+	rospy.loginfo("Step Distance moved %fmm, Step_angle %f degree, R %f mm, Step_distance %f mm", dist, robot_drive.step_angle, R, robot_drive.step_distance) 
 	robot_drive.lon_now, robot_drive.lat_now 	= gpsmath.get_gps(robot_drive.lon_now, robot_drive.lat_now, dist, bearing)		
 	robot_drive.bearing_now 					= gpsmath.format_bearing(robot_drive.bearing_now + robot_drive.step_angle)
 	stringToSend 								= '%f %f %f' % (robot_drive.lon_now, robot_drive.lat_now, robot_drive.bearing_now) #might need to add \n behind the E
@@ -88,6 +88,9 @@ def update_robot_gps(left_encode, right_encode):
 # before this add a correction job if angle is more than 3 degrees 
 def distance_correction():
         rospy.loginfo("**************correction**************")
+        robot_drive.lon_target 		= robot_job.job_lon_target[0]
+        robot_drive.lat_target 		= robot_job.job_lat_target[0]
+        robot_drive.bearing_target 	= robot_job.job_bearing_target[0]
 	distance 	= gpsmath.haversine(robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target, robot_drive.lat_target)
 	rospy.loginfo("distance error: %f", distance)
 	bearing 	= gpsmath.bearing(robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target, robot_drive.lat_target)

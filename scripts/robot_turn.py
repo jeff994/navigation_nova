@@ -31,10 +31,7 @@ def start_turn():
 	global degree_to_turn
 	
 	rospy.loginfo("start turn...........................")
-	robot_drive.lon_target	= robot_drive.lon_now
-	robot_drive.lat_target 	= robot_drive.lat_now
-	
-	degree_to_turn = robot_drive.bearing_target - robot_drive.bearing_now 	
+
 	if(degree_to_turn > 180): 
 		degree_to_turn = degree_to_turn - 360
 	elif(degree_to_turn < -180):
@@ -55,13 +52,14 @@ def start_turn():
 	else:
 		robot_drive.speed_now = 6
 		robot_drive.desired_speed = 6 
-	rospy.loginfo('Robot starts to execute a turn job')
+
 	if robot_drive.robot_moving == 1:
 		robot_drive.robot_on_mission = 1
-	degree_turned = 0
-	status_pub.publish("enabled 1")
-	robot_drive.start()
-	rospy.loginfo("Start: Degree turned %d, degree to turn %d, bearing_now %d, bearing_target %d", degree_turned, degree_to_turn, robot_drive.bearing_now, robot_drive.bearing_target)
+		degree_turned = 0
+		rospy.loginfo("Start: Degree turned %d, degree to turn %d", degree_turned, degree_to_turn)
+	else:
+		robot_drive.start()
+
 
 # tell the robot to complete it's turning job 
 def stop_turn():
