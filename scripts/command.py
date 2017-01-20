@@ -27,7 +27,7 @@ last_process_time 	= 0 	# last processing time
 max_delay 			= 1.0	# max delay allowed for not receiving any signal from encooder 
 last_received_time 	= 0.0 	# the time of receiving the last encoer data 
 #@yuqing_forwardafterobstacle
-dist_forward_after_obstacle = 500
+dist_forward_after_obstacle = 1000
 
 #@yuqing_publishparam
 pub_param = rospy.Publisher('parameters', String, queue_size = 10)
@@ -150,7 +150,7 @@ def complete_obstacle_avoidence():
         	robot_drive.bearing_target 	= robot_job.job_bearing_target[0]
 		robot_job.remove_current_job()
 		# Re-calculate and send the corretion job 
-		robot_correction.distance_correction()
+		robot_correction.distance_correction(dist_forward_after_obstacle)
 		#@yuqing_forwardafterobstacle
 		#forward distance by angle from sensor
 		#rospy.loginfo("forward 0.5m after obstacle") 
@@ -253,8 +253,8 @@ def driver_obstacle_callback(data):
 	rospy.loginfo('driver callback: ' + string)
 	rospy.loginfo('robot_on_obstacle: %d', robot_obstacle.robot_on_obstacle)
 	if(string == 'FINISH'):
-		rospy.loginfo('callback: obstacle finish')
 		if robot_obstacle.robot_on_obstacle>0: 
+			rospy.loginfo('callback: obstacle finish')
 			robot_obstacle.obstacle_is_over()
 	else:
 		if (robot_obstacle.robot_on_obstacle==0):
@@ -266,6 +266,8 @@ def driver_obstacle_callback(data):
 				else:
 					needForward = False
 				robot_obstacle.start_obstacle_avidence()
+			else:
+				rospy.loginfo("string: %s", string)
 	return
 # handle the data from the front reverse car sensor
 def rc_sensor_f_callback(data):
@@ -427,6 +429,7 @@ def main_commander():
 	# Robot obstancle avoidence is over, now resumeto normal operation 
 	if(robot_obstacle.robot_over_obstacle > 0):
 		if (robot_drive.robot_turning == 0 and robot_drive.robot_moving == 0):
+			rospy.loginfo("@@@@@@@@@@@@@@@@@@@@@@@@@@")
 			complete_obstacle_avoidence()
 		else:
 			rospy.loginfo("waiting robot to stop")

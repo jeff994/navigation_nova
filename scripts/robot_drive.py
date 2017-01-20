@@ -2,6 +2,7 @@
 import rospy
 import serial
 import string
+import time
 from std_msgs.msg import String
 
 #-------------------------------------------------------#
@@ -10,8 +11,8 @@ from std_msgs.msg import String
 
 encode_to_mm 		= 69.00 	# 1000 encoding signals = 1 mm travelled
 turn_radius 		= 378 		# radius when turning in mm (half distance between the middle point of two wheels) 
-desired_speed 		= 6			# Global robot moving spped, 3 - 5
-speed_now 			= 6			# Robot moving speed now
+desired_speed 		= 8			# Global robot moving spped, 3 - 5
+speed_now 			= 8			# Robot moving speed now
 robot_on_mission 	= 0			# set an indicator that robot's on a job right now 
 robot_enabled 		= 0 		# A switch to enable or disable robot from execuing any jobs 
 robot_on_obstancle 	= 0			# If robot is on obstancle avoidence, then set it to be 1
@@ -93,3 +94,5 @@ def enter_no_obstacle():
 def enter_obstacle():
 	pub_command.publish('SO00000OE\n')
 	rospy.loginfo('SO00000OE enter no obstacle mode')
+	time.sleep(0.1)
+	unlock_robot()

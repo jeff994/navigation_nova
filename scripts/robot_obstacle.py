@@ -33,7 +33,7 @@ def start_obstacle_avidence():
 	rospy.loginfo('start_obstacle_avidence')
 	global robot_on_obstacle
 	global robot_over_obstacle
-	robot_on_obstace 	= 1
+	robot_on_obstacle 	= 1
 	robot_over_obstacle 	= 0
 
 # if obstacle avoidence is over
