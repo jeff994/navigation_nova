@@ -32,7 +32,7 @@ def start_move():
 	robot_drive.lat_target = lat
 	rospy.loginfo("Lon target %f, lat target %f", lon, lat)
 	
-	if abs(dist_to_run) < 50:
+	if abs(dist_to_run) < 100:
 		robot_drive.speed_now  = 4
         	robot_drive.desired_speed = 4
 	elif abs(dist_to_run) < 200: 
@@ -124,7 +124,7 @@ def move_distance(dist):
 	if (dist_completed > dist_to_correct):
 		rospy.loginfo("-----------------dist_completed: %f, start to correct", dist_completed)
 		stop_move()
-		return 1
+		return not robot_drive.robot_on_mission
 		
 	if (dist_threshold - dist_completed > 0) :
 		#just continue moving of job not completed and no change of speed command received 
@@ -134,7 +134,7 @@ def move_distance(dist):
 	else :
 		stop_move()
         	# make sure the robot is stopped before next job
-        	return not robot_drive.robot_on_mission
+        	return not robot_drive.robot_on_mission 
        	#clean current job 
 	
 	return 0 

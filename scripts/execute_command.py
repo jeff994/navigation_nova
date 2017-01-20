@@ -23,6 +23,11 @@ def callback(data):
     	commands_list[receiving_index] = data.data
     	rospy.loginfo("I heard %s", commands_list[receiving_index])
 	receiving_index = (receiving_index + 1) % command_buffer 
+	if open_serial():
+           	status_pub.publish("driver 1")
+        	#rospy.loginfo("Testing serial port")
+        	rospy.loginfo("command :" + data.data + " written to port")
+	        ser.write(data.data)
 
 def init_command_buffer( size ):
     	global commands_list 
@@ -88,8 +93,8 @@ def execute_command():
 def executer():
 	rospy.init_node('commad_executer', anonymous=True)
     	rospy.Subscriber("command", String, callback)
-    	while not rospy.is_shutdown():
-        	execute_command()
+    	#while not rospy.is_shutdown():
+        #	execute_command()
 
     # spin() simply keeps python from exiting until this node is stopped
     	rospy.spin()

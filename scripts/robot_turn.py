@@ -46,10 +46,10 @@ def start_turn():
  		robot_drive.move_direction = 'R'
 
 	# put more detailed spped definitioan 
-	if(abs(degree_to_turn) < 4):
+	if(abs(degree_to_turn) < 10):
 		robot_drive.speed_now = 4
 		robot_drive.desired_speed = 4 
-	elif(abs(degree_to_turn) < 10):
+	elif(abs(degree_to_turn) < 20):
 		robot_drive.speed_now = 5
 		robot_drive.desired_speed = 5 
 	else:
@@ -126,7 +126,7 @@ def turn_degree():
 
 	degree_turned = degree_turned + abs(step_angle)
     # 1 step before the robot turn, stop the robot
-	degree_threshold = abs(degree_to_turn) - abs(step_angle)
+	degree_threshold = abs(degree_to_turn) - 1 * abs(step_angle)
 	#simple log for tracing 
 	distpub = 'Required angle:%f turned angle:%f step angle: %f' % (degree_to_turn, degree_turned, step_angle)
     	rospy.loginfo(distpub)
