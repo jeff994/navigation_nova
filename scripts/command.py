@@ -116,7 +116,7 @@ def encoder_to_distance(encoder_received, encoder_processed):
 # Process all kinds of robot job as required 
 def process_job():
 	job_completed = 0 
-    if (robot_job.job_des[0] == 'T') : 
+	if (robot_job.job_des[0] == 'T') : 
 		#rospy.loginfo("Bearing now %f, bearing target %f", robot_drive.bearing_now, robot_drive.bearing_target)
 		#if(robot_drive.robot_on_mission == 0): 
 		robot_drive.bearing_target  = robot_job.job_num[0]
@@ -389,7 +389,7 @@ def main_commander():
 	global compass_data 
 	global compass_index
 	
-    publish_parameters()
+	publish_parameters()
 
 	# Not any new data comming, waiting for next data, if waiting too long need to issue warning or error	 
 	if(encoder_received == encoder_processed):

@@ -37,10 +37,10 @@ def start_move():
     # only if the robot starts to move then change the status
 	if(robot_drive.robot_moving == 1):
    		robot_drive.robot_on_mission = 1 
-   	    dist_completed = 0
-        rospy.loginfo('Robot moving job started')
-    else:
-	   robot_drive.start()
+   	        dist_completed = 0
+        	rospy.loginfo('Robot moving job started')
+    	else:
+	  	 robot_drive.start()
 
 # Roboet complet a moving job 
 def stop_move():	
