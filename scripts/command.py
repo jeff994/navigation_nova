@@ -146,8 +146,8 @@ def complete_obstacle_avoidence():
 	# Remove the un-finished job 
 	if robot_drive.robot_on_mission:
 		robot_drive.lon_target 		= robot_job.job_lon_target[0]
-        robot_drive.lat_target 		= robot_job.job_lat_target[0]
-        robot_drive.bearing_target 	= robot_job.job_bearing_target[0]
+	        robot_drive.lat_target 		= robot_job.job_lat_target[0]
+        	robot_drive.bearing_target 	= robot_job.job_bearing_target[0]
 		robot_job.remove_current_job()
 		# Re-calculate and send the corretion job 
 		robot_correction.distance_correction()
@@ -458,8 +458,8 @@ def main_commander():
 	# ----------------------------------------------------------------------------------------#
 	if job_completed == 1:
 		robot_drive.lon_target 		= robot_job.job_lon_target[0]
-        robot_drive.lat_target 		= robot_job.job_lat_target[0]
-        robot_drive.bearing_target 	= robot_job.job_bearing_target[0] 
+        	robot_drive.lat_target 		= robot_job.job_lat_target[0]
+        	robot_drive.bearing_target 	= robot_job.job_bearing_target[0] 
 		robot_job.remove_current_job()
 		#robot_correction.angle_correction()
 		robot_correction.distance_correction()
