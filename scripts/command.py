@@ -180,18 +180,18 @@ def keyboard_callback(data):
 		robot_job.initialize_job()
 	elif (keyboard_data == 'Forward'):
 		rospy.loginfo("Command received: Start to move forward 1 m")
-		robot_job.generate_move(1000, 'F')
+		robot_job.simple_job_move(1000, 'F', robot_drive.lon_now, robot_drive.lat_now, robot_drive.bearing_now)
 	elif (keyboard_data == 'Back'):
 		rospy.loginfo("rospeived: Start to move back 1 m")
-		robot_job.generate_move(-1000, 'B')
+		robot_job.simple_job_move(-1000, 'B', robot_drive.lon_now, robot_drive.lat_now, robot_drive.bearing_now)
 	elif (keyboard_data == 'Turn_West'):
 		rospy.loginfo("Command received: turn to 270 (WEST)") 
 		#robot_drive.bearing_now = compass_data[compass_index] 
-		robot_job.generate_turn(270)
+		robot_job.simple_job_turn(270, robot_drive.lon_now, robot_drive.lat_now)
 	elif (keyboard_data == 'Turn_East'): 
 		rospy.loginfo('Command received: turn to 90 (EAST)')
 		#robot_drive.bearing_now = compass_data[compass_index]
-		robot_job.generate_turn(90)
+		robot_job.simple_job_turn(90, robot_drive.lon_now, robot_drive.lat_now)
 	elif (keyboard_data == 'Stop'):
 		rospy.loginfo("Comamnd received: Clear all jobs") 
 		robot_job.clear_jobs()
@@ -232,13 +232,13 @@ def keyboard_callback(data):
 		robot_drive.enter_obstacle()
 	elif (keyboard_data == "30m"):#@yuqing_toggleobstaclemode
 		rospy.loginfo('forward 30m')
-		robot_job.generate_move(30000, 'F')
+		robot_job.simple_job_move(30000, 'F', robot_drive.lon_now, robot_drive.lat_now, robot_drive.bearing_now)
 	elif (keyboard_data == "180"):#@yuqing_toggleobstaclemode
 		rospy.loginfo('turn 180')
-		robot_job.generate_turn(180)
+		robot_job.simple_job_turn(180, robot_drive.lon_now, robot_drive.lat_now)
 	elif (keyboard_data == "zero"):#@yuqing_toggleobstaclemode
 		rospy.loginfo('turn 0')
-		robot_job.generate_turn(0)
+		robot_job.simple_job_turn(0, robot_drive.lon_now, robot_drive.lat_now)
 	else:
 		rospy.loginfo(keyboard_data)
 		rospy.loginfo("Not recognizing command receivied")
