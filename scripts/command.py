@@ -252,10 +252,10 @@ def driver_obstacle_callback(data):
 	string = data.data
 	rospy.loginfo('driver callback: ' + string)
 	rospy.loginfo('robot_on_obstacle: %d', robot_obstacle.robot_on_obstacle)
-	#if robot_obstacle.robot_on_obstacle: 
 	if(string == 'FINISH'):
 		rospy.loginfo('callback: obstacle finish')
-		robot_obstacle.obstacle_is_over()
+		if robot_obstacle.robot_on_obstacle>0: 
+			robot_obstacle.obstacle_is_over()
 	else:
 		if (robot_obstacle.robot_on_obstacle==0):
 			if(string.find('OBSTACLE') != -1):
@@ -344,11 +344,16 @@ def encoder_callback(data):
 
 	left_encode  = int(left_encode)
     	right_encode = int(right_encode)
-	if(left_encode == 0 and right_encode == 0):
+	if(left_encode == 0 or right_encode == 0):
 		#rospy.loginfo("encoder 0,0")
 		robot_drive.robot_moving = 0
+		robot_drive.robot_turning = 0
+	elif (left_encode * right_encode > 0):
+		robot_drive.robot_moving = 1
+		robot_drive.robot_turning = 0
 	else:
-		robot_drive.robot_moving = 1 		
+		robot_drive.robot_turning = 1
+		robot_drive.robot_moving =0 		
 
     	index = encoder_received * 2
     	encoder_data[encoder_received * 2] = float(left_encode)
@@ -421,7 +426,10 @@ def main_commander():
 
 	# Robot obstancle avoidence is over, now resumeto normal operation 
 	if(robot_obstacle.robot_over_obstacle > 0):
-		complete_obstacle_avoidence()
+		if (robot_drive.robot_turning == 0 and robot_drive.robot_moving == 0):
+			complete_obstacle_avoidence()
+		else:
+			rospy.loginfo("waiting robot to stop")
 		return 
 
 	# ----------------------------------------------------------------------------------------#

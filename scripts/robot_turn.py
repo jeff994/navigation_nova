@@ -54,7 +54,7 @@ def start_turn():
 		robot_drive.speed_now = 6
 		robot_drive.desired_speed = 6 
 
-	if robot_drive.robot_moving == 1:
+	if robot_drive.robot_turning == 1:
 		robot_drive.robot_on_mission = 1
 		degree_turned = 0
 		rospy.loginfo("Start: Degree turned %d, degree to turn %d", degree_turned, degree_to_turn)
@@ -66,7 +66,7 @@ def start_turn():
 def stop_turn():
 	global degree_turned
 	global degree_to_turn 
-	if robot_drive.robot_moving == 0:
+	if robot_drive.robot_turning == 0:
         	robot_drive.robot_on_mission = 0
         	degree_turned = 0
         	degree_to_turn = 0
@@ -79,7 +79,7 @@ def continue_turn(step_angle):
 	global degree_turned
 	global degree_to_turn
 	
-	if robot_drive.robot_moving == 0:
+	if robot_drive.robot_turning == 0:
 		rospy.loginfo("Robot stopped during the mission, start to turn again")
 	        robot_drive.start()
 
