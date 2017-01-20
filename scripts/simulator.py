@@ -32,6 +32,9 @@ def executor_simulator(data):
     	elif(command_str == 'SF000003E\n'):
     		left_encode = 879
     		right_encode = 867
+        elif(command_str == 'SB000006E\n'):
+            left_encode = -2000
+            right_encode  = -2017
     	elif(command_str == 'SB000005E\n'):
     		left_encode = -1444
     		right_encode  = -1430
@@ -41,6 +44,9 @@ def executor_simulator(data):
     	elif(command_str == 'SB000003E\n'):
     		left_encode = -879
     		right_encode = -867
+        elif(command_str == 'SL000006E\n'):
+            left_encode = -2000
+            right_encode  = 2017
     	elif(command_str == 'SL000005E\n'):
     		left_encode = -1444
     		right_encode  = 1430
@@ -50,6 +56,9 @@ def executor_simulator(data):
     	elif(command_str == 'SL000003E\n'):
     		left_encode = -879
     		right_encode = 867
+        elif(command_str == 'SR000006E\n'):
+            left_encode = 2000
+            right_encode  = -2017
     	elif(command_str == 'SR000005E\n'):
     		left_encode = 1108
     		right_encode = -1105
