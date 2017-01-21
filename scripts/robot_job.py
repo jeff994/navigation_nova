@@ -189,7 +189,8 @@ def simple_job_turn(bearing_target, lon_now, lat_now):
 	return bearing_target
 
 def simple_job():
-	lon_new, lat_new 	= simple_job_move(10000, 'F', robot_drive.lon_now, robot_drive.lat_now, robot_drive.bearing_now)
+	lon_new, lat_new  = simple_job_turn(0, robot_drive.lon_now, robot_drive.lat_now)
+	lon_new, lat_new 	= simple_job_move(10000, 'F', lon_new, lat_new, robot_drive.bearing_now)
 	bearing_target 		= simple_job_turn(90, lon_new, lat_new)
 	lon_new, lat_new 	=simple_job_move(20000, 'F', lon_new, lat_new, bearing_target)
 	bearing_target 		= simple_job_turn(180, lon_new, lat_new)
