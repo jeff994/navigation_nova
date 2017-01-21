@@ -105,7 +105,7 @@ def distance_correction():
 		if(diff_angle > 5 and  diff_angle < 355):
 			robot_job.add_correction_turn(robot_drive.bearing_target)
 			robot_job.add_target_gps(robot_drive.lon_target, robot_drive.lat_target, robot_drive.bearing_target)
-		robot_job.add_job_from_gps(bot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target, robot_drive.lat_target)
+		robot_job.add_job_from_gps(robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target, robot_drive.lat_target)
 	else: 
 		rospy.loginfo("no need to correct distance.....................")
 		diff_angle = abs(robot_drive.bearing_target - robot_drive.bearing_now)
