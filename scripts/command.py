@@ -192,7 +192,7 @@ def complete_obstacle_avoidence():
 					else:
 						rospy.loginfo("The last job in the queue")
 						break; 
-		else
+		else:
 			rospy.logerr("Invalude job_type found")
 
 		if robot_obstacle.needForward:
