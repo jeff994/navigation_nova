@@ -26,7 +26,10 @@ job_bearing_target 	= []
 job_type			= []			#define job type check whether it's a correction job or normal job 
 loops 				= 2 			#how many rounds to go
 correction_count 	= 0
-max_correction_run 	= 5
+max_correction_run 	= 15
+
+#@yuqing_forwardafterobstacle
+dist_forward_after_obstacle = 1000
 
 # generate job from pre-defined gps 
 def job_generator(init_bearing):	

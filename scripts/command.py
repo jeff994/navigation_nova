@@ -26,8 +26,6 @@ compass_index 		= 0 	# current compass index
 last_process_time 	= 0 	# last processing time 
 max_delay 			= 1.0	# max delay allowed for not receiving any signal from encooder 
 last_received_time 	= 0.0 	# the time of receiving the last encoer data 
-#@yuqing_forwardafterobstacle
-dist_forward_after_obstacle = 1000
 
 #@yuqing_publishparam
 pub_param = rospy.Publisher('parameters', String, queue_size = 10)
@@ -196,7 +194,7 @@ def complete_obstacle_avoidence():
 			rospy.logerr("Invalude job_type found")
 
 		if robot_obstacle.needForward:
-			robot_correction.distance_correction_obstacle(dist_forward_after_obstacle)
+			robot_correction.distance_correction_obstacle(robot_job.dist_forward_after_obstacle)		
 		else:
 			robot_correction.distance_correction()
 			rospy.loginfo("no need to forward 0.5m after obstacle")
@@ -291,14 +289,15 @@ def keyboard_callback(data):
 #read obstacle finish data thro driver node
 def driver_obstacle_callback(data):
 	string = data.data
-	#rospy.loginfo('driver callback: ' + string)
-	#rospy.loginfo('robot_on_obstacle: %d', robot_obstacle.robot_on_obstacle)
+	rospy.loginfo('driver callback: ' + string)
+	rospy.loginfo('robot_on_obstacle: %d', robot_obstacle.robot_on_obstacle)
 	if(string == 'FINISH'):
 		if robot_obstacle.robot_on_obstacle > 0: 
 			rospy.loginfo('callback: obstacle finish')
 			robot_obstacle.obstacle_is_over()
 		else: 
-			rospy.loginfo('Received finish after obstacle avoidence is over')
+			rospy.loginfo('Received one more finish')
+			robot_drive.unlock_robot()
 	else:
 		index = string.find('OBSTACLE')
 		# if current state is no obstacle but recevited obstacel, starts obstacle avidentce 

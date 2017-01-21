@@ -157,8 +157,8 @@ def distance_correction_obstacle(dist):
 		else:
 			rospy.loginfo("no need to correct angle.................")
 	#rospy.loginfo("There's a %f mm distance error, %f angle difference", distance, diff_angle)
-	rospy.loginfo("Add a job to move forward %d mm", dist_forward_after_obstacle)
-	robot_job.add_correction_move(dist_forward_after_obstacle)
+	rospy.loginfo("Add a job to move forward %d mm", robot_job.dist_forward_after_obstacle)
+	robot_job.add_correction_move(robot_job.dist_forward_after_obstacle)
 	robot_job.add_target_gps(lon2, lat2, bearing)
 
 # def angle_correction(): 

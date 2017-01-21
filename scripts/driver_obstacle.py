@@ -51,7 +51,12 @@ def driver():
             time.sleep(0.1)
             continue
 
-        bytesToRead = ser.readline()
+	try:
+        	bytesToRead = ser.readline()
+	except serial.serialutil.SerialException as ex:
+		rospy.logerr("reconnect driver serial port: %s", ex)
+		continue
+
         bytesToRead = bytesToRead.strip('\r\n')
         rospy.loginfo(bytesToRead)
         rospy.loginfo('length: %d',len(bytesToRead))
