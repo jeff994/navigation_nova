@@ -23,8 +23,10 @@ job_num 			= []			#if job is 'T', the number is the angle of robot need to face 
 job_lon_target 		= []
 job_lat_target 		= []
 job_bearing_target 	= []
-loops 				= 2 				#how many rounds to go
-
+job_type			= []			#define job type check whether it's a correction job or normal job 
+loops 				= 2 			#how many rounds to go
+correction_count 	= 0
+max_correction_run 	= 5
 
 # generate job from pre-defined gps 
 def job_generator(init_bearing):	
@@ -74,6 +76,7 @@ def remove_current_job():
 	global job_lon_target
 	global job_lat_target
 	global job_bearing_target 
+	global job_type
 	# Reset the robot job status 
 	robot_drive.robot_on_mission = 0
 	if(len(job_des) > 0): 
@@ -86,6 +89,8 @@ def remove_current_job():
 		del job_lon_target[0]
 	if len(job_bearing_target) > 0: 
 		del job_bearing_target[0]
+	if len(job_type) > 0:
+		del job_type[0]
 
 # Clear jobs 
 def clear_jobs():
@@ -94,37 +99,45 @@ def clear_jobs():
 	global job_lon_target
 	global job_lat_target
 	global job_bearing_target
+	global job_type
 	del job_des[:]
 	del job_num[:]
 	del job_lon_target[:]
 	del job_lat_target[:]
 	del job_bearing_target[:]
+	del job_type[:]
 
 def generate_move( distance, direction):
 	global job_des
 	global job_num 
+	global job_type
 	job_num.extend([distance]) 
 	job_des.extend([direction])
-	rospy.loginfo("Generated a job move %s with distance %f mm", direction, distance)
+	job_type.extend(['N'])
+	rospy.loginfo("Generated a normal job move %s with distance %f mm", direction, distance)
 
 def generate_turn(angle):
 	global job_des
 	global job_num 
+	global job_type
 	job_num.extend([angle]) 
 	job_des.extend(['T'])
-
-	rospy.loginfo("Generated a job turn to angle %f", angle)
+	job_type.extend(['N'])
+	rospy.loginfo("Generated a normal job turn to angle %f", angle)
 
 def add_correction_turn(angle ): 
 	global job_des
 	global job_num 
+	global job_type
 	job_des.insert(0, 'T')
 	job_num.insert(0, angle)
-	rospy.loginfo("Inserted a job turn to angle %f", angle)
+	job_type.insert(0, 'C')
+	rospy.loginfo("Inserted a correction job turn to angle %f", angle)
 
 def add_correction_move(distance):
 	global job_des 
 	global job_num 
+	global job_type
 	if(distance == 0):
 		return
 	job_num.insert(0, abs(distance))
@@ -133,6 +146,7 @@ def add_correction_move(distance):
 		job_des.insert(0, 'B')
 	else:
 		job_des.insert(0, 'F')
+	job_type.insert(0, 'C')
 	rospy.loginfo("Inserted a correction job move %s with distance %f mm", direction, distance)
 
 def add_target_gps(lon, lat, bearing):
