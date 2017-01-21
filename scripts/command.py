@@ -77,7 +77,7 @@ def process_encoder_delay():
 		delay_seconds = delta.seconds + delta.microseconds / 1000000.0 
 		if(delay_seconds >  max_delay):
 			bytesToLog = 'Error: Not receiving data for %f seconds: Stopping robot immediately' % (max_delay)
-				rospy.logerr(bytesToLog)
+			rospy.logerr(bytesToLog)
 			robot_drive.stop_robot()
 		else:
 			time.sleep(0.05)
@@ -99,15 +99,15 @@ def encoder_to_distance(encoder_received, encoder_processed):
 	left_encode = 0
 	right_encode = 0
 	#in case data received is faster than the processing time 
-		if(encoder_received > encoder_processed): 
-			for x in range(encoder_processed, encoder_received):
-				left_encode += encoder_data[2 * x]
-				right_encode += encoder_data[2 * x +1]
+	if(encoder_received > encoder_processed): 
+		for x in range(encoder_processed, encoder_received):
+			left_encode += encoder_data[2 * x]
+			right_encode += encoder_data[2 * x +1]
 
 	if(encoder_received < encoder_processed): 
 		for x in range(encoder_processed, 1000):
 			left_encode 	+= encoder_data[2 * x]
-				right_encode 	+= encoder_data[2 * x + 1]
+			right_encode 	+= encoder_data[2 * x + 1]
 			for x in range(0, encoder_received):
 				left_encode 	+= encoder_data[2 * x]
 				right_encode 	+= encoder_data[2 * x + 1]
@@ -352,7 +352,7 @@ def encoder_callback(data):
 	left_encode, right_encode = data_string.split(" ")
 
 	left_encode  = int(left_encode)
-		right_encode = int(right_encode)
+	right_encode = int(right_encode)
 	if(left_encode == 0 or right_encode == 0):
 		#rospy.loginfo("encoder 0,0")
 		robot_drive.robot_moving = 0
@@ -364,9 +364,9 @@ def encoder_callback(data):
 		robot_drive.robot_turning = 1
 		robot_drive.robot_moving =0 		
 
-		index = encoder_received * 2
-		encoder_data[encoder_received * 2] = float(left_encode)
-		encoder_data[encoder_received * 2 + 1] = float(right_encode)
+	index = encoder_received * 2
+	encoder_data[encoder_received * 2] = float(left_encode)
+	encoder_data[encoder_received * 2 + 1] = float(right_encode)
 
 		#bytesToLog = 'Encoder sequence %d received' % (encoder_received)
 		#rospy.loginfo(str(bytesToLog))
@@ -476,8 +476,8 @@ def main_commander():
 	# ----------------------------------------------------------------------------------------#
 	if job_completed == 1:
 		robot_drive.lon_target 		= robot_job.job_lon_target[0]
-			robot_drive.lat_target 		= robot_job.job_lat_target[0]
-			robot_drive.bearing_target 	= robot_job.job_bearing_target[0] 
+		robot_drive.lat_target 		= robot_job.job_lat_target[0]
+		robot_drive.bearing_target 	= robot_job.job_bearing_target[0] 
 		robot_job.remove_current_job()
 		#robot_correction.angle_correction()
 		robot_correction.distance_correction()

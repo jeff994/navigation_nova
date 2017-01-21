@@ -86,10 +86,10 @@ def update_robot_gps(left_encode, right_encode):
 	rospy.loginfo("Bearing now %f,lon_now %f, lat_now %f", robot_drive.bearing_now, robot_drive.lon_now, robot_drive.lat_now)
 
 # correct robot every time by comapring the lat_now, lon_now with target position
-def dist_correction():
+def distance_correction():
 	rospy.loginfo("**************correction jobs**************")
 	distance 	= gpsmath.haversine(robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target, robot_drive.lat_target)
-	bearing 	= gpsmath.bearing(bot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target, robot_drive.lat_target)
+	bearing 	= gpsmath.bearing(robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target, robot_drive.lat_target)
 	# check the bearing now and bearing target 
 	rospy.loginfo("GPS now [%f, %f], GPS target: [%f, %f]", robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target,robot_drive.lat_target)
 	rospy.loginfo("Bearing move %f, Bearing now %f, bearing target %f", bearing, robot_drive.bearing_now, robot_drive.bearing_target)
