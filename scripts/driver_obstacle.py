@@ -16,7 +16,6 @@ start = 0.0
 end = 0.0
 
 status_pub = rospy.Publisher('status', String, queue_size = 100)
-needForward = False
 
 def open_serial():
     global ser

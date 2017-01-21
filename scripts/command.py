@@ -34,11 +34,11 @@ pub_param = rospy.Publisher('parameters', String, queue_size = 10)
 
 # init the the encoder buffer with some empty data when system starts 
 def init_encoder_buffer( size=2000 ):
-    global encoder_data 
-    if(len(encoder_data) == size):
-    	return 
-    for i in range(size - len(encoder_data)):
-        encoder_data.append(0)
+	global encoder_data 
+	if(len(encoder_data) == size):
+		return 
+	for i in range(size - len(encoder_data)):
+		encoder_data.append(0)
 
 # init the compass buffer with some empty data when sytem states 
 def init_compass_buffer(size = 10):
@@ -77,7 +77,7 @@ def process_encoder_delay():
 		delay_seconds = delta.seconds + delta.microseconds / 1000000.0 
 		if(delay_seconds >  max_delay):
 			bytesToLog = 'Error: Not receiving data for %f seconds: Stopping robot immediately' % (max_delay)
-     			rospy.logerr(bytesToLog)
+				rospy.logerr(bytesToLog)
 			robot_drive.stop_robot()
 		else:
 			time.sleep(0.05)
@@ -99,18 +99,18 @@ def encoder_to_distance(encoder_received, encoder_processed):
 	left_encode = 0
 	right_encode = 0
 	#in case data received is faster than the processing time 
-    	if(encoder_received > encoder_processed): 
-    		for x in range(encoder_processed, encoder_received):
-    			left_encode += encoder_data[2 * x]
-    			right_encode += encoder_data[2 * x +1]
+		if(encoder_received > encoder_processed): 
+			for x in range(encoder_processed, encoder_received):
+				left_encode += encoder_data[2 * x]
+				right_encode += encoder_data[2 * x +1]
 
-   	if(encoder_received < encoder_processed): 
-   		for x in range(encoder_processed, 1000):
-   			left_encode 	+= encoder_data[2 * x]
-    			right_encode 	+= encoder_data[2 * x + 1]
-    		for x in range(0, encoder_received):
-    			left_encode 	+= encoder_data[2 * x]
-    			right_encode 	+= encoder_data[2 * x + 1]
+	if(encoder_received < encoder_processed): 
+		for x in range(encoder_processed, 1000):
+			left_encode 	+= encoder_data[2 * x]
+				right_encode 	+= encoder_data[2 * x + 1]
+			for x in range(0, encoder_received):
+				left_encode 	+= encoder_data[2 * x]
+				right_encode 	+= encoder_data[2 * x + 1]
 	return left_encode, right_encode 
 
 # Process all kinds of robot job as required 
@@ -146,22 +146,18 @@ def complete_obstacle_avoidence():
 	# Remove the un-finished job 
 	if robot_drive.robot_on_mission:
 		robot_drive.lon_target 		= robot_job.job_lon_target[0]
-	        robot_drive.lat_target 		= robot_job.job_lat_target[0]
-        	robot_drive.bearing_target 	= robot_job.job_bearing_target[0]
+		robot_drive.lat_target 		= robot_job.job_lat_target[0]
+		robot_drive.bearing_target 	= robot_job.job_bearing_target[0]
 		robot_job.remove_current_job()
 		# Re-calculate and send the corretion job 
-		robot_correction.distance_correction(dist_forward_after_obstacle)
+		#robot_correction.distance_correction(dist_forward_after_obstacle)
 		#@yuqing_forwardafterobstacle
 		#forward distance by angle from sensor
 		#rospy.loginfo("forward 0.5m after obstacle") 
-		if needForward:
-			rospy.loginfo("need to forward 0.5m after obstacle") 
-			robot_job.add_correction_move(dist_forward_after_obstacle)
-			lon2, lat2 = gpsmath.get_gps(robot_drive.lon_now, robot_drive.lat_now, dist_forward_after_obstacle, robot_drive.bearing_now)
-			distance 	= gpsmath.haversine(lon2, lat2, robot_drive.lon_target, robot_drive.lat_target)
-			bearing 	= gpsmath.bearing(lon2, lat2, robot_drive.lon_target, robot_drive.lat_target)
-			robot_job.add_target_gps(lon2, lat2, bearing)
+		if robot_obstacle.needForward:
+			robot_correction.distance_correction_obstacle(dist_forward_after_obstacle)
 		else:
+			robot_correction.distance_correction()
 			rospy.loginfo("no need to forward 0.5m after obstacle")
 
 # Very import step, based on the encoder data, we do the conversion and calcuation 
@@ -252,25 +248,32 @@ def keyboard_callback(data):
 
 #read obstacle finish data thro driver node
 def driver_obstacle_callback(data):
-	global needForward
 	string = data.data
-	rospy.loginfo('driver callback: ' + string)
-	rospy.loginfo('robot_on_obstacle: %d', robot_obstacle.robot_on_obstacle)
+	#rospy.loginfo('driver callback: ' + string)
+	#rospy.loginfo('robot_on_obstacle: %d', robot_obstacle.robot_on_obstacle)
 	if(string == 'FINISH'):
-		if robot_obstacle.robot_on_obstacle>0: 
+		if robot_obstacle.robot_on_obstacle > 0: 
 			rospy.loginfo('callback: obstacle finish')
 			robot_obstacle.obstacle_is_over()
+		else: 
+			rospy.loginfo('Received finish after obstacle avoidence is over')
 	else:
-		if (robot_obstacle.robot_on_obstacle==0):
-			if(string.find('OBSTACLE') != -1):
-				rospy.loginfo('callback: obstacle start %s', string)
-				direction = string[-1]
-				if ((direction == 'L') or (direction =='R')):
-					needForward = True
-				else:
-					needForward = False
+		index = string.find('OBSTACLE')
+		# if current state is no obstacle but recevited obstacel, starts obstacle avidentce 
+		if (robot_obstacle.robot_on_obstacle == 0):
+			if(index != -1):
 				robot_obstacle.start_obstacle_avidence()
+				robot_obstacle.needForward = False
+				robot_obstacle.justStop = False
+
+		if(index != -1):
+			rospy.loginfo('callback: obstacle start %s', string)
+			direction = string[-1]
+			if ((direction == 'L') or (direction =='R')):
+				robot_obstacle.needForward = True
 			else:
+				robot_obstacle.justStop = True
+		else:
 				rospy.loginfo("string: %s", string)
 	return
 # handle the data from the front reverse car sensor
@@ -349,7 +352,7 @@ def encoder_callback(data):
 	left_encode, right_encode = data_string.split(" ")
 
 	left_encode  = int(left_encode)
-    	right_encode = int(right_encode)
+		right_encode = int(right_encode)
 	if(left_encode == 0 or right_encode == 0):
 		#rospy.loginfo("encoder 0,0")
 		robot_drive.robot_moving = 0
@@ -361,12 +364,12 @@ def encoder_callback(data):
 		robot_drive.robot_turning = 1
 		robot_drive.robot_moving =0 		
 
-    	index = encoder_received * 2
-    	encoder_data[encoder_received * 2] = float(left_encode)
-    	encoder_data[encoder_received * 2 + 1] = float(right_encode)
+		index = encoder_received * 2
+		encoder_data[encoder_received * 2] = float(left_encode)
+		encoder_data[encoder_received * 2 + 1] = float(right_encode)
 
-    	#bytesToLog = 'Encoder sequence %d received' % (encoder_received)
-    	#rospy.loginfo(str(bytesToLog))
+		#bytesToLog = 'Encoder sequence %d received' % (encoder_received)
+		#rospy.loginfo(str(bytesToLog))
 
 	encoder_received = (encoder_received + 1) % 1000
 	#convert encoder number to floading point number, make sure all subsquent calculation is on floating point mode 
@@ -374,23 +377,23 @@ def encoder_callback(data):
 	#	rospy.loginfo(str(data_string))
 
 def publish_parameters():
-    #@yuqing_publishparam
-    info={}  
-    info["ENABLE"]      =    robot_drive.robot_enabled
-    info["MOVING"]      =    robot_drive.robot_moving 
-    info["MISSION"]     =    robot_drive.robot_on_mission 
-    info["OBSTACLE"]    =    robot_obstacle.robot_on_obstacle  
-    info["DIRECTION"]   =    robot_drive.move_direction
-    info["SPEED"]       =    robot_drive.speed_now  
-    info["LONG"]        =    robot_drive.lon_now
-    info["LAT"]         =    robot_drive.lat_now
-    info["BEARING"]     =    robot_drive.bearing_now
-    data={}
-    data["parameters"]  =    info
-      
-    parameters = json.dumps(data)
-    #rospy.loginfo(parameters)
-    pub_param.publish(parameters)
+	#@yuqing_publishparam
+	info={}  
+	info["ENABLE"]      =    robot_drive.robot_enabled
+	info["MOVING"]      =    robot_drive.robot_moving 
+	info["MISSION"]     =    robot_drive.robot_on_mission 
+	info["OBSTACLE"]    =    robot_obstacle.robot_on_obstacle  
+	info["DIRECTION"]   =    robot_drive.move_direction
+	info["SPEED"]       =    robot_drive.speed_now  
+	info["LONG"]        =    robot_drive.lon_now
+	info["LAT"]         =    robot_drive.lat_now
+	info["BEARING"]     =    robot_drive.bearing_now
+	data={}
+	data["parameters"]  =    info
+	  
+	parameters = json.dumps(data)
+	#rospy.loginfo(parameters)
+	pub_param.publish(parameters)
 
 # The main progream process the robot logic 
 def main_commander():
@@ -443,7 +446,7 @@ def main_commander():
 	#  Codes for robot normal jobs like walking and turning       							  #
 	# ----------------------------------------------------------------------------------------#
 	# Check whether if there's any job left for the robot
-    # If no jobs, make sure robot stopped moving, we cannot leave robot moving there 
+	# If no jobs, make sure robot stopped moving, we cannot leave robot moving there 
 	if(len(robot_job.job_des) < 1 or len(robot_job.job_num) < 1):
 		process_no_job()
 		return
@@ -464,8 +467,8 @@ def main_commander():
 	#else: 
 		# if abs(compass_data[compass_index]) <=2 or abs(compass_data[compass_index]) >= 358:
 		 #	rospy.loginfo("Compass reached true north %d, calculated beraing now is %f", compass_data[compass_index], robot_drive.bearing_now)
-		 	# need to add a correction job after the current job finished
-		 	# update the robot bearing to the compass given one 
+			# need to add a correction job after the current job finished
+			# update the robot bearing to the compass given one 
 		 #	robot_drive.bearing_now = compass_data[compass_index]
 
 	# ----------------------------------------------------------------------------------------#
@@ -473,8 +476,8 @@ def main_commander():
 	# ----------------------------------------------------------------------------------------#
 	if job_completed == 1:
 		robot_drive.lon_target 		= robot_job.job_lon_target[0]
-        	robot_drive.lat_target 		= robot_job.job_lat_target[0]
-        	robot_drive.bearing_target 	= robot_job.job_bearing_target[0] 
+			robot_drive.lat_target 		= robot_job.job_lat_target[0]
+			robot_drive.bearing_target 	= robot_job.job_bearing_target[0] 
 		robot_job.remove_current_job()
 		#robot_correction.angle_correction()
 		robot_correction.distance_correction()

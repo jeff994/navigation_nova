@@ -23,7 +23,7 @@ def update_robot_gps(left_encode, right_encode):
 	#scenario 1, robot not moving 
 	if(left_encode == 0 and right_encode == 0):
 		#no updating of information 
-                #@yuqing_continueturn
+				#@yuqing_continueturn
 		return
 
 	# loacal vaiables 
@@ -85,16 +85,13 @@ def update_robot_gps(left_encode, right_encode):
 	robot_drive.pub_gps.publish(stringToSend)
 	rospy.loginfo("Bearing now %f,lon_now %f, lat_now %f", robot_drive.bearing_now, robot_drive.lon_now, robot_drive.lat_now)
 
-# before this add a correction job if angle is more than 3 degrees 
-def distance_correction(dist=0):
-        rospy.loginfo("**************correction**************")
-	lon2, lat2 = gpsmath.get_gps(robot_drive.lon_now, robot_drive.lat_now, dist, robot_drive.bearing_now)
-	distance 	= gpsmath.haversine(lon2, lat2, robot_drive.lon_target, robot_drive.lat_target)
-	rospy.loginfo("distance error: %f", distance)
-	bearing 	= gpsmath.bearing(lon2, lat2, robot_drive.lon_target, robot_drive.lat_target)
+# correct robot every time by comapring the lat_now, lon_now with target position
+def dist_correction():
+	rospy.loginfo("**************correction jobs**************")
+	distance 	= gpsmath.haversine(robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target, robot_drive.lat_target)
+	bearing 	= gpsmath.bearing(bot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target, robot_drive.lat_target)
 	# check the bearing now and bearing target 
 	rospy.loginfo("GPS now [%f, %f], GPS target: [%f, %f]", robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target,robot_drive.lat_target)
-
 	rospy.loginfo("Bearing move %f, Bearing now %f, bearing target %f", bearing, robot_drive.bearing_now, robot_drive.bearing_target)
 
 	if(bearing > 90 and bearing < 270):
@@ -102,14 +99,50 @@ def distance_correction(dist=0):
 		bearing = (bearing+180)%360
 
 	if(abs(distance) > 100):
-		rospy.loginfo("correct distance.......................")
+		rospy.loginfo("Add jobs to correct distance.......................")
 		diff_angle 	= abs(robot_drive.bearing_target - bearing)
 		#rospy.loginfo("distance: %f, angle: %f", distance, diff_angle)
 		if(diff_angle > 5 and  diff_angle < 355):
 			robot_job.add_correction_turn(robot_drive.bearing_target)
 			robot_job.add_target_gps(robot_drive.lon_target, robot_drive.lat_target, robot_drive.bearing_target)
-		robot_job.add_job_from_gps(lon2, lat2, robot_drive.lon_target, robot_drive.lat_target)
-		
+		robot_job.add_job_from_gps(bot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target, robot_drive.lat_target)
+	else: 
+		rospy.loginfo("no need to correct distance.....................")
+		diff_angle = abs(robot_drive.bearing_target - robot_drive.bearing_now)
+		rospy.loginfo("angle: %f", diff_angle)
+		if(diff_angle > 5  and diff_angle < 355): 
+			rospy.loginfo("Add a job to correct angle............................")
+			robot_job.add_correction_turn(robot_drive.bearing_target)
+			robot_job.add_target_gps(robot_drive.lon_target, robot_drive.lat_target, robot_drive.bearing_target)
+		else:
+			rospy.loginfo("no need to correct angle.................")
+	rospy.loginfo("There's a %f mm distance error", distance)
+
+
+# Correct a robot with obstancles by inserting a job to move the robot forward for 1m
+def distance_correction_obstacle(dist):
+	rospy.loginfo("**************correction jobs for obstacles with movement **************")
+	# step 1 calculate the gps position of the robot with movment on the current direction of dist
+	lon2, lat2 = gpsmath.get_gps(robot_drive.lon_now, robot_drive.lat_now, dist, robot_drive.bearing_now)
+	# Get the distance of robot after move forward cetain values with the target position  
+	distance 	= gpsmath.haversine(lon2, lat2, robot_drive.lon_target, robot_drive.lat_target)
+	bearing 	= gpsmath.bearing(lon2, lat2, robot_drive.lon_target, robot_drive.lat_target)
+	# check the bearing now and bearing target 
+	rospy.loginfo("GPS now [%f, %f], GPS target: [%f, %f]", robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target,robot_drive.lat_target)
+	rospy.loginfo("Bearing move %f, Bearing now %f, bearing target %f", bearing, robot_drive.bearing_now, robot_drive.bearing_target)
+
+	if(bearing > 90 and bearing < 270):
+		distance = -distance 
+		bearing = (bearing+180)%360
+
+	if(abs(distance) > 100):
+		rospy.loginfo("Add jobs of correct distance.......................")
+		diff_angle 	= abs(robot_drive.bearing_target - bearing)
+		#rospy.loginfo("distance: %f, angle: %f", distance, diff_angle)
+		if(diff_angle > 5 and  diff_angle < 355):
+			robot_job.add_correction_turn(robot_drive.bearing_target)
+			robot_job.add_target_gps(robot_drive.lon_target, robot_drive.lat_target, robot_drive.bearing_target)
+		robot_job.add_job_from_gps(lon2, lat2, robot_drive.lon_target, robot_drive.lat_target)		
 		#robot_job.add_job_from_gps(robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target, robot_drive.lat_target)
 		#robot_job.add_correction_move(distance)
 		#robot_job.add_correction_turn(bearing)
@@ -118,12 +151,15 @@ def distance_correction(dist=0):
 		diff_angle = abs(robot_drive.bearing_target - robot_drive.bearing_now)
 		rospy.loginfo("angle: %f", diff_angle)
 		if(diff_angle > 5  and diff_angle < 355): 
-			rospy.loginfo("correct angle............................")
+			rospy.loginfo("Add a job to correct angle............................")
 			robot_job.add_correction_turn(robot_drive.bearing_target)
 			robot_job.add_target_gps(robot_drive.lon_target, robot_drive.lat_target, robot_drive.bearing_target)
 		else:
 			rospy.loginfo("no need to correct angle.................")
-	rospy.loginfo("There's a %f mm distance error, %f angle difference", distance, diff_angle)
+	#rospy.loginfo("There's a %f mm distance error, %f angle difference", distance, diff_angle)
+	rospy.loginfo("Add a job to move forward %d mm", dist_forward_after_obstacle)
+	robot_job.add_correction_move(dist_forward_after_obstacle)
+	robot_job.add_target_gps(lon2, lat2, bearing)
 
 # def angle_correction(): 
 # 	rospy.loginfo("bearing now calculated: %f, bearing target: %f", robot_drive.bearing_now, robot_drive.bearing_target)
