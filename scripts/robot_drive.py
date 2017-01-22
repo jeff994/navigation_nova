@@ -39,6 +39,8 @@ step_distance		= 0
 #1: obstacle mode 
 #0: no-obstalce mode
 obstacle_mode = 1
+#yuqing_unlockconfirm
+isunlockdone = 0
 
 pub_command 		= rospy.Publisher('command', 	String, queue_size=10)
 pub_gps				= rospy.Publisher('gps', 		String, queue_size=10)

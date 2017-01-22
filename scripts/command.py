@@ -139,8 +139,9 @@ def process_job():
 def complete_obstacle_avoidence(): 
 	# Need to perform necessary correction 
 	rospy.loginfo("Resume the robot from obstacle avoidence") 
-	# First get ready the robot for normal walking  
-	robot_obstacle.unlock_from_obstacle()
+	# First get ready the robot for normal walking 
+	#yuqing_unlockconfirm 
+	#robot_obstacle.unlock_from_obstacle()
 	# Remove the un-finished job 
 	if robot_drive.robot_on_mission:
 		current_job_type = robot_job.job_type[0]
@@ -294,7 +295,7 @@ def driver_obstacle_callback(data):
 	rospy.loginfo('robot_on_obstacle: %d', robot_obstacle.robot_on_obstacle)
 	if(string == 'FINISH'):
 		if robot_obstacle.robot_on_obstacle > 0: 
-			rospy.loginfo('callback: obstacle finish')
+			rospy.loginfo('first finish')
 			robot_obstacle.obstacle_is_over()
 		else: 
 			rospy.loginfo('Received one more finish')
@@ -307,6 +308,9 @@ def driver_obstacle_callback(data):
 		elif (string == "UPPER CONTROL"):
 			rospy.loginfo("robot enter obstacle mode")
 			robot_drive.obstacle_mode = 1
+		#yuqing_unlockconfirm
+		elif (string == "UNLOCK"):
+			robot_drive.isunlockdone = 1
 		else:
 			index = string.find('OBSTACLE')
 			# if current state is no obstacle but recevited obstacel, starts obstacle avidentce 
@@ -486,8 +490,13 @@ def main_commander():
 	# Robot obstancle avoidence is over, now resumeto normal operation 
 	if(robot_obstacle.robot_over_obstacle > 0):
 		if (robot_drive.robot_turning == 0 and robot_drive.robot_moving == 0):
-			rospy.loginfo("@@@@@@@@@@@@@@@@@@@@@@@@@@")
-			complete_obstacle_avoidence()
+			#@yuqing_unlockconfirm
+			if (robot_drive.isunlockdone == 1):
+				complete_obstacle_avoidence()
+			#yuqing_unlockconfirm
+			#complete_obstacle_avoidence()
+			else:
+				robot_drive.unlock_robot()
 		else:
 			rospy.loginfo("waiting robot to stop")
 		return 

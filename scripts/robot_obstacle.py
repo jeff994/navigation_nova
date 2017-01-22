@@ -38,6 +38,8 @@ def start_obstacle_avidence():
 	global robot_over_obstacle
 	robot_on_obstacle 	= 1
 	robot_over_obstacle 	= 0
+	#yuqing_unlockconfirm
+	robot_drive.isunlockdone = 0
 
 # if obstacle avoidence is over
 def obstacle_is_over():
