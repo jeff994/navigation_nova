@@ -291,8 +291,10 @@ def keyboard_callback(data):
 #read obstacle finish data thro driver node
 def driver_obstacle_callback(data):
 	string = data.data
-	rospy.loginfo('driver callback: ' + string)
+	string = string.strip('\r\n')
+	rospy.loginfo('driver callback: %s, length: %d ',  string, len(string))
 	rospy.loginfo('robot_on_obstacle: %d', robot_obstacle.robot_on_obstacle)
+	
 	if(string == 'FINISH'):
 		if robot_obstacle.robot_on_obstacle > 0: 
 			rospy.loginfo('first finish')
@@ -494,6 +496,8 @@ def main_commander():
 			if (robot_drive.isunlockdone == 1):
 				rospy.loginfo("complete obstacle")
 				complete_obstacle_avoidence()
+				robot_drive.isunlockdone = 0
+				robot_obstacle.robot_over_obstacle = 0
 			#yuqing_unlockconfirm
 			#complete_obstacle_avoidence()
 			else:
