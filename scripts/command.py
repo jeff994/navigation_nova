@@ -224,10 +224,10 @@ def keyboard_callback(data):
 		robot_job.initialize_job()
 	elif (keyboard_data == 'Forward'):
 		rospy.loginfo("Command received: Start to move forward 1 m")
-		robot_job.simple_job_move(1000, 'F', robot_drive.lon_now, robot_drive.lat_now, robot_drive.bearing_now)
+		robot_job.simple_job_move(10000, 'F', robot_drive.lon_now, robot_drive.lat_now, robot_drive.bearing_now)
 	elif (keyboard_data == 'Back'):
 		rospy.loginfo("rospeived: Start to move back 1 m")
-		robot_job.simple_job_move(-1000, 'B', robot_drive.lon_now, robot_drive.lat_now, robot_drive.bearing_now)
+		robot_job.simple_job_move(-10000, 'B', robot_drive.lon_now, robot_drive.lat_now, robot_drive.bearing_now)
 	elif (keyboard_data == 'Turn_West'):
 		rospy.loginfo("Command received: turn to 270 (WEST)") 
 		#robot_drive.bearing_now = compass_data[compass_index] 

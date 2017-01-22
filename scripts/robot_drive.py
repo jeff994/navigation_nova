@@ -46,12 +46,20 @@ pub_command 		= rospy.Publisher('command', 	String, queue_size=10)
 pub_gps				= rospy.Publisher('gps', 		String, queue_size=10)
 
 def init_gps():
+	global lon_now
+	global lat_now
+	global bearing_now
+	global bearing_target
+	global lon_target
+	global lat_target
+
 	lon_now 		= 121.635139
 	lat_now  		= 31.2112262
 	bearing_now 	= 0
 	lon_target 		= 121.635139
 	lat_target 		= 31.2112262
 	bearing_target 	= 0              #degrees
+	rospy.loginfo("Robot reset to original position")
 
 # start the robot movement or turning 
 def start():
