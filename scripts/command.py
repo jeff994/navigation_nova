@@ -244,6 +244,7 @@ def keyboard_callback(data):
 		if(robot_drive.robot_enabled == 1):
 			rospy.loginfo("robot disabled")  
 			robot_drive.robot_enabled = 0
+			robot_drive.init_gps()
 		else: 
 			robot_drive.init_gps()
 			rospy.loginfo("robot enabled")  
