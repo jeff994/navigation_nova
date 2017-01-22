@@ -173,11 +173,11 @@ def add_job_from_gps(lon1, lat1, lon2, lat2):
 # as discovred, the digital compass would be accurabte in true north, so to initialize the robot,
 # we need to turn one round to identify the true north 
 def initialize_job():
-	lon_new, lat_new  = simple_job_turn(90, robot_drive.lon_now, robot_drive.lat_now)
-	lon_new, lat_new  = simple_job_turn(180, lon_new, lat_new )
-	lon_new, lat_new  = simple_job_turn(270, lon_new, lat_new )
-	lon_new, lat_new  = simple_job_turn(0, lon_new, lat_new )
-	lon_new, lat_new  = simple_job_turn(90, lon_new, lat_new )
+	bearing  = simple_job_turn(90, robot_drive.lon_now, robot_drive.lat_now)
+	bearing  = simple_job_turn(180, lon_new, lat_new )
+	bearing  = simple_job_turn(270, lon_new, lat_new )
+	bearing  = simple_job_turn(0, lon_new, lat_new )
+	bearing  = simple_job_turn(90, lon_new, lat_new )
 
 
 def simple_job_move(dist, dire, lon, lat, bearing):
