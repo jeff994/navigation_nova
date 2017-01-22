@@ -297,7 +297,7 @@ def driver_obstacle_callback(data):
 			robot_obstacle.obstacle_is_over()
 		else: 
 			rospy.loginfo('Received one more finish')
-			robot_drive.unlock_robot()
+			#robot_drive.unlock_robot()
 	else:
 		index = string.find('OBSTACLE')
 		# if current state is no obstacle but recevited obstacel, starts obstacle avidentce 
