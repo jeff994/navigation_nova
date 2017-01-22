@@ -492,10 +492,12 @@ def main_commander():
 		if (robot_drive.robot_turning == 0 and robot_drive.robot_moving == 0):
 			#@yuqing_unlockconfirm
 			if (robot_drive.isunlockdone == 1):
+				rospy.loginfo("complete obstacle")
 				complete_obstacle_avoidence()
 			#yuqing_unlockconfirm
 			#complete_obstacle_avoidence()
 			else:
+				rospy.loginfo("unlock again")
 				robot_drive.unlock_robot()
 		else:
 			rospy.loginfo("waiting robot to stop")
