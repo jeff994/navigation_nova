@@ -35,6 +35,7 @@ def open_serial():
         return 1
     return 0 
 
+#@yuqing_obstacledriverread
 def driver():
     global ser
     pub = rospy.Publisher('driver_obstacle', String, queue_size = 10)

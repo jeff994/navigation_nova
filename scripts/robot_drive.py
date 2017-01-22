@@ -35,6 +35,11 @@ bearing_target 		= 0 		#degrees
 step_angle 			= 0
 step_distance		= 0
 
+#yuqing_obstaclemodeconfirm
+#1: obstacle mode 
+#0: no-obstalce mode
+obstacle_mode = 1
+
 pub_command 		= rospy.Publisher('command', 	String, queue_size=10)
 pub_gps				= rospy.Publisher('gps', 		String, queue_size=10)
 
@@ -94,5 +99,6 @@ def enter_no_obstacle():
 def enter_obstacle():
 	pub_command.publish('SO00000OE\n')
 	rospy.loginfo('SO00000OE enter no obstacle mode')
-	time.sleep(0.1)
-	unlock_robot()
+	#yuqing_obstaclemodeconfirm
+	#remove unlock
+	

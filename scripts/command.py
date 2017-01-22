@@ -286,6 +286,7 @@ def keyboard_callback(data):
 		rospy.loginfo(keyboard_data)
 		rospy.loginfo("Not recognizing command receivied")
 
+#@yuqing_obstacledriverread
 #read obstacle finish data thro driver node
 def driver_obstacle_callback(data):
 	string = data.data
@@ -299,23 +300,31 @@ def driver_obstacle_callback(data):
 			rospy.loginfo('Received one more finish')
 			#robot_drive.unlock_robot()
 	else:
-		index = string.find('OBSTACLE')
-		# if current state is no obstacle but recevited obstacel, starts obstacle avidentce 
-		if (robot_obstacle.robot_on_obstacle == 0):
-			if(index != -1):
-				robot_obstacle.start_obstacle_avidence()
-				robot_obstacle.needForward = False
-				robot_obstacle.justStop = False
-
-		if(index != -1):
-			rospy.loginfo('callback: obstacle start %s', string)
-			direction = string[-1]
-			if ((direction == 'L') or (direction =='R')):
-				robot_obstacle.needForward = True
-			else:
-				robot_obstacle.justStop = True
+		#yuqing_obstaclemodeconfirm
+		if (string == "LOWER CONTROL"):
+			rospy.loginfo("robot enter no obstacle mode")
+			robot_drive.obstacle_mode = 0
+		elif (string == "UPPER CONTROL"):
+			rospy.loginfo("robot enter obstacle mode")
+			robot_drive.obstacle_mode = 1
 		else:
-				rospy.loginfo("string: %s", string)
+			index = string.find('OBSTACLE')
+			# if current state is no obstacle but recevited obstacel, starts obstacle avidentce 
+			if (robot_obstacle.robot_on_obstacle == 0):
+				if(index != -1):
+					robot_obstacle.start_obstacle_avidence()
+					robot_obstacle.needForward = False
+					robot_obstacle.justStop = False
+
+			if(index != -1):
+				rospy.loginfo('callback: obstacle start %s', string)
+				direction = string[-1]
+				if ((direction == 'L') or (direction =='R')):
+					robot_obstacle.needForward = True
+				else:
+					robot_obstacle.justStop = True
+			else:
+					rospy.loginfo("string: %s", string)
 	return
 # handle the data from the front reverse car sensor
 def rc_sensor_f_callback(data):
