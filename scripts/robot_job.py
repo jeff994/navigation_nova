@@ -24,7 +24,7 @@ job_lon_target 		= []
 job_lat_target 		= []
 job_bearing_target 	= []
 job_type			= []			#define job type check whether it's a correction job or normal job 
-loops 				= 2 			#how many rounds to go
+loops 				= 1 			#how many rounds to go
 correction_count 	= 0
 max_correction_run 	= 15
 
@@ -45,6 +45,7 @@ def job_generator(init_bearing):
 			generate_job(k, ne_k)
 	#final turn to init_bearing
 	generate_turn(init_bearing)
+	set_target_gps(robot_drive.lon_now, robot_drive.lat_now, init_bearing)
 
 #based on the gps coordinates of the two location, generate jobs
 def generate_job(first_point, second_point):

@@ -4,7 +4,7 @@
         <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch"/>
         <node pkg="navigation_nova" name="encoder" type="encoder.py"/>
         <node pkg="navigation_nova" name="execute_command" type="execute_command.py"/>
-        <node pkg="navigation_nova" name="driver_obstacle" type="driver_obstacle.py"/>
+        <!--<node pkg="navigation_nova" name="driver_obstacle" type="driver_obstacle.py"/>-->
         <node pkg="navigation_nova" name="command" type="command.py" output="screen"/>
         <!--</group>-->
 </launch>
