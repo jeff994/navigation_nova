@@ -237,7 +237,7 @@ def append_regular_move_job(distance, direction, target_lon, target_lat, target_
 	set_target_gps(target_lon, target_lat, target_bearing)
 
 # append a regular turn job on the back 
-def apeend_regular_turn_job(target_lon, target_lat, target_bearing)
+def apeend_regular_turn_job(target_lon, target_lat, target_bearing):
 	generate_turn(target_bearing)
 	set_target_gps(target_lon, target_lat, target_bearing)
 
