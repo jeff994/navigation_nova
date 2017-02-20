@@ -141,7 +141,8 @@ def insert_compensation_jobs(lon_source, lat_source, lon_target, lat_target):
 
 def has_jobs_left():
 	global job_lists 
-	return len(job_lists) > 0
+	#rospy.loginfo("No of jobs left %d", len(job_lists)) 
+	return len(job_lists) <= 0
 
 def current_job():
 	global job_lists
@@ -149,6 +150,7 @@ def current_job():
 
 def complete_current_job():
 	global job_lists
+
 	del job_lists[0]
 
 def clear_job_list():
