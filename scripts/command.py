@@ -126,18 +126,18 @@ def keyboard_callback(data):
 		robot_job.initialize_job()
 	elif (keyboard_data == 'Forward'):
 		rospy.loginfo("Command received: Start to move forward 1 m")
-		robot_job.simple_job_move(10000, 'F', robot_drive.lon_now, robot_drive.lat_now, robot_drive.bearing_now)
+		robot_job.simple_move(10000, 0, 'F')
 	elif (keyboard_data == 'Back'):
 		rospy.loginfo("rospeived: Start to move back 1 m")
-		robot_job.simple_job_move(-10000, 'B', robot_drive.lon_now, robot_drive.lat_now, robot_drive.bearing_now)
+		robot_job.simple_move(-10000, 0, 'B')
 	elif (keyboard_data == 'Turn_West'):
 		rospy.loginfo("Command received: turn to 270 (WEST)") 
 		#robot_drive.bearing_now = compass_data[compass_index] 
-		robot_job.simple_job_turn(270, robot_drive.lon_now, robot_drive.lat_now)
+		robot_job.simple_turn(270)
 	elif (keyboard_data == 'Turn_East'): 
 		rospy.loginfo('Command received: turn to 90 (EAST)')
 		#robot_drive.bearing_now = compass_data[compass_index]
-		robot_job.simple_job_turn(90, robot_drive.lon_now, robot_drive.lat_now)
+		robot_job.simple_turn(90)
 	elif (keyboard_data == 'Stop'):
 		rospy.loginfo("Comamnd received: Clear all jobs") 
 		robot_job.clear_jobs()
