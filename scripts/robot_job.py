@@ -105,9 +105,9 @@ def init_robot_gps(lon, lat, bearing):
 def generate_jobs_from_gps():
 	#step 1: Move from initial point to the loop start point 
 	global init_lat, init_lon, init_bearing
+	global loops, gps_lon, gps_lat 
 	append_regular_jobs(init_lat, init_lon, gps_lon[0],gps_lat[0]);
 	#step 2: Start loop jobs
-	global loops, gps_lon, gps_lat 
 	#handles from start to first point
 	gps_num = len(gps_lon) 
 	#handles how many loops
