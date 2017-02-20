@@ -51,7 +51,7 @@ def process_no_job():
 def process_job():
 	job_completed = 0 
 	global job_lists
-	if (job_lists[0].job_description == 'T') : 
+	if (job_lists[0].description == 'T') : 
 		#rospy.loginfo("Bearing now %f, bearing target %f", robot_drive.bearing_now, robot_drive.bearing_target)
 		#if(robot_drive.robot_on_mission == 0): 
 		robot_drive.bearing_target  = job_lists[0].value
