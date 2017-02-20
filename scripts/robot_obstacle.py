@@ -65,3 +65,69 @@ def rc_sensor_data(rc_sensor_value):
 	rc_sensor_value = rc_sensor_value / 16 
 	forth_digit = rc_sensor_value % 16
 	return first_digit, second_digit, third_digit, forth_digit
+
+
+# Complete the obstacle avoidence after we get a signal from the robot base  
+def complete_obstacle_avoidence(): 
+	# Need to perform necessary correction 
+	rospy.loginfo("Resume the robot from obstacle avoidence") 
+	# First get ready the robot for normal walking 
+	#yuqing_unlockconfirm 
+	#robot_obstacle.unlock_from_obstacle()
+	# Remove the un-finished job 
+	if robot_drive.robot_on_mission:
+		current_job_type = robot_job.job_type[0]
+		if(current_job_type == 'N'):
+			rospy.loginfo("oRbot met obstacle during normal job, pefrorm correction")
+			robot_job.correction_count 	= 0
+			robot_drive.lon_target 		= robot_job.job_lon_target[0]
+			robot_drive.lat_target 		= robot_job.job_lat_target[0]
+			robot_drive.bearing_target 	= robot_job.job_bearing_target[0]
+			robot_job.remove_current_job()
+			# Re-calculate and send the corretion job 
+			#robot_correction.distance_correction(dist_forward_after_obstacle)
+			#@yuqing_forwardafterobstacle
+			#forward distance by angle from sensor
+			#rospy.loginfo("forward 0.5m after obstacle") 
+		elif(current_job_type == 'C'): 
+			if(robot_job.correction_count  > robot_job.max_correction_run):
+				rospy.loginfo("Robot has tried to move to %f, %f for %d times, failed")
+				while (current_job_type == 'C'):
+					robot_job.remove_current_job()
+					if len(robot_job.job_type) > 0:
+						current_job_type = robot_job.job_type[0]
+					else:
+						rospy.loginfo("The last job in the queue")
+						break; 
+
+				rospy.loginfo("Cleared all the correction jobs")
+				if len(robot_job.job_type) > 0:
+					current_job_type 			= robot_job.job_type[0]
+					robot_drive.lon_target 		= robot_job.job_lon_target[0]
+					robot_drive.lat_target 		= robot_job.job_lat_target[0]
+					robot_drive.bearing_target 	= robot_job.job_bearing_target[0]
+					rospy.loginfo("Add correction for next %s job", current_job_type)
+					robot_job.remove_current_job()
+			else:
+				rospy.loginfo("Robot meet a obstacle while peforming correction job")
+				robot_job.correction_count = robot_job.correction_count + 1
+				rospy.loginfo("Robot failed correction job for %d time", robot_job.correction_count )
+				#discard all correction jobs 
+				while (current_job_type == 'C'):
+					robot_drive.lon_target 		= robot_job.job_lon_target[0]
+					robot_drive.lat_target 		= robot_job.job_lat_target[0]
+					robot_drive.bearing_target 	= robot_job.job_bearing_target[0]
+					robot_job.remove_current_job()
+					if len(robot_job.job_type) > 0:
+						current_job_type = robot_job.job_type[0]
+					else:
+						rospy.loginfo("The last job in the queue")
+						break; 
+		else:
+			rospy.logerr("Invalude job_type found")
+
+		if robot_obstacle.needForward:
+			robot_correction.distance_correction_obstacle(robot_job.dist_forward_after_obstacle)		
+		else:
+			robot_correction.distance_correction()
+			rospy.loginfo("no need to forward 0.5m after obstacle")

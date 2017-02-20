@@ -82,15 +82,6 @@ def process_encoder_delay():
 	else:
 		time.sleep(0.05)
 
-# If not any job left in the sytem 
-def process_no_job():
-	robot_drive.robot_on_mission = 0
-	if(robot_drive.robot_moving == 1):
-		rospy.logwarn('warning: robot is not fully stopped even though a top command issued')
-		robot_drive.stop_robot()
-		time.sleep(0.05)
-		return
-
 # Simple conversion, get all the encoder not processed, then convert them to the distance 
 def encoder_to_distance(encoder_received, encoder_processed):
 	global encode_data 
@@ -110,95 +101,6 @@ def encoder_to_distance(encoder_received, encoder_processed):
 				left_encode 	+= encoder_data[2 * x]
 				right_encode 	+= encoder_data[2 * x + 1]
 	return left_encode, right_encode 
-
-# Process all kinds of robot job as required 
-def process_job():
-	job_completed = 0 
-	if (robot_job.job_des[0] == 'T') : 
-		#rospy.loginfo("Bearing now %f, bearing target %f", robot_drive.bearing_now, robot_drive.bearing_target)
-		#if(robot_drive.robot_on_mission == 0): 
-		robot_drive.bearing_target  = robot_job.job_num[0]
-		# Pre-steps of turning jobs starts: calculate the required angle to turn 
-		# start the job 
-		job_completed = robot_turn.turn_degree()
-	elif (robot_job.job_des[0] == 'F' or robot_job.job_des[0] == 'B'):
-		if(robot_job.job_des[0] == 'B'):
-			robot_job.job_num[0] = -  abs(robot_job.job_num[0])
-		#rospy.loginfo("process_job move......")
-		job_completed =robot_move.move_distance(robot_job.job_num[0])
-		#rospy.loginfo("Bearing target before correction %f", robot_drive.bearing_target)
- 
-	else :
-		print(str(robot_job.job_des[0]))
-		rospy.logwarn('job_des %s:%d', robot_job.job_des[0], robot_job.job_num[0])
-		rospy.logwarn('warning: illegal job description found, not peform any actions')
-	#rospy.loginfo("Bearing target before correction %f", robot_drive.bearing_target)
-	return job_completed
-
-# Complete the obstacle avoidence after we get a signal from the robot base  
-def complete_obstacle_avoidence(): 
-	# Need to perform necessary correction 
-	rospy.loginfo("Resume the robot from obstacle avoidence") 
-	# First get ready the robot for normal walking 
-	#yuqing_unlockconfirm 
-	#robot_obstacle.unlock_from_obstacle()
-	# Remove the un-finished job 
-	if robot_drive.robot_on_mission:
-		current_job_type = robot_job.job_type[0]
-		if(current_job_type == 'N'):
-			rospy.loginfo("oRbot met obstacle during normal job, pefrorm correction")
-			robot_job.correction_count 	= 0
-			robot_drive.lon_target 		= robot_job.job_lon_target[0]
-			robot_drive.lat_target 		= robot_job.job_lat_target[0]
-			robot_drive.bearing_target 	= robot_job.job_bearing_target[0]
-			robot_job.remove_current_job()
-			# Re-calculate and send the corretion job 
-			#robot_correction.distance_correction(dist_forward_after_obstacle)
-			#@yuqing_forwardafterobstacle
-			#forward distance by angle from sensor
-			#rospy.loginfo("forward 0.5m after obstacle") 
-		elif(current_job_type == 'C'): 
-			if(robot_job.correction_count  > robot_job.max_correction_run):
-				rospy.loginfo("Robot has tried to move to %f, %f for %d times, failed")
-				while (current_job_type == 'C'):
-					robot_job.remove_current_job()
-					if len(robot_job.job_type) > 0:
-						current_job_type = robot_job.job_type[0]
-					else:
-						rospy.loginfo("The last job in the queue")
-						break; 
-
-				rospy.loginfo("Cleared all the correction jobs")
-				if len(robot_job.job_type) > 0:
-					current_job_type 			= robot_job.job_type[0]
-					robot_drive.lon_target 		= robot_job.job_lon_target[0]
-					robot_drive.lat_target 		= robot_job.job_lat_target[0]
-					robot_drive.bearing_target 	= robot_job.job_bearing_target[0]
-					rospy.loginfo("Add correction for next %s job", current_job_type)
-					robot_job.remove_current_job()
-			else:
-				rospy.loginfo("Robot meet a obstacle while peforming correction job")
-				robot_job.correction_count = robot_job.correction_count + 1
-				rospy.loginfo("Robot failed correction job for %d time", robot_job.correction_count )
-				#discard all correction jobs 
-				while (current_job_type == 'C'):
-					robot_drive.lon_target 		= robot_job.job_lon_target[0]
-					robot_drive.lat_target 		= robot_job.job_lat_target[0]
-					robot_drive.bearing_target 	= robot_job.job_bearing_target[0]
-					robot_job.remove_current_job()
-					if len(robot_job.job_type) > 0:
-						current_job_type = robot_job.job_type[0]
-					else:
-						rospy.loginfo("The last job in the queue")
-						break; 
-		else:
-			rospy.logerr("Invalude job_type found")
-
-		if robot_obstacle.needForward:
-			robot_correction.distance_correction_obstacle(robot_job.dist_forward_after_obstacle)		
-		else:
-			robot_correction.distance_correction()
-			rospy.loginfo("no need to forward 0.5m after obstacle")
 
 
 # Very import step, based on the encoder data, we do the conversion and calcuation 
@@ -490,13 +392,13 @@ def main_commander():
 		rospy.loginfo("Robot on obstacle avoidence, please wait") 
 		return 
 
-	# Robot obstancle avoidence is over, now resumeto normal operation 
+	# Robot obstancle avoidence is over, now resume to normal operation 
 	if(robot_obstacle.robot_over_obstacle > 0):
 		if (robot_drive.robot_turning == 0 and robot_drive.robot_moving == 0):
 			#@yuqing_unlockconfirm
 			if (robot_drive.isunlockdone == 1):
 				rospy.loginfo("complete obstacle")
-				complete_obstacle_avoidence()
+				robot_obstacle.complete_obstacle_avoidence()
 				robot_drive.isunlockdone = 0
 				robot_obstacle.robot_over_obstacle = 0
 			#yuqing_unlockconfirm
@@ -513,11 +415,11 @@ def main_commander():
 	# ----------------------------------------------------------------------------------------#
 	# Check whether if there's any job left for the robot
 	# If no jobs, make sure robot stopped moving, we cannot leave robot moving there 
-	if(len(robot_job.job_des) < 1 or len(robot_job.job_num) < 1):
-		process_no_job()
+	if robot_job.has_jobs_left():
+		robot_job.process_no_job()
 		return
 
-	job_completed = process_job()
+	job_completed = robot_job.process_job()
 	
 	# ----------------------------------------------------------------------------------------#
 	#  Robot's doing the initialization jobs, not normal jobs      							  #
@@ -541,9 +443,9 @@ def main_commander():
 	#  Error compensation after current job completed      									  #
 	# ----------------------------------------------------------------------------------------#
 	if job_completed == 1:
-		robot_drive.lon_target 		= robot_job.job_lon_target[0]
-		robot_drive.lat_target 		= robot_job.job_lat_target[0]
-		robot_drive.bearing_target 	= robot_job.job_bearing_target[0] 
+		robot_drive.lon_target 		= robot_job.job_lists[0].lon_target;
+		robot_drive.lat_target 		= robot_job.job_lists[0].lat_target; 
+		robot_drive.bearing_target 	= robot_job.job_lists[0].bearing_target; 
 		robot_job.remove_current_job()
 		#robot_correction.angle_correction()
 		robot_correction.distance_correction()
