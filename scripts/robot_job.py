@@ -130,7 +130,7 @@ def append_regular_jobs(lon_source, lat_source, lon_target, lat_target):
 	job_lists.extend([turn_job])
 	job_lists.extend([move_job])
 
-def insert_compensation_jobs(lon_source, lat_source, lon_target, lat_target)
+def insert_compensation_jobs(lon_source, lat_source, lon_target, lat_target):
 	global job_lists
 	bearing 	= gpsmath.bearing(lon_source, lat_source, lon_target, lat_target)
 	distance 	= gpsmath.haversine(lon_source, lat_source, lon_target, lat_target)
