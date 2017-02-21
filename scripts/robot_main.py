@@ -8,6 +8,9 @@ import robot_correction
 import robot_publisher
 import robot_listener 
 
+from std_msgs.msg import String
+
+
 # The main progream process the robot logic 
 def main_commander():
 	# ----------------------------------------------------------------------------------------#
