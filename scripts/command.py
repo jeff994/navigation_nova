@@ -11,6 +11,7 @@ import robot_move
 import robot_turn
 import robot_correction 
 import robot_publisher
+import robot_listener 
 import json
 from datetime import datetime
 from std_msgs.msg import String
@@ -29,8 +30,6 @@ max_delay 			= 1.0	# max delay allowed for not receiving any signal from encoode
 last_received_time 	= 0.0 	# the time of receiving the last encoer data 
 
 #@yuqing_publishparam
-pub_command 		= rospy.Publisher('command', 	String, queue_size=10)
-pub_param = rospy.Publisher('parameters', String, queue_size = 10)
 
 # init the the encoder buffer with some empty data when system starts 
 def init_encoder_buffer( size=2000 ):
@@ -372,7 +371,7 @@ def main_commander():
 def main_listener():
 	rospy.init_node('commander')
 	rospy.Subscriber('compass', String, compass_callback)
-	rospy.Subscriber('encoder', String, encoder_callback)
+	rospy.Subscriber('encoder', String, robot_listener.encoder_callback)
 	rospy.Subscriber('keyboard', String, keyboard_callback)
 	rospy.Subscriber('rc_sensor_f', String, rc_sensor_f_callback)
 	rospy.Subscriber('rc_sensor_b', String, rc_sensor_b_callback)

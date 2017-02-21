@@ -6,8 +6,10 @@ import robot_obstacle
 import json
 from std_msgs.msg import String
 
-pub_command 		= rospy.Publisher('command', 	String, queue_size=10)
-pub_param = rospy.Publisher('parameters', String, queue_size = 10)
+pub_param 		= rospy.Publisher('parameters', String, queue_size = 10)
+pub_gps			= rospy.Publisher('gps', 		String, queue_size=10)
+pub_command 	= rospy.Publisher('command', 	String, queue_size=10)
+
 # Used to publish parameters 
 def publish_parameters():
 	#@yuqing_publishparam
@@ -27,3 +29,16 @@ def publish_parameters():
 	parameters = json.dumps(data)
 	#rospy.loginfo(parameters)
 	pub_param.publish(parameters)
+
+def publish_gps():
+	stringToSend = '%f %f %f' % (robot_drive.lon_now, robot_drive.lat_now, robot_drive.bearing_now) #might need to add \n behind the E
+	pub_gps.publish(stringToSend)
+
+
+# Helper function which can send commands to robot 
+def publish_command(command_string, speed):
+	#sending the string
+	#handle the format of the string
+	stringToSend = 'S%s00000%dE\n' % (command_string, speed) #might need to add \n behind the E
+	pub_command.publish(stringToSend)
+	rospy.loginfo(str(stringToSend))

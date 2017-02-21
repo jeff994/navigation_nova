@@ -3,8 +3,9 @@ import rospy
 import serial
 import string
 import time
-from std_msgs.msg import String
+import robot_publisher 
 
+from std_msgs.msg import String
 #-------------------------------------------------------#
 #	Robot drive module									#
 #-------------------------------------------------------#
@@ -43,9 +44,6 @@ obstacle_mode = 1
 #yuqing_unlockconfirm
 isunlockdone = 0
 
-pub_gps				= rospy.Publisher('gps', 		String, queue_size=10)
-pub_command 		= rospy.Publisher('command', 	String, queue_size=10)
-
 def init_gps():
 	global lon_now, lat_now, bearing_now
 	global bearing_target, lon_target, lat_target
@@ -62,7 +60,7 @@ def init_gps():
 def start():
 	global speed_now
 	global move_direction
-	send_command(move_direction, speed_now)
+	robot_publisher.publish_command(move_direction, speed_now)
 
 # Simple conversion, get all the encoder not processed, then convert them to the distance 
 def encoder_to_distance(encoder_data, encoder_received, encoder_processed):
@@ -90,38 +88,30 @@ def stop_robot():
 	# move_direction = 'S'
 	# updated the stop command from 'S' to 'P'
 	move_direction = 'P'
-	send_command(move_direction,speed_now)
+	robot_publisher.publish_command(move_direction,speed_now)
 
 def unlock_robot():
 	# send a command to unlock robot after obstacle avoidece 
-	pub_command.publish('SB00000BE\n')
+	robot_publisher.publish_command('SB00000BE\n')
 	rospy.loginfo('Unlock robot after avoidense ')
 
 # change speed
 def change_speed():
 	global move_direction, speed_now, desired_speed 
-	send_command(move_direction, desired_speed)
+	robot_publisher.publish_command(move_direction, desired_speed)
 	speed_now  = desired_speed
 	distpub = 'Robot speed changed from %d to %d' % (speed_now, desired_speed)
 	rospy.loginfo(distpub)
-
-# Helper function which can send commands to robot 
-def send_command(command_string, speed):
-	#sending the string
-	#handle the format of the string
-	stringToSend = 'S%s00000%dE\n' % (command_string, speed) #might need to add \n behind the E
-	pub_command.publish(stringToSend)
-	rospy.loginfo(str(stringToSend))
 	
 
 #@yuqing_toggleobstaclemode
 def enter_no_obstacle():
-	pub_command.publish('SW00000WE\n')
+	robot_publisher.publish_command('SW00000WE\n')
 	rospy.loginfo('SW00000WE enter no obstacle mode')
 
 #@yuqing_toggleobstaclemode
 def enter_obstacle():
-	pub_command.publish('SO00000OE\n')
+	robot_publisher.publish_command.publish('SO00000OE\n')
 	rospy.loginfo('SO00000OE enter no obstacle mode')
 	#yuqing_obstaclemodeconfirm
 	#remove unlock
