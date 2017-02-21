@@ -7,6 +7,7 @@ import json
 from std_msgs.msg import String
 
 pub_command 		= rospy.Publisher('command', 	String, queue_size=10)
+pub_param = rospy.Publisher('parameters', String, queue_size = 10)
 # Used to publish parameters 
 def publish_parameters():
 	#@yuqing_publishparam
