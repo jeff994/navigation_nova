@@ -14,7 +14,8 @@ turn_radius 		= 378 		# radius when turning in mm (half distance between the mid
 desired_speed 		= 8			# Global robot moving spped, 3 - 5
 speed_now 			= 8			# Robot moving speed now
 robot_on_mission 	= 0			# set an indicator that robot's on a job right now 
-robot_enabled 		= 0 		# A switch to enable or disable robot from execuing any jobs 
+robot_enabled 		= 0 		# A switch to enable or disable robot from execuing any jobs
+robot_paused 		= 0 		# A flag to indicate enable robot to execute job  
 robot_on_obstancle 	= 0			# If robot is on obstancle avoidence, then set it to be 1
 robot_over_obstacle = 0			# The robot finished obstance avodence 
 move_direction 		= 'F'		# Global robot walking/turning direction
@@ -46,12 +47,8 @@ pub_command 		= rospy.Publisher('command', 	String, queue_size=10)
 pub_gps				= rospy.Publisher('gps', 		String, queue_size=10)
 
 def init_gps():
-	global lon_now
-	global lat_now
-	global bearing_now
-	global bearing_target
-	global lon_target
-	global lat_target
+	global lon_now, lat_now, bearing_now
+	global bearing_target, lon_target, lat_target
 
 	lon_now 		= 121.635139
 	lat_now  		= 31.2112262
@@ -66,6 +63,25 @@ def start():
 	global speed_now
 	global move_direction
 	send_command(move_direction, speed_now)
+
+# Simple conversion, get all the encoder not processed, then convert them to the distance 
+def encoder_to_distance(encoder_data, encoder_received, encoder_processed):
+	left_encode = 0
+	right_encode = 0
+	#in case data received is faster than the processing time 
+	if(encoder_received > encoder_processed): 
+		for x in range(encoder_processed, encoder_received):
+			left_encode += encoder_data[2 * x]
+			right_encode += encoder_data[2 * x +1]
+
+	if(encoder_received < encoder_processed): 
+		for x in range(encoder_processed, 1000):
+			left_encode 	+= encoder_data[2 * x]
+			right_encode 	+= encoder_data[2 * x + 1]
+			for x in range(0, encoder_received):
+				left_encode 	+= encoder_data[2 * x]
+				right_encode 	+= encoder_data[2 * x + 1]
+	return left_encode, right_encode 
 
 # just send a command to stop robot 
 def stop_robot():
@@ -83,9 +99,7 @@ def unlock_robot():
 
 # change speed
 def change_speed():
-	global move_direction
-	global speed_now 
-	global desired_speed 
+	global move_direction, speed_now, desired_speed 
 	send_command(move_direction, desired_speed)
 	speed_now  = desired_speed
 	distpub = 'Robot speed changed from %d to %d' % (speed_now, desired_speed)

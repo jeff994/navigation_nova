@@ -70,6 +70,28 @@ def process_job():
 	#rospy.loginfo("Bearing target before correction %f", robot_drive.bearing_target)
 	return job_completed
 
+# Complete init compass
+def complete_init_compass(compass_value):
+	if abs(compass_value) <=2 or abs(compass_value) >= 358:
+		#Clear the remainging initialization jobs 
+		robot_drive.bearing_now = compass_value
+		robot_job.clear_jobs()
+		robot_drive.robot_initialized = 1
+		rospy.loginfo("Robot initlization completed")
+
+# disable robot if emergency stop button clicked (0)
+def disable_robot():
+	while True:
+		#step 1, send the stop command every 10 milli seoncs
+		if(robot_drive.robot_moving == 1):
+			robot_drive.stop_robot()
+			time.sleep(0.01)
+		else: 
+			# Clear all the reamining jobs
+			clear_jobs()
+			#robot_drive.stop_robot()
+			break
+			#robot_drive.robot_enabled = 1
 
 # class to define i
 class Job:
@@ -149,6 +171,9 @@ def current_job():
 	return job_lists[0]
 
 def complete_current_job():
+	robot_drive.lon_target 		= robot_job.job_lists[0].lon_target;
+	robot_drive.lat_target 		= robot_job.job_lists[0].lat_target; 
+	robot_drive.bearing_target 	= robot_job.job_lists[0].bearing_target; 
 	global job_lists
 	del job_lists[0]
 
