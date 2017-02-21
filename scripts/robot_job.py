@@ -75,7 +75,7 @@ def complete_init_compass(compass_value):
 	if abs(compass_value) <=2 or abs(compass_value) >= 358:
 		#Clear the remainging initialization jobs 
 		robot_drive.bearing_now = compass_value
-		robot_job.clear_jobs()
+		clear_job_list()
 		robot_drive.robot_initialized = 1
 		rospy.loginfo("Robot initlization completed")
 
@@ -171,9 +171,10 @@ def current_job():
 	return job_lists[0]
 
 def complete_current_job():
-	robot_drive.lon_target 		= robot_job.job_lists[0].lon_target;
-	robot_drive.lat_target 		= robot_job.job_lists[0].lat_target; 
-	robot_drive.bearing_target 	= robot_job.job_lists[0].bearing_target; 
+	global job_lists
+	robot_drive.lon_target 		= job_lists[0].lon_target;
+	robot_drive.lat_target 		= job_lists[0].lat_target; 
+	robot_drive.bearing_target 	= job_lists[0].bearing_target; 
 	global job_lists
 	del job_lists[0]
 
