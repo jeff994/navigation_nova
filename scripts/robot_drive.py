@@ -44,6 +44,7 @@ obstacle_mode = 1
 isunlockdone = 0
 
 pub_gps				= rospy.Publisher('gps', 		String, queue_size=10)
+pub_command 		= rospy.Publisher('command', 	String, queue_size=10)
 
 def init_gps():
 	global lon_now, lat_now, bearing_now
