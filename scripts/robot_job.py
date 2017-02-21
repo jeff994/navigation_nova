@@ -175,7 +175,6 @@ def complete_current_job():
 	robot_drive.lon_target 		= job_lists[0].lon_target;
 	robot_drive.lat_target 		= job_lists[0].lat_target; 
 	robot_drive.bearing_target 	= job_lists[0].bearing_target; 
-	global job_lists
 	del job_lists[0]
 
 def clear_job_list():
