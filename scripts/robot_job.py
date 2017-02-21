@@ -182,11 +182,11 @@ def clear_job_list():
 	del job_lists[:]
 
 def simple_move(distance, bearing, direction):
-	rospy.loginfo("Added a turn job %s, %d", direction, bearing)
+	rospy.loginfo("Added a turn job T, %d", bearing)
 	turn_job 	= Job(robot_drive.lon_now, robot_drive.lat_now, 0, 'N', 'T', bearing)
 	job_lists.extend([turn_job])
 	# add a move job to move 10 meters 
-	rospy.loginfo("Added a move job %s, %d", direction, bearing)
+	rospy.loginfo("Added a move job %s, %d", direction, distance)
 	lon_new, lat_new  = gpsmath.get_gps(robot_drive.lon_now, robot_drive.lat_now, distance, bearing)
 	append_regular_jobs(robot_drive.lon_now, robot_drive.lat_now, lon_new, lat_new)
 
@@ -399,28 +399,6 @@ def initialize_job():
 	bearing  = simple_job_turn(270, lon_new, lat_new )
 	bearing  = simple_job_turn(0, lon_new, lat_new )
 	bearing  = simple_job_turn(90, lon_new, lat_new )
-
-def simple_job_move(dist, dire, lon, lat, bearing):
-	generate_move(dist, dire)
-	lon_new, lat_new  = gpsmath.get_gps(lon, lat, dist, bearing)
-	set_target_gps(lon_new, lat_new, bearing)
-	return lon_new, lat_new
-
-def simple_job_turn(bearing_target, lon_now, lat_now):
-	generate_turn(bearing_target)
-	set_target_gps(lon_now, lat_now, bearing_target)
-	return bearing_target
-
-def simple_job():
-	bearing_target  	= simple_job_turn(0, robot_drive.lon_now, robot_drive.lat_now)
-	lon_new, lat_new 	= simple_job_move(10000, 'F', robot_drive.lon_now, robot_drive.lat_now, robot_drive.bearing_now)
-	bearing_target 		= simple_job_turn(90, lon_new, lat_new)
-	lon_new, lat_new 	= simple_job_move(20000, 'F', lon_new, lat_new, bearing_target)
-	bearing_target 		= simple_job_turn(180, lon_new, lat_new)
-	lon_new, lat_new 	= simple_job_move(10000, 'F', lon_new, lat_new, bearing_target)
-	bearing_target 		= simple_job_turn(270, lon_new, lat_new)
-	lon_new, lat_new 	= simple_job_move(20000, 'F', lon_new, lat_new, bearing_target)
-	bearing_target 		= simple_job_turn(0, lon_new, lat_new)
 
 
 
