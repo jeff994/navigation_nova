@@ -3,6 +3,7 @@ import serial
 import string
 import robot_drive 
 import robot_obstacle
+import json
 from std_msgs.msg import String
 
 pub_command 		= rospy.Publisher('command', 	String, queue_size=10)
