@@ -157,14 +157,16 @@ def clear_job_list():
 	del job_lists[:]
 
 def simple_move(distance, bearing, direction):
-	turn_job 	= Job(robot_drive.lon_now, robot_drive.lat_now, 0, 'N', direction, bearing)
+	rospy.loginfo("Added a turn job %s, %d", direction, bearing)
+	turn_job 	= Job(robot_drive.lon_now, robot_drive.lat_now, 0, 'N', 'T', bearing)
 	job_lists.extend([turn_job])
 	# add a move job to move 10 meters 
+	rospy.loginfo("Added a move job %s, %d", direction, bearing)
 	lon_new, lat_new  = gpsmath.get_gps(robot_drive.lon_now, robot_drive.lat_now, distance, bearing)
 	append_regular_jobs(robot_drive.lon_now, robot_drive.lat_now, lon_new, lat_new)
 
 def simple_trun(bearing):
-	turn_job 	= Job(robot_drive.lon_now, robot_drive.lat_now, 0, 'N', 'T', 0)
+	turn_job 	= Job(robot_drive.lon_now, robot_drive.lat_now, 0, 'N', 'T', bearing)
 	job_lists.extend([turn_job])
 
 
