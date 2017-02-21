@@ -10,7 +10,7 @@ import robot_drive
 import robot_move
 import robot_turn
 import robot_correction 
-import robot_publisher 
+import robot_publisher
 import json
 from datetime import datetime
 from std_msgs.msg import String
@@ -29,6 +29,7 @@ max_delay 			= 1.0	# max delay allowed for not receiving any signal from encoode
 last_received_time 	= 0.0 	# the time of receiving the last encoer data 
 
 #@yuqing_publishparam
+pub_command 		= rospy.Publisher('command', 	String, queue_size=10)
 pub_param = rospy.Publisher('parameters', String, queue_size = 10)
 
 # init the the encoder buffer with some empty data when system starts 
