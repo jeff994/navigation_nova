@@ -1,6 +1,9 @@
+import rospy
+import serial
+import string
 import robot_drive 
 import robot_obstacle
-
+from std_msgs.msg import String
 
 pub_command 		= rospy.Publisher('command', 	String, queue_size=10)
 # Used to publish parameters 
