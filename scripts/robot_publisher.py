@@ -1,3 +1,8 @@
+import robot_drive 
+import robot_obstacle
+
+
+pub_command 		= rospy.Publisher('command', 	String, queue_size=10)
 # Used to publish parameters 
 def publish_parameters():
 	#@yuqing_publishparam
