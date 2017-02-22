@@ -11,32 +11,20 @@ import robot_move
 #-------------------------------------------------------#
 #	Robot jobs module									#
 #-------------------------------------------------------#
-
 from std_msgs.msg import String
 from math import radians, cos, sin, asin, sqrt, atan2, degrees
 
 ###################### EDIT HERE ###########################
 #defining or acquiring the GPS coordinates
-gps_num 			= 5
-
 init_lon			= 103.962386
 init_lat			= 1.340549
 init_bearing		= 0
-
 gps_lon 			= [103.962389,103.962456,103.962461,103.962381] #S,A,B,C,D
 gps_lat 			= [1.3407,1.340696,1.340589,1.340599]
-job_des 			= []			#could be 'T' or 'F'
-job_num 			= []			#if job is 'T', the number is the angle of robot need to face of the job else it's the distance in mm 
-job_lon_target 		= []
-job_lat_target 		= []
-job_bearing_target 	= []
-job_type			= []			#define job type check whether it's a correction job or normal job 
 loops 				= 1 			#how many rounds to go
 correction_count 	= 0
 max_correction_run 	= 15
-
 job_lists 			= [] 
-
 
 # if not jobs in the sytem 
 def process_no_job():
@@ -83,7 +71,7 @@ def complete_init_compass(compass_value):
 def disable_robot():
 	while True:
 		#step 1, send the stop command every 10 milli seoncs
-		if(robot_drive.robot_moving == 1):
+		if(robot_drive.robot_moving == 1 or robot_drive.robot_turning == 1):
 			robot_drive.stop_robot()
 			time.sleep(0.01)
 		else: 
@@ -177,230 +165,55 @@ def complete_current_job():
 	robot_drive.bearing_target 	= job_lists[0].bearing_target; 
 	del job_lists[0]
 
-def clear_job_list():
-	global job_lists
-	del job_lists[:]
-
+# list of test jobs: Not from gps, but just like move, turn etc
+# ---------------------------------------------------------------------------------
 def simple_move(distance, bearing, direction):
 	rospy.loginfo("Added a turn job T, %d", bearing)
-	turn_job 	= Job(robot_drive.lon_now, robot_drive.lat_now, 0, 'N', 'T', bearing)
-	job_lists.extend([turn_job])
+	simple_turn(bearing)
 	# add a move job to move 10 meters 
-	rospy.loginfo("Added a move job %s, %d", direction, distance)
-	lon_new, lat_new  = gpsmath.get_gps(robot_drive.lon_now, robot_drive.lat_now, distance, bearing)
-	append_regular_jobs(robot_drive.lon_now, robot_drive.lat_now, lon_new, lat_new)
+	lon_new, lat_new  = apeend_regular_job(lobot_drive.lon_now, robot_drive.lat_now, distance, bearing)
 
-def simple_trun(bearing):
-	turn_job 	= Job(robot_drive.lon_now, robot_drive.lat_now, 0, 'N', 'T', bearing)
+def simple_turn(bearing):
+	append_turn_job(robot_drive.lon_now, robot_drive.lat_now, bearing)
+
+def append_turn_job(lon_target, lat_target, bearing_target):
+	turn_job 	= Job(lon_target, lat_target, bearing_target, 'N', 'T', bearing_target)
 	job_lists.extend([turn_job])
 
+def apeend_regular_job(lon_now, lat_now, distance, bearing)
+	# Get new GPS 
+	lon_new, lat_new  = gpsmath.get_gps(lon_now, lat_now, distance, bearing)
+	append_regular_jobs(lon_now, lat_now, lon_new, lat_new)
+	return lon_new, lat_new
 
 def define_test_job():
 	# add a turn job to turn to 0 degree 
-	turn_job 	= Job(robot_drive.lon_now, robot_drive.lat_now, 0, 'N', 'T', 0)
-	job_lists.extend([turn_job])
+	append_turn_job(robot_drive.lon_now, robot_drive.lat_now, 0)
 	# add a move job to move 10 meters 
-	lon_new, lat_new  = gpsmath.get_gps(robot_drive.lon_now, robot_drive.lat_now, 10000, 0)
-	append_regular_jobs(robot_drive.lon_now, robot_drive.lat_now, lon_new, lat_new)
+	lon_new, lat_new  = apeend_regular_job(lon_new, lat_new, 10000, 0)
 	# now turn to 90 
-	turn_job 	= Job(lon_new, lat_new , 90, 'N', 'T', 90)
-	job_lists.extend([turn_job])
+	append_turn_job(lon_new, lat_new , 90)
 	# move another 10 meters 
-	lon_new, lat_new  = gpsmath.get_gps(lon_new, lat_new , 10000, 90)
-	append_regular_jobs(robot_drive.lon_now, robot_drive.lat_now, lon_new, lat_new)
+	lon_new, lat_new  = apeend_regular_job(lon_new, lat_new, 10000, 90)
 	# now turn to 180 
-	turn_job 	= Job(lon_new, lat_new , 180, 'N', 'T', 180)
-	job_lists.extend([turn_job])
+	append_turn_job(lon_new, lat_new , 180)
 	# move another 10 meters 
-	lon_new, lat_new  = gpsmath.get_gps(lon_new, lat_new , 10000, 180)
-	append_regular_jobs(robot_drive.lon_now, robot_drive.lat_now, lon_new, lat_new)
+	lon_new, lat_new  = apeend_regular_job(lon_new, lat_new, 10000, 180)
 	# now turn to 270 
-	turn_job 	= Job(lon_new, lat_new , 270, 'N', 'T', 270)
-	job_lists.extend([turn_job])
+	append_turn_job(lon_new, lat_new , 270)
 	# move another 10 meters 
-	lon_new, lat_new  = gpsmath.get_gps(lon_new, lat_new , 10000, 270)
-	append_regular_jobs(robot_drive.lon_now, robot_drive.lat_now, lon_new, lat_new)
+	lon_new, lat_new  = apeend_regular_job(lon_new, lat_new, 10000, 270)
 	# now turn to 270 
-	turn_job 	= Job(lon_new, lat_new , 0, 'N', 'T', 0)
-	job_lists.extend([turn_job])
+	append_turn_job(robot_drive.lon_now, robot_drive.lat_now, 0)
 
-
+# The job used to initialize the compass
 def define_initialize_job():
-	turn_job 	= Job(robot_drive.lon_now, robot_drive.lat_now, 0, 'N', 'T', 0)
-	job_lists.extend([turn_job])
-	turn_job 	= Job(robot_drive.lon_now, robot_drive.lat_now, 90, 'N', 'T', 90)
-	job_lists.extend([turn_job])
-	turn_job 	= Job(robot_drive.lon_now, robot_drive.lat_now, 180, 'N', 'T', 180)
-	job_lists.extend([turn_job])
-	turn_job 	= Job(robot_drive.lon_now, robot_drive.lat_now, 270, 'N', 'T', 270)
-	job_lists.extend([turn_job])
-	turn_job 	= Job(robot_drive.lon_now, robot_drive.lat_now, 0, 'N', 'T', 0)
-	job_lists.extend([turn_job])
-	turn_job 	= Job(robot_drive.lon_now, robot_drive.lat_now, 90, 'N', 'T', 90)
-	job_lists.extend([turn_job])
-
+	append_turn_job(robot_drive.lon_now, robot_drive.lat_now, 0)
+	append_turn_job(robot_drive.lon_now, robot_drive.lat_now, 90)
+	append_turn_job(robot_drive.lon_now, robot_drive.lat_now, 180)
+	append_turn_job(robot_drive.lon_now, robot_drive.lat_now, 270)
+	append_turn_job(robot_drive.lon_now, robot_drive.lat_now, 0)
+	append_turn_job(robot_drive.lon_now, robot_drive.lat_now, 90)
 
 #------------------------- end of re-factoring ----------------------------------
 # generate job from gps lists 
-def job_generator(init_bearing):	
-	global gps_num 
-	global loops 
-	#handles from start to first point
-	gps_num = len(gps_lon) 
-	#handles how many loops
-	for i in range (loops) :
-		for k in range (gps_num):
-			ne_k = (k + 1) % gps_num
-			generate_job(k, ne_k)
-	#final turn to init_bearing
-	generate_turn(init_bearing)
-	set_target_gps(robot_drive.lon_now, robot_drive.lat_now, init_bearing)
-
-#based on the gps coordinates of the two location, generate jobs
-def generate_job(first_point, second_point):
-	global gps_lon
-	global gps_lat
-	#handles from first_point to second_point
-	generate_job_from_gps(gps_lon[first_point],gps_lat[first_point],gps_lon[second_point],gps_lat[second_point]) #km 
-
-
-# based on two gps corrdinates, generate a turn job and a move job 
-def generate_job_from_gps(lon1, lat1, lon2, lat2):
-	angle_next 	= gpsmath.bearing(lon1, lat1, lon2, lat2)  	# the angle that the robot must face before it moves 
-	distance 	= gpsmath.haversine(lon1, lat1, lon2, lat2)	# the distance that the robot have to move after the angle corrected
-	apeend_regular_turn_job(angle_next, lon1, lat1, angle_next)
-	append_move_regular_job(distance, 'F', lon2, lat2, angle_next)
-
-# append a regular move job on the back 
-def append_regular_move_job(distance, direction, target_lon, target_lat, target_bearing):
-	generate_move(distance, direction)
-	set_target_gps(target_lon, target_lat, target_bearing)
-
-# append a regular turn job on the back 
-def apeend_regular_turn_job(target_lon, target_lat, target_bearing):
-	generate_turn(target_bearing)
-	set_target_gps(target_lon, target_lat, target_bearing)
-
-# set target gps and bearing 
-def set_target_gps(lon, lat, bearing):
-	global job_lon_target
-	global job_lat_target
-	global job_bearing_target
-	job_lon_target.extend([lon])
-	job_lat_target.extend([lat])
-	job_bearing_target.extend([bearing])
-	rospy.loginfo("Added a target gps %d", len(job_lon_target))
-
-# clear current job
-def remove_current_job():
-	global job_des
-	global job_num 
-	global job_lon_target
-	global job_lat_target
-	global job_bearing_target 
-	global job_type
-	# Reset the robot job status 
-	robot_drive.robot_on_mission = 0
-	if(len(job_des) > 0): 
-		del job_des[0]
-	if(len(job_num) > 0):
-		del job_num[0]
-	if len(job_lat_target) > 0: 
-		del job_lat_target[0]
-	if len(job_lon_target) > 0: 
-		del job_lon_target[0]
-	if len(job_bearing_target) > 0: 
-		del job_bearing_target[0]
-	if len(job_type) > 0:
-		del job_type[0]
-
-# Clear jobs 
-def clear_jobs():
-	global job_des
-	global job_num 
-	global job_lon_target
-	global job_lat_target
-	global job_bearing_target
-	global job_type
-	del job_des[:]
-	del job_num[:]
-	del job_lon_target[:]
-	del job_lat_target[:]
-	del job_bearing_target[:]
-	del job_type[:]
-
-def generate_move( distance, direction):
-	global job_des
-	global job_num 
-	global job_type
-	job_num.extend([distance]) 
-	job_des.extend([direction])
-	job_type.extend(['N'])
-	rospy.loginfo("Generated a normal job move %s with distance %f mm", direction, distance)
-
-def generate_turn(angle):
-	global job_des
-	global job_num 
-	global job_type
-	job_num.extend([angle]) 
-	job_des.extend(['T'])
-	job_type.extend(['N'])
-	rospy.loginfo("Generated a normal job turn to angle %f", angle)
-
-
-# all the correction related jobs need to be inserted on the front 
-
-def add_correction_turn(angle ): 
-	global job_des
-	global job_num 
-	global job_type
-	job_des.insert(0, 'T')
-	job_num.insert(0, angle)
-	job_type.insert(0, 'C')
-	rospy.loginfo("Inserted a correction job turn to angle %f", angle)
-
-def add_correction_move(distance):
-	global job_des 
-	global job_num 
-	global job_type
-	if(distance == 0):
-		return
-	job_num.insert(0, abs(distance))
-	direction = 'F'
-	if(distance < 0):
-		job_des.insert(0, 'B')
-	else:
-		job_des.insert(0, 'F')
-	job_type.insert(0, 'C')
-	rospy.loginfo("Inserted a correction job move %s with distance %f mm", direction, distance)
-
-def add_target_gps(lon, lat, bearing):
-	global job_lon_target
-	global job_lat_target
-	global job_bearing_target
-	job_lon_target.insert(0, lon)
-	job_lat_target.insert(0, lat)
-	job_bearing_target.insert(0, bearing)
-
-# based on two gps corrdinates, generate a turn job and a move job 
-def add_job_from_gps(lon1, lat1, lon2, lat2):
-	angle_next 	= gpsmath.bearing(lon1, lat1, lon2, lat2)  	# the angle that the robot must face before it moves 
-	distance 	= gpsmath.haversine(lon1, lat1, lon2, lat2)	# the distance that the robot have to move after the angle corrected
-	add_correction_move(distance)
-	add_target_gps(lon2, lat2, angle_next)
-	add_correction_turn(angle_next)
-	add_target_gps(lon1, lat1, angle_next)
-
-# as discovred, the digital compass would be accurabte in true north, so to initialize the robot,
-# we need to turn one round to identify the true north 
-def initialize_job():
-	bearing  = simple_job_turn(90, robot_drive.lon_now, robot_drive.lat_now)
-	bearing  = simple_job_turn(180, lon_new, lat_new )
-	bearing  = simple_job_turn(270, lon_new, lat_new )
-	bearing  = simple_job_turn(0, lon_new, lat_new )
-	bearing  = simple_job_turn(90, lon_new, lat_new )
-
-
-
-
-

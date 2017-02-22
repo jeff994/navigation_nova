@@ -64,7 +64,7 @@ def job_callback(data):
 			robot_job.gps_lat.extend([lat])
 		robot_job.clear_jobs()
 		# after parsing the gps corrdinates, now generate robot jobs 
-		robot_job.job_generator(robot_drive.initial_bearing)
+		robot_job.generate_jobs_from_gps()
 	except (ValueError, KeyError, TypeError):
 		rospy.loginfo('JSON format error:')
 		rospy.loginfo(json_str)
@@ -143,10 +143,10 @@ def keyboard_callback(data):
 		robot_job.initialize_job()
 	elif (keyboard_data == 'Forward'):
 		rospy.loginfo("Command received: Start to move forward 1 m")
-		robot_job.simple_move(10000, 0, 'F')
+		robot_job.simple_move(10000, robot_drive.bearing_now, 'F')
 	elif (keyboard_data == 'Back'):
 		rospy.loginfo("rospeived: Start to move back 1 m")
-		robot_job.simple_move(-10000, 0, 'B')
+		robot_job.simple_move(-10000, robot_drive.bearing_now, 'B')
 	elif (keyboard_data == 'Turn_West'):
 		rospy.loginfo("Command received: turn to 270 (WEST)") 
 		#robot_drive.bearing_now = compass_data[compass_index] 
@@ -157,7 +157,7 @@ def keyboard_callback(data):
 		robot_job.simple_turn(90)
 	elif (keyboard_data == 'Stop'):
 		rospy.loginfo("Comamnd received: Clear all jobs") 
-		robot_job.clear_jobs()
+		robot_job.clear_job_list()
 		robot_drive.robot_on_mission =  0
 	elif (keyboard_data == "Switch"):
 		if(robot_drive.robot_enabled == 1):
@@ -185,9 +185,9 @@ def keyboard_callback(data):
 	elif (keyboard_data == "Demo"):
 		#robot_drive.bearing_now = 0
 		rospy.loginfo("Simple job")
-		robot_job.simple_job()
+		robot_job.define_test_job()
 	elif (keyboard_data == "Test"):
-		robot_job.job_generator(0)
+		robot_job.simple_turn(0)
 	elif (keyboard_data == "No_obstacle"):#@yuqing_toggleobstaclemode
 		rospy.loginfo('keyboard No_obstacle')
 		robot_drive.enter_no_obstacle()
@@ -196,13 +196,13 @@ def keyboard_callback(data):
 		robot_drive.enter_obstacle()
 	elif (keyboard_data == "30m"):#@yuqing_toggleobstaclemode
 		rospy.loginfo('forward 30m')
-		robot_job.simple_job_move(10000, 'F', robot_drive.lon_now, robot_drive.lat_now, robot_drive.bearing_now)
+		robot_job.simple_move(10000, 0, 'F')
 	elif (keyboard_data == "180"):#@yuqing_toggleobstaclemode
 		rospy.loginfo('turn 180')
-		robot_job.simple_job_turn(180, robot_drive.lon_now, robot_drive.lat_now)
+		robot_job.simple_turn(180,)
 	elif (keyboard_data == "zero"):#@yuqing_toggleobstaclemode
 		rospy.loginfo('turn 0')
-		robot_job.simple_job_turn(0, robot_drive.lon_now, robot_drive.lat_now)
+		robot_job.simple_turn(0)
 	else:
 		rospy.loginfo(keyboard_data)
 		rospy.loginfo("Not recognizing command receivied")

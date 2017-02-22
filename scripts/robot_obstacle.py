@@ -119,7 +119,8 @@ def complete_obstacle_avoidence():
 				while (current_job_type == 'C'):
 					robot_job.complete_current_job()
 					if len(robot_job.job_type) > 0:
-						current_job_type = robot_job.job_type[0]
+						job_executing 		= robot_job.current_job()
+						current_job_type 	= job_executing.classfication; 
 					else:
 						rospy.loginfo("The last job in the queue")
 						break; 
