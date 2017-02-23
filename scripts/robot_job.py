@@ -180,7 +180,7 @@ def append_turn_job(lon_target, lat_target, bearing_target):
 	turn_job 	= Job(lon_target, lat_target, bearing_target, 'N', 'T', bearing_target)
 	job_lists.extend([turn_job])
 
-def append_regular_job(lon_now, lat_now, distance, bearing);
+def append_regular_job(lon_now, lat_now, distance, bearing):
 	# Get new GPS 
 	lon_new, lat_new  = gpsmath.get_gps(lon_now, lat_now, distance, bearing)
 	append_regular_jobs(lon_now, lat_now, lon_new, lat_new)
