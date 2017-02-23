@@ -76,7 +76,7 @@ def disable_robot():
 			time.sleep(0.01)
 		else: 
 			# Clear all the reamining jobs
-			clear_jobs()
+			clear_job_list()
 			#robot_drive.stop_robot()
 			break
 			#robot_drive.robot_enabled = 1
@@ -157,6 +157,10 @@ def has_jobs_left():
 def current_job():
 	global job_lists
 	return job_lists[0]
+
+def clear_job_list():
+	global job_lists
+	del job_lists[:]
 
 def complete_current_job():
 	global job_lists
