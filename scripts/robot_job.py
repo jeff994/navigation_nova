@@ -220,7 +220,7 @@ def insert_compensation_jobs(lon_source, lat_source, lon_target, lat_target):
 	bearing 	= gpsmath.bearing(lon_source, lat_source, lon_target, lat_target)
 	distance 	= gpsmath.haversine(lon_source, lat_source, lon_target, lat_target)
 	turn_job 	= Job(lon_source, lat_source, bearing, 'C', 'T', bearing)
-	move_job 	= job(lon_target, lat_target, bearing, 'C', 'F', distance) 
+	move_job 	= Job(lon_target, lat_target, bearing, 'C', 'F', distance) 
 	job_lists.insert(0, move_job)
 	job_lists.insert(0, turn_job)
 	
