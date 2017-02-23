@@ -140,15 +140,6 @@ def append_regular_jobs(lon_source, lat_source, lon_target, lat_target):
 	job_lists.extend([turn_job])
 	job_lists.extend([move_job])
 
-def insert_compensation_jobs(lon_source, lat_source, lon_target, lat_target):
-	global job_lists
-	bearing 	= gpsmath.bearing(lon_source, lat_source, lon_target, lat_target)
-	distance 	= gpsmath.haversine(lon_source, lat_source, lon_target, lat_target)
-	turn_job 	= Job(lon_source, lat_source, bearing, 'C', 'T', bearing)
-	move_job 	= job(lon_target, lat_target, bearing, 'C', 'F', distance) 
-	job_lists.insert(0, turn_job)
-	job_lists.insert(0, move_job)
-
 def has_jobs_left():
 	global job_lists 
 	#rospy.loginfo("No of jobs left %d", len(job_lists)) 
@@ -179,6 +170,9 @@ def simple_move(distance, bearing, direction):
 
 def simple_turn(bearing):
 	append_turn_job(robot_drive.lon_now, robot_drive.lat_now, bearing)
+
+# ----------------------------------------------------------------------------------
+# A list of operations for regular jobs 
 
 def append_turn_job(lon_target, lat_target, bearing_target):
 	turn_job 	= Job(lon_target, lat_target, bearing_target, 'N', 'T', bearing_target)
@@ -219,5 +213,17 @@ def define_initialize_job():
 	append_turn_job(robot_drive.lon_now, robot_drive.lat_now, 0)
 	append_turn_job(robot_drive.lon_now, robot_drive.lat_now, 90)
 
+#--------------------------------------------------------------------------------
+# a list of operations for the correction jobs 
+def insert_compensation_jobs(lon_source, lat_source, lon_target, lat_target):
+	global job_lists
+	bearing 	= gpsmath.bearing(lon_source, lat_source, lon_target, lat_target)
+	distance 	= gpsmath.haversine(lon_source, lat_source, lon_target, lat_target)
+	turn_job 	= Job(lon_source, lat_source, bearing, 'C', 'T', bearing)
+	move_job 	= job(lon_target, lat_target, bearing, 'C', 'F', distance) 
+	job_lists.insert(0, move_job)
+	job_lists.insert(0, turn_job)
+	
+
+
 #------------------------- end of re-factoring ----------------------------------
-# generate job from gps lists 
