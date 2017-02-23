@@ -188,7 +188,7 @@ def define_test_job():
 	# add a turn job to turn to 0 degree 
 	append_turn_job(robot_drive.lon_now, robot_drive.lat_now, 0)
 	# add a move job to move 10 meters 
-	lon_new, lat_new  = append_regular_job(lon_new, lat_new, 10000, 0)
+	lon_new, lat_new  = append_regular_job(robot_drive.lon_now, robot_drive.lat_now, 10000, 0)
 	# now turn to 90 
 	append_turn_job(lon_new, lat_new , 90)
 	# move another 10 meters 
