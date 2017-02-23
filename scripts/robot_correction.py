@@ -95,13 +95,14 @@ def distance_correction(lon_now, lat_now, bearing_now, lon_target, lat_target, b
 	# check the bearing now and bearing target 
 	rospy.loginfo("GPS now [%f, %f], GPS target: [%f, %f]", lon_now, lat_now, lon_target, lat_target)
 	rospy.loginfo("Bearing move %f, Bearing now %f, bearing target %f", bearing, bearing_now, bearing_target)
-
-	rospy.loginfo("There's a %f mm distance error, %f angle difference", distance, diff_angle)
+	
+	diff_angle = abs(bearing_target - bearing_now)
+	
 	if(bearing > 90 and bearing < 270):
 		distance = -distance 
 		bearing = (bearing+180)%360
 
-	diff_angle = abs(bearing_target - bearing_now)
+	rospy.loginfo("There's a %f mm distance error, %f angle difference", distance, diff_angle)
 
 	if abs(distance) > 100 or (diff_angle > 5 and diff_angle < 355):
 		rospy.loginfo("Add jobs to correction.")
