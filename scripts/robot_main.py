@@ -76,7 +76,7 @@ def main_commander():
 	if job_completed == 1:
 		robot_job.complete_current_job()
 		#robot_correction.angle_correction()
-		robot_correction.distance_correction()
+		robot_correction.dist_correction_normal()
 
 #subscribes to different topic 
 def main_listener():
