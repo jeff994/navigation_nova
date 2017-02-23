@@ -175,7 +175,7 @@ def simple_move(distance, bearing, direction):
 	rospy.loginfo("Added a turn job T, %d", bearing)
 	simple_turn(bearing)
 	# add a move job to move 10 meters 
-	lon_new, lat_new  = append_regular_job(lobot_drive.lon_now, robot_drive.lat_now, distance, bearing)
+	lon_new, lat_new  = append_regular_job(robot_drive.lon_now, robot_drive.lat_now, distance, bearing)
 
 def simple_turn(bearing):
 	append_turn_job(robot_drive.lon_now, robot_drive.lat_now, bearing)
