@@ -84,7 +84,7 @@ def update_robot_gps(left_encode, right_encode):
 	robot_publisher.publish_gps()
 	rospy.loginfo("Bearing now %f,lon_now %f, lat_now %f", robot_drive.bearing_now, robot_drive.lon_now, robot_drive.lat_now)
 
-dist_correction_normal():
+def dist_correction_normal():
 	distance_correction(robot_drive.lon_now, robot_drive.lat_now, robot_drive.bearing_now, robot_drive.lon_target, robot_drive.lat_target, robot_drive.bearing_target)
 
 # correct robot every time by comapring the lat_now, lon_now with target position
