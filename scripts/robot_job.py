@@ -180,7 +180,7 @@ def append_turn_job(lon_target, lat_target, bearing_target):
 	turn_job 	= Job(lon_target, lat_target, bearing_target, 'N', 'T', bearing_target)
 	job_lists.extend([turn_job])
 
-def apeend_regular_job(lon_now, lat_now, distance, bearing)
+def append_regular_job(lon_now, lat_now, distance, bearing);
 	# Get new GPS 
 	lon_new, lat_new  = gpsmath.get_gps(lon_now, lat_now, distance, bearing)
 	append_regular_jobs(lon_now, lat_now, lon_new, lat_new)
@@ -190,19 +190,19 @@ def define_test_job():
 	# add a turn job to turn to 0 degree 
 	append_turn_job(robot_drive.lon_now, robot_drive.lat_now, 0)
 	# add a move job to move 10 meters 
-	lon_new, lat_new  = apeend_regular_job(lon_new, lat_new, 10000, 0)
+	lon_new, lat_new  = append_regular_job(lon_new, lat_new, 10000, 0)
 	# now turn to 90 
 	append_turn_job(lon_new, lat_new , 90)
 	# move another 10 meters 
-	lon_new, lat_new  = apeend_regular_job(lon_new, lat_new, 10000, 90)
+	lon_new, lat_new  = append_regular_job(lon_new, lat_new, 10000, 90)
 	# now turn to 180 
 	append_turn_job(lon_new, lat_new , 180)
 	# move another 10 meters 
-	lon_new, lat_new  = apeend_regular_job(lon_new, lat_new, 10000, 180)
+	lon_new, lat_new  = append_regular_job(lon_new, lat_new, 10000, 180)
 	# now turn to 270 
 	append_turn_job(lon_new, lat_new , 270)
 	# move another 10 meters 
-	lon_new, lat_new  = apeend_regular_job(lon_new, lat_new, 10000, 270)
+	lon_new, lat_new  = append_regular_job(lon_new, lat_new, 10000, 270)
 	# now turn to 270 
 	append_turn_job(robot_drive.lon_now, robot_drive.lat_now, 0)
 
