@@ -116,16 +116,20 @@ def generate_jobs_from_gps():
 	#step 1: Move from initial point to the loop start point 
 	global init_lat, init_lon, init_bearing
 	global loops, gps_lon, gps_lat 
+	global job_lists
 	append_regular_jobs(init_lat, init_lon, gps_lon[0],gps_lat[0]);
 	#step 2: Start loop jobs
 	#handles from start to first point
 	gps_num = len(gps_lon) 
+	rospy.loginfo("jobs created for init %d, loop control points: %d", len(job_lists), len(gps_lon)) 
 	#handles how many loops
-	for i in range (loops) :
-		for k in range (gps_num):
-			ne_k = (k + 1) % gps_num
-			append_regular_jobs(gps_lon[k],gps_lat[k],gps_lon[ne_k],gps_lat[ne_k])
+	if(gps_num > 1):
+		for i in range (loops) :
+			for k in range (gps_num):
+				ne_k = (k + 1) % gps_num
+				append_regular_jobs(gps_lon[k],gps_lat[k],gps_lon[ne_k],gps_lat[ne_k])
 	#move to init position
+	rospy.loginfo("Number of jobs %d", len(job_lists))
 	append_regular_jobs(gps_lon[0],gps_lat[0], init_lat, init_lon)
 	turn_job 	= Job(init_lat, init_lon, 0, 'N', 'T', 0)
 	job_lists.extend([turn_job])
