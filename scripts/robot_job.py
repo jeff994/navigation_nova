@@ -141,6 +141,8 @@ def append_regular_jobs(lon_source, lat_source, lon_target, lat_target):
 	distance 	= gpsmath.haversine(lon_source, lat_source, lon_target, lat_target)
 	turn_job 	= Job(lon_source, lat_source, bearing, 'N', 'T', bearing)
 	move_job 	= Job(lon_target, lat_target, bearing, 'N', 'F', distance) 
+	rospy.loginfo("Added a turn job: Turn to %f", bearing)
+	rospy.loginfo("Added a move job: Move %f mm", distance)
 	job_lists.extend([turn_job])
 	job_lists.extend([move_job])
 
