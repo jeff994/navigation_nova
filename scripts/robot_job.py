@@ -16,8 +16,8 @@ from math import radians, cos, sin, asin, sqrt, atan2, degrees
 
 ###################### EDIT HERE ###########################
 #defining or acquiring the GPS coordinates
-init_lon			= 103.962386
-init_lat			= 1.340549
+init_lon			= 121.635139
+init_lat			= 31.2112262
 init_bearing		= 0
 gps_lon 			= [103.962389,103.962456,103.962461,103.962381] #S,A,B,C,D
 gps_lat 			= [1.3407,1.340696,1.340589,1.340599]
@@ -117,7 +117,7 @@ def generate_jobs_from_gps():
 	global init_lat, init_lon, init_bearing
 	global loops, gps_lon, gps_lat 
 	global job_lists
-	append_regular_jobs(init_lat, init_lon, gps_lon[0],gps_lat[0]);
+	append_regular_jobs(init_lon, init_lat,  gps_lon[0],gps_lat[0]);
 	#step 2: Start loop jobs
 	#handles from start to first point
 	gps_num = len(gps_lon) 
@@ -130,13 +130,14 @@ def generate_jobs_from_gps():
 				append_regular_jobs(gps_lon[k],gps_lat[k],gps_lon[ne_k],gps_lat[ne_k])
 	#move to init position
 	rospy.loginfo("Number of jobs %d", len(job_lists))
-	append_regular_jobs(gps_lon[0],gps_lat[0], init_lat, init_lon)
+	append_regular_jobs(gps_lon[0],gps_lat[0], init_lon, init_lat)
 	turn_job 	= Job(init_lat, init_lon, 0, 'N', 'T', 0)
 	job_lists.extend([turn_job])
 
 # generate regualr jobs from point to point()
 def append_regular_jobs(lon_source, lat_source, lon_target, lat_target):
 	global job_lists
+	rospy.loginfo("Added a jon to move from (%f, %f) to (%f, %f)", lon_source, lat_source, lon_target, lat_target)
 	bearing 	= gpsmath.bearing(lon_source, lat_source, lon_target, lat_target)
 	distance 	= gpsmath.haversine(lon_source, lat_source, lon_target, lat_target)
 	turn_job 	= Job(lon_source, lat_source, bearing, 'N', 'T', bearing)
