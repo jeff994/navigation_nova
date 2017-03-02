@@ -16,6 +16,7 @@ def publish_parameters():
 	info={}  
 	info["ENABLE"]      =    robot_drive.robot_enabled
 	info["MOVING"]      =    robot_drive.robot_moving 
+	info["PAUSED"]      =    robot_drive.robot_paused 
 	info["MISSION"]     =    robot_drive.robot_on_mission 
 	info["OBSTACLE"]    =    robot_obstacle.robot_on_obstacle  
 	info["DIRECTION"]   =    robot_drive.move_direction
