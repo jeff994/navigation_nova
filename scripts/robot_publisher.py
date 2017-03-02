@@ -6,9 +6,9 @@ import robot_obstacle
 import json
 from std_msgs.msg import String
 
-pub_param 		= rospy.Publisher('parameters', String, queue_size = 10)
-pub_gps			= rospy.Publisher('gps', 		String, queue_size=10)
-pub_command 	= rospy.Publisher('command', 	String, queue_size=10)
+pub_param 		= rospy.Publisher('parameters', String, queue_size = 1)
+pub_gps			= rospy.Publisher('gps', 	String, queue_size=10)
+pub_command 		= rospy.Publisher('command', 	String, queue_size=10)
 
 # Used to publish parameters 
 def publish_parameters():
