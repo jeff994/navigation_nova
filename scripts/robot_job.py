@@ -70,19 +70,20 @@ def complete_init_compass(compass_value):
 		robot_drive.robot_initialized = 1
 		rospy.loginfo("Robot initlization completed")
 
+def pause_robot():
+		while True:
+			#step 1, send the stop command every 10 milli seoncs
+			if(robot_drive.robot_moving == 1 or robot_drive.robot_turning == 1):
+				robot_drive.stop_robot()
+				time.sleep(0.01)
+			else: 
+				break
+			#robot_drive.robot_enabled = 1
+
 # disable robot if emergency stop button clicked (0)
 def disable_robot():
-	while True:
-		#step 1, send the stop command every 10 milli seoncs
-		if(robot_drive.robot_moving == 1 or robot_drive.robot_turning == 1):
-			robot_drive.stop_robot()
-			time.sleep(0.01)
-		else: 
-			# Clear all the reamining jobs
-			clear_job_list()
-			#robot_drive.stop_robot()
-			break
-			#robot_drive.robot_enabled = 1
+	pause_robot()
+	clear_job_list()
 
 # class to define i
 class Job:

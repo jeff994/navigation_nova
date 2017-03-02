@@ -52,6 +52,13 @@ def main_commander():
 		robot_obstacle.complete_obstacle_avoidence()
 		return 
 
+	# handle robot paused conidtions 
+	if robot_drive.robot_paused == 0
+		rospy.loginfo("Pause robot") 
+		robot_job.pause_robot(); 
+		return; 
+
+
 	# ----------------------------------------------------------------------------------------#
 	#  Codes for robot normal jobs like walking and turning       							  #
 	# ----------------------------------------------------------------------------------------#

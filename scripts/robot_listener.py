@@ -142,6 +142,12 @@ def keyboard_callback(data):
 	if (keyboard_data == 'Init'):
 		rospy.loginfo("Testing init job")
 		robot_job.initialize_job()
+	elif (keyboard_data == 'Pause'):
+		rospy.loginfo("Pause the task");
+		robot_drive.robot_paused = 1; 
+		robot_job.pause_robot(); 
+	elif (keyboard_data == 'Resume'): 
+		robot_drive.robot_paused = 0; 
 	elif (keyboard_data == 'Forward'):
 		rospy.loginfo("Command received: Start to move forward 1 m")
 		robot_job.simple_move(10000, robot_drive.bearing_now, 'F')
