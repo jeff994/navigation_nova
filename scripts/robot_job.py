@@ -26,7 +26,7 @@ correction_count 	= 0
 max_correction_run 	= 15
 job_lists 			= [] 
 
-# if not jobs in the sytem 
+# if not jobs in the sytem
 def process_no_job():
 	robot_drive.robot_on_mission = 0
 	if(robot_drive.robot_moving == 1):
@@ -39,6 +39,8 @@ def process_no_job():
 def process_job():
 	job_completed = 0 
 	global job_lists
+	rospy.loginfo("Number of jobs left to execute %d", len(job_lists))
+	rospy.loginfo("Job classifictiaon %s, description %s, value %d", job_lists[0].classfication, job_lists[0].description, job_lists[0].value)
 	if (job_lists[0].description == 'T') : 
 		#rospy.loginfo("Bearing now %f, bearing target %f", robot_drive.bearing_now, robot_drive.bearing_target)
 		#if(robot_drive.robot_on_mission == 0): 
@@ -83,11 +85,11 @@ def disable_robot():
 
 # class to define i
 class Job:
-	classfication 	= 'N'
+	classfication 		= 'N'
 	lon_target		= 0.0
 	lat_target 		= 0.0 
-	bearing_target  = 0
-	description 	= ''
+	bearing_target  	= 0
+	description 		= ''
 	value 			= 0
 	index 			= 0
 
@@ -95,10 +97,10 @@ class Job:
 	def __init__(self, lon, lat, bearing, classify, description, value):
 		self.lon_target 	= lon
 		self.lat_target 	= lat 
-		self.bearing_target = bearing
+		self.bearing_target 	= bearing
 		self.classfication	= classify
-		self.value = value 
-		self.description = description
+		self.value 		= value 
+		self.description 	= description
 
 #@yuqing_forwardafterobstacle
 dist_forward_after_obstacle = 1000
@@ -131,7 +133,7 @@ def generate_jobs_from_gps():
 	#move to init position
 	rospy.loginfo("Number of jobs %d", len(job_lists))
 	append_regular_jobs(gps_lon[0],gps_lat[0], init_lon, init_lat)
-	turn_job 	= Job(init_lat, init_lon, 0, 'N', 'T', 0)
+	turn_job 	= Job(init_lon, init_lat, 0, 'N', 'T', 0)
 	job_lists.extend([turn_job])
 
 # generate regualr jobs from point to point()
@@ -150,7 +152,7 @@ def append_regular_jobs(lon_source, lat_source, lon_target, lat_target):
 def has_jobs_left():
 	global job_lists 
 	#rospy.loginfo("No of jobs left %d", len(job_lists)) 
-	return len(job_lists) <= 0
+	return len(job_lists) > 0
 
 def current_job():
 	global job_lists

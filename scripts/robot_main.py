@@ -57,7 +57,7 @@ def main_commander():
 	# ----------------------------------------------------------------------------------------#
 	# Check whether if there's any job left for the robot
 	# If no jobs, make sure robot stopped moving, we cannot leave robot moving there 
-	if robot_job.has_jobs_left():
+	if not robot_job.has_jobs_left():
 		robot_job.process_no_job()
 		return
 
