@@ -53,7 +53,7 @@ def main_commander():
 		return 
 
 	# handle robot paused conidtions 
-	if robot_drive.robot_paused == 0
+	if robot_drive.robot_paused == 1:
 		rospy.loginfo("Pause robot") 
 		robot_job.pause_robot(); 
 		return; 
