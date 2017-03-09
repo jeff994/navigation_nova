@@ -64,6 +64,14 @@ def job_callback(data):
 			robot_job.gps_lon.extend([lon])
 			robot_job.gps_lat.extend([lat])
 		robot_job.clear_job_list()
+
+		init_point 				= decoded['init_point']
+		robot_job.init_lon 		= float(init_point.get('lon'))
+		robot_job.init_lat 		= float(init_point.get('lat'))
+		
+		no_runs 				= decoded['no_runs']
+		robot_job.loops 		= float(no_runs.get('no_runs'));
+
 		# after parsing the gps corrdinates, now generate robot jobs 
 		robot_job.generate_jobs_from_gps()
 	except (ValueError, KeyError, TypeError):
