@@ -66,14 +66,15 @@ def job_callback(data):
 		robot_job.clear_job_list()
 
 		init_point 				= decoded['init_point']
-		robot_job.init_lon 		= float(init_point.get('lon'))
+		robot_job.init_lon 		= float(init_point.get('lng'))
 		robot_job.init_lat 		= float(init_point.get('lat'))
 		
-		no_runs 				= decoded['no_runs']
-		robot_job.loops 		= float(no_runs.get('no_runs'));
-
+		no_runs 				= decoded['runs']
+		robot_job.loops 		= float(no_runs);
+		rospy.loginfo("No of loops %d", no_runs); 
 		# after parsing the gps corrdinates, now generate robot jobs 
 		robot_job.generate_jobs_from_gps()
+		rospy.loginfo("Finish generating jobs");
 	except (ValueError, KeyError, TypeError):
 		rospy.loginfo('JSON format error:')
 		rospy.loginfo(json_str)

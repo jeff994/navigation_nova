@@ -127,8 +127,11 @@ def generate_jobs_from_gps():
 	gps_num = len(gps_lon) 
 	rospy.loginfo("jobs created for init %d, loop control points: %d", len(job_lists), len(gps_lon)) 
 	#handles how many loops
+	rospy.loginfo("Number of loops %d", loops);
 	if(gps_num > 1):
-		for i in range (loops) :
+		rospy.loginfo("Number of loops %d", loops);
+		for i in range(len(gps_lon)):
+			rospy.loginfo("Adding loops %d", i);
 			for k in range (gps_num):
 				ne_k = (k + 1) % gps_num
 				append_regular_jobs(gps_lon[k],gps_lat[k],gps_lon[ne_k],gps_lat[ne_k])
