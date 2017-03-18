@@ -14,6 +14,7 @@ import robot_correction
 import robot_publisher
 import robot_listener 
 import json
+import math
 from datetime import datetime
 from std_msgs.msg import String
 
@@ -45,6 +46,22 @@ def rc_sensor_f_callback(data):
 	#if ret > 0:
 	#	robot_obstacle.start_obstacle_avidence()
 	return
+
+def control_callback(data):
+	json_str = str(data.data)
+	# clear all the existing jobs 
+	del robot_job.gps_lon[:]
+	del robot_job.gps_lat[:]
+	try:
+		decoded = json.loads(json_str)
+		bearing = decoded['bearing']
+		append_turn_job(robot_drive.lon_now, robot_drive.lat_now, bearing)
+		lon_new, lat_new  = append_regular_job(robot_drive.lon_now, robot_drive.lat_now, math.inf, bearing)
+		rospy.loginfo("Finish generating jobs");
+	except (ValueError, KeyError, TypeError):
+		rospy.loginfo('JSON format error:')
+		rospy.loginfo(json_str)
+
 
 # handle the data from the job creator from our website, based on the gps corrdicates provided, 
 # Generate a list of jobs 
