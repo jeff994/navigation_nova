@@ -96,6 +96,7 @@ def main_listener():
 	#@yuqing_obstacledriverread
 	rospy.Subscriber('driver_obstacle', String, robot_listener.driver_obstacle_callback)
 	rospy.Subscriber('job', String, robot_listener.job_callback)
+	rospy.Subscriber('control', String, robot_listener.control_callback)
 	while not rospy.is_shutdown():
 		main_commander()
 	rospy.spin()
