@@ -55,8 +55,8 @@ def control_callback(data):
 	try:
 		decoded = json.loads(json_str)
 		bearing = decoded['bearing']
-		append_turn_job(robot_drive.lon_now, robot_drive.lat_now, bearing)
-		lon_new, lat_new  = append_regular_job(robot_drive.lon_now, robot_drive.lat_now, math.inf, bearing)
+		robot_job.append_turn_job(robot_drive.lon_now, robot_drive.lat_now, bearing)
+		lon_new, lat_new  = robot_job.append_regular_job(robot_drive.lon_now, robot_drive.lat_now, math.inf, bearing)
 		rospy.loginfo("Finish generating jobs");
 	except (ValueError, KeyError, TypeError):
 		rospy.loginfo('JSON format error:')
