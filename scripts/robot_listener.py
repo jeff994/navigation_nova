@@ -55,7 +55,7 @@ def communicate_callback(data):
 		decoded 	= json.loads(json_str)
 		url 		= decoded['url']
 		my_id 		= decoded['robot_id']
-		web_id 		= decoded['web_id']
+		web_id 		= decoded['control_id']
 		# Open URL in a new tab, if a browser window is already open.
 		webbrowser.open_new(url + '?robotid=' + my_id + ';web_id=' + web_id);
 	except (ValueError, KeyError, TypeError):
