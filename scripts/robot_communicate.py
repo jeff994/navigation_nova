@@ -26,7 +26,7 @@ def callback(data):
         
 def executer():
     rospy.init_node('communication', anonymous=True)
-    rospy.Subscriber("communication", String, callback)
+    rospy.Subscriber("communicate", String, callback)
         #@yuqing_sendcommanddelay
         #while not rospy.is_shutdown():
         #   execute_command()
