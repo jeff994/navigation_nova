@@ -97,7 +97,6 @@ def main_listener():
 	rospy.Subscriber('driver_obstacle', String, robot_listener.driver_obstacle_callback)
 	rospy.Subscriber('job', String, robot_listener.job_callback)
 	rospy.Subscriber('control', String, robot_listener.control_callback)
-	rospy.Subscriber('communicate', String, robot_listener.communicate_callback)
 	while not rospy.is_shutdown():
 		main_commander()
 	rospy.spin()

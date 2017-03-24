@@ -58,7 +58,7 @@ def communicate_callback(data):
 		my_id 		= decoded['robot_id']
 		web_id 		= decoded['control_id']
 		# Open URL in a new tab, if a browser window is already open.
-		webbrowser.register('mozilla', Mozilla('mozilla'))
+		#webbrowser.register('mozilla', Mozilla('mozilla'))
 		webbrowser.open_new(url + '?robotid=' + my_id + ';web_id=' + web_id)
 	except (ValueError, KeyError, TypeError):
 		rospy.loginfo('JSON format error:')
