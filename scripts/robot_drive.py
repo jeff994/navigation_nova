@@ -12,8 +12,8 @@ from std_msgs.msg import String
 
 encode_to_mm 		= 69.00 	# 1000 encoding signals = 1 mm travelled
 turn_radius 		= 378 		# radius when turning in mm (half distance between the middle point of two wheels) 
-desired_speed 		= 8			# Global robot moving spped, 3 - 5
-speed_now 			= 8			# Robot moving speed now
+desired_speed 		= 6			# Global robot moving spped, 3 - 5
+speed_now 			= 6			# Robot moving speed now
 robot_on_mission 	= 0			# set an indicator that robot's on a job right now 
 robot_enabled 		= 0 		# A switch to enable or disable robot from execuing any jobs
 robot_paused 		= 0 		# A flag to indicate enable robot to execute job  
@@ -92,7 +92,7 @@ def stop_robot():
 
 def unlock_robot():
 	# send a command to unlock robot after obstacle avoidece 
-	robot_publisher.publish_command('SB00000BE\n')
+	robot_publisher.pub_command.publish('SB00000BE\n')
 	rospy.loginfo('Unlock robot after avoidense ')
 
 # change speed
@@ -102,16 +102,15 @@ def change_speed():
 	speed_now  = desired_speed
 	distpub = 'Robot speed changed from %d to %d' % (speed_now, desired_speed)
 	rospy.loginfo(distpub)
-	
 
 #@yuqing_toggleobstaclemode
 def enter_no_obstacle():
-	robot_publisher.publish_command('SW00000WE\n')
+	robot_publisher.pub_command.publish('SW00000WE\n')
 	rospy.loginfo('SW00000WE enter no obstacle mode')
 
 #@yuqing_toggleobstaclemode
 def enter_obstacle():
-	robot_publisher.publish_command.publish('SO00000OE\n')
+	robot_publisher.pub_command.publish('SO00000OE\n')
 	rospy.loginfo('SO00000OE enter no obstacle mode')
 	#yuqing_obstaclemodeconfirm
 	#remove unlock
