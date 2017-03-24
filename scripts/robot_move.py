@@ -15,7 +15,7 @@ import robot_job
 dist_completed = 0.0
 dist_to_run = 0.0
 #@yuqing_correctionper10m
-dist_to_correct = 10000.0
+dist_to_correct = 5000.0
 
 status_pub = rospy.Publisher('status', String, queue_size = 100)
 # Starts the robot for moving, put the control variables into proper value 
