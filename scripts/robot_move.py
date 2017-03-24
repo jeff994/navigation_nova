@@ -123,8 +123,8 @@ def move_distance(dist):
 		return  0
 	else :
 		stop_move()
-        	# make sure the robot is stopped before next job
-        	return not robot_drive.robot_on_mission 
+        # make sure the robot is stopped before next job
+        return not robot_drive.robot_on_mission 
        	#clean current job 
 	
 	return 0 

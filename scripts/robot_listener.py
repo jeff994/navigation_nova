@@ -47,6 +47,16 @@ def rc_sensor_f_callback(data):
 	#	robot_obstacle.start_obstacle_avidence()
 	return
 
+def communicate_callback(data):
+	json_str 	= str(data.data)
+	decoded 	= json.loads(json_str)
+	url 		= decoded['url']
+	my_id 		= decoded['robot_id']
+	web_id 		= decoded['web_id']
+	# Open URL in a new tab, if a browser window is already open.
+	webbrowser.open_new(url + '？robotid='+my_id+';web_id=' + web_id);
+
+	
 def control_callback(data):
 	json_str = str(data.data)
 	# clear all the existing jobs 
