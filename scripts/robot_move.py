@@ -6,6 +6,7 @@ from std_msgs.msg import String
 import robot_drive
 import robot_correction 
 import gpsmath
+import robot_job 
 
 #-------------------------------------------------------#
 #	Robot moving module									#
@@ -115,8 +116,17 @@ def move_distance(dist):
 		rospy.loginfo("-----------------dist_completed: %f, start to correct", dist_completed)
 		stop_move()
 		return not robot_drive.robot_on_mission
-		
-	if (dist_threshold - dist_completed > 0) :
+	
+	dist_remain = dist_threshold - dist_completed;
+	#very near to the target position 
+	if(dist_remain < 600 and dist_threshold > 300)
+		current_job = robot_job.current_job()
+		dist_temp = gpsmath.haversine(current_job.lon_target, current_job.lat_target, robot_drive.lon_now,  robot_drive.lat_now)
+		if(dist_temp < dist_remain)
+			stop_move()
+			return not robot_drive.robot_on_mission
+
+	if (dist_remain > 0) :
 		#just continue moving of job not completed and no change of speed command received 
 		#if speed changed, then just change the move speed 
 		continue_move() 
