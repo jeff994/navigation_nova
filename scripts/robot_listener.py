@@ -54,7 +54,7 @@ def communicate_callback(data):
 	my_id 		= decoded['robot_id']
 	web_id 		= decoded['web_id']
 	# Open URL in a new tab, if a browser window is already open.
-	webbrowser.open_new(url + '？robotid='+my_id+';web_id=' + web_id);
+	webbrowser.open_new(url + '?robotid=' + my_id + ';web_id=' + web_id);
 
 	
 def control_callback(data):
