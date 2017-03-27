@@ -14,7 +14,7 @@ encode_to_mm 		= 69.00 		# 1000 encoding signals = 1 mm travelled
 turn_radius 		= 378 			# radius when turning in mm (half distance between the middle point of two wheels) 
 speed_lower			= 5
 speed_lowest		= 4
-speed_full			= 8
+speed_full			= 6
 speed_desired 		= speed_full	# Global robot moving spped, 3 - 5
 speed_now 			= speed_full	# Robot moving speed now
 robot_on_mission 	= False			# set an indicator that robot's on a job right now 

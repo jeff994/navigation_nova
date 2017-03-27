@@ -31,20 +31,20 @@ def start_move():
 	# if the task is a short distance task, then start with a lower speed 
 	if abs(dist_to_run) < dist_lowest_speed:
 		robot_drive.speed_now  		= robot_drive.speed_lowest 
-        robot_drive.speed_desired 	= robot_drive.speed_lowest
+		robot_drive.speed_desired 	= robot_drive.speed_lowest
 	elif abs(dist_to_run) < dist_lower_speed: 
-    	robot_drive.speed_now  		= robot_drive.speed_lower
-        robot_drive.speed_desired 	= robot_drive.speed_lower 
+		robot_drive.speed_now  		= robot_drive.speed_lower
+		robot_drive.speed_desired 	= robot_drive.speed_lower 
    	else:
 		robot_drive.speed_now 		= robot_drive.speed_full 
 		robot_drive.speed_desired 	= robot_drive.speed_full 
 
     # only if the robot starts to move then change the status
 	if robot_drive.robot_moving:
-   		robot_drive.robot_on_mission = True 
-   	    dist_completed = 0
-        rospy.loginfo('Started a moving job')
-    else:
+		robot_drive.robot_on_mission = True 
+		dist_completed = 0
+		rospy.loginfo('Started a moving job')
+	else:
 	  	robot_drive.start()
 		rospy.loginfo('Starting a moving job')
 
@@ -52,36 +52,36 @@ def start_move():
 def stop_move():	
 	global dist_completed
 	if not robot_drive.robot_moving :
-        dist_completed = 0
-        robot_drive.robot_on_mission = False
-        rospy.loginfo('Robot completed a moving job')
+		dist_completed = 0
+		robot_drive.robot_on_mission = False
+		rospy.loginfo('Robot completed a moving job')
 	else:
-        rospy.loginfo('Robot still moving, stopping robot')
-        robot_drive.stop_robot()
+		rospy.loginfo('Robot still moving, stopping robot')
+		robot_drive.stop_robot()
 
 # Update robot speed as required new speed 
 def continue_move():
-    global dist_to_run
-    global dist_completed
-    global dist_lowest_speed
+	global dist_to_run
+	global dist_completed
+	global dist_lowest_speed
 	global dist_lower_speed
 
 	# if robot's on mission and somehow it's stopped, need to restart the robot 
-    if not robot_drive.robot_moving:
-        rospy.loginfo("Robot stopped during the mission, start to move again")
-        robot_drive.start()
+	if not robot_drive.robot_moving:
+        	rospy.loginfo("Robot stopped during the mission, start to move again")
+        	robot_drive.start()
 
     # if robot is approaching the destination, then need to decrease speed 
-    if(abs(dist_to_run) - abs(dist_completed) < dist_lowest_speed):
+	if(abs(dist_to_run) - abs(dist_completed) < dist_lowest_speed):
 		robot_drive.speed_desired = robot_drive.speed_lowest
 		rospy.loginfo('Reduce speed to 4, very close to target position')
-    elif(abs(dist_to_run) - abs(dist_completed) < dist_lower_speed):
+	elif(abs(dist_to_run) - abs(dist_completed) < dist_lower_speed):
 		robot_drive.speed_desired = robot_drive.speed_lower
 		rospy.loginfo('Reduce speed to 5, only 20 cm to target position')
 
     # if change of speed request is received 
-    if(robot_drive.speed_now  != robot_drive.speed_desired):
-        robot_drive.change_speed()
+	if(robot_drive.speed_now  != robot_drive.speed_desired):
+        	robot_drive.change_speed()
 
 # main function to control the robot movement 
 def move_distance(dist):

@@ -58,12 +58,12 @@ def stop_turn():
 	global degree_turned
 	global degree_to_turn 
 	if not robot_drive.robot_turning:
-    	robot_drive.robot_on_mission = False
-    	degree_turned = 0
-    	degree_to_turn = 0
-    	rospy.loginfo('Robot completed a turn job')
+		robot_drive.robot_on_mission = False
+		degree_turned = 0
+		degree_to_turn = 0
+		rospy.loginfo('Robot completed a turn job')
 	else:
-    	robot_drive.stop_robot()
+		robot_drive.stop_robot()
 
 # change the speed of turing 
 def continue_turn(step_angle):
@@ -121,7 +121,7 @@ def turn_degree():
 	degree_threshold = abs(degree_to_turn) - robot_drive.min_correcton_angle
 	#simple log for tracing 
 	distpub = 'Required angle:%f turned angle:%f step angle: %f' % (degree_to_turn, degree_turned, step_angle)
-    rospy.loginfo(distpub)
+	rospy.loginfo(distpub)
 
 	if(degree_turned < degree_threshold): 
 		continue_turn(step_angle)
