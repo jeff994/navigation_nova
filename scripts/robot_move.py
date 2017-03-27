@@ -24,11 +24,11 @@ def start_move():
 	global dist_to_run 
 
 	if abs(dist_to_run) < 100:
-		robot_drive.speed_now  = 4
-        	robot_drive.desired_speed = 4
+		robot_drive.speed_now  = 6
+        	robot_drive.desired_speed = 6
 	elif abs(dist_to_run) < 200: 
-    		robot_drive.speed_now  = 5
-        	robot_drive.desired_speed = 5
+    		robot_drive.speed_now  = 6
+        	robot_drive.desired_speed = 6
         else:
 		robot_drive.speed_now = 6
 		robot_drive.desired_speed = 6
@@ -65,10 +65,10 @@ def continue_move():
         robot_drive.start()
 
     if(abs(dist_to_run) - abs(dist_completed) < 50):
-            robot_drive.desired_speed = 4
+            robot_drive.desired_speed = 6
             rospy.loginfo('Reduce speed to 4, very close to target position')
     elif(abs(dist_to_run) - abs(dist_completed) < 200):
-            robot_drive.desired_speed = 5
+            robot_drive.desired_speed = 6
             rospy.loginfo('Reduce speed to 5, only 20 cm to target position')
 
     if(robot_drive.speed_now  == robot_drive.desired_speed):

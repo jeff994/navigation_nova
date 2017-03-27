@@ -103,6 +103,8 @@ def turn_degree():
  	global degree_turned 
  	global degree_to_turn 
 
+	if degree_to_turn < 5: 
+		return 1 
 	#robot has not started turning, just start the turning 
 	if(robot_drive.robot_on_mission == 0):
 		start_turn()
