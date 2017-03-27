@@ -104,9 +104,12 @@ def distance_correction(lon_now, lat_now, bearing_now, lon_target, lat_target, b
 
 	rospy.loginfo("There's a %f mm distance error, %f angle difference", distance, diff_angle)
 
-	if abs(distance) > 100 or (diff_angle > 5 and diff_angle < 355):
+	need_correct_distance 	=  abs(distance) > robot_drive.min_correction_distance
+	need_correct_angle 		= diff_angle > 5 and diff_angle < 355;
+
+	if need_correct_distance or need_correct_angle:
 		rospy.loginfo("Add jobs to correction.")
-		robot_job.insert_compensation_jobs(lon_now, lat_now, lon_target, lat_target)
+		robot_job.insert_compensation_jobs(lon_now, lat_now, lon_target, lat_target, need_correct_distance, need_correct_angle)
 	else: 
 		rospy.loginfo("no need to compensate errors")
 	
@@ -117,4 +120,4 @@ def distance_correction_obstacle(dist):
 	distance_correction(lon_new, lat_new, robot_drive.bearing_now, robot_drive.lon_target, robot_drive.lat_target, robot_drive.bearing_target)
 	#rospy.loginfo("There's a %f mm distance error, %f angle difference", distance, diff_angle)
 	rospy.loginfo("Add a job to move forward %d mm", robot_job.dist_forward_after_obstacle)
-	robot_job.insert_compensation_jobs(robot_drive.lon_now, robot_drive.lat_now, lat_new, lon_new, lat_new)
+	robot_job.insert_compensation_jobs(robot_drive.lon_now, robot_drive.lat_now, lat_new, lon_new, lat_new, True, False)

@@ -10,20 +10,24 @@ from std_msgs.msg import String
 #	Robot drive module									#
 #-------------------------------------------------------#
 
-encode_to_mm 		= 69.00 	# 1000 encoding signals = 1 mm travelled
-turn_radius 		= 378 		# radius when turning in mm (half distance between the middle point of two wheels) 
-desired_speed 		= 6			# Global robot moving spped, 3 - 5
-speed_now 			= 6			# Robot moving speed now
-robot_on_mission 	= 0			# set an indicator that robot's on a job right now 
-robot_enabled 		= 0 		# A switch to enable or disable robot from execuing any jobs
-robot_paused 		= 0 		# A flag to indicate enable robot to execute job  
-robot_on_obstancle 	= 0			# If robot is on obstancle avoidence, then set it to be 1
-robot_over_obstacle = 0			# The robot finished obstance avodence 
-move_direction 		= 'F'		# Global robot walking/turning direction
-robot_initialized	= 1 		# Confirm whehter the robot has initialized the true north 
-robot_moving 		= 0		# based on the encoder data to know whether the robot's moving
-robot_turning		= 0
-initial_bearing 	= 0 	#set as north for now
+encode_to_mm 		= 69.00 		# 1000 encoding signals = 1 mm travelled
+turn_radius 		= 378 			# radius when turning in mm (half distance between the middle point of two wheels) 
+speed_lower			= 5
+speed_lowest		= 4
+speed_full			= 8
+speed_desired 		= speed_full	# Global robot moving spped, 3 - 5
+speed_now 			= speed_full	# Robot moving speed now
+robot_on_mission 	= False			# set an indicator that robot's on a job right now 
+robot_enabled 		= False 		# A switch to enable or disable robot from execuing any jobs
+robot_paused 		= False 		# A flag to indicate enable robot to execute job  
+robot_on_obstancle 	= False			# If robot is on obstancle avoidence, then set it to be 1
+robot_over_obstacle = False			# The robot finished obstance avodence 
+move_direction 		= 'F'			# Global robot walking/turning direction
+robot_initialized	= True 			# Confirm whehter the robot has initialized the true north 
+robot_moving 		= False			# based on the encoder data to know whether the robot's moving
+robot_turning		= False
+initial_bearing 	= 0 			#set as north for now
+
 ############################################################
 
 lon_now 			= 121.635139
@@ -36,6 +40,12 @@ bearing_target 		= 0 		#degrees
 
 step_angle 			= 0
 step_distance		= 0
+
+
+############################################################
+min_correction_distance 	= 50
+min_correcton_angle 		= 5
+
 
 #yuqing_obstaclemodeconfirm
 #1: obstacle mode 

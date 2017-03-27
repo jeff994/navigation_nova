@@ -4,6 +4,18 @@ import rospy
 
 from math import radians, cos, sin, asin, sqrt, atan2, degrees
 
+# just make sure the angle is between [0-360)
+# def correct_angle(angle):
+# 	if(angle < -360 or angle >= 720):
+# 		rospy.logerr('Waring Angle not supposed to appear')
+# 		return 
+
+# 	if(angle < 0):
+# 		angle = angle + 360 
+# 	elif(angle >= 360): 
+# 		angle = angle - 360 
+# 	return angle
+
 # Calculate distance between two gps coordinates 
 def haversine(lon1, lat1, lon2, lat2):
 	#convert to radians

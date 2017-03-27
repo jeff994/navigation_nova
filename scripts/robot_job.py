@@ -38,7 +38,7 @@ def process_no_job():
 
 # Process all kinds of robot job as required 
 def process_job():
-	job_completed = 0 
+	job_completed = False
 	global job_lists
 	rospy.loginfo("Number of jobs left to execute %d", len(job_lists))
 	rospy.loginfo("Job classifictiaon %s, description %s, value %d", job_lists[0].classfication, job_lists[0].description, job_lists[0].value)
@@ -163,6 +163,11 @@ def current_job():
 	global job_lists
 	return job_lists[0]
 
+def left_gps_distance():
+	current_job = current_job()
+	dist_temp = gpsmath.haversine(current_job.lon_target, current_job.lat_target, robot_drive.lon_now,  robot_drive.lat_now)
+	return dist_temp
+
 def clear_job_list():
 	global job_lists
 	del job_lists[:]
@@ -229,14 +234,16 @@ def define_initialize_job():
 
 #--------------------------------------------------------------------------------
 # a list of operations for the correction jobs 
-def insert_compensation_jobs(lon_source, lat_source, lon_target, lat_target):
+def insert_compensation_jobs(lon_source, lat_source, lon_target, lat_target, need_correct_distace, need_correct_angle):
 	global job_lists
 	bearing 	= gpsmath.bearing(lon_source, lat_source, lon_target, lat_target)
 	distance 	= gpsmath.haversine(lon_source, lat_source, lon_target, lat_target)
 	turn_job 	= Job(lon_source, lat_source, bearing, 'C', 'T', bearing)
 	move_job 	= Job(lon_target, lat_target, bearing, 'C', 'F', distance) 
-	job_lists.insert(0, move_job)
-	job_lists.insert(0, turn_job)
+	if need_correct_distace:
+		job_lists.insert(0, move_job)
+	if need_correct_angle:
+		job_lists.insert(0, turn_job)
 	
 
 

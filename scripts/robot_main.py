@@ -35,7 +35,7 @@ def main_commander():
 	#  code to close robot when required	                    							  #
 	# ----------------------------------------------------------------------------------------#
 	# If robot not enabled, just need to disable the robot 
-	if(robot_drive.robot_enabled == 0): 
+	if not robot_drive.robot_enabled: 
 		robot_job.disable_robot()
 		return
 
@@ -43,17 +43,17 @@ def main_commander():
 	#  Codes for obstacle avoidence handling                     							  #
 	# ----------------------------------------------------------------------------------------#
 	# The flat would be set by hardware, we cannot do anything but blankly calculate the gps coordinates  
-	if(robot_obstacle.robot_on_obstacle > 0):
+	if robot_obstacle.robot_on_obstacle:
 		rospy.loginfo("Robot on obstacle avoidence, please wait") 
 		return 
 
 	# Robot obstancle avoidence is over, now resume to normal operation 
-	if(robot_obstacle.robot_over_obstacle > 0):
+	if robot_obstacle.robot_over_obstacle:
 		robot_obstacle.complete_obstacle_avoidence()
 		return 
 
 	# handle robot paused conidtions 
-	if robot_drive.robot_paused == 1:
+	if robot_drive.robot_paused:
 		rospy.loginfo("Pause robot") 
 		robot_job.pause_robot(); 
 		return; 
@@ -73,14 +73,14 @@ def main_commander():
 	# ----------------------------------------------------------------------------------------#
 	#  Robot's doing the initialization jobs, not normal jobs      							  #
 	# ----------------------------------------------------------------------------------------# 
-	if robot_drive.robot_initialized == 0:
+	if not robot_drive.robot_initialized:
 		robot_job.complete_init_compass(compass_data[compass_index])
 		return
 
 	# ----------------------------------------------------------------------------------------#
 	#  Error compensation after current job completed      									  #
 	# ----------------------------------------------------------------------------------------#
-	if job_completed == 1:
+	if job_completed:
 		robot_job.complete_current_job()
 		#robot_correction.angle_correction()
 		robot_correction.dist_correction_normal()
