@@ -85,11 +85,11 @@ def update_robot_gps(left_encode, right_encode):
 	rospy.loginfo("Bearing now %f,lon_now %f, lat_now %f", robot_drive.bearing_now, robot_drive.lon_now, robot_drive.lat_now)
 
 def dist_correction_normal():
+	rospy.loginfo("**************normal correction jobs**************")
 	distance_correction(robot_drive.lon_now, robot_drive.lat_now, robot_drive.bearing_now, robot_drive.lon_target, robot_drive.lat_target, robot_drive.bearing_target)
 
 # correct robot every time by comapring the lat_now, lon_now with target position
 def distance_correction(lon_now, lat_now, bearing_now, lon_target, lat_target, bearing_target):
-	rospy.loginfo("**************correction jobs**************")
 	distance 	= gpsmath.haversine(lon_now, lat_now, lon_target, lat_target)
 	bearing 	= gpsmath.bearing(lon_now, lat_now, lon_target, lat_target)
 	# check the bearing now and bearing target 
@@ -115,6 +115,7 @@ def distance_correction(lon_now, lat_now, bearing_now, lon_target, lat_target, b
 	
 # Correct a robot with obstancles by inserting a job to move the robot forward for 1m
 def distance_correction_obstacle(dist):
+	rospy.loginfo("**************obstance correction jobs**************")
 	lon_new, lat_new = gpsmath.get_gps(robot_drive.lon_now, robot_drive.lat_now, dist, robot_drive.bearing_now)
 	#fist distance correction 
 	distance_correction(lon_new, lat_new, robot_drive.bearing_now, robot_drive.lon_target, robot_drive.lat_target, robot_drive.bearing_target)
