@@ -164,8 +164,8 @@ def current_job():
 	return job_lists[0]
 
 def left_gps_distance():
-	current_job = current_job()
-	dist_temp = gpsmath.haversine(current_job.lon_target, current_job.lat_target, robot_drive.lon_now,  robot_drive.lat_now)
+	job_now = current_job()
+	dist_temp = gpsmath.haversine(job_now.lon_target, job_now.lat_target, robot_drive.lon_now,  robot_drive.lat_now)
 	return dist_temp
 
 def clear_job_list():
@@ -241,8 +241,10 @@ def insert_compensation_jobs(lon_source, lat_source, lon_target, lat_target, nee
 	turn_job 	= Job(lon_source, lat_source, bearing, 'C', 'T', bearing)
 	move_job 	= Job(lon_target, lat_target, bearing, 'C', 'F', distance) 
 	if need_correct_distace:
+		rospy.loginfo("Added a distance correction")
 		job_lists.insert(0, move_job)
 	if need_correct_angle:
+		rospy.loginfo("Added a angle correction")
 		job_lists.insert(0, turn_job)
 	
 

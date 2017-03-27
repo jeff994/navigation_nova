@@ -81,6 +81,7 @@ def main_commander():
 	#  Error compensation after current job completed      									  #
 	# ----------------------------------------------------------------------------------------#
 	if job_completed:
+		rospy.loginfo("Complete a job")
 		robot_job.complete_current_job()
 		#robot_correction.angle_correction()
 		robot_correction.dist_correction_normal()

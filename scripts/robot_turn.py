@@ -20,8 +20,7 @@ def start_turn():
 	global degree_to_turn
 	
 	rospy.loginfo("start turn...........................")
-
-	degree_to_turn = robot_drive.bearing_target - robot_drive.bearing_now 	
+	
 	
 	# get turning angle to (-180 to 180)
 	if(degree_to_turn > 180): 
@@ -93,11 +92,11 @@ def turn_degree():
  	global degree_turned 
  	global degree_to_turn 
 
-	if degree_to_turn < robot_drive.min_correcton_angle: 
-		return True 
-
-	#robot has not started turning, just start the turning 
-	if not robot_drive.robot_on_mission:
+ 	if not robot_drive.robot_on_mission:
+ 		degree_to_turn = robot_drive.bearing_target - robot_drive.bearing_now 
+		if abs(degree_to_turn) < robot_drive.min_correcton_angle: 
+			rospy.loginfo("Degree to turn %d < %d",  degree_to_turn, robot_drive.min_correcton_angle)
+			return True 
 		start_turn()
 		return False
 	
