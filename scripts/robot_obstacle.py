@@ -36,24 +36,24 @@ def start_obstacle_avidence():
 	rospy.loginfo('start_obstacle_avidence')
 	global robot_on_obstacle
 	global robot_over_obstacle
-	robot_on_obstacle 	= 1
-	robot_over_obstacle 	= 0
+	robot_on_obstacle 		= True
+	robot_over_obstacle 	= False
 	#yuqing_unlockconfirm
-	robot_drive.isunlockdone = 0
+	robot_drive.isunlockdone = False
 
 # if obstacle avoidence is over
 def obstacle_is_over():
 	rospy.loginfo('obstacle_is_over')
 	global robot_on_obstacle
 	global robot_over_obstacle
-	robot_on_obstacle 	= 0 
-	robot_over_obstacle 	= 1
+	robot_on_obstacle 	= False
+	robot_over_obstacle = True
 
 def unlock_from_obstacle():
  	rospy.loginfo('unlock_from_obstacle')
 	robot_drive.unlock_robot()
 	global robot_over_obstacle
-	robot_over_obstacle = 0
+	robot_over_obstacle = False
 
 	# Get the last four digit of the reverse car sendor data 
 def rc_sensor_data(rc_sensor_value):
@@ -68,13 +68,18 @@ def rc_sensor_data(rc_sensor_value):
 
 # Complete the obstacle avoidence after we get a signal from the robot base  
 def complete_obstacle_avoidence(): 
-	if (robot_drive.robot_turning > 0 or robot_drive.robot_moving > 0):
+	# step 1: Waiting for robot stop moving 
+	if (robot_drive.robot_turning or robot_drive.robot_moving):
 		rospy.loginfo("waiting robot to stop")
 		return
-	if (robot_drive.isunlockdone == 0):
+
+	# step 2: Once robot stopped moving, send unlock signal to the robot 
+	if (not robot_drive.isunlockdone):
 		rospy.loginfo("unlock robot for further processing")
 		robot_drive.unlock_robot()
+		return
 
+	# step 3: Once robot is unlocked, resume control to the program 
 	# Need to perform necessary correction 
 	rospy.loginfo("Resume the robot from obstacle avoidence") 
 	# First get ready the robot for normal walking 
@@ -133,6 +138,6 @@ def complete_obstacle_avoidence():
 			robot_correction.distance_correction()
 			rospy.loginfo("no need to forward 0.5m after obstacle")
 
-		robot_drive.isunlockdone = 0
-		robot_obstacle.robot_over_obstacle = 0
+		robot_drive.isunlockdone = False
+		robot_obstacle.robot_over_obstacle = False
 

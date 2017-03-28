@@ -29,8 +29,8 @@ job_lists 			= []
 
 # if not jobs in the sytem
 def process_no_job():
-	robot_drive.robot_on_mission = 0
-	if(robot_drive.robot_moving == 1):
+	robot_drive.robot_on_mission = False
+	if(robot_drive.robot_moving):
 		rospy.logwarn('warning: robot is not fully stopped even though a top command issued')
 		robot_drive.stop_robot()
 		time.sleep(0.05)
@@ -73,7 +73,7 @@ def complete_init_compass(compass_value):
 def pause_robot():
 		while True:
 			#step 1, send the stop command every 10 milli seoncs
-			if(robot_drive.robot_moving == 1 or robot_drive.robot_turning == 1):
+			if(robot_drive.robot_moving or robot_drive.robot_turning):
 				robot_drive.stop_robot()
 				time.sleep(0.01)
 			else: 

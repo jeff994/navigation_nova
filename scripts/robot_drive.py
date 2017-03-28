@@ -50,9 +50,9 @@ min_correcton_angle 		= 5
 #yuqing_obstaclemodeconfirm
 #1: obstacle mode 
 #0: no-obstalce mode
-obstacle_mode = 1
+obstacle_mode = True
 #yuqing_unlockconfirm
-isunlockdone = 0
+isunlockdone = False
 
 def init_gps():
 	global lon_now, lat_now, bearing_now
