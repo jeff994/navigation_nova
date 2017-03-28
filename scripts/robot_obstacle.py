@@ -6,6 +6,7 @@ import math
 import gpsmath
 import robot_drive
 import robot_job 
+import robot_correction 
 
 robot_on_obstacle 		= 0 # if robot is on obstacle avoidence, it would be set to 1
 robot_over_obstacle 	= 0 # it's effective if the robot_on_obstacle 
@@ -91,7 +92,7 @@ def complete_obstacle_avoidence():
 		current_job_type = job_executing.classfication; 
 		if(current_job_type == 'N'):
 			rospy.loginfo("oRbot met obstacle during normal job, pefrorm correction")
-			robot_job.correction_count 	= 0
+			robot_correction.correction_count 	= 0
 			robot_job.complete_current_job()
 			# Re-calculate and send the corretion job 
 			#robot_correction.distance_correction(dist_forward_after_obstacle)
@@ -99,7 +100,7 @@ def complete_obstacle_avoidence():
 			#forward distance by angle from sensor
 			#rospy.loginfo("forward 0.5m after obstacle") 
 		elif(current_job_type == 'C'): 
-			if(robot_job.correction_count  > robot_job.max_correction_run):
+			if(robot_correction.correction_count  > robot_correction.max_correction_run):
 				rospy.loginfo("Robot has tried to move to %f, %f for %d times, failed")
 				while (current_job_type == 'C'):
 					robot_job.complete_current_job()
@@ -118,8 +119,8 @@ def complete_obstacle_avoidence():
 					robot_job.complete_current_job()
 			else:
 				rospy.loginfo("Robot meet a obstacle while peforming correction job")
-				robot_job.correction_count = robot_job.correction_count + 1
-				rospy.loginfo("Robot failed correction job for %d time", robot_job.correction_count )
+				robot_correction.correction_count = robot_correction.correction_count + 1
+				rospy.loginfo("Robot failed correction job for %d time", robot_correction.correction_count )
 				#discard all correction jobs 
 				while (current_job_type == 'C'):
 					robot_job.complete_current_job()

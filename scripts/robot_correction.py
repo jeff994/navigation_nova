@@ -1,12 +1,20 @@
 #!/usr/bin/env python
 import rospy
 import serial
-import string
+import string`
 import math
 import gpsmath
 import robot_drive
 import robot_job 
 import robot_publisher 
+
+
+
+############################################################
+min_correction_distance 	= 100
+min_correcton_angle 		= 5
+correction_count 			= 0
+max_correction_run 			= 15
 
 from math import radians, cos, sin, asin, sqrt, atan2, degrees
 
@@ -104,8 +112,8 @@ def distance_correction(lon_now, lat_now, bearing_now, lon_target, lat_target, b
 
 	rospy.loginfo("There's a %f mm distance error, %f angle difference", distance, diff_angle)
 
-	need_correct_distance 	=  abs(distance) > robot_drive.min_correction_distance
-	need_correct_angle 		= diff_angle > 5 and diff_angle < 355;
+	need_correct_distance 	=  abs(distance) > min_correction_distance
+	need_correct_angle 		= diff_angle > min_correcton_angle and diff_angle < (360 - min_correcton_angle)
 
 	if need_correct_distance or need_correct_angle:
 		rospy.loginfo("Add jobs to correction.")

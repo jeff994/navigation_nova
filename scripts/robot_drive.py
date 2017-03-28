@@ -42,11 +42,6 @@ step_angle 			= 0
 step_distance		= 0
 
 
-############################################################
-min_correction_distance 	= 100
-min_correcton_angle 		= 5
-
-
 #yuqing_obstaclemodeconfirm
 #1: obstacle mode 
 #0: no-obstalce mode

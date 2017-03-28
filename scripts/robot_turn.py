@@ -94,8 +94,8 @@ def turn_degree():
 
  	if not robot_drive.robot_on_mission:
  		degree_to_turn = robot_drive.bearing_target - robot_drive.bearing_now 
-		if abs(degree_to_turn) < robot_drive.min_correcton_angle: 
-			rospy.loginfo("Degree to turn %d < %d",  degree_to_turn, robot_drive.min_correcton_angle)
+		if abs(degree_to_turn) < robot_correction.min_correcton_angle: 
+			rospy.loginfo("Degree to turn %d < %d",  degree_to_turn, robot_correction.min_correcton_angle)
 			return True 
 		start_turn()
 		return False
@@ -117,7 +117,7 @@ def turn_degree():
 
 	degree_turned = degree_turned + abs(step_angle)
     # 1 step before the robot turn, stop the robot
-	degree_threshold = abs(degree_to_turn) - robot_drive.min_correcton_angle/2
+	degree_threshold = abs(degree_to_turn) - robot_correction.min_correcton_angle/2
 	#simple log for tracing 
 	distpub = 'Required angle:%f turned angle:%f step angle: %f' % (degree_to_turn, degree_turned, step_angle)
 	rospy.loginfo(distpub)

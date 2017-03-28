@@ -23,8 +23,6 @@ init_bearing		= 0
 gps_lon 			= [103.962389,103.962456,103.962461,103.962381] #S,A,B,C,D
 gps_lat 			= [1.3407,1.340696,1.340589,1.340599]
 loops 				= 1 			#how many rounds to go
-correction_count 	= 0
-max_correction_run 	= 15
 job_lists 			= [] 
 
 # if not jobs in the sytem

@@ -90,7 +90,7 @@ def move_distance(dist):
 
 	dist_to_run = dist
 	# if robot received a meaning less job, just signal, clear the job and return 
-	if (abs(dist_to_run) < robot_drive.min_correction_distance):
+	if (abs(dist_to_run) < robot_correction.min_correction_distance):
 		stop_move()
 		rospy.logwarn('Robot received a meaningless moving job')
 		return True
@@ -113,7 +113,7 @@ def move_distance(dist):
 	# accumulate the distance to the completed distance 
 	dist_completed = dist_completed + abs(dist_step)   #this is in mm
 	# robot is with in the range, then we condidered robot reached the position 
-	dist_threshold = abs(dist_to_run) - robot_drive.min_correction_distance 	#0 mm, I can choose -50mm, but since there will be inefficiencies, 0 error threshold might be good enough
+	dist_threshold = abs(dist_to_run) - robot_correction.min_correction_distance 	#0 mm, I can choose -50mm, but since there will be inefficiencies, 0 error threshold might be good enough
 	
 	distpub = 'Dist-travelled: %f dist-total:%f dist-step:%f' % (dist_completed, abs(dist_to_run) ,dist_step)
 	rospy.loginfo(distpub)
