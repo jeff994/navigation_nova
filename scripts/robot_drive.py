@@ -43,7 +43,7 @@ step_distance		= 0
 
 
 ############################################################
-min_correction_distance 	= 50
+min_correction_distance 	= 100
 min_correcton_angle 		= 5
 
 
