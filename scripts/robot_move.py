@@ -16,8 +16,8 @@ dist_completed 			= 0.0
 dist_to_run 			= 0.0
 #@yuqing_correctionper10m
 dist_to_correct 		= 5000.0
-dist_lowest_speed 		= 100
-dist_lower_speed 		= 200
+dist_lowest_speed 		= 150
+dist_lower_speed 		= 250
 dist_end_point_check 	= 600
 
 status_pub = rospy.Publisher('status', String, queue_size = 100)
