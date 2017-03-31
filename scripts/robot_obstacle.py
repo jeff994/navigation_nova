@@ -103,6 +103,7 @@ def clear_after_obstacle_avoidence(current_job_type):
 		rospy.logerr("Invalid job_type found")
 
 def resume_from_obstacle_avoidence():
+	job_executing = robot_job.current_job()
 	current_job_type = job_executing.classfication; 
 		
 	# performing necessary clearing of current tasks 
@@ -139,7 +140,6 @@ def complete_obstacle_avoidence():
 	#yuqing_unlockconfirm 
 	#robot_obstacle.unlock_from_obstacle()
 	# Remove the un-finished job 
-	job_executing = robot_job.current_job()
 	if robot_drive.robot_on_mission:
 		resume_from_obstacle_avoidence()
 	else:
