@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+
 import rospy
 import serial
 import string
@@ -104,7 +105,7 @@ def complete_obstacle_avoidence():
 				rospy.loginfo("Robot has tried to move to %f, %f for %d times, failed")
 				while (current_job_type == 'C'):
 					robot_job.complete_current_job()
-					if len(robot_job.job_type) > 0:
+					if len(robot_job.job_lists) > 0:
 						job_executing 		= robot_job.current_job()
 						current_job_type 	= job_executing.classfication; 
 					else:
@@ -112,7 +113,7 @@ def complete_obstacle_avoidence():
 						break; 
 
 				rospy.loginfo("Cleared all the correction jobs")
-				if len(robot_job.job_type) > 0:
+				if len(robot_job.job_lists) > 0:
 					job_executing 		= robot_job.current_job()
 					current_job_type 	= job_executing.classfication; 
 					rospy.loginfo("Add correction for next %s job", current_job_type)
@@ -124,7 +125,7 @@ def complete_obstacle_avoidence():
 				#discard all correction jobs 
 				while (current_job_type == 'C'):
 					robot_job.complete_current_job()
-					if len(robot_job.job_type) > 0:
+					if len(robot_job.job_lists) > 0:
 						job_executing 		= robot_job.current_job()
 						current_job_type 	= job_executing.classfication; 
 					else:
@@ -133,12 +134,12 @@ def complete_obstacle_avoidence():
 		else:
 			rospy.logerr("Invalid job_type found")
 
-		if robot_obstacle.needForward:
+		if needForward:
 			robot_correction.distance_correction_obstacle(robot_job.dist_forward_after_obstacle)		
 		else:
-			robot_correction.distance_correction()
+			robot_correction.dist_correction_normal()
 			rospy.loginfo("no need to forward 0.5m after obstacle")
 
 		robot_drive.isunlockdone = False
-		robot_obstacle.robot_over_obstacle = False
+		robot_over_obstacle = False
 

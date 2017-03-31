@@ -11,7 +11,7 @@ from std_msgs.msg import String
 #-------------------------------------------------------#
 
 encode_to_mm 		= 69.00 		# 1000 encoding signals = 1 mm travelled
-turn_radius 		= 378 			# radius when turning in mm (half distance between the middle point of two wheels) 
+turn_radius 		= 388 			# radius when turning in mm (half distance between the middle point of two wheels) 
 speed_lower			= 5
 speed_lowest		= 4
 speed_full			= 6

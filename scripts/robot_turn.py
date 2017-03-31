@@ -5,6 +5,7 @@ import string
 from std_msgs.msg import String
 import robot_drive
 import math
+import robot_correction
 
 #-------------------------------------------------------#
 # Robot turning module 									#

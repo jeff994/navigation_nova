@@ -129,4 +129,4 @@ def distance_correction_obstacle(dist):
 	distance_correction(lon_new, lat_new, robot_drive.bearing_now, robot_drive.lon_target, robot_drive.lat_target, robot_drive.bearing_target)
 	#rospy.loginfo("There's a %f mm distance error, %f angle difference", distance, diff_angle)
 	rospy.loginfo("Add a job to move forward %d mm", robot_job.dist_forward_after_obstacle)
-	robot_job.insert_compensation_jobs(robot_drive.lon_now, robot_drive.lat_now, lat_new, lon_new, lat_new, True, False)
+	robot_job.insert_compensation_jobs(robot_drive.lon_now, robot_drive.lat_now, lat_new, lon_new, lat_new, True)
