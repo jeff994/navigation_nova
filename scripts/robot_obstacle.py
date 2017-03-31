@@ -98,7 +98,7 @@ def clear_after_obstacle_avoidence(current_job_type):
 		if(robot_correction.correction_count  > robot_correction.max_correction_run):
 			quit_obstacle_correction(current_job_type)
 		else:
-			clear_correction__trial_tasks(current_job_type)
+			clear_correction_trial_tasks(current_job_type)
 	else:
 		rospy.logerr("Invalid job_type found")
 
@@ -111,13 +111,12 @@ def resume_from_obstacle_avoidence():
 	# robot is resumed to clear state and ready for the correction tasks 
 
 	if needForward:
-		robot_correction.distance_correction_obstacle_need_forward(robot_job.dist_forward_after_obstacle)	
+		robot_correction.dist_correction_obstacle_need_forward(robot_job.dist_forward_after_obstacle)	
 	else:
-		robot_correction.distance_correction_obstacle()
+		robot_correction.dist_correction_obstacle()
 		rospy.loginfo("no need to forward 0.5m after obstacle")
 
-	robot_over_obstacle = False
-	robot_drive.isunlockdone = False
+	#robot_drive.isunlockdone = False
 
 # Complete the obstacle avoidence after we get a signal from the robot base  
 def complete_obstacle_avoidence(): 
@@ -140,10 +139,12 @@ def complete_obstacle_avoidence():
 	#yuqing_unlockconfirm 
 	#robot_obstacle.unlock_from_obstacle()
 	# Remove the un-finished job 
-	if robot_drive.robot_on_mission:
+	if robot_drive.robot_on_mission and robot_job.has_jobs_left():
 		resume_from_obstacle_avoidence()
 	else:
 		rospy.loginfo("There's no missing on going")
+	
+	robot_over_obstacle = False
 
 
 
