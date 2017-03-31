@@ -142,7 +142,7 @@ def complete_obstacle_avoidence():
 	job_executing = robot_job.current_job()
 	if robot_drive.robot_on_mission:
 		resume_from_obstacle_avoidence()
-	else
+	else:
 		rospy.loginfo("There's no missing on going")
 
 
