@@ -97,7 +97,7 @@ def clear_after_obstacle_avoidence(current_job_type):
 	elif(current_job_type == 'O'): 
 		if(robot_correction.correction_count  > robot_correction.max_correction_run):
 			quit_obstacle_correction(current_job_type)
-		else
+		else：
 			clear_correction__trial_tasks(current_job_type)
 	else:
 		rospy.logerr("Invalid job_type found")
