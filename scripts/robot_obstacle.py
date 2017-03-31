@@ -72,7 +72,7 @@ def clear_correction_trial_tasks(current_job_type):
 	rospy.loginfo("Robot correction trial %d failed, perform clearing tasks", robot_correction.correction_count)
 	while (current_job_type == 'O'):
 		robot_job.complete_current_job()
-		if len(robot_job.job_lists) > 0:
+		if robot_job.has_jobs_left():
 			job_executing 		= robot_job.current_job()
 			current_job_type 	= job_executing.classfication; 
 		else:
@@ -82,7 +82,7 @@ def clear_correction_trial_tasks(current_job_type):
 def quit_obstacle_correction(current_job_type):
 	clear_correction_trial_tasks(current_job_type)
 	rospy.loginfo("Quitting correction")
-	if len(robot_job.job_lists) > 0:
+	if robot_job.has_jobs_left() > 0:
 		job_executing 		= robot_job.current_job()
 		current_job_type 	= job_executing.classfication; 
 		rospy.loginfo("Add correction for next %s job", current_job_type)
