@@ -94,10 +94,14 @@ def update_robot_gps(left_encode, right_encode):
 
 def dist_correction_normal():
 	rospy.loginfo("**************normal correction jobs**************")
-	distance_correction(robot_drive.lon_now, robot_drive.lat_now, robot_drive.bearing_now, robot_drive.lon_target, robot_drive.lat_target, robot_drive.bearing_target)
+	distance_correction(robot_drive.lon_now, robot_drive.lat_now, robot_drive.bearing_now, robot_drive.lon_target, robot_drive.lat_target, robot_drive.bearing_target, 'C')
+
+def dist_correction_obstacle():
+	rospy.loginfo("**************normal correction jobs**************")
+	distance_correction(robot_drive.lon_now, robot_drive.lat_now, robot_drive.bearing_now, robot_drive.lon_target, robot_drive.lat_target, robot_drive.bearing_target, 'O')
 
 # correct robot every time by comapring the lat_now, lon_now with target position
-def distance_correction(lon_now, lat_now, bearing_now, lon_target, lat_target, bearing_target):
+def distance_correction(lon_now, lat_now, bearing_now, lon_target, lat_target, bearing_target, correction_type):
 	distance 	= gpsmath.haversine(lon_now, lat_now, lon_target, lat_target)
 	bearing 	= gpsmath.bearing(lon_now, lat_now, lon_target, lat_target)
 	# check the bearing now and bearing target 
@@ -108,7 +112,7 @@ def distance_correction(lon_now, lat_now, bearing_now, lon_target, lat_target, b
 	
 	if(bearing > 90 and bearing < 270):
 		distance = -distance 
-		bearing = (bearing+180)%360
+		bearing = (bearing + 180) % 360
 
 	rospy.loginfo("There's a %f mm distance error, %f angle difference", distance, diff_angle)
 
@@ -117,16 +121,16 @@ def distance_correction(lon_now, lat_now, bearing_now, lon_target, lat_target, b
 
 	if need_correct_distance or need_correct_angle:
 		rospy.loginfo("Add jobs to correction.")
-		robot_job.insert_compensation_jobs(lon_now, lat_now, lon_target, lat_target, need_correct_distance, need_correct_angle)
+		robot_job.insert_compensation_jobs(lon_now, lat_now, lon_target, lat_target, correction_type, need_correct_distance, need_correct_angle)
 	else: 
 		rospy.loginfo("no need to compensate errors")
 	
 # Correct a robot with obstancles by inserting a job to move the robot forward for 1m
-def distance_correction_obstacle(dist):
+def distance_correction_obstacle_need_forward(dist):
 	rospy.loginfo("**************obstance correction jobs**************")
 	lon_new, lat_new = gpsmath.get_gps(robot_drive.lon_now, robot_drive.lat_now, dist, robot_drive.bearing_now)
 	#fist distance correction 
-	distance_correction(lon_new, lat_new, robot_drive.bearing_now, robot_drive.lon_target, robot_drive.lat_target, robot_drive.bearing_target)
+	distance_correction(lon_new, lat_new, robot_drive.bearing_now, robot_drive.lon_target, robot_drive.lat_target, robot_drive.bearing_target, 'O')
 	#rospy.loginfo("There's a %f mm distance error, %f angle difference", distance, diff_angle)
 	rospy.loginfo("Add a job to move forward %d mm", robot_job.dist_forward_after_obstacle)
-	robot_job.insert_compensation_jobs(robot_drive.lon_now, robot_drive.lat_now, lat_new, lon_new, lat_new, True)
+	robot_job.insert_compensation_jobs(robot_drive.lon_now, robot_drive.lat_now, lat_new, lon_new, 'O', True, False)

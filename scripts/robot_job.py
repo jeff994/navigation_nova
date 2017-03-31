@@ -230,14 +230,13 @@ def define_initialize_job():
 	append_turn_job(robot_drive.lon_now, robot_drive.lat_now, 0)
 	append_turn_job(robot_drive.lon_now, robot_drive.lat_now, 90)
 
-#--------------------------------------------------------------------------------
 # a list of operations for the correction jobs 
-def insert_compensation_jobs(lon_source, lat_source, lon_target, lat_target, need_correct_distace, need_correct_angle):
+def insert_compensation_jobs(lon_source, lat_source, lon_target, lat_target, correction_type, need_correct_distace, need_correct_angle):
 	global job_lists
 	bearing 	= gpsmath.bearing(lon_source, lat_source, lon_target, lat_target)
 	distance 	= gpsmath.haversine(lon_source, lat_source, lon_target, lat_target)
-	turn_job 	= Job(lon_source, lat_source, bearing, 'C', 'T', bearing)
-	move_job 	= Job(lon_target, lat_target, bearing, 'C', 'F', distance) 
+	turn_job 	= Job(lon_source, lat_source, bearing, correction_type, 'T', bearing)
+	move_job 	= Job(lon_target, lat_target, bearing, correction_type, 'F', distance) 
 	if need_correct_distace:
 		rospy.loginfo("Added a distance correction")
 		job_lists.insert(0, move_job)
