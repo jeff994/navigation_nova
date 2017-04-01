@@ -8,6 +8,7 @@ import robot_correction
 import robot_publisher
 import robot_listener 
 import robot_drive 
+import robot_config 
 
 from std_msgs.msg import String
 
@@ -86,6 +87,43 @@ def main_commander():
 		#robot_correction.angle_correction()
 		robot_correction.dist_correction_normal()
 
+def read_system_config():
+	# Read configure path 
+	config_path = os.path.dirname(os.path.abspath(__file__)) + '/robot.cfg'
+	size_para 	= 17
+	ret 		= [None] * size_para
+	
+	# Now reading configurable parameters 
+	# [speed] related
+	ret[0], robot_drive.speed_full 						= robot_config.read_config(config_path, 'speed', 'speed_full')
+	ret[1], robot_drive.speed_lower 					= robot_config.read_config(config_path, 'speed', 'speed_lower')
+	ret[2], robot_drive.speed_lowest 					= robot_config.read_config(config_path, 'speed', 'speed_lowest')
+	# [architectural]
+	ret[3], robot_drive.encoder_to_mm 					= robot_config.read_config(config_path, 'mechanic', 'encoder_to_mm')
+	ret[4], robot_drive.turn_radius 					= robot_config.read_config(config_path, 'mechanic', 'turn_radius')
+	# [correction]
+	ret[5], robot_correction.min_correction_distance 	= robot_config.read_config(config_path, 'correction', 'min_correction_angle')
+	ret[6], robot_correction.min_correction_angle 		= robot_config.read_config(config_path, 'correction', 'min_correction_distance')
+	ret[7], robot_correction.max_correction_runs 		= robot_config.read_config(config_path, 'correction', 'max_correction_runs')
+	# [walk]
+	ret[8], robot_move.dist_lower_speed 				= robot_config.read_config(config_path, 'move', 'dist_lower_speed')
+	ret[9], robot_move.dist_lowest_speed 				= robot_config.read_config(config_path, 'move', 'dist_lowest_speed')
+	ret[10], robot_move.dist_to_correct 				= robot_config.read_config(config_path, 'move', 'dist_to_correct')
+	ret[11], robot_move.dist_end_point_check 			= robot_config.read_config(config_path, 'move', 'dist_end_point_check')
+	ret[12], robot_move.angle_lower_speed 				= robot_config.read_config(config_path, 'move', 'angle_lower_speed')
+	ret[13], robot_move.angle_lowest_speed 				= robot_config.read_config(config_path, 'move', 'angle_lowest_speed')
+	# [init]c
+	ret[14], robot_drive.obstacle_mode 					= robot_config.read_config(config_path, 'init', 'obstacle_mode')
+	ret[15], robot_drive.robot_enabled 					= robot_config.read_config(config_path, 'init', 'robot_enabled')
+	ret[16], robot_drive.robot_paused 					= robot_config.read_config(config_path, 'init', 'robot_paused')
+	
+	# check whether the reading is successful or not 
+	for index in range(size_para):
+		if not ret[index]: 
+			rospy.loginfo("The no %d configure parameter reading is wrong", index)
+	return
+
+
 #subscribes to different topic 
 def main_listener():
 	rospy.init_node('commander')
@@ -106,7 +144,9 @@ if __name__ == '__main__':
 	try:
 		# AAron's initial one for final testing
 		#job_generator(initial_bearing, loops)
+		read_system_config()
 		robot_listener.init_encoder_buffer()
+		:
 		robot_listener.init_compass_buffer()
 		main_listener()
 	except rospy.ROSInterruptException:
