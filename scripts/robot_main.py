@@ -9,6 +9,8 @@ import robot_correction
 import robot_publisher
 import robot_listener 
 import robot_drive 
+import robot_move
+import robot_turn 
 import robot_configure
 
 from std_msgs.msg import String
