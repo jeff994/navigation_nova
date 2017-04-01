@@ -2,13 +2,14 @@
 import rospy
 import string
 import time 
+import os
 import robot_obstacle
 import robot_job
 import robot_correction 
 import robot_publisher
 import robot_listener 
 import robot_drive 
-import robot_config 
+import robot_configure
 
 from std_msgs.msg import String
 
@@ -146,7 +147,6 @@ if __name__ == '__main__':
 		#job_generator(initial_bearing, loops)
 		read_system_config()
 		robot_listener.init_encoder_buffer()
-		:
 		robot_listener.init_compass_buffer()
 		main_listener()
 	except rospy.ROSInterruptException:
