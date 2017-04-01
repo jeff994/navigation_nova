@@ -8,6 +8,7 @@ from std_msgs.msg import String
 def read_config(config_file_path, field, key): 
     cf = ConfigParser.ConfigParser()
     ret = True 
+    result = None
     try:
         cf.read(config_file_path)
         result = cf.get(field, key)
