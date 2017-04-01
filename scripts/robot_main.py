@@ -99,7 +99,6 @@ def read_system_config():
 	# Now reading configurable parameters 
 	# [speed] related
 	ret[0], robot_drive.speed_full 						= robot_configure.read_config_int(config_path, 'speed', 'speed_full')
-	robot_drive.speed_full = int(val)
 	ret[1], robot_drive.speed_lower 					= robot_configure.read_config_int(config_path, 'speed', 'speed_lower')
 	ret[2], robot_drive.speed_lowest 					= robot_configure.read_config_int(config_path, 'speed', 'speed_lowest')
 	# [architectural]
