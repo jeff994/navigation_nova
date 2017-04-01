@@ -102,7 +102,7 @@ def read_system_config():
 	ret[1], robot_drive.speed_lower 					= robot_configure.read_config_int(config_path, 'speed', 'speed_lower')
 	ret[2], robot_drive.speed_lowest 					= robot_configure.read_config_int(config_path, 'speed', 'speed_lowest')
 	# [architectural]
-	ret[3], robot_drive.encoder_to_mm 					= robot_configure.read_config_int(config_path, 'mechanic', 'encoder_to_mm')
+	ret[3], robot_drive.encoder_to_mm 					= robot_configure.read_config_int(config_path, 'mechanic', 'encode_to_mm')
 	ret[4], robot_drive.turn_radius 					= robot_configure.read_config_int(config_path, 'mechanic', 'turn_radius')
 	# [correction]
 	ret[5], robot_correction.min_correction_distance 	= robot_configure.read_config_int(config_path, 'correction', 'min_correction_angle')
