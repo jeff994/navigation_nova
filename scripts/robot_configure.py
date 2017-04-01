@@ -17,6 +17,18 @@ def read_config(config_file_path, field, key):
         rospy.loginfo("Failed to read %s-%s", field, key)
     return ret, result
 
+def read_config_int(config_file_path, field, key): 
+    cf = ConfigParser.ConfigParser()
+    ret = True 
+    result = None
+    try:
+        cf.read(config_file_path)
+        result = cf.get(field, key)
+    except:
+        ret = False
+        rospy.loginfo("Failed to read %s-%s", field, key)
+    return ret, int(result)
+
 def write_config(config_file_path, field, key, value):
     cf = ConfigParser.ConfigParser()
     ret = True

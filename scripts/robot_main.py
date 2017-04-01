@@ -98,27 +98,28 @@ def read_system_config():
 	
 	# Now reading configurable parameters 
 	# [speed] related
-	ret[0], robot_drive.speed_full 						= int(robot_configure.read_config(config_path, 'speed', 'speed_full'))
-	ret[1], robot_drive.speed_lower 					= int(robot_configure.read_config(config_path, 'speed', 'speed_lower'))
-	ret[2], robot_drive.speed_lowest 					= int(robot_configure.read_config(config_path, 'speed', 'speed_lowest'))
+	ret[0], robot_drive.speed_full 						= robot_configure.read_config_int(config_path, 'speed', 'speed_full')
+	robot_drive.speed_full = int(val)
+	ret[1], robot_drive.speed_lower 					= robot_configure.read_config_int(config_path, 'speed', 'speed_lower')
+	ret[2], robot_drive.speed_lowest 					= robot_configure.read_config_int(config_path, 'speed', 'speed_lowest')
 	# [architectural]
-	ret[3], robot_drive.encoder_to_mm 					= int(robot_configure.read_config(config_path, 'mechanic', 'encoder_to_mm'))
-	ret[4], robot_drive.turn_radius 					= int(robot_configure.read_config(config_path, 'mechanic', 'turn_radius'))
+	ret[3], robot_drive.encoder_to_mm 					= robot_configure.read_config_int(config_path, 'mechanic', 'encoder_to_mm')
+	ret[4], robot_drive.turn_radius 					= robot_configure.read_config_int(config_path, 'mechanic', 'turn_radius')
 	# [correction]
-	ret[5], robot_correction.min_correction_distance 	= int(robot_configure.read_config(config_path, 'correction', 'min_correction_angle'))
-	ret[6], robot_correction.min_correction_angle 		= int(robot_configure.read_config(config_path, 'correction', 'min_correction_distance'))
-	ret[7], robot_correction.max_correction_runs 		= int(robot_configure.read_config(config_path, 'correction', 'max_correction_runs'))
+	ret[5], robot_correction.min_correction_distance 	= robot_configure.read_config_int(config_path, 'correction', 'min_correction_angle')
+	ret[6], robot_correction.min_correction_angle 		= robot_configure.read_config_int(config_path, 'correction', 'min_correction_distance')
+	ret[7], robot_correction.max_correction_runs 		= robot_configure.read_config_int(config_path, 'correction', 'max_correction_runs')
 	# [walk]
-	ret[8], robot_move.dist_lower_speed 				= int(robot_configure.read_config(config_path, 'move', 'dist_lower_speed'))
-	ret[9], robot_move.dist_lowest_speed 				= int(robot_configure.read_config(config_path, 'move', 'dist_lowest_speed'))
-	ret[10], robot_move.dist_to_correct 				= int(robot_configure.read_config(config_path, 'move', 'dist_to_correct'))
-	ret[11], robot_move.dist_end_point_check 			= int(robot_configure.read_config(config_path, 'move', 'dist_end_point_check'))
-	ret[12], robot_move.angle_lower_speed 				= int(robot_configure.read_config(config_path, 'move', 'angle_lower_speed'))
-	ret[13], robot_move.angle_lowest_speed 				= int(robot_configure.read_config(config_path, 'move', 'angle_lowest_speed'))
+	ret[8], robot_move.dist_lower_speed 				= robot_configure.read_config_int(config_path, 'move', 'dist_lower_speed')
+	ret[9], robot_move.dist_lowest_speed 				= robot_configure.read_config_int(config_path, 'move', 'dist_lowest_speed')
+	ret[10], robot_move.dist_to_correct 				= robot_configure.read_config_int(config_path, 'move', 'dist_to_correct')
+	ret[11], robot_move.dist_end_point_check 			= robot_configure.read_config_int(config_path, 'move', 'dist_end_point_check')
+	ret[12], robot_move.angle_lower_speed 				= robot_configure.read_config_int(config_path, 'move', 'angle_lower_speed')
+	ret[13], robot_move.angle_lowest_speed 				= robot_configure.read_config_int(config_path, 'move', 'angle_lowest_speed')
 	# [init]c
-	ret[14], robot_drive.obstacle_mode 					= int(robot_configure.read_config(config_path, 'init', 'obstacle_mode'))
-	ret[15], robot_drive.robot_enabled 					= int(robot_configure.read_config(config_path, 'init', 'robot_enabled'))
-	ret[16], robot_drive.robot_paused 					= int(robot_configure.read_config(config_path, 'init', 'robot_paused'))
+	ret[14], robot_drive.obstacle_mode 					= robot_configure.read_config_int(config_path, 'init', 'obstacle_mode')
+	ret[15], robot_drive.robot_enabled 					= robot_configure.read_config_int(config_path, 'init', 'robot_enabled')
+	ret[16], robot_drive.robot_paused 					= robot_configure.read_config_int(config_path, 'init', 'robot_paused')
 	
 	# check whether the reading is successful or not 
 	for index in range(size_para):
