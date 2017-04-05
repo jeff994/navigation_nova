@@ -88,24 +88,26 @@ def job_callback(data):
 	del robot_job.gps_lon[:]
 	del robot_job.gps_lat[:]
 	try:
-
+		rospy.loginfo("Start to parse job")
 		decoded = json.loads(json_str)
 		# pretty printing of json-formatted strin
 		list_route  = decoded['route']
+		rospy.loginfo("Decoded route")
 		for item in list_route:
 			lon = float(item.get(u'lng'))
 			lat = float(item.get(u'lat'))
 			robot_job.gps_lon.extend([lon])
 			robot_job.gps_lat.extend([lat])
 		robot_job.clear_job_list()
-
-		init_point 				= decoded['init_point']
-		robot_job.init_lon 		= float(init_point.get('lng'))
-		robot_job.init_lat 		= float(init_point.get('lat'))
-		
-		no_runs 				= decoded['runs']
-		robot_job.loops 		= float(no_runs);
-		rospy.loginfo("No of loops %d", no_runs); 
+		rospy.loginfo("Parsing route successful") 
+		init_point			= decoded['init_point']
+		robot_job.init_lon 		= float(init_point.get(u'lng'))
+		robot_job.init_lat 		= float(init_point.get(u'lat'))
+		rospy.loginfo("Parse init point successful")
+		no_runs 			= decoded['run']
+		rospy.loginfo("Number of runs %d", int(no_runs))
+		robot_job.loops 		= int(no_runs)
+		#rospy.loginfo("Parsing successful. No of loops %d", no_runs); 
 		# after parsing the gps corrdinates, now generate robot jobs 
 		robot_job.generate_jobs_from_gps()
 		rospy.loginfo("Finish generating jobs");
