@@ -33,7 +33,7 @@ def KeyControl():
 	print ("z. 0")
 	print ("using ctrl + c to exit")
 	print (30 * '-')
-	#rospy.loginfo(str("test"))
+	
 	while not rospy.is_shutdown():
 		choice = raw_input('Enter your choice [0-9] : ') 
 		if(len(choice) > 1):
