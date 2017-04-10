@@ -119,6 +119,8 @@ def generate_jobs_from_gps():
 	global init_lat, init_lon, init_bearing
 	global loops, gps_lon, gps_lat 
 	global job_lists
+	robot_drive.lon_now = init_lon
+	robot_drive.lat_now = init_lat 
 	append_regular_jobs(init_lon, init_lat,  gps_lon[0],gps_lat[0]);
 	#step 2: Start loop jobs
 	#handles from start to first point
