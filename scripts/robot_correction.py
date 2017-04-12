@@ -11,7 +11,8 @@ import robot_publisher
 
 
 ############################################################
-min_correction_distance 	= 100
+min_correction_distance 	= 100.0
+
 min_correcton_angle 		= 5
 correction_count 			= 0
 max_correction_run 			= 15
@@ -114,7 +115,7 @@ def distance_correction(lon_now, lat_now, bearing_now, lon_target, lat_target, b
 		distance = -distance 
 		bearing = (bearing + 180) % 360
 
-	rospy.loginfo("There's a %f mm distance error, %f angle difference", distance, diff_angle)
+	rospy.loginfo("There's a %f mm distance error, %f angle difference, %f", abs(distance), diff_angle, min_correction_distance)
 
 	need_correct_distance 	=  abs(distance) > min_correction_distance
 	need_correct_angle 		= diff_angle > min_correcton_angle and diff_angle < (360 - min_correcton_angle)

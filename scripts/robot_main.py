@@ -105,8 +105,8 @@ def read_system_config():
 	ret[3], robot_drive.encoder_to_mm 					= robot_configure.read_config_int(config_path, 'mechanic', 'encode_to_mm')
 	ret[4], robot_drive.turn_radius 					= robot_configure.read_config_int(config_path, 'mechanic', 'turn_radius')
 	# [correction]
-	ret[5], robot_correction.min_correction_distance 	= robot_configure.read_config_int(config_path, 'correction', 'min_correction_angle')
-	ret[6], robot_correction.min_correction_angle 		= robot_configure.read_config_int(config_path, 'correction', 'min_correction_distance')
+	ret[5], robot_correction.min_correction_distance 	= robot_configure.read_config_int(config_path, 'correction', 'min_correction_distance')
+	ret[6], robot_correction.min_correction_angle 		= robot_configure.read_config_int(config_path, 'correction', 'min_correction_angle')
 	ret[7], robot_correction.max_correction_runs 		= robot_configure.read_config_int(config_path, 'correction', 'max_correction_runs')
 	# [walk]
 	ret[8], robot_move.dist_lower_speed 				= robot_configure.read_config_int(config_path, 'move', 'dist_lower_speed')

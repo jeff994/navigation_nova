@@ -12,6 +12,8 @@ pub_command 		= rospy.Publisher('command', 	String, queue_size=10)
 
 # Used to publish parameters 
 def publish_parameters():
+	if(not robot_drive.robot_moving and not robot_drive.robot_turning): 
+		return
 	#@yuqing_publishparam
 	info={}  
 	info["ENABLE"]      =    robot_drive.robot_enabled
