@@ -5,15 +5,15 @@ import string
 from std_msgs.msg import String
 
 ser = serial.Serial()
-ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_85438363039351206271-if00"
+ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75630313536351217041-if00"
 #depends on the device port name
-ser.baudrate = 9600
+ser.baudrate = 115200
 ser.open()
 
 
 def send_command():
 	#handle the format of the string
-	stringToSend = 'SL000003E\n' #might need to add \n behind the E
+	stringToSend = 'SL000006E\n' #might need to add \n behind the E
 	#sending the string
 	if ser.isOpen():
                                 #ser.write('S0000000E\n' )

@@ -24,8 +24,8 @@ def open_serial():
 		return 1 
 
 	#real robot port
-	ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_854383630393512042A0-if00"
-	ser.baudrate = 4800
+	ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75630313536351217041-if00"
+	ser.baudrate = 115200
 	#testing port
 	#ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75439333335351412220-if00"
 	#ser.baudrate = 9600	
@@ -59,6 +59,7 @@ def encoder():
 		bytesToRead = ser.readline()
 		#rospy.log info(str(bytesToRead))
 		bytesToRead = bytesToRead.strip('\n')
+		rospy.loginfo(bytesToRead)
 		if len(bytesToRead)  == 17: 
 			#separates the data into readable things
                       	#rospy.loginfo(str(bytesToRead))
