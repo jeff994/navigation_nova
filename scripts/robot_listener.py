@@ -147,6 +147,7 @@ def rc_sensor_b_callback(data):
 def encoder_callback(data):
 	global encoder_data
 	global encoder_received 
+	robot_drive.burn_mode = False
 	#accumulate encoder data
 	#Step 1: Get encoder data and convert them to number for later use 
 	#Get left encoder and right encoder 
@@ -216,11 +217,13 @@ def keyboard_callback(data):
 		if(robot_drive.robot_enabled == 1):
 			rospy.loginfo("robot disabled")  
 			robot_drive.robot_enabled = 0
-			robot_drive.init_gps()
+			robto_drive.enter_burn_mode()
+			#robot_drive.init_gps()
 		else: 
-			robot_drive.init_gps()
+			#robot_drive.init_gps()
 			rospy.loginfo("robot enabled")  
-			robot_drive.robot_enabled = 1 
+			robot_drive.robot_enabled = 1
+			robto_drive.enter_normal_mode() 
 	elif (keyboard_data == 'Faster'):
 		rospy.loginfo('Command received: Try to increase robot speed')
 		if(robot_drive.desired_speed < 6): 

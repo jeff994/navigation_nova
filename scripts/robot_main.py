@@ -24,6 +24,10 @@ def main_commander():
 	# publish parameters to the web server 
 	robot_publisher.publish_parameters()
 
+	if robot_drive.burn_mode:
+		rospy.loginfo("Robot is on burn mode")
+		time.sleep(0.1)
+
 	# Very important error handling: 
 	# If Not any new data comming, waiting for next data, 
 	# if waiting too long need to issue warning or error	 

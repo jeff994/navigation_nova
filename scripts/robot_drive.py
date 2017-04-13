@@ -46,6 +46,10 @@ step_distance		= 0
 obstacle_mode = True
 #yuqing_unlockconfirm
 isunlockdone = False
+# Jianbo: Burn mode and normal mode 
+# True for burn mode when pwer up 
+# False for normal mode 
+burn_mode = True
 
 def init_gps():
 	global lon_now, lat_now, bearing_now
@@ -117,4 +121,11 @@ def enter_obstacle():
 	rospy.loginfo('SO00000OE enter no obstacle mode')
 	#yuqing_obstaclemodeconfirm
 	#remove unlock
-	
+
+def enter_burn_mode()
+	robot_publisher.pub_command.publish('iap\r\n')
+	rospy.loginfo('Enter burn mode')
+
+def enter_normal_mode()
+	robot_publisher.pub_command.publish('iap_jump_app\r\n')
+	rospy.loginfo('Enter normal mode')
