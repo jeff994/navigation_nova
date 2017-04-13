@@ -20,7 +20,7 @@ from datetime import datetime
 from std_msgs.msg import String
 
 #used to hold the encoder data received, init with some value  
-encoder_buffer_size = 1000 	# The buffer size for the encoder
+encoder_buffer_size 	= 1000 	# The buffer size for the encoder
 encoder_data 		= []	# pairs of encoder data , l, r etc
 compass_size 		= 10 	# The compas data buffer size 
 compass_data 		= [] 	# Hold the compass dat which [0 - 359] 

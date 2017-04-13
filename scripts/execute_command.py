@@ -44,8 +44,8 @@ def open_serial():
     #testing robot port
     #ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75439333335351412220-if00"
     #real port
-    	ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_85438363039351206271-if00"
-    	ser.baudrate = 9600
+    	ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75630313536351217041-if00"
+    	ser.baudrate = 115200
         try:
             ser.open()
         except serial.serialutil.SerialException as ex:
