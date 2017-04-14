@@ -141,6 +141,14 @@ def generate_jobs_from_gps():
 	turn_job 	= Job(init_lon, init_lat, 0, 'N', 'T', 0)
 	job_lists.extend([turn_job])
 
+def append_backward_job(lon_source, lat_source, lon_target, lat_target, bearing_now):
+	global job_lists
+	rospy.loginfo("Added a jon to move from (%f, %f) to (%f, %f)", lon_source, lat_source, lon_target, lat_target)
+	bearing 	= gpsmath.bearing(lon_source, lat_source, lon_target, lat_target)
+	distance 	= gpsmath.haversine(lon_source, lat_source, lon_target, lat_target)
+	move_job 	= Job(lon_target, lat_target, bearing_now, 'N', 'B', distance) 
+	job_lists.extend([move_job])
+
 # generate regualr jobs from point to point()
 def append_regular_jobs(lon_source, lat_source, lon_target, lat_target):
 	global job_lists
@@ -200,7 +208,10 @@ def append_turn_job(lon_target, lat_target, bearing_target):
 def append_regular_job(lon_now, lat_now, distance, bearing):
 	# Get new GPS 
 	lon_new, lat_new  = gpsmath.get_gps(lon_now, lat_now, distance, bearing)
-	append_regular_jobs(lon_now, lat_now, lon_new, lat_new)
+	if(bearing == robot_drive.bearing_now and distance < 0): 
+		append_backward_job(lon_now, lat_now, lon_new, lat_new, bearing)
+	else:
+		append_regular_jobs(lon_now, lat_now, lon_new, lat_new)
 	return lon_new, lat_new
 
 def define_test_job():
