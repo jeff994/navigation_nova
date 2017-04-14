@@ -26,7 +26,9 @@ def main_commander():
 
 	if robot_drive.burn_mode:
 		rospy.loginfo("Robot is on burn mode")
+		robot_drive.robot_enabled = False 
 		time.sleep(0.1)
+		return 
 
 	# Very important error handling: 
 	# If Not any new data comming, waiting for next data, 
@@ -91,8 +93,7 @@ def main_commander():
 	if job_completed:
 		rospy.loginfo("Complete a job")
 		robot_job.complete_current_job()
-		#robot_correction.angle_correction()
-		robot_correction.dist_correction_normal()
+		#robot_correction.dist_correction_normal()
 
 def read_system_config():
 	# Read configure path 

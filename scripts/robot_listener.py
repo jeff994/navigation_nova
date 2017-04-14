@@ -215,13 +215,13 @@ def keyboard_callback(data):
 		robot_drive.robot_on_mission =  0
 	elif (keyboard_data == "Switch"):
 		if(robot_drive.robot_enabled == 1):
-			rospy.loginfo("robot disabled")  
+			#rospy.loginfo("")  
 			robot_drive.robot_enabled = 0
 			robot_drive.enter_burn_mode()
 			#robot_drive.init_gps()
 		else: 
 			#robot_drive.init_gps()
-			rospy.loginfo("robot enabled")  
+			#rospy.loginfo("robot enabled")  
 			robot_drive.robot_enabled = 1
 			robot_drive.enter_normal_mode() 
 	elif (keyboard_data == 'Faster'):
