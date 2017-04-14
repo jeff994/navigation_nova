@@ -217,13 +217,13 @@ def keyboard_callback(data):
 		if(robot_drive.robot_enabled == 1):
 			rospy.loginfo("robot disabled")  
 			robot_drive.robot_enabled = 0
-			robto_drive.enter_burn_mode()
+			robot_drive.enter_burn_mode()
 			#robot_drive.init_gps()
 		else: 
 			#robot_drive.init_gps()
 			rospy.loginfo("robot enabled")  
 			robot_drive.robot_enabled = 1
-			robto_drive.enter_normal_mode() 
+			robot_drive.enter_normal_mode() 
 	elif (keyboard_data == 'Faster'):
 		rospy.loginfo('Command received: Try to increase robot speed')
 		if(robot_drive.desired_speed < 6): 
