@@ -10,7 +10,7 @@ from std_msgs.msg import String
 #	Robot drive module									#
 #-------------------------------------------------------#
 
-encode_to_mm 		= 20.00 		# 1000 encoding signals = 1 mm travelled
+encode_to_mm 		= 18.40 		# 1000 encoding signals = 1 mm travelled
 turn_radius 		= 388 			# radius when turning in mm (half distance between the middle point of two wheels) 
 speed_lower			= 5
 speed_lowest		= 4
@@ -123,9 +123,11 @@ def enter_obstacle():
 	#remove unlock
 
 def enter_burn_mode():
-	robot_publisher.pub_command.publish('lock')
-	rospy.loginfo('Switch to burn mode')
+	for i in range (0,3):
+		robot_publisher.pub_command.publish('lock')
+		rospy.loginfo('Switch to burn mode')
 
 def enter_normal_mode():
-	robot_publisher.pub_command.publish('unlock')
-	rospy.loginfo('Switch normal mode')
+	for i in range (0,3):
+		robot_publisher.pub_command.publish('unlock')
+		rospy.loginfo('Switch normal mode')

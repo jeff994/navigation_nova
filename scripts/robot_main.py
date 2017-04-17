@@ -12,6 +12,7 @@ import robot_drive
 import robot_move
 import robot_turn 
 import robot_configure
+import execute_command
 
 from std_msgs.msg import String
 
