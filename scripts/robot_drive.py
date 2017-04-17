@@ -123,9 +123,9 @@ def enter_obstacle():
 	#remove unlock
 
 def enter_burn_mode():
-	robot_publisher.pub_command.publish('iap\r\n')
+	robot_publisher.pub_command.publish('lock')
 	rospy.loginfo('Switch to burn mode')
 
 def enter_normal_mode():
-	robot_publisher.pub_command.publish('iap_jump_app\r\n')
+	robot_publisher.pub_command.publish('unlock')
 	rospy.loginfo('Switch normal mode')

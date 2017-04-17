@@ -3,12 +3,12 @@ import rospy
 import string
 from std_msgs.msg import String
 
-def send_unlock_command():
+def send_lock_command():
 	pub = rospy.Publisher('command', String, queue_size=10)
-	rospy.init_node('unlock_cpp', anonymous=True)
+	rospy.init_node('lock_cpp', anonymous=True)
 	rate = rospy.Rate(1)
 
-	stringToSend = 'unlock'
+	stringToSend = 'lock'
 
 	for i in range (0,5):
 		if not rospy.is_shutdown():
@@ -17,6 +17,6 @@ def send_unlock_command():
 	
 if __name__ == '__main__':
 	try:
-		send_unlock_command()
+		send_lock_command()
 	except rospy.ROSInterruptException:
 		pass
