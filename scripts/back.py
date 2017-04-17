@@ -2,23 +2,14 @@
 import rospy
 import serial
 import string
+import robot_publisher
 from std_msgs.msg import String
-
-ser = serial.Serial()
-ser.port = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__Arduino_Uno_75630313536351217041-if00"
-#depends on the device port name
-ser.baudrate = 115200
-ser.open()
-
 
 def send_command():
 	#handle the format of the string
-	stringToSend = 'SB000006E\0' #might need to add \n behind the E
-	#sending the string
-	if ser.isOpen():
-		ser.write(stringToSend)
-	else:
-		rospy.loginfo("Commanding Serial port not connected")
+	#commandToPub = 'SB000006E' #might need to add \n behind the E
+	#publishing the command as a string
+	robot_publisher.publish_command('B', 6)
 
 
 if __name__ == '__main__':

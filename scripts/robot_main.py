@@ -138,8 +138,10 @@ def main_listener():
 	rospy.Subscriber('compass', String, robot_listener.compass_callback)
 	rospy.Subscriber('encoder', String, robot_listener.encoder_callback)
 	rospy.Subscriber('keyboard', String, robot_listener.keyboard_callback)
-	rospy.Subscriber('rc_sensor_f', String, robot_listener.rc_sensor_f_callback)
-	rospy.Subscriber('rc_sensor_b', String, robot_listener.rc_sensor_b_callback)
+	rospy.Subscriber('rc_sensor_f', String, robot_listener.rc_sensor_f_callback)  #write the callbacks properly
+	rospy.Subscriber('rc_sensor_b', String, robot_listener.rc_sensor_b_callback)  #once we can get the correct data formats
+	#ADD SUBSCRIBERS FOR GYRO DATA, MAKE CALLBACKS TO HANDLE THEM	
+
 	#@yuqing_obstacledriverread
 	rospy.Subscriber('driver_obstacle', String, robot_listener.driver_obstacle_callback)
 	rospy.Subscriber('job', String, robot_listener.job_callback)
