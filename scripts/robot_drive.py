@@ -11,7 +11,7 @@ from std_msgs.msg import String
 #-------------------------------------------------------#
 
 encode_to_mm 		= 18.40 		# 1000 encoding signals = 1 mm travelled
-turn_radius 		= 388 			# radius when turning in mm (half distance between the middle point of two wheels) 
+turn_radius 		= 388.0 			# radius when turning in mm (half distance between the middle point of two wheels) 
 speed_lower			= 5
 speed_lowest		= 4
 speed_full			= 6
@@ -24,7 +24,7 @@ move_direction 		= 'F'			# Global robot walking/turning direction
 robot_initialized	= True 			# Confirm whehter the robot has initialized the true north 
 robot_moving 		= False			# based on the encoder data to know whether the robot's moving
 robot_turning		= False
-initial_bearing 	= 0 			#set as north for now
+initial_bearing 	= 0.0 			#set as north for now
 
 ############################################################
 
@@ -57,10 +57,10 @@ def init_gps():
 
 	lon_now 		= 121.635139
 	lat_now  		= 31.2112262
-	bearing_now 	= 0
+	bearing_now 				= 0.0
 	lon_target 		= 121.635139
 	lat_target 		= 31.2112262
-	bearing_target 	= 0              #degrees
+	bearing_target 				= 0.0              #degrees
 	rospy.loginfo("Robot reset to original position")
 
 # start the robot movement or turning 

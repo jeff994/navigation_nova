@@ -16,9 +16,9 @@ dist_completed 			= 0.0
 dist_to_run 			= 0.0
 #@yuqing_correctionper10m
 dist_to_correct 		= 5000.0
-dist_lowest_speed 		= 150
-dist_lower_speed 		= 250
-dist_end_point_check 	= 600
+dist_lowest_speed 		= 150.0
+dist_lower_speed 		= 250.0
+dist_end_point_check 	= 600.0
 
 status_pub = rospy.Publisher('status', String, queue_size = 100)
 # Starts the robot for moving, put the control variables into proper value 
@@ -42,7 +42,7 @@ def start_move():
     # only if the robot starts to move then change the status
 	if robot_drive.robot_moving:
 		robot_drive.robot_on_mission = True 
-		dist_completed = 0
+		dist_completed = 0.0
 		rospy.loginfo('Started a moving job')
 	else:
 	  	robot_drive.start()
@@ -52,7 +52,7 @@ def start_move():
 def stop_move():	
 	global dist_completed
 	if not robot_drive.robot_moving :
-		dist_completed = 0
+		dist_completed = 0.0
 		robot_drive.robot_on_mission = False
 		rospy.loginfo('Robot completed a moving job')
 	else:
@@ -96,7 +96,7 @@ def move_distance(dist):
 		return True
 
 	#check the move direction 
-	if (dist_to_run < 0):
+	if (dist_to_run < 0.0):
 		robot_drive.move_direction = 'B'
 	else: 
 		robot_drive.move_direction = 'F'
@@ -134,7 +134,7 @@ def move_distance(dist):
 			stop_move()
 			return not robot_drive.robot_on_mission
 
-	if (dist_remain > 0) :
+	if (dist_remain > 0.0) :
 		#just continue moving of job not completed and no change of speed command received 
 		#if speed changed, then just change the move speed 
 		continue_move() 

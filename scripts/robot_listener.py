@@ -197,18 +197,18 @@ def keyboard_callback(data):
 		robot_drive.robot_paused = 0; 
 	elif (keyboard_data == 'Forward'):
 		rospy.loginfo("Command received: Start to move forward 1 m")
-		robot_job.simple_move(1000, robot_drive.bearing_now, 'F')
+		robot_job.simple_move(1000.0, robot_drive.bearing_now, 'F')
 	elif (keyboard_data == 'Back'):
 		rospy.loginfo("rospeived: Start to move back 1 m")
-		robot_job.simple_move(-1000, robot_drive.bearing_now, 'B')
+		robot_job.simple_move(-1000.0, robot_drive.bearing_now, 'B')
 	elif (keyboard_data == 'Turn_West'):
 		rospy.loginfo("Command received: turn to 270 (WEST)") 
 		#robot_drive.bearing_now = compass_data[compass_index] 
-		robot_job.simple_turn(270)
+		robot_job.simple_turn(270.0)
 	elif (keyboard_data == 'Turn_East'): 
 		rospy.loginfo('Command received: turn to 90 (EAST)')
 		#robot_drive.bearing_now = compass_data[compass_index]
-		robot_job.simple_turn(90)
+		robot_job.simple_turn(90.0)
 	elif (keyboard_data == 'Stop'):
 		rospy.loginfo("Comamnd received: Clear all jobs") 
 		robot_job.clear_job_list()
@@ -243,7 +243,7 @@ def keyboard_callback(data):
 		rospy.loginfo("Simple job")
 		robot_job.define_test_job()
 	elif (keyboard_data == "Test"):
-		robot_job.simple_turn(0)
+		robot_job.simple_turn(0.0)
 	elif (keyboard_data == "No_obstacle"):#@yuqing_toggleobstaclemode
 		rospy.loginfo('keyboard No_obstacle')
 		robot_drive.enter_no_obstacle()
@@ -252,13 +252,13 @@ def keyboard_callback(data):
 		robot_drive.enter_obstacle()
 	elif (keyboard_data == "30m"):#@yuqing_toggleobstaclemode
 		rospy.loginfo('forward 30m')
-		robot_job.simple_move(10000, 0, 'F')
+		robot_job.simple_move(10000.0, 0, 'F')
 	elif (keyboard_data == "180"):#@yuqing_toggleobstaclemode
 		rospy.loginfo('turn 180')
-		robot_job.simple_turn(180,)
+		robot_job.simple_turn(180.0,)
 	elif (keyboard_data == "zero"):#@yuqing_toggleobstaclemode
 		rospy.loginfo('turn 0')
-		robot_job.simple_turn(0)
+		robot_job.simple_turn(0.0)
 	else:
 		rospy.loginfo(keyboard_data)
 		rospy.loginfo("Not recognizing command receivied")

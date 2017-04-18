@@ -61,7 +61,7 @@ def process_job():
 
 # Complete init compass
 def complete_init_compass(compass_value):
-	if abs(compass_value) <=2 or abs(compass_value) >= 358:
+	if abs(compass_value) <=2.0 or abs(compass_value) >= 358.0:
 		#Clear the remainging initialization jobs 
 		robot_drive.bearing_now = compass_value
 		clear_job_list()
@@ -88,7 +88,7 @@ class Job:
 	classfication 		= 'N'
 	lon_target		= 0.0
 	lat_target 		= 0.0 
-	bearing_target  	= 0
+	bearing_target  	= 0.0
 	description 		= ''
 	value 			= 0
 	index 			= 0
@@ -138,12 +138,12 @@ def generate_jobs_from_gps():
 	#move to init position
 	rospy.loginfo("Number of jobs %d", len(job_lists))
 	append_regular_jobs(gps_lon[0],gps_lat[0], init_lon, init_lat)
-	turn_job 	= Job(init_lon, init_lat, 0, 'N', 'T', 0)
+	turn_job 	= Job(init_lon, init_lat, 0.0, 'N', 'T', 0.0)
 	job_lists.extend([turn_job])
 
 def append_backward_job(lon_source, lat_source, lon_target, lat_target, bearing_now):
 	global job_lists
-	rospy.loginfo("Added a jon to move from (%f, %f) to (%f, %f)", lon_source, lat_source, lon_target, lat_target)
+	rospy.loginfo("Added a job to move from (%f, %f) to (%f, %f)", lon_source, lat_source, lon_target, lat_target)
 	bearing 	= gpsmath.bearing(lon_source, lat_source, lon_target, lat_target)
 	distance 	= gpsmath.haversine(lon_source, lat_source, lon_target, lat_target)
 	move_job 	= Job(lon_target, lat_target, bearing_now, 'N', 'B', distance) 
@@ -152,7 +152,7 @@ def append_backward_job(lon_source, lat_source, lon_target, lat_target, bearing_
 # generate regualr jobs from point to point()
 def append_regular_jobs(lon_source, lat_source, lon_target, lat_target):
 	global job_lists
-	rospy.loginfo("Added a jon to move from (%f, %f) to (%f, %f)", lon_source, lat_source, lon_target, lat_target)
+	rospy.loginfo("Added a job to move from (%f, %f) to (%f, %f)", lon_source, lat_source, lon_target, lat_target)
 	bearing 	= gpsmath.bearing(lon_source, lat_source, lon_target, lat_target)
 	distance 	= gpsmath.haversine(lon_source, lat_source, lon_target, lat_target)
 	turn_job 	= Job(lon_source, lat_source, bearing, 'N', 'T', bearing)
@@ -216,32 +216,32 @@ def append_regular_job(lon_now, lat_now, distance, bearing):
 
 def define_test_job():
 	# add a turn job to turn to 0 degree 
-	append_turn_job(robot_drive.lon_now, robot_drive.lat_now, 0)
+	append_turn_job(robot_drive.lon_now, robot_drive.lat_now, 0.0)
 	# add a move job to move 10 meters 
-	lon_new, lat_new  = append_regular_job(robot_drive.lon_now, robot_drive.lat_now, 10000, 0)
+	lon_new, lat_new  = append_regular_job(robot_drive.lon_now, robot_drive.lat_now, 10000.0, 0.0)
 	# now turn to 90 
-	append_turn_job(lon_new, lat_new , 90)
+	append_turn_job(lon_new, lat_new , 90.0)
 	# move another 10 meters 
-	lon_new, lat_new  = append_regular_job(lon_new, lat_new, 10000, 90)
+	lon_new, lat_new  = append_regular_job(lon_new, lat_new, 10000.0, 90.0)
 	# now turn to 180 
-	append_turn_job(lon_new, lat_new , 180)
+	append_turn_job(lon_new, lat_new , 180.0)
 	# move another 10 meters 
-	lon_new, lat_new  = append_regular_job(lon_new, lat_new, 10000, 180)
+	lon_new, lat_new  = append_regular_job(lon_new, lat_new, 10000.0, 180.0)
 	# now turn to 270 
-	append_turn_job(lon_new, lat_new , 270)
+	append_turn_job(lon_new, lat_new , 270.0)
 	# move another 10 meters 
-	lon_new, lat_new  = append_regular_job(lon_new, lat_new, 10000, 270)
+	lon_new, lat_new  = append_regular_job(lon_new, lat_new, 10000.0, 270.0)
 	# now turn to 270 
-	append_turn_job(robot_drive.lon_now, robot_drive.lat_now, 0)
+	append_turn_job(robot_drive.lon_now, robot_drive.lat_now, 0.0)
 
 # The job used to initialize the compass
 def define_initialize_job():
-	append_turn_job(robot_drive.lon_now, robot_drive.lat_now, 0)
-	append_turn_job(robot_drive.lon_now, robot_drive.lat_now, 90)
-	append_turn_job(robot_drive.lon_now, robot_drive.lat_now, 180)
-	append_turn_job(robot_drive.lon_now, robot_drive.lat_now, 270)
-	append_turn_job(robot_drive.lon_now, robot_drive.lat_now, 0)
-	append_turn_job(robot_drive.lon_now, robot_drive.lat_now, 90)
+	append_turn_job(robot_drive.lon_now, robot_drive.lat_now, 0.0)
+	append_turn_job(robot_drive.lon_now, robot_drive.lat_now, 90.0)
+	append_turn_job(robot_drive.lon_now, robot_drive.lat_now, 180.0)
+	append_turn_job(robot_drive.lon_now, robot_drive.lat_now, 270.0)
+	append_turn_job(robot_drive.lon_now, robot_drive.lat_now, 0.0)
+	append_turn_job(robot_drive.lon_now, robot_drive.lat_now, 90.0)
 
 # a list of operations for the correction jobs 
 def insert_compensation_jobs(lon_source, lat_source, lon_target, lat_target, correction_type, need_correct_distace, need_correct_angle):

@@ -3,7 +3,7 @@ import rospy
 import string
 import time 
 import os
-import robot_obstacle
+#import robot_obstacle
 import robot_job
 import robot_correction 
 import robot_publisher
@@ -12,7 +12,7 @@ import robot_drive
 import robot_move
 import robot_turn 
 import robot_configure
-import execute_command
+import execute_command    #only here to init command buffer
 
 from std_msgs.msg import String
 
