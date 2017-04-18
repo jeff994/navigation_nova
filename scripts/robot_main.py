@@ -3,7 +3,7 @@ import rospy
 import string
 import time 
 import os
-#import robot_obstacle
+import robot_obstacle
 import robot_job
 import robot_correction 
 import robot_publisher
