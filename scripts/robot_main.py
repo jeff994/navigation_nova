@@ -13,7 +13,6 @@ import robot_move
 import robot_turn 
 import robot_configure
 import execute_command    #only here to init command buffer
-
 from std_msgs.msg import String
 
 
@@ -94,7 +93,7 @@ def main_commander():
 	if job_completed:
 		rospy.loginfo("Complete a job")
 		robot_job.complete_current_job()
-		#robot_correction.dist_correction_normal()
+		robot_correction.dist_correction_normal()
 
 def read_system_config():
 	# Read configure path 
