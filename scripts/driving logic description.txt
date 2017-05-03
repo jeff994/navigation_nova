@@ -1,42 +1,48 @@
 Driving logic: 
 
-For each step of encoder data received 
+While ROSPY running 
+		
+	publish parameters
+
+	if is burn mode 
+		nothing could be done 
+		robot is disabled 
+		sleep 
+		return 
+
+	if no encoder data come in
+		robot can not do anything 
+		deal with it,
+		return 
+
+	process encoder data 
+
+	if received a command to disable robot
+		disable robot (remove all the tasks)
+		return
+
+	if robot is on obstacle mode 
+		hardare controls robot 
+		nothing can do 
+		return 
+
+
+	if robot finish the obstacle avoidence, control resumed 
+		Perform necessary resume actions
+		return 
+
+
+	if robot get a pause command 
+		pause robot (keep all the tasks)
+		return; 
+
+
 	if no more job left in queue
 		return 
-	Get first job as current job 
 	
-	check the currenct job
-		if the mission is a turning job 
-			set on_mission indicator if it's not set 
-			then perofrm turn 
-			if the angle turn accumalted equal or greater than required angle  
-				issue signal current job completed
-				de-set on_mission indicator
-				delelte the current job 
-			else 
-				if on_misson set
-					continue for next step
-				else
-					command robot to rotate 
-		
-		if a turn job is completed
-			check the beaing now with the compass, see whether need necesary correction 
+	process first job 
 
-
-		if the mission is a moving job
-			set on_mission indicator if it's not set 
-			drive forward
-			calculate the distance run for this step 
-			if the distance accumlated equal or greater than required angle 
-				issue signal current job completed
-				delete current job
-				de-set on_mission indicator
-			else 
-				if on_mission set
-					continue for the next step 
-				else 
-					command robot to move 
-
-		if the moving job is completed 
-			just check with desired gps with the gps_now 
-			see whether need to add command for correction 
+	if completed job 
+		complete job 
+		make necessary correction 
+	

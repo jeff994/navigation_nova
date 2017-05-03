@@ -83,9 +83,9 @@ def main_commander():
 	# ----------------------------------------------------------------------------------------#
 	#  Robot's doing the initialization jobs, not normal jobs      							  #
 	# ----------------------------------------------------------------------------------------# 
-	if not robot_drive.robot_initialized:
-		robot_job.complete_init_compass(compass_data[compass_index])
-		return
+	#if not robot_drive.robot_initialized:
+	#	robot_job.complete_init_compass(compass_data[compass_index])
+	#	return
 
 	# ----------------------------------------------------------------------------------------#
 	#  Error compensation after current job completed      									  #
