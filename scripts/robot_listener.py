@@ -188,6 +188,11 @@ def keyboard_callback(data):
 	if (keyboard_data == 'Init'):
 		rospy.loginfo("Testing init job")
 		robot_job.initialize_job()
+	elif (keyboard_data == "Burn")
+		if(robot_drive.burn_mode):
+			robot_drive.enter_normal_mode() 
+		else:
+			robot_drive.enter_burn_mode()
 	elif (keyboard_data == 'Pause'):
 		rospy.loginfo("Pause the task");
 		robot_drive.robot_paused = 1; 
@@ -217,13 +222,11 @@ def keyboard_callback(data):
 		if(robot_drive.robot_enabled == 1):
 			#rospy.loginfo("")  
 			robot_drive.robot_enabled = 0
-			robot_drive.enter_burn_mode()
 			#robot_drive.init_gps()
 		else: 
 			#robot_drive.init_gps()
 			#rospy.loginfo("robot enabled")  
 			robot_drive.robot_enabled = 1
-			robot_drive.enter_normal_mode() 
 	elif (keyboard_data == 'Faster'):
 		rospy.loginfo('Command received: Try to increase robot speed')
 		if(robot_drive.desired_speed < 6): 
