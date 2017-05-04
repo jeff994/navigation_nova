@@ -45,8 +45,8 @@ def KeyControl():
 		elif choice == '0':
 			pub.publish('Switch')
 		elif choice == '1':
-	    	pub.publish('Forward')
-	    elif choice == '2':
+			pub.publish('Forward')
+		elif choice == '2':
 			pub.publish('Back')
 		elif choice == '3':
 			pub.publish('Turn_West')
@@ -72,7 +72,7 @@ def KeyControl():
 			pub.publish('180')
 		elif choice == 'z':#@yuqing_toggleobstaclemode
 			pub.publish('zero')
-		elif choice = 'b':
+		elif choice == 'b':
 			pub.publish("burn");
 		else:
 			print ("Invalid/Not defined number. Try again...")
