@@ -188,7 +188,7 @@ def keyboard_callback(data):
 	if (keyboard_data == 'Init'):
 		rospy.loginfo("Testing init job")
 		robot_job.initialize_job()
-	elif (keyboard_data == "Burn")：
+	elif (keyboard_data == "Burn"):
 		if(robot_drive.burn_mode):
 			robot_drive.enter_normal_mode() 
 		else:
