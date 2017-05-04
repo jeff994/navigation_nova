@@ -123,11 +123,11 @@ def enter_obstacle():
 	#remove unlock
 
 def enter_burn_mode():
-	for i in range (0,3):
-		robot_publisher.pub_command.publish('lock')
-		rospy.loginfo('Switch to burn mode')
+	#for i in range (0,3):
+	robot_publisher.pub_command.publish('lock')
+	rospy.loginfo('Switch to burn mode')
 
 def enter_normal_mode():
-	for i in range (0,3):
-		robot_publisher.pub_command.publish('unlock')
-		rospy.loginfo('Switch normal mode')
+	#for i in range (0,3):
+	robot_publisher.pub_command.publish('unlock')
+	rospy.loginfo('Switch normal mode')
