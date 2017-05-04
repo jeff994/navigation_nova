@@ -85,13 +85,13 @@ def disable_robot():
 
 # class to define i
 class Job:
-	classfication 		= 'N'
-	lon_target		= 0.0
-	lat_target 		= 0.0 
-	bearing_target  	= 0.0
-	description 		= ''
-	value 			= 0
-	index 			= 0
+	classfication		= 'N'
+	lon_target			= 0.0
+	lat_target 			= 0.0 
+	bearing_target		= 0.0
+	description			= ''
+	value				= 0
+	index				= 0
 
 	# constructor
 	def __init__(self, lon, lat, bearing, classify, description, value):

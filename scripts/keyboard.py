@@ -31,6 +31,7 @@ def KeyControl():
 	print ("f. Move 30m forward")
 	print ("t. 180")
 	print ("z. 0")
+	print ("b. Enter/Quite from burn mode")
 	print ("using ctrl + c to exit")
 	print (30 * '-')
 	
