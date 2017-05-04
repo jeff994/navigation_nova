@@ -26,7 +26,6 @@ def main_commander():
 
 	if robot_drive.burn_mode:
 		rospy.loginfo("Robot is on burn mode")
-		robot_drive.robot_enabled = False 
 		time.sleep(0.1)
 		return 
 
