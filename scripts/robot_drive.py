@@ -99,7 +99,7 @@ def stop_robot():
 
 def unlock_robot():
 	# send a command to unlock robot after obstacle avoidece 
-	robot_publisher.pub_command.publish('SB00000BE')
+	robot_publisher.pub_command.publish('SB00000BE\n')
 	rospy.loginfo('Unlock robot after avoidense ')
 
 # change speed
@@ -112,22 +112,22 @@ def change_speed():
 
 #@yuqing_toggleobstaclemode
 def enter_no_obstacle():
-	robot_publisher.pub_command.publish('SW00000WE')
+	robot_publisher.pub_command.publish('SW00000WE\n')
 	rospy.loginfo('SW00000WE enter no obstacle mode')
 
 #@yuqing_toggleobstaclemode
 def enter_obstacle():
-	robot_publisher.pub_command.publish('SO00000OE')
+	robot_publisher.pub_command.publish('SO00000OE\n')
 	rospy.loginfo('SO00000OE enter no obstacle mode')
 	#yuqing_obstaclemodeconfirm
 	#remove unlock
 
 def enter_burn_mode():
 	#for i in range (0,3):
-	robot_publisher.pub_command.publish('lock')
+	robot_publisher.pub_command.publish('lock\n')
 	rospy.loginfo('Switch to burn mode')
 
 def enter_normal_mode():
 	#for i in range (0,3):
-	robot_publisher.pub_command.publish('unlock')
-	rospy.loginfo('Switch normal mode')
+	robot_publisher.pub_command.publish('unlock\n')
+	rospy.loginfo('Switch to normal mode')

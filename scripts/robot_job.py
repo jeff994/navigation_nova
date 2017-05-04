@@ -33,6 +33,8 @@ def process_no_job():
 		robot_drive.stop_robot()
 		time.sleep(0.05)
 		return
+	else:
+		time.sleep(0.1)
 
 # Process all kinds of robot job as required 
 def process_job():

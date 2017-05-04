@@ -45,6 +45,7 @@ def main_commander():
 	# ----------------------------------------------------------------------------------------#
 	# If robot not enabled, just need to disable the robot 
 	if not robot_drive.robot_enabled: 
+		rospy.loginfo("Robot is disabled")
 		robot_job.disable_robot()
 		return
 

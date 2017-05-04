@@ -42,6 +42,6 @@ def publish_gps():
 def publish_command(command_string, speed):
 	#sending the string
 	#handle the format of the string
-	stringToSend = 'S%s00000%dE' % (command_string, speed) #might need to add \n behind the E
+	stringToSend = 'S%s00000%dE\n' % (command_string, speed) #might need to add \n behind the E
 	pub_command.publish(stringToSend)
 	rospy.loginfo(str(stringToSend))

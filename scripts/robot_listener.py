@@ -192,6 +192,7 @@ def keyboard_callback(data):
 		if robot_drive.burn_mode:
 			rospy.loginfo("Robot is on burn mode")
 			robot_drive.enter_normal_mode() 
+			rospy.loginfo("Entered nomrl mode")
 		else:
 			rospy.loginfo("Robot is on normal mode")
 			robot_drive.enter_burn_mode()
