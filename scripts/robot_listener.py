@@ -189,9 +189,11 @@ def keyboard_callback(data):
 		rospy.loginfo("Testing init job")
 		robot_job.initialize_job()
 	elif (keyboard_data == "Burn"):
-		if(robot_drive.burn_mode):
+		if robot_drive.burn_mode:
+			rospy.loginfo("Robot is on burn mode")
 			robot_drive.enter_normal_mode() 
 		else:
+			rospy.loginfo("Robot is on normal mode")
 			robot_drive.enter_burn_mode()
 	elif (keyboard_data == 'Pause'):
 		rospy.loginfo("Pause the task");
