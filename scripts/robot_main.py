@@ -141,8 +141,6 @@ def read_system_config():
 
 #subscribes to different topic 
 def main_listener():
-	if not rospy.is_shutdown():
-		read_system_config()
 	rospy.init_node('commander')
 	rospy.Subscriber('compass', String, robot_listener.compass_callback)
 	rospy.Subscriber('encoder', String, robot_listener.encoder_callback)
@@ -163,6 +161,7 @@ if __name__ == '__main__':
 	try:
 		# AAron's initial one for final testing
 		#job_generator(initial_bearing, loops)
+		read_system_config()
 		robot_listener.init_encoder_buffer()
 		robot_listener.init_compass_buffer()
 		main_listener()
