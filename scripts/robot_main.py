@@ -24,9 +24,12 @@ def main_commander():
 	# publish parameters to the web server 
 	robot_publisher.publish_parameters()
 
-	if robot_drive.burn_mode:
+	if robot_drive.burn_mode and not robot_drive.robot_enabled:
 		rospy.loginfo("Robot is on burn mode")
 		time.sleep(0.1)
+		return 
+	else if robot_drive.burn_mode
+		robot_drive.robot_drive.enter_normal_mode()
 		return 
 
 	# Very important error handling: 

@@ -122,12 +122,12 @@ def enter_obstacle():
 	#yuqing_obstaclemodeconfirm
 	#remove unlock
 
-def enter_burn_mode():
-	#for i in range (0,3):
-	robot_publisher.pub_command.publish('lock\n')
-	rospy.loginfo('Switch to burn mode')
-
 def enter_normal_mode():
 	#for i in range (0,3):
-	robot_publisher.pub_command.publish('unlock\n')
+	robot_publisher.pub_command.publish('iap_jump_app\r\n')
+	rospy.loginfo('Switch to burn mode')
+
+def enter_burn_mode():
+	#for i in range (0,3):
+	robot_publisher.pub_command.publish('iap_app\r\n')
 	rospy.loginfo('Switch to normal mode')
