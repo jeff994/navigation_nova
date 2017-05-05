@@ -101,6 +101,7 @@ def main_commander():
 
 def read_system_config():
 	# Read configure path 
+	print("Read configuration file")
 	config_path = os.path.dirname(os.path.abspath(__file__)) + '/robot.cfg'
 	size_para 	= 17
 	ret 		= [None] * size_para
@@ -139,7 +140,7 @@ def read_system_config():
 	rospy.loginfo("robot_drive: Speed lowest - %f", 	robot_drive.speed_lowest)
 	rospy.loginfo("robot_drive: Encoder to mm - %f", 	robot_drive.encoder_to_mm)
 	rospy.loginfo("robot_drive: Turn radius - %f", 	robot_drive.turn_radius)
-	rospy.loginfo("robot_correction： Min correction distance - %f", 		robot_correction.min_correction_distance)
+	rospy.loginfo("robot_correction: Min correction distance - %f",robot_correction.min_correction_distance)
 	rospy.loginfo("robot_correction: min correction angle - %f", 	robot_correction.min_correction_angle)
 	rospy.loginfo("robot_correction: max_correction_runs - %f", 	robot_correction.max_correction_runs)
 	rospy.loginfo("robot_move: dist_lower_speed: %f", 	robot_move.dist_lower_speed)
@@ -151,11 +152,14 @@ def read_system_config():
 	rospy.loginfo("robot_drive: obstacle_mode: %f", 	robot_drive.obstacle_mode)
 	rospy.loginfo("robot_drive: robot_enabled: %f", 	robot_drive.robot_enabled)
 	rospy.loginfo("robot_drive: robot_paused: %f", 	robot_drive.robot_paused)
+	print("Finished read configure file")
 	return
 
 
 #subscribes to different topic 
 def main_listener():
+	if not rospy.is_shutdown():
+		read_system_config()
 	rospy.init_node('commander')
 	rospy.Subscriber('compass', String, robot_listener.compass_callback)
 	rospy.Subscriber('encoder', String, robot_listener.encoder_callback)
@@ -176,7 +180,6 @@ if __name__ == '__main__':
 	try:
 		# AAron's initial one for final testing
 		#job_generator(initial_bearing, loops)
-		read_system_config()
 		robot_listener.init_encoder_buffer()
 		robot_listener.init_compass_buffer()
 		main_listener()
