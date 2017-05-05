@@ -26,10 +26,10 @@ def executor_simulator(data):
 	command_str = command_str.rstrip('\r')
 	rospy.loginfo("recieved command %s", command_str)
 
-    	if command_str == 'iap_jump_app':
+    	if command_str == 'unlock':
 		rospy.loginfo('Turn off burn mode')
         	burn_mode = False
-    	elif command_str == 'iap_app':
+    	elif command_str == 'lock':
 		rospy.loginfo("Turn to burn mode")
         	burn_mode = True
 	elif  (command_str == 'SF000006E'):

@@ -139,7 +139,7 @@ def read_system_config():
 	# check whether the reading is successful or not 
 	for index in range(size_para):
 		if not ret[index]: 
-			print("The ",index,"%d parameter is not correct")
+			print("The ",index,"parameter is not correct")
 	
 	print("Finished read configure file")
 	return

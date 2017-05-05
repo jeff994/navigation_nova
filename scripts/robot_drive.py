@@ -124,10 +124,10 @@ def enter_obstacle():
 
 def enter_normal_mode():
 	#for i in range (0,3):
-	robot_publisher.pub_command.publish('iap_jump_app\r\n')
+	robot_publisher.pub_command.publish('unlock')
 	rospy.loginfo('Switch to normal mode')
 
 def enter_burn_mode():
 	#for i in range (0,3):
-	robot_publisher.pub_command.publish('iap_app\r\n')
+	robot_publisher.pub_command.publish('lock')
 	rospy.loginfo('Switch to burn mode')
