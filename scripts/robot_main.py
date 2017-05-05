@@ -103,7 +103,7 @@ def read_system_config():
 	# Read configure path 
 	print("Read configuration file")
 	config_path = os.path.dirname(os.path.abspath(__file__)) + '/robot.cfg'
-	size_para 	= 17
+	size_para 	= 19
 	ret 		= [None] * size_para
 	
 	# Now reading configurable parameters 
@@ -129,7 +129,11 @@ def read_system_config():
 	ret[14], robot_drive.obstacle_mode 					= robot_configure.read_config_float(config_path, 'init', 'obstacle_mode')
 	ret[15], robot_drive.robot_enabled 					= robot_configure.read_config_float(config_path, 'init', 'robot_enabled')
 	ret[16], robot_drive.robot_paused 					= robot_configure.read_config_float(config_path, 'init', 'robot_paused')
+	ret[17], robot_job.init_lon 						= robot_configure.read_config_float(config_path, 'init', 'init_lon')
+	ret[18], robot_job.init_lat 						= robot_configure.read_config_float(config_path, 'init', 'init_lat')
 	
+	robot_drive.lon_now = robot_drive.lon_now;
+	robot_drive.lat_now = robot_drive.lat_now;
 	# check whether the reading is successful or not 
 	for index in range(size_para):
 		if not ret[index]: 
