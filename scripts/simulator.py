@@ -15,67 +15,72 @@ encoder_pub = rospy.Publisher('encoder', String, queue_size = 10)
 
 left_encode   	= 0 
 right_encode 	= 0
-burn_mode	   = True
+burn_mode	= True
 
 def executor_simulator(data):
+	global burn_mode
 	global left_encode
 	global right_encode
 	command_str = str(data.data)
-	rospy.loginfo("recieved command %s|", command_str)
+	command_str = command_str.rstrip('\n')
+	command_str = command_str.rstrip('\r')
+	rospy.loginfo("recieved command %s", command_str)
 
-    if command_str == 'iap_jump_app\r\n':
-        burn_mode = False
-    elif command_str == 'iap_jump_app\r\n':
-        burn_mode = True
-	elif  (command_str == 'SF000006E\n'):
+    	if command_str == 'iap_jump_app':
+		rospy.loginfo('Turn off burn mode')
+        	burn_mode = False
+    	elif command_str == 'iap_app':
+		rospy.loginfo("Turn to burn mode")
+        	burn_mode = True
+	elif  (command_str == 'SF000006E'):
 		left_encode = 1700
 		right_encode  = 1700
-	elif (command_str == 'SL000006E\n'):
+	elif (command_str == 'SL000006E'):
 		left_encode = -2400
 		right_encode = 2400
-	elif (command_str == 'SF000005E\n'):
+	elif (command_str == 'SF000005E'):
 		left_encode = 1444
 		right_encode  = 1444
-	elif(command_str == 'SF000004E\n'):
+	elif(command_str == 'SF000004E'):
 		left_encode = 1108
 		right_encode = 1108
-	elif(command_str == 'SF000003E\n'):
+	elif(command_str == 'SF000003E'):
 		left_encode = 867
 		right_encode = 867
-	elif(command_str == 'SB000006E\n'):
+	elif(command_str == 'SB000006E'):
 		left_encode = -2000
 		right_encode  = -2000
-	elif(command_str == 'SB000005E\n'):
+	elif(command_str == 'SB000005E'):
 		left_encode = -1444
 		right_encode  = -1444
-	elif(command_str == 'SB000004E\n'):
+	elif(command_str == 'SB000004E'):
 		left_encode = -1108
 		right_encode = -1108
-	elif(command_str == 'SB000003E\n'):
+	elif(command_str == 'SB000003E'):
 		left_encode = -867
 		right_encode = -867
-	elif(command_str == 'SL000006E\n'):
+	elif(command_str == 'SL000006E'):
 		left_encode = -2000
 		right_encode  = 2000
-	elif(command_str == 'SL000005E\n'):
+	elif(command_str == 'SL000005E'):
 		left_encode = -1444
 		right_encode  = 1444
-	elif(command_str == 'SL000004E\n'):
+	elif(command_str == 'SL000004E'):
 		left_encode = -1108
 		right_encode = 1108
-	elif(command_str == 'SL000003E\n'):
+	elif(command_str == 'SL000003E'):
 		left_encode = -879
 		right_encode = 879
-	elif(command_str == 'SR000006E\n'):
+	elif(command_str == 'SR000006E'):
 		left_encode = 2000
 		right_encode  = -2017
-	elif(command_str == 'SR000005E\n'):
+	elif(command_str == 'SR000005E'):
 		left_encode = 1108
 		right_encode = -1105
-	elif(command_str == 'SR000004E\n'):
+	elif(command_str == 'SR000004E'):
 		left_encode = 1108
 		right_encode = -1105
-	elif(command_str == 'SR000003E\n'):
+	elif(command_str == 'SR000003E'):
 		left_encode = 879
 		right_encode = -879
 	else:
@@ -85,21 +90,22 @@ def executor_simulator(data):
 
 def encoder_simulator():
 	if burn_mode:
-        rospy.loginfo("Robot hardware in burn mode, doing notheing")
-        return 
-    global encoder_pub	
+        	rospy.loginfo("Robot hardware in burn mode, doing notheing")
+        	return 
+	#rospy.loginfo("Robot hardware in normal mode")
+    	global encoder_pub	
 	bytesToPublish = '%d %d' % (left_encode, right_encode)
 	if(left_encode != 0  or right_encode != 0):
 	 	rospy.loginfo(bytesToPublish)
-    encoder_pub.publish(str(bytesToPublish))
+   	encoder_pub.publish(str(bytesToPublish))
 
 def simulator():
 	rospy.init_node('simulator', anonymous=True)
 	rospy.Subscriber("command", String, executor_simulator)
 	rate = rospy.Rate(10)
 	while not rospy.is_shutdown():
-	encoder_simulator()
-	rate.sleep()
+		encoder_simulator()
+		rate.sleep()
 
 # spin() simply keeps python from exiting until this node is stopped
 	rospy.spin()
