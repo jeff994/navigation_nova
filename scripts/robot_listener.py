@@ -19,6 +19,7 @@ import robot_configure
 import webbrowser
 from datetime import datetime
 from std_msgs.msg import String
+import os
 
 #used to hold the encoder data received, init with some value  
 encoder_buffer_size 	= 1000 	# The buffer size for the encoder
@@ -388,7 +389,7 @@ def print_config():
 	rospy.loginfo("robot_drive: robot_enabled: %f", 	robot_drive.robot_enabled)
 	rospy.loginfo("robot_drive: robot_paused: %f", 	robot_drive.robot_paused)
 
-def update_base(lon, lat)
+def update_base(lon, lat):
 	config_path = os.path.dirname(os.path.abspath(__file__)) + '/robot.cfg'		
-	write_config(config_path, 'init', 'init_lon', lon)
-	write_config(config_path, 'init', 'init_lat', lat)
+	robot_configure.write_config(config_path, 'init', 'init_lon', lon)
+	robot_configure.write_config(config_path, 'init', 'init_lat', lat)

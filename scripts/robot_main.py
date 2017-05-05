@@ -22,7 +22,7 @@ def main_commander():
 	#  code to check and use the ecnoder data                     							  #
 	# ----------------------------------------------------------------------------------------#
 	# publish parameters to the web server 
-	robot_publisher.publish_parameters()
+	#robot_publisher.publish_parameters()
 
 	if robot_drive.burn_mode: 
 		if not robot_drive.robot_enabled:
@@ -32,6 +32,8 @@ def main_commander():
 		else:
 			rospy.loginfo("Robot enabled, switch to normal mode")
 			robot_drive.enter_normal_mode() 
+	else:
+		robot_publisher.publish_parameters()
 
 	# Very important error handling: 
 	# If Not any new data comming, waiting for next data, 

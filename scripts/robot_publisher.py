@@ -30,7 +30,7 @@ def publish_parameters():
 	data["parameters"]  =    info
 	  
 	parameters = json.dumps(data)
-	#rospy.loginfo(parameters)
+	rospy.loginfo(parameters)
 	pub_param.publish(parameters)
 
 def publish_gps():
