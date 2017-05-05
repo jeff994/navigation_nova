@@ -17,14 +17,14 @@ def read_config(config_file_path, field, key):
         rospy.loginfo("Failed to read %s-%s", field, key)
     return ret, result
 
-def read_config_int(config_file_path, field, key): 
+def read_config_float(config_file_path, field, key): 
     cf = ConfigParser.ConfigParser()
     ret = True 
     val = 0
     try:
         cf.read(config_file_path)
         result = cf.get(field, key)
-        val = int(result)
+        val = float(result)
     except:
         ret = False
         rospy.loginfo("Failed to read %s-%s", field, key)

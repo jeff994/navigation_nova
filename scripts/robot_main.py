@@ -107,32 +107,50 @@ def read_system_config():
 	
 	# Now reading configurable parameters 
 	# [speed] related
-	ret[0], robot_drive.speed_full 						= robot_configure.read_config_int(config_path, 'speed', 'speed_full')
-	ret[1], robot_drive.speed_lower 					= robot_configure.read_config_int(config_path, 'speed', 'speed_lower')
-	ret[2], robot_drive.speed_lowest 					= robot_configure.read_config_int(config_path, 'speed', 'speed_lowest')
+	ret[0], robot_drive.speed_full 						= robot_configure.read_config_float(config_path, 'speed', 'speed_full')
+	ret[1], robot_drive.speed_lower 					= robot_configure.read_config_float(config_path, 'speed', 'speed_lower')
+	ret[2], robot_drive.speed_lowest 					= robot_configure.read_config_float(config_path, 'speed', 'speed_lowest')
 	# [architectural]
-	ret[3], robot_drive.encoder_to_mm 					= robot_configure.read_config_int(config_path, 'mechanic', 'encode_to_mm')
-	ret[4], robot_drive.turn_radius 					= robot_configure.read_config_int(config_path, 'mechanic', 'turn_radius')
+	ret[3], robot_drive.encoder_to_mm 					= robot_configure.read_config_float(config_path, 'mechanic', 'encode_to_mm')
+	ret[4], robot_drive.turn_radius 					= robot_configure.read_config_float(config_path, 'mechanic', 'turn_radius')
 	# [correction]
-	ret[5], robot_correction.min_correction_distance 	= robot_configure.read_config_int(config_path, 'correction', 'min_correction_distance')
-	ret[6], robot_correction.min_correction_angle 		= robot_configure.read_config_int(config_path, 'correction', 'min_correction_angle')
-	ret[7], robot_correction.max_correction_runs 		= robot_configure.read_config_int(config_path, 'correction', 'max_correction_runs')
+	ret[5], robot_correction.min_correction_distance 	= robot_configure.read_config_float(config_path, 'correction', 'min_correction_distance')
+	ret[6], robot_correction.min_correction_angle 		= robot_configure.read_config_float(config_path, 'correction', 'min_correction_angle')
+	ret[7], robot_correction.max_correction_runs 		= robot_configure.read_config_float(config_path, 'correction', 'max_correction_runs')
 	# [walk]
-	ret[8], robot_move.dist_lower_speed 				= robot_configure.read_config_int(config_path, 'move', 'dist_lower_speed')
-	ret[9], robot_move.dist_lowest_speed 				= robot_configure.read_config_int(config_path, 'move', 'dist_lowest_speed')
-	ret[10], robot_move.dist_to_correct 				= robot_configure.read_config_int(config_path, 'move', 'dist_to_correct')
-	ret[11], robot_move.dist_end_point_check 			= robot_configure.read_config_int(config_path, 'move', 'dist_end_point_check')
-	ret[12], robot_move.angle_lower_speed 				= robot_configure.read_config_int(config_path, 'move', 'angle_lower_speed')
-	ret[13], robot_move.angle_lowest_speed 				= robot_configure.read_config_int(config_path, 'move', 'angle_lowest_speed')
+	ret[8], robot_move.dist_lower_speed 				= robot_configure.read_config_float(config_path, 'move', 'dist_lower_speed')
+	ret[9], robot_move.dist_lowest_speed 				= robot_configure.read_config_float(config_path, 'move', 'dist_lowest_speed')
+	ret[10], robot_move.dist_to_correct 				= robot_configure.read_config_float(config_path, 'move', 'dist_to_correct')
+	ret[11], robot_move.dist_end_point_check 			= robot_configure.read_config_float(config_path, 'move', 'dist_end_point_check')
+	ret[12], robot_move.angle_lower_speed 				= robot_configure.read_config_float(config_path, 'move', 'angle_lower_speed')
+	ret[13], robot_move.angle_lowest_speed 				= robot_configure.read_config_float(config_path, 'move', 'angle_lowest_speed')
 	# [init]c
-	ret[14], robot_drive.obstacle_mode 					= robot_configure.read_config_int(config_path, 'init', 'obstacle_mode')
-	ret[15], robot_drive.robot_enabled 					= robot_configure.read_config_int(config_path, 'init', 'robot_enabled')
-	ret[16], robot_drive.robot_paused 					= robot_configure.read_config_int(config_path, 'init', 'robot_paused')
+	ret[14], robot_drive.obstacle_mode 					= robot_configure.read_config_float(config_path, 'init', 'obstacle_mode')
+	ret[15], robot_drive.robot_enabled 					= robot_configure.read_config_float(config_path, 'init', 'robot_enabled')
+	ret[16], robot_drive.robot_paused 					= robot_configure.read_config_float(config_path, 'init', 'robot_paused')
 	
 	# check whether the reading is successful or not 
 	for index in range(size_para):
 		if not ret[index]: 
 			rospy.loginfo("The no %d configure parameter reading is wrong", index)
+	
+	rospy.loginfo("robot_drive: Speed full - %f", 	robot_drive.speed_full)
+	rospy.loginfo("robot_drive: Speed lower - %f", 	robot_drive.speed_lower)
+	rospy.loginfo("robot_drive: Speed lowest - %f", 	robot_drive.speed_lowest)
+	rospy.loginfo("robot_drive: Encoder to mm - %f", 	robot_drive.encoder_to_mm)
+	rospy.loginfo("robot_drive: Turn radius - %f", 	robot_drive.turn_radius)
+	rospy.loginfo("robot_correction： Min correction distance - %f", 		robot_correction.min_correction_distance)
+	rospy.loginfo("robot_correction: min correction angle - %f", 	robot_correction.min_correction_angle)
+	rospy.loginfo("robot_correction: max_correction_runs - %f", 	robot_correction.max_correction_runs)
+	rospy.loginfo("robot_move: dist_lower_speed: %f", 	robot_move.dist_lower_speed)
+	rospy.loginfo("robot_move: dist_lowest_speed): %f", 	robot_move.dist_lowest_speed)
+	rospy.loginfo("robot_move: dist_to_correct: %f", 	robot_move.dist_to_correct)
+	rospy.loginfo("robot_move: dist_end_point_check: %f", 	robot_move.dist_end_point_check)
+	rospy.loginfo("robot_move: angle_lower_speed: %f", 	robot_move.angle_lower_speed)
+	rospy.loginfo("robot_move: angle_lowest_speed: %f", 	robot_move.angle_lowest_speed)
+	rospy.loginfo("robot_drive: obstacle_mode: %f", 	robot_drive.obstacle_mode)
+	rospy.loginfo("robot_drive: robot_enabled: %f", 	robot_drive.robot_enabled)
+	rospy.loginfo("robot_drive: robot_paused: %f", 	robot_drive.robot_paused)
 	return
 
 
