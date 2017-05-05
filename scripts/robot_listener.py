@@ -15,6 +15,7 @@ import robot_publisher
 import robot_listener 
 import json
 import math
+import robot_configure
 import webbrowser
 from datetime import datetime
 from std_msgs.msg import String
@@ -103,6 +104,7 @@ def job_callback(data):
 		init_point			= decoded['init_point']
 		robot_job.init_lon 		= float(init_point.get(u'lng'))
 		robot_job.init_lat 		= float(init_point.get(u'lat'))
+		update_base(robot_job.init_lon, robot_job.init_lat)
 		rospy.loginfo("Parse init point successful")
 		no_runs 			= decoded['run']
 		rospy.loginfo("Number of runs %d", int(no_runs))
@@ -385,3 +387,8 @@ def print_config():
 	rospy.loginfo("robot_drive: obstacle_mode: %f", 	robot_drive.obstacle_mode)
 	rospy.loginfo("robot_drive: robot_enabled: %f", 	robot_drive.robot_enabled)
 	rospy.loginfo("robot_drive: robot_paused: %f", 	robot_drive.robot_paused)
+
+def update_base(lon, lat)
+	config_path = os.path.dirname(os.path.abspath(__file__)) + '/robot.cfg'		
+	write_config(config_path, 'init', 'init_lon', lon)
+	write_config(config_path, 'init', 'init_lat', lat)
