@@ -73,13 +73,13 @@ def executor_simulator(data):
 		right_encode = 879
 	elif(command_str == 'SR000006E'):
 		left_encode = 2000
-		right_encode  = -2017
+		right_encode  = -2000
 	elif(command_str == 'SR000005E'):
 		left_encode = 1108
-		right_encode = -1105
+		right_encode = -1108
 	elif(command_str == 'SR000004E'):
 		left_encode = 1108
-		right_encode = -1105
+		right_encode = -1108
 	elif(command_str == 'SR000003E'):
 		left_encode = 879
 		right_encode = -879
