@@ -73,7 +73,9 @@ def KeyControl():
 		elif choice == 'z':#@yuqing_toggleobstaclemode
 			pub.publish('zero')
 		elif choice == 'b':
-			pub.publish("Burn");
+			pub.publish("Burn")
+		elif choice == 'c':
+			pub.publish('cfg')
 		else:
 			print ("Invalid/Not defined number. Try again...")
 	rate.sleep()

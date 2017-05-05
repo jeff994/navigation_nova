@@ -133,25 +133,8 @@ def read_system_config():
 	# check whether the reading is successful or not 
 	for index in range(size_para):
 		if not ret[index]: 
-			rospy.loginfo("The no %d configure parameter reading is wrong", index)
+			print("%d parameter is not correct", index)
 	
-	rospy.loginfo("robot_drive: Speed full - %f", 	robot_drive.speed_full)
-	rospy.loginfo("robot_drive: Speed lower - %f", 	robot_drive.speed_lower)
-	rospy.loginfo("robot_drive: Speed lowest - %f", 	robot_drive.speed_lowest)
-	rospy.loginfo("robot_drive: Encoder to mm - %f", 	robot_drive.encoder_to_mm)
-	rospy.loginfo("robot_drive: Turn radius - %f", 	robot_drive.turn_radius)
-	rospy.loginfo("robot_correction: Min correction distance - %f",robot_correction.min_correction_distance)
-	rospy.loginfo("robot_correction: min correction angle - %f", 	robot_correction.min_correction_angle)
-	rospy.loginfo("robot_correction: max_correction_runs - %f", 	robot_correction.max_correction_runs)
-	rospy.loginfo("robot_move: dist_lower_speed: %f", 	robot_move.dist_lower_speed)
-	rospy.loginfo("robot_move: dist_lowest_speed): %f", 	robot_move.dist_lowest_speed)
-	rospy.loginfo("robot_move: dist_to_correct: %f", 	robot_move.dist_to_correct)
-	rospy.loginfo("robot_move: dist_end_point_check: %f", 	robot_move.dist_end_point_check)
-	rospy.loginfo("robot_move: angle_lower_speed: %f", 	robot_move.angle_lower_speed)
-	rospy.loginfo("robot_move: angle_lowest_speed: %f", 	robot_move.angle_lowest_speed)
-	rospy.loginfo("robot_drive: obstacle_mode: %f", 	robot_drive.obstacle_mode)
-	rospy.loginfo("robot_drive: robot_enabled: %f", 	robot_drive.robot_enabled)
-	rospy.loginfo("robot_drive: robot_paused: %f", 	robot_drive.robot_paused)
 	print("Finished read configure file")
 	return
 
