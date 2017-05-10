@@ -11,7 +11,7 @@ from std_msgs.msg import String
 #-------------------------------------------------------#
 
 encode_to_mm 		= 18.40 		# 1000 encoding signals = 1 mm travelled
-turn_radius 		= 388.0 			# radius when turning in mm (half distance between the middle point of two wheels) 
+turn_radius 		= 307.0 			# radius when turning in mm (half distance between the middle point of two wheels) 
 speed_lower			= 5
 speed_lowest		= 4
 speed_full			= 6
@@ -99,8 +99,9 @@ def stop_robot():
 
 def unlock_robot():
 	# send a command to unlock robot after obstacle avoidece 
-	robot_publisher.pub_command.publish('SB00000BE\n')
-	rospy.loginfo('Unlock robot after avoidense ')
+	#robot_publisher.pub_command.publish('SB00000BE\n')
+	robot_publisher.pub_command.publish('obstacle unlock')
+	rospy.loginfo('Unlock robot after avoidancee ')
 
 # change speed
 def change_speed():
@@ -112,22 +113,24 @@ def change_speed():
 
 #@yuqing_toggleobstaclemode
 def enter_no_obstacle():
-	robot_publisher.pub_command.publish('SW00000WE\n')
+	#robot_publisher.pub_command.publish('SW00000WE\n')
+	robot_publisher.pub_command.publish('no obstacle mode')
 	rospy.loginfo('SW00000WE enter no obstacle mode')
 
 #@yuqing_toggleobstaclemode
 def enter_obstacle():
-	robot_publisher.pub_command.publish('SO00000OE\n')
-	rospy.loginfo('SO00000OE enter no obstacle mode')
+	#robot_publisher.pub_command.publish('SO00000OE\n')
+	robot_publisher.pub_command.publish('obstacle mode')
+	rospy.loginfo('SO00000OE enter obstacle mode')
 	#yuqing_obstaclemodeconfirm
 	#remove unlock
 
 def enter_normal_mode():
 	#for i in range (0,3):
-	robot_publisher.pub_command.publish('unlock')
+	robot_publisher.pub_command.publish('normal')
 	rospy.loginfo('Switch to normal mode')
 
 def enter_burn_mode():
-	#for i in range (0,3):
-	robot_publisher.pub_command.publish('lock')
-	rospy.loginfo('Switch to burn mode')
+	for i in range (0,5):
+		robot_publisher.pub_command.publish('burn')
+		rospy.loginfo('Switch to burn mode')
