@@ -277,49 +277,63 @@ def keyboard_callback(data):
 
 #@yuqing_obstacledriverread
 #read obstacle finish data thro driver node
-def driver_obstacle_callback(data):
+def obstacle_status_callback(data):
 	string = data.data
-	string = string.strip('\r\n')
-	rospy.loginfo('driver callback: %s, length: %d ',  string, len(string))
-	rospy.loginfo('robot_on_obstacle: %d', robot_obstacle.robot_on_obstacle)
-	
-	if(string == 'FINISH'):
-		if robot_obstacle.robot_on_obstacle: 
-			rospy.loginfo('first finish')
-			robot_obstacle.obstacle_is_over()
-		else: 
-			rospy.loginfo('Received one more finish')
-			#robot_drive.unlock_robot()
-	else:
-		#yuqing_obstaclemodeconfirm
-		if (string == "LOWER CONTROL"):
-			rospy.loginfo("robot enter no obstacle mode")
-			robot_drive.obstacle_mode = False
-		elif (string == "UPPER CONTROL"):
-			rospy.loginfo("robot enter obstacle mode")
-			robot_drive.obstacle_mode = True
-		#yuqing_unlockconfirm
-		elif (string == "UNLOCK"):
-			robot_drive.isunlockdone = True
-		else:
-			index = string.find('OBSTACLE')
-			# if current state is no obstacle but recevited obstacel, starts obstacle avidentce 
-			if (not robot_obstacle.robot_on_obstacle):
-				if(index != -1):
-					robot_obstacle.start_obstacle_avidence()
-					robot_obstacle.needForward = False
-					robot_obstacle.justStop = False
+	obstacle_mode, obstacle_detected, obstacle_finish_status = string.split(" ")
+	#rospy.loginfo('obstacle callback: %s, length: %d ',  string, len(string))
+	#rospy.loginfo('robot_on_obstacle: %d', robot_obstacle.robot_on_obstacle)
+	if (obstacle_finish_status == 1): 					#this will only happen when obstacle mode is on
+		robot_obstacle.obstacle_is_over() 						
+		#robot_obstacle.unlock_from_obstacle()			#unlock robot from obstacle
+	#elif(obstacle_finish_status == 0 and robot_obstacle.robot_over_obstacle == True): 		#robot successfully unlocked
+	#	robot_obstacle.obstacle_avoidance_ended() 		#change flags
+	elif(obstacle_mode == 1 and obstacle_detected == 0 and obstacle_finish_status == 0):	#if on, no obstacle
+		robot_obstacle.obstacle_avoidance_do_nothing()
+	elif(obstacle_mode == 1 and obstacle_detected == 1 and obstacle_finish_status == 0):	#if on, detected obstacle
+		robot_obstacle.start_obstacle_avoidance()
+	else: 												#
+		robot_obstacle.obstacle_avoidance_do_nothing()
 
-			if(index != -1):
-				rospy.loginfo('callback: obstacle start %s', string)
-				direction = string[-1]
-				if ((direction == 'L') or (direction =='R')):
-					robot_obstacle.needForward = True
-				else:
-					robot_obstacle.justStop = True
-			else:
-					rospy.loginfo("string: %s", string)
 	return
+
+	#if(string == 'FINISH'):
+	#	if robot_obstacle.robot_on_obstacle: 
+	#		#rospy.loginfo('first finish')
+	#		robot_obstacle.obstacle_is_over()
+	#	else: 
+	#		rospy.loginfo('Received one more finish')
+			#robot_drive.unlock_robot()
+	#else:
+		#yuqing_obstaclemodeconfirm
+		#if (string == "LOWER CONTROL"):
+		#	rospy.loginfo("robot enter no obstacle mode")
+		#	robot_drive.obstacle_mode = False
+		#elif (string == "UPPER CONTROL"):
+		#	rospy.loginfo("robot enter obstacle mode")
+		#	robot_drive.obstacle_mode = True
+		#yuqing_unlockconfirm
+		#below commented away 11th may by aaron ###################
+		#elif (string == "UNLOCK"):
+		#	robot_drive.isunlockdone = True
+		#else:
+		#	index = string.find('OBSTACLE')
+		#	# if current state is no obstacle but recevited obstacel, starts obstacle avidentce 
+		#	if (not robot_obstacle.robot_on_obstacle):
+		#		if(index != -1):
+		#			robot_obstacle.start_obstacle_avoidance()
+		#			robot_obstacle.needForward = False
+		#			robot_obstacle.justStop = False
+#
+#			if(index != -1):
+#				rospy.loginfo('callback: obstacle start %s', string)
+#				direction = string[-1]
+#				if ((direction == 'L') or (direction =='R')):
+#					robot_obstacle.needForward = True
+#				else:
+#					robot_obstacle.justStop = True
+#			else:
+#					rospy.loginfo("string: %s", string)
+#	return
 
 #@yuqing_publishparam
 

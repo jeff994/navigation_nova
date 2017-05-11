@@ -65,7 +65,7 @@ def main_commander():
 
 	# Robot obstancle avoidence is over, now resume to normal operation 
 	if robot_obstacle.robot_over_obstacle:
-		robot_obstacle.complete_obstacle_avoidence()
+		robot_obstacle.complete_obstacle_avoidance()
 		return 
 
 	# handle robot paused conidtions 
@@ -156,7 +156,7 @@ def main_listener():
 	#ADD SUBSCRIBERS FOR GYRO DATA, MAKE CALLBACKS TO HANDLE THEM	
 
 	#@yuqing_obstacledriverread
-	rospy.Subscriber('driver_obstacle', String, robot_listener.driver_obstacle_callback)
+	rospy.Subscriber('obstacle_status', String, robot_listener.obstacle_status_callback) #was previously driver_obstacle
 	rospy.Subscriber('job', String, robot_listener.job_callback)
 	rospy.Subscriber('control', String, robot_listener.control_callback)
 	while not rospy.is_shutdown():

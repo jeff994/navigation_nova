@@ -125,12 +125,13 @@ def enter_obstacle():
 	#yuqing_obstaclemodeconfirm
 	#remove unlock
 
+#normal and burn mode's commands are written in serial_handler_node
 def enter_normal_mode():
 	#for i in range (0,3):
 	robot_publisher.pub_command.publish('normal')
 	rospy.loginfo('Switch to normal mode')
 
 def enter_burn_mode():
-	for i in range (0,5):
-		robot_publisher.pub_command.publish('burn')
-		rospy.loginfo('Switch to burn mode')
+	#for i in range (0,5):
+	robot_publisher.pub_command.publish('burn')
+	rospy.loginfo('Switch to burn mode')

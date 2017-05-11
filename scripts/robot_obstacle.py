@@ -23,7 +23,14 @@ from math import radians, cos, sin, asin, sqrt, atan2, degrees
 # while robot's moving, dynamically update robot gps
 # still need to handle more scenarios 
 
-def is_on_obstacle_avoidence(first, second, third, forth):
+def obstacle_avoidance_do_nothing():
+	global robot_on_obstacle
+	global robot_over_obstacle
+	robot_on_obstacle = False
+	robot_over_obstacle = False
+	robot_drive.isunlockdone = True
+
+def is_on_obstacle_avoidance(first, second, third, forth):
 	if(first == 0 or first == 1 or first == 2 or first == 3):
 		return 1
 	if(second ==0 or second == 2 or second ==3 or second == 1):
@@ -34,8 +41,8 @@ def is_on_obstacle_avoidence(first, second, third, forth):
 		return 4 
 	return 0
 
-def start_obstacle_avidence():
-	rospy.loginfo('start_obstacle_avidence')
+def start_obstacle_avoidance():
+	rospy.loginfo('start_obstacle_avoidance')
 	global robot_on_obstacle
 	global robot_over_obstacle
 	robot_on_obstacle 		= True
@@ -51,11 +58,18 @@ def obstacle_is_over():
 	robot_on_obstacle 	= False
 	robot_over_obstacle = True
 
+#this will keep sending if listener doesn't get "UNLOCK"
 def unlock_from_obstacle():
- 	rospy.loginfo('unlock_from_obstacle')
+ 	rospy.loginfo('sending unlock_from_obstacle')
 	robot_drive.unlock_robot()
+	#global robot_over_obstacle
+	#robot_over_obstacle = False
+
+#added by aaron, 11May, to indicate obstacle avoidance has ended
+def obstacle_avoidance_ended():
 	global robot_over_obstacle
 	robot_over_obstacle = False
+	robot_drive.isunlockdone = True
 
 	# Get the last four digit of the reverse car sendor data 
 def rc_sensor_data(rc_sensor_value):
@@ -88,7 +102,7 @@ def quit_obstacle_correction(current_job_type):
 		rospy.loginfo("Add correction for next %s job", current_job_type)
 		robot_job.complete_current_job()
 
-def clear_after_obstacle_avoidence(current_job_type):
+def clear_after_obstacle_avoidance(current_job_type):
 	# Remove the un-finished job 
 	if(current_job_type == 'N' or current_job_type == 'C'):
 		rospy.loginfo("Robot met obstacle during normal job, finishing current job")
@@ -102,12 +116,12 @@ def clear_after_obstacle_avoidence(current_job_type):
 	else:
 		rospy.logerr("Invalid job_type found")
 
-def resume_from_obstacle_avoidence():
+def resume_from_obstacle_avoidance():
 	job_executing = robot_job.current_job()
 	current_job_type = job_executing.classfication; 
 		
 	# performing necessary clearing of current tasks 
-	clear_after_obstacle_avoidence(current_job_type)
+	clear_after_obstacle_avoidance(current_job_type)
 	# robot is resumed to clear state and ready for the correction tasks 
 
 	if needForward:
@@ -119,7 +133,7 @@ def resume_from_obstacle_avoidence():
 	#robot_drive.isunlockdone = False
 
 # Complete the obstacle avoidence after we get a signal from the robot base  
-def complete_obstacle_avoidence(): 
+def complete_obstacle_avoidance(): 
 	global robot_over_obstacle
 	# step 1: Waiting for robot stop moving 
 	if (robot_drive.robot_turning or robot_drive.robot_moving):
@@ -140,7 +154,7 @@ def complete_obstacle_avoidence():
 	#robot_obstacle.unlock_from_obstacle()
 	# Remove the un-finished job 
 	if robot_drive.robot_on_mission and robot_job.has_jobs_left():
-		resume_from_obstacle_avoidence()
+		resume_from_obstacle_avoidance()
 	else:
 		rospy.loginfo("There's no missing on going")
 	
