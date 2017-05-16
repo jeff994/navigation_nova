@@ -259,9 +259,9 @@ def keyboard_callback(data):
 	elif (keyboard_data == "Obstacle"):#@yuqing_toggleobstaclemode
 		rospy.loginfo('keyboard Obstacle')
 		robot_drive.enter_obstacle()
-	elif (keyboard_data == "30m"):#@yuqing_toggleobstaclemode
-		rospy.loginfo('forward 30m')
-		robot_job.simple_move(10000.0, 0, 'F')
+	elif (keyboard_data == "10m"):#@yuqing_toggleobstaclemode
+		rospy.loginfo('forward 10m')
+		robot_job.simple_move(10000.0, robot_drive.bearing_now, 'F')
 	elif (keyboard_data == "180"):#@yuqing_toggleobstaclemode
 		rospy.loginfo('turn 180')
 		robot_job.simple_turn(180.0,)

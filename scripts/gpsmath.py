@@ -19,13 +19,13 @@ from math import radians, cos, sin, asin, sqrt, atan2, degrees
 # Calculate distance between two gps coordinates 
 def haversine(lon1, lat1, lon2, lat2):
 	#convert to radians
-	lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1,lon2, lat2])
+	lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
 	#haversine
 	dlon = lon2 - lon1
 	dlat = lat2 - lat1
 	a = sin(dlat/2.0)**2.0 + cos(lat1) * cos(lat2) * sin(dlon/2.0)**2.0
 	c = 2.0 * asin(sqrt(a))
-	r = 6371.0 #radius of earth in kilometers
+	r = 6371.0088 #radius of earth in kilometers
 	
 	distance =  c * r
 	distance = distance * 1000.0 * 1000.0  					# convert distance to mm
@@ -49,7 +49,7 @@ def get_gps(lon1, lat1, dist, bearing):
 		return lon1, lat1
 	lon1, lat1, bearing	= map(radians, [lon1, lat1,bearing])
 	
-	r = 6371.0 * 1000.0 * 1000.0
+	r = 6371.0088 * 1000.0 * 1000.0
 	delta = dist/r
 	lat2 = asin(sin(lat1) * cos(delta) + cos (lat1) * sin(delta)* cos(bearing))
 	lon2 = lon1 + atan2(sin(bearing) * sin (delta) * cos(lat1), cos(delta) - sin (lat1) * sin(lat2))

@@ -28,7 +28,7 @@ def KeyControl():
 	print ("i. Initialize the true north of the robot")
 	print ("w. Enter no obstacle mode")
 	print ("o. Enter obstacle mode")
-	print ("f. Move 30m forward")
+	print ("f. Move 10m forward")
 	print ("t. 180")
 	print ("z. 0")
 	print ("b. Enter/Quite from burn mode")
@@ -67,7 +67,7 @@ def KeyControl():
 		elif choice == 'o':#@yuqing_toggleobstaclemode
 			pub.publish('Obstacle')
 		elif choice == 'f':#@yuqing_toggleobstaclemode
-			pub.publish('30m')
+			pub.publish('10m')
 		elif choice == 't':#@yuqing_toggleobstaclemode
 			pub.publish('180')
 		elif choice == 'z':#@yuqing_toggleobstaclemode

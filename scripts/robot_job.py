@@ -19,7 +19,7 @@ from math import radians, cos, sin, asin, sqrt, atan2, degrees
 #defining or acquiring the GPS coordinates
 init_lon			= 121.635139
 init_lat			= 31.2112262
-init_bearing		= 0
+init_bearing			= 0
 gps_lon 			= [103.962389,103.962456,103.962461,103.962381] #S,A,B,C,D
 gps_lat 			= [1.3407,1.340696,1.340589,1.340599]
 loops 				= 1 			#how many rounds to go
@@ -99,9 +99,9 @@ class Job:
 	def __init__(self, lon, lat, bearing, classify, description, value):
 		self.lon_target 	= lon
 		self.lat_target 	= lat 
-		self.bearing_target 	= bearing
+		self.bearing_target = bearing
 		self.classfication	= classify
-		self.value 		= value 
+		self.value 			= value 
 		self.description 	= description
 
 #@yuqing_forwardafterobstacle
@@ -246,18 +246,33 @@ def define_initialize_job():
 	append_turn_job(robot_drive.lon_now, robot_drive.lat_now, 90.0)
 
 # a list of operations for the correction jobs 
-def insert_compensation_jobs(lon_source, lat_source, lon_target, lat_target, correction_type, need_correct_distace, need_correct_angle):
+def insert_compensation_jobs(lon_source, lat_source, bearing_source, lon_target, lat_target, bearing_target, correction_type, need_correct_distance, need_correct_angle):
 	global job_lists
 	bearing 	= gpsmath.bearing(lon_source, lat_source, lon_target, lat_target)
 	distance 	= gpsmath.haversine(lon_source, lat_source, lon_target, lat_target)
-	turn_job 	= Job(lon_source, lat_source, bearing, correction_type, 'T', bearing)
-	move_job 	= Job(lon_target, lat_target, bearing, correction_type, 'F', distance) 
-	if need_correct_distace:
+
+	turn_job 				= Job(lon_source, lat_source, bearing, correction_type, 'T', bearing_target)
+	turn_before_move_job 	= Job(lon_source, lat_source, bearing, correction_type, 'T', bearing)
+	move_job 				= Job(lon_target, lat_target, bearing, correction_type, 'F', distance)
+	reverse_job 			= Job(lon_target, lat_target, bearing, correction_type, 'B', distance)
+
+	#if (need_correct_distance and not need_correct_angle):
+	#	if((bearing - bearing_source + 360.0)%360.0 >= 90):
+	#		rospy.loginfo("Added a backward distance correction")
+	#		job_lists.insert(0, reverse_job)
+	#	else:
+	#		rospy.loginfo("Added a forward distance correction")
+	#		job_lists.insert(0, move_job)
+	if need_correct_distance:
 		rospy.loginfo("Added a distance correction")
-		job_lists.insert(0, move_job)
-	if need_correct_angle:
+		job_lists.insert(0, turn_before_move_job)
+		job_lists.insert(1, move_job)
+		job_lists.insert(2, turn_job)
+	elif (need_correct_angle and not need_correct_distance):
 		rospy.loginfo("Added a angle correction")
-		job_lists.insert(0, turn_job)
+		job_lists.insert(0, turn_job) 
+	
+	
 	
 
 

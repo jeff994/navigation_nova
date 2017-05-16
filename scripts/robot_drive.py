@@ -30,14 +30,14 @@ initial_bearing 	= 0.0 			#set as north for now
 
 lon_now 			= 121.635139
 lat_now  			= 31.2112262
-bearing_now 		= 0
+bearing_now 			= 0.0
 
 lon_target 			= 121.635139
 lat_target 			= 31.2112262
-bearing_target 		= 0 		#degrees
+bearing_target 			= 0.0 		#degrees
 
 step_angle 			= 0
-step_distance		= 0
+step_distance			= 0
 
 
 #yuqing_obstaclemodeconfirm
@@ -105,10 +105,10 @@ def unlock_robot():
 
 # change speed
 def change_speed():
-	global move_direction, speed_now, desired_speed 
-	robot_publisher.publish_command(move_direction, desired_speed)
-	speed_now  = desired_speed
-	distpub = 'Robot speed changed from %d to %d' % (speed_now, desired_speed)
+	global move_direction, speed_now, speed_desired 
+	robot_publisher.publish_command(move_direction, speed_desired)
+	speed_now  = speed_desired
+	distpub = 'Robot speed changed from %d to %d' % (speed_now, speed_desired)
 	rospy.loginfo(distpub)
 
 #@yuqing_toggleobstaclemode
