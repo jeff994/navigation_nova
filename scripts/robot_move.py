@@ -16,8 +16,8 @@ dist_completed 			= 0.0
 dist_to_run 			= 0.0
 #@yuqing_correctionper10m
 dist_to_correct 		= 10000.0
-dist_lowest_speed 		= 1000.0
-dist_lower_speed 		= 2000.0
+dist_lowest_speed 		= 200.0
+dist_lower_speed 		= 500.0
 dist_end_point_check 	= 600.0 #was 600
 
 dist_4_speed 			= 2000.0
@@ -33,31 +33,34 @@ def start_move():
 	global dist_lowest_speed
 	global dist_lower_speed
 
+	global dist_4_speed
+	global dist_3_speed
+	global dist_2_speed
+
 	# if the task is a short distance task, then start with a lower speed 
-	#if abs(dist_to_run) < dist_lowest_speed:
-	#	robot_drive.speed_now  		= robot_drive.speed_lowest 
-	#	robot_drive.speed_desired 	= robot_drive.speed_lowest
-	#elif abs(dist_to_run) < dist_lower_speed: 
-	#	robot_drive.speed_now  		= robot_drive.speed_lower
-	#	robot_drive.speed_desired 	= robot_drive.speed_lower 
-   	#else:
-	#	robot_drive.speed_now 		= robot_drive.speed_full 
-	#	robot_drive.speed_desired 	= robot_drive.speed_full 
+	if abs(dist_to_run) < dist_lowest_speed:
+		robot_drive.speed_now  		= robot_drive.speed_lowest 
+		robot_drive.speed_desired 	= robot_drive.speed_lowest
+	elif abs(dist_to_run) < dist_lower_speed: 
+		robot_drive.speed_now  		= robot_drive.speed_lower
+		robot_drive.speed_desired 	= robot_drive.speed_lower 
+   	else:
+		robot_drive.speed_now 		= robot_drive.speed_full 
+		robot_drive.speed_desired 	= robot_drive.speed_full 
 
 	#changed by aaron to handle slow communication
-	if abs(dist_to_run) < dist_4_speed:
-		robot_drive.speed_now 		= 4
-		robot_drive.speed_desired 	= 4
-	elif abs(dist_to_run) < dist_3_speed:
-		robot_drive.speed_now 		= 3
-		robot_drive.speed_desired 	= 3
-	elif abs(dist_to_run) < dist_2_speed:
-		robot_drive.speed_now 		= 2
-		robot_drive.speed_desired 	= 2
-	else:
-		robot_drive.speed_now 		= 6
-		robot_drive.speed_now 		= 6
-
+	#if abs(dist_to_run) < dist_2_speed:
+	#	robot_drive.speed_now 		= robot_drive.speed_2
+	#	robot_drive.speed_desired 	= robot_drive.speed_2
+	#elif abs(dist_to_run) < dist_3_speed:
+	#	robot_drive.speed_now 		= robot_drive.speed_3
+	#	robot_drive.speed_desired 	= robot_drive.speed_3
+	#elif abs(dist_to_run) < dist_4_speed:
+	#	robot_drive.speed_now 		= robot_drive.speed_4
+	#	robot_drive.speed_desired 	= robot_drive.speed_4
+	#else:
+	#	robot_drive.speed_now 		= robot_drive.speed_6
+	#	robot_drive.speed_now 		= robot_drive.speed_6
 
     # only if the robot starts to move then change the status
 	if robot_drive.robot_moving:
@@ -98,6 +101,20 @@ def continue_move():
 	elif(abs(dist_to_run) - abs(dist_completed) < dist_lower_speed):
 		robot_drive.speed_desired = robot_drive.speed_lower
 		rospy.loginfo('Reduce speed to 5, only 20 cm to target position')
+
+	#if (abs(dist_to_run) - abs(dist_completed) < dist_2_speed):
+	#	#robot_drive.speed_now 		= robot_drive.speed_2
+	#	robot_drive.speed_desired 	= robot_drive.speed_2
+	#elif (abs(dist_to_run) - abs(dist_completed) < dist_3_speed):
+	#	#robot_drive.speed_now 		= robot_drive.speed_3
+	#	robot_drive.speed_desired 	= robot_drive.speed_3
+	#elif (abs(dist_to_run) - abs(dist_completed) < dist_4_speed):
+	#	#robot_drive.speed_now 		= robot_drive.speed_4
+	#	robot_drive.speed_desired 	= robot_drive.speed_4
+	#else:
+	#	#robot_drive.speed_now 		= robot_drive.speed_6
+	#	robot_drive.speed_now 		= robot_drive.speed_6
+
 
     # if change of speed request is received 
 	if(robot_drive.speed_now  != robot_drive.speed_desired):

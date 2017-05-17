@@ -8,7 +8,7 @@ from std_msgs.msg import String
 
 pub_param 		= rospy.Publisher('parameters', String, queue_size = 1)
 pub_gps			= rospy.Publisher('gps', 	String, queue_size=10)
-pub_command 		= rospy.Publisher('command', 	String, queue_size=10)
+pub_command 	= rospy.Publisher('command', 	String, queue_size=1)
 
 # Used to publish parameters 
 def publish_parameters():
@@ -30,7 +30,7 @@ def publish_parameters():
 	data["parameters"]  =    info
 	  
 	parameters = json.dumps(data)
-	rospy.loginfo(parameters)
+	#rospy.loginfo(parameters)
 	pub_param.publish(parameters)
 
 def publish_gps():
@@ -42,6 +42,6 @@ def publish_gps():
 def publish_command(command_string, speed):
 	#sending the string
 	#handle the format of the string
-	stringToSend = 'S%s00000%dE' % (command_string, speed) #might need to add \n behind the E
+	stringToSend = 'S%s00000%dE\n' % (command_string, speed) #might need to add \n behind the E
 	pub_command.publish(stringToSend)
 	rospy.loginfo(str(stringToSend))

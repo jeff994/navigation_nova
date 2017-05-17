@@ -75,7 +75,8 @@ def update_robot_gps(left_encode, right_encode):
 		R 		= abs(r1 - r2)
 
 		#right turn 
-		if(left_dist > 0.0 or (left_dist == 0.0 and right_dist < 0.0)): 
+		if(left_dist >= 0.0 and right_dist < 0.0):
+		#if(left_dist > 0.0 or (left_dist == 0.0 and right_dist < 0.0)): 
 			alpha = alpha 
 		else:
 			alpha = -alpha 
