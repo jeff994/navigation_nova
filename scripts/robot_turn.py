@@ -75,7 +75,6 @@ def start_turn():
 	else:
 		robot_drive.start()
 
-
 # tell the robot to complete it's turning job 
 def stop_turn():
 	global degree_turned
@@ -127,6 +126,10 @@ def turn_degree():
 
  	if not robot_drive.robot_on_mission:
  		degree_to_turn = robot_drive.bearing_target - robot_drive.bearing_now 
+ 		if (degree_to_turn > 180.0):
+ 			degree_to_turn = degree_to_turn - 360.0
+ 		elif (degree_to_turn < -180):
+ 			degree_to_turn = degree_to_turn + 360.0
 		if abs(degree_to_turn) < robot_correction.min_correction_angle: 
 			rospy.loginfo("Degree to turn %d < %d",  degree_to_turn, robot_correction.min_correction_angle)
 			return True 
@@ -146,21 +149,34 @@ def turn_degree():
 	#Get the turned angle and then calculate 
 	step_angle = robot_drive.step_angle  
 	#robot_drive.bearing_now = robot_drive.bearing_now + step_angle
-	rospy.loginfo("Degree turned %f, degree to turn %f, bearing_now %f, bearing_target %f", degree_turned, abs(degree_to_turn), robot_drive.bearing_now, robot_drive.bearing_target)
+	#rospy.loginfo("To turn %f, Turned %f, bearing_now %f, bearing_target %f", degree_turned, abs(degree_to_turn), robot_drive.bearing_now, robot_drive.bearing_target)
 
-	degree_turned = degree_turned + abs(step_angle)
+	degree_turned = degree_turned + step_angle
     # 1 step before the robot turn, stop the robot
-	degree_threshold = abs(degree_to_turn) - robot_correction.min_correction_angle/2.0
+	#degree_threshold = abs(degree_to_turn) - (robot_correction.min_correction_angle/2.0)
+	bearing_lower_threshold = robot_drive.bearing_target - (robot_correction.min_correction_angle/2.0)
+	bearing_upper_threshold = robot_drive.bearing_target + (robot_correction.min_correction_angle/2.0)
 	#degree_threshold = 5
 	#simple log for tracing 
-	distpub = 'Required angle:%f turned angle:%f step angle: %f' % (degree_to_turn, degree_turned, step_angle)
-	rospy.loginfo(distpub)
+	#distpub = 'To turn:%f Turned:%f Step angle: %f' % (degree_to_turn, degree_turned, step_angle)
+	#rospy.loginfo(distpub)
+	rospy.loginfo("To turn %f, Turned %f, Step %f, Bearing %f, Target %f", degree_to_turn, degree_turned, step_angle, robot_drive.bearing_now, robot_drive.bearing_target)
 
-	if(degree_turned < degree_threshold): 
-		continue_turn(step_angle)
-		return False
-	else: 
-		#finishe the turning 
+	#if(degree_turned < degree_threshold): 
+	#	continue_turn(step_angle)
+	#	return False
+	#else: 
+	#	#finishe the turning 
+	#	stop_turn()
+	#	return not robot_drive.robot_on_mission
+	
+	#aaron trying
+	if(robot_drive.bearing_now >= bearing_lower_threshold and robot_drive.bearing_now <= bearing_upper_threshold):
+		rospy.loginfo("now %f, low thresh %f, high thresh %f", robot_drive.bearing_now, bearing_lower_threshold, bearing_upper_threshold)
 		stop_turn()
 		return not robot_drive.robot_on_mission
+	else:
+		continue_turn(step_angle)
+		return False
+
 	return False

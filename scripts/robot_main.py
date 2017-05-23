@@ -5,7 +5,7 @@ import time
 import os
 import robot_obstacle
 import robot_job
-import robot_correction 
+import robot_correction
 import robot_publisher
 import robot_listener 
 import robot_drive 
@@ -14,7 +14,7 @@ import robot_turn
 import robot_configure
 import execute_command    #only here to init command buffer
 from std_msgs.msg import String
-
+from geometry_msgs.msg import Vector3
 
 # The main progream process the robot logic 
 def main_commander():
@@ -159,6 +159,8 @@ def main_listener():
 	rospy.Subscriber('obstacle_status', String, robot_listener.obstacle_status_callback) #was previously driver_obstacle
 	rospy.Subscriber('job', String, robot_listener.job_callback)
 	rospy.Subscriber('control', String, robot_listener.control_callback)
+	rospy.Subscriber('velocity', Vector3, robot_listener.velocity_callback)
+	
 	while not rospy.is_shutdown():
 		main_commander()
 	rospy.spin()

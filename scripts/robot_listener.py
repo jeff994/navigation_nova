@@ -337,6 +337,17 @@ def obstacle_status_callback(data):
 
 #@yuqing_publishparam
 
+#aaron 23May
+def velocity_callback(data):
+	something = data.x
+	something = data.y
+	something = data.z
+
+def IMU_callback(data):
+	something = data.x
+	something = data.y
+	something = data.z
+	
 # init the the encoder buffer with some empty data when system starts 
 def init_encoder_buffer( size=2000 ):
 	global encoder_data 
@@ -367,10 +378,10 @@ def process_encoder_delay():
 			bytesToLog = 'Error: Not receiving data for %f seconds: Stopping robot immediately' % (max_delay)
 			rospy.logerr(bytesToLog)
 			robot_drive.stop_robot()
-		else:
-			time.sleep(0.05)
-	else:
-		time.sleep(0.05)
+		#else: 							#aaron comment
+		#	time.sleep(0.05) 			#aaron comment
+	#else: 								#aaron comment
+	#	time.sleep(0.05) 				#aaron comment
 
 # Very import step, based on the encoder data, we do the conversion and calcuation 
 def process_encoder_data():

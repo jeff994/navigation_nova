@@ -10,9 +10,9 @@ from std_msgs.msg import String
 #	Robot drive module									#
 #-------------------------------------------------------#
 
-encode_to_mm 		= 23.50 		# 1000 encoding signals = 1 mm travelled
-correct_turn_radius 	= 307.0
-turn_radius 		= 370.0 			# radius when turning in mm (half distance between the middle point of two wheels) 
+encode_to_mm 		= 31.81297 		# 1000 encoding signals = 1 mm travelled
+turn_radius 		= 307.0
+last_night_turn_radius 		= 370.0 			# radius when turning in mm (half distance between the middle point of two wheels) 
 speed_lower			= 3
 speed_lowest		= 3
 speed_full			= 4
@@ -99,10 +99,17 @@ def encoder_to_distance(encoder_data, encoder_received, encoder_processed):
 def stop_robot():
 	speed_now = 0
 	desired_speed = 0
+	move_direction = 'P' #P
 	# move_direction = 'S'
 	# updated the stop command from 'S' to 'P'
-	move_direction = 'B' #P
-	robot_publisher.publish_command(move_direction,speed_now)
+	#while True:
+	#	#step 1, send the stop command every 10 milli seoncs
+	#	if(robot_moving or robot_turning):
+	#		robot_publisher.publish_command(move_direction,speed_now)
+	#		time.sleep(0.01)
+	#	else: 
+	#		break
+	robot_publisher.publish_command(move_direction, speed_now)
 
 def unlock_robot():
 	# send a command to unlock robot after obstacle avoidece 
@@ -114,7 +121,7 @@ def unlock_robot():
 def change_speed():
 	global move_direction, speed_now, speed_desired 
 	robot_publisher.publish_command(move_direction, speed_desired)
-	speed_now  = speed_desired
+	speed_now = speed_desired
 	distpub = 'Robot speed changed from %d to %d' % (speed_now, speed_desired)
 	rospy.loginfo(distpub)
 

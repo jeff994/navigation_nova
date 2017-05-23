@@ -19,7 +19,7 @@ from math import radians, cos, sin, asin, sqrt, atan2, degrees
 #defining or acquiring the GPS coordinates
 init_lon			= 121.635139
 init_lat			= 31.2112262
-init_bearing			= 0
+init_bearing		= 0.0
 gps_lon 			= [103.962389,103.962456,103.962461,103.962381] #S,A,B,C,D
 gps_lat 			= [1.3407,1.340696,1.340589,1.340599]
 loops 				= 1 			#how many rounds to go
@@ -31,10 +31,10 @@ def process_no_job():
 	if(robot_drive.robot_moving):
 		rospy.logwarn('warning: robot is not fully stopped even though a top command issued')
 		robot_drive.stop_robot()
-		time.sleep(0.05)
+		#time.sleep(0.05) 			#aaron comment
 		return
-	else:
-		time.sleep(0.1)
+	#else: 							#aaron comment
+	#	time.sleep(0.1) 			#aaron comment
 
 # Process all kinds of robot job as required 
 def process_job():
@@ -75,7 +75,7 @@ def pause_robot():
 			#step 1, send the stop command every 10 milli seoncs
 			if(robot_drive.robot_moving or robot_drive.robot_turning):
 				robot_drive.stop_robot()
-				time.sleep(0.01)
+				#time.sleep(0.01) 			#aaron comment
 			else: 
 				break
 			#robot_drive.robot_enabled = 1
@@ -251,7 +251,7 @@ def insert_compensation_jobs(lon_source, lat_source, bearing_source, lon_target,
 	bearing 	= gpsmath.bearing(lon_source, lat_source, lon_target, lat_target)
 	distance 	= gpsmath.haversine(lon_source, lat_source, lon_target, lat_target)
 
-	turn_job 				= Job(lon_source, lat_source, bearing, correction_type, 'T', bearing_target)
+	turn_job 				= Job(lon_source, lat_source, bearing_target, correction_type, 'T', bearing_target)
 	turn_before_move_job 	= Job(lon_source, lat_source, bearing, correction_type, 'T', bearing)
 	move_job 				= Job(lon_target, lat_target, bearing, correction_type, 'F', distance)
 	reverse_job 			= Job(lon_target, lat_target, bearing, correction_type, 'B', distance)

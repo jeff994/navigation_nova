@@ -12,7 +12,7 @@ import robot_publisher
 
 ############################################################
 min_correction_distance 	= 100.0
-min_correction_angle 		= 30.0
+min_correction_angle 		= 5.0
 correction_count 			= 0.0
 max_correction_run 			= 15.0
 
@@ -83,8 +83,7 @@ def update_robot_gps(left_encode, right_encode):
 
 	robot_drive.step_angle 	= degrees(alpha)
 	# covnert to degree
-	#####bearing 				= robot_drive.bearing_now + robot_drive.step_angle / 2.0
-	bearing = robot_drive.bearing_now + robot_drive.step_angle
+	bearing 				= robot_drive.bearing_now + robot_drive.step_angle / 2.0
 	# convert between [0 - 360)
 	bearing 				= gpsmath.format_bearing(bearing)
 	dist 					= R * sin(abs(alpha/2.0)) * 2.0
@@ -108,12 +107,10 @@ def distance_correction(lon_now, lat_now, bearing_now, lon_target, lat_target, b
 	bearing 	= gpsmath.bearing(lon_now, lat_now, lon_target, lat_target)
 	# check the bearing now and bearing target 
 	rospy.loginfo("GPS now [%f, %f], GPS target: [%f, %f]", lon_now, lat_now, lon_target, lat_target)
-	rospy.loginfo("Bearing now %f, bearing target %f, Bearing move %f, ", bearing_now, bearing_target, bearing)
+	rospy.loginfo("Bearing move %f, Bearing now %f, bearing target %f", bearing, bearing_now, bearing_target)
 	
 	diff_angle = (bearing_target - bearing_now + 360.0) % 360.0
-	if (diff_angle > 180.0):
-		diff_angle = diff_angle - 360.0
-
+	
 	#if((bearing - bearing_now + 360.0)%360.0 >= 90):
 	#	distance = -distance
 
