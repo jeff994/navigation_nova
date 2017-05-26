@@ -157,7 +157,7 @@ def move_distance(dist):
 
 	#@yuqing_correctionper10m
 	#if travel over 10m, job_completed to 1, start to correct
-	if (dist_completed > dist_to_correct):
+	if (dist_completed >= dist_to_correct):
 		rospy.loginfo("-----------------dist_completed: %f, start to correct", dist_completed)
 		stop_move()
 		return not robot_drive.robot_on_mission

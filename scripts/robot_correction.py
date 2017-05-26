@@ -8,11 +8,9 @@ import robot_drive
 import robot_job 
 import robot_publisher 
 
-
-
 ############################################################
 min_correction_distance 	= 100.0
-min_correction_angle 		= 30.0
+min_correction_angle 		= 5.0
 correction_count 			= 0.0
 max_correction_run 			= 15.0
 
@@ -23,6 +21,13 @@ from math import radians, cos, sin, asin, sqrt, atan2, degrees
 #-------------------------------------------------------#
 # while robot's moving, dynamically update robot gps
 # still need to handle more scenarios 
+def update_robot_gps_new(dist, bearing):
+	#rospy.loginfo("Step Distance moved %fmm, Step_angle %f degree, Step_distance %f mm", dist, robot_drive.step_angle, robot_drive.step_distance) 
+	robot_drive.lon_now, robot_drive.lat_now 	= gpsmath.get_gps(robot_drive.lon_now, robot_drive.lat_now, dist, bearing)		
+	#robot_drive.bearing_now 					= gpsmath.format_bearing(robot_drive.bearing_now + robot_drive.step_angle)
+	#robot_publisher.publish_gps()
+	#rospy.loginfo("Bearing now %f,lon_now %f, lat_now %f", robot_drive.bearing_now, robot_drive.lon_now, robot_drive.lat_now)
+
 
 def update_robot_gps(left_encode, right_encode): 
 	robot_drive.step_angle = 0.0

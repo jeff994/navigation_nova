@@ -31,10 +31,10 @@ def process_no_job():
 	if(robot_drive.robot_moving):
 		rospy.logwarn('warning: robot is not fully stopped even though a top command issued')
 		robot_drive.stop_robot()
-		#time.sleep(0.05) 			#aaron comment
+		time.sleep(0.05) 			#aaron comment
 		return
-	#else: 							#aaron comment
-	#	time.sleep(0.1) 			#aaron comment
+	else: 							#aaron comment
+		time.sleep(0.1) 			#aaron comment
 
 # Process all kinds of robot job as required 
 def process_job():
@@ -75,7 +75,7 @@ def pause_robot():
 			#step 1, send the stop command every 10 milli seoncs
 			if(robot_drive.robot_moving or robot_drive.robot_turning):
 				robot_drive.stop_robot()
-				#time.sleep(0.01) 			#aaron comment
+				time.sleep(0.01) 			#aaron comment
 			else: 
 				break
 			#robot_drive.robot_enabled = 1

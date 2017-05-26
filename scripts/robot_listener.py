@@ -19,6 +19,7 @@ import robot_configure
 import webbrowser
 from datetime import datetime
 from std_msgs.msg import String
+from geometry_msgs.msg import Vector3
 import os
 
 #used to hold the encoder data received, init with some value  
@@ -33,6 +34,9 @@ compass_index 		= 0 	# current compass index
 last_process_time 	= 0 	# last processing time 
 max_delay 			= 1.0	# max delay allowed for not receiving any signal from encooder 
 last_received_time 	= 0.0 	# the time of receiving the last encoer data 
+
+#aaron added globals
+
 
 # handle the data from the front reverse car sensor
 def rc_sensor_f_callback(data):
@@ -207,11 +211,11 @@ def keyboard_callback(data):
 		rospy.loginfo("Resume the task");
 		robot_drive.robot_paused = 0; 
 	elif (keyboard_data == 'Forward'):
-		rospy.loginfo("Command received: Start to move forward 1 m")
-		robot_job.simple_move(1000.0, robot_drive.bearing_now, 'F')
+		rospy.loginfo("Command received: Start to move forward 2 m")
+		robot_job.simple_move(2000.0, robot_drive.bearing_now, 'F')
 	elif (keyboard_data == 'Back'):
-		rospy.loginfo("rospeived: Start to move back 1 m")
-		robot_job.simple_move(-1000.0, robot_drive.bearing_now, 'B')
+		rospy.loginfo("rospeived: Start to move back 2 m")
+		robot_job.simple_move(-2000.0, robot_drive.bearing_now, 'B')
 	elif (keyboard_data == 'Turn_West'):
 		rospy.loginfo("Command received: turn to 270 (WEST)") 
 		#robot_drive.bearing_now = compass_data[compass_index] 
@@ -339,15 +343,28 @@ def obstacle_status_callback(data):
 
 #aaron 23May
 def velocity_callback(data):
-	something = data.x
-	something = data.y
-	something = data.z
+	#skip processing and update relevant places
+	robot_drive.burn_mode  	= False
+	robot_drive.vx   	 	= data.x
+	robot_drive.vy  	 	= data.y
+	robot_drive.vth  	 	= data.z
 
-def IMU_callback(data):
-	something = data.x
-	something = data.y
-	something = data.z
+	if(data.x == 0.0 and data.y == 0.0 and data.z == 0.0):
+		#rospy.loginfo("encoder 0,0")
+		robot_drive.robot_moving 	= False
+		robot_drive.robot_turning 	= False
+	elif (data.x != 0.0 and abs(data.z) < 0.5):
+		robot_drive.robot_moving 	= True
+		robot_drive.robot_turning 	= False
+	else:
+		robot_drive.robot_turning 	= True
+		robot_drive.robot_moving 	= False 
 	
+def IMU_callback(data):
+	robot_drive.roll  	= data.x
+	robot_drive.pitch 	= data.y
+	robot_drive.yaw 	= data.z
+
 # init the the encoder buffer with some empty data when system starts 
 def init_encoder_buffer( size=2000 ):
 	global encoder_data 
@@ -378,18 +395,18 @@ def process_encoder_delay():
 			bytesToLog = 'Error: Not receiving data for %f seconds: Stopping robot immediately' % (max_delay)
 			rospy.logerr(bytesToLog)
 			robot_drive.stop_robot()
-		#else: 							#aaron comment
-		#	time.sleep(0.05) 			#aaron comment
-	#else: 								#aaron comment
-	#	time.sleep(0.05) 				#aaron comment
+		else: 							#aaron comment
+			time.sleep(0.05) 			#aaron comment
+	else: 								#aaron comment
+		time.sleep(0.05) 				#aaron comment
 
 # Very import step, based on the encoder data, we do the conversion and calcuation 
 def process_encoder_data():
 	global encoder_data 
 	global encoder_received
 	global encoder_processed
-	# convert the encoder data to distance 
-	left_encode, right_encode = robot_drive.encoder_to_distance(encoder_data, encoder_received, encoder_processed)
+	# Accumulate all available encoder data
+	left_encode, right_encode = robot_drive.accum_encoder_data(encoder_data, encoder_received, encoder_processed)
 	# After process, update the proccessed index the same as received index 
 	encoder_processed = encoder_received
 	# dynamically calculate and update the gps data, step_angle, step_distance etc while the robot moving 

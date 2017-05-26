@@ -4,8 +4,11 @@ import serial
 import string
 import time
 import robot_publisher 
+import robot_correction
+import math
 
 from std_msgs.msg import String
+from math import radians, cos, sin, asin, sqrt, atan2, degrees
 #-------------------------------------------------------#
 #	Robot drive module									#
 #-------------------------------------------------------#
@@ -37,14 +40,28 @@ speed_2 			= 2
 
 lon_now 			= 121.635139
 lat_now  			= 31.2112262
-bearing_now 			= 0.0
+bearing_now 		= 0.0
 
 lon_target 			= 121.635139
 lat_target 			= 31.2112262
-bearing_target 			= 0.0 		#degrees
+bearing_target 		= 0.0 		#degrees
 
-step_angle 			= 0
-step_distance			= 0
+x 					= 0.0
+y 					= 0.0
+th 					= 0.0
+
+vx 					= 0.0
+vy 					= 0.0
+vth 				= 0.0
+
+roll 				= 0.0
+pitch 				= 0.0
+yaw 				= 0.0
+
+past_step_time 			= 0.0
+
+step_angle 			= 0.0
+step_distance		= 0.0
 
 
 #yuqing_obstaclemodeconfirm
@@ -76,8 +93,8 @@ def start():
 	global move_direction
 	robot_publisher.publish_command(move_direction, speed_now)
 
-# Simple conversion, get all the encoder not processed, then convert them to the distance 
-def encoder_to_distance(encoder_data, encoder_received, encoder_processed):
+# Get all the encoder not processed 
+def accum_encoder_data(encoder_data, encoder_received, encoder_processed):
 	left_encode = 0
 	right_encode = 0
 	#in case data received is faster than the processing time 
@@ -94,6 +111,48 @@ def encoder_to_distance(encoder_data, encoder_received, encoder_processed):
 				left_encode 	+= encoder_data[2 * x]
 				right_encode 	+= encoder_data[2 * x + 1]
 	return left_encode, right_encode 
+
+def get_step():
+	global past_step_time
+	global x
+	global y	
+	global bearing_now
+	global bearing_target
+	global vx 	#mm/s
+	global vy 	#mm/s
+	global vth 	#rad/s
+	global step_distance
+
+	current_step_time 	= rospy.get_time()
+	dt 			 	 	= current_step_time - past_step_time
+
+	#th is relative to each job
+	th 					= (bearing_target - bearing_now) 	
+	if (th < -180.0):
+		th 				= th + 360.0
+	elif (th > 180.0):
+		th 				= th - 360.0
+
+	#calculate step deltas
+	th_radian 			= th * 3.14159265 / 180.0
+	delta_x 			= vx * cos(th_radian) * dt #mm
+	delta_y 			= vx * sin(th_radian) * dt #mm
+	delta_th 			= vth * dt #radians
+
+	#coordinates relative to job
+	x  		 			= x + delta_x
+	y 					= y + delta_y
+
+	#relative to step
+	bearing_now 		= (bearing_now - (delta_th * 180.0 / 3.14159265) + 360.0)%360.0
+	step_distance 		= sqrt((delta_x ** 2.0) + (delta_y ** 2.0))
+
+	#setting past_time for next iteration
+	past_step_time  		= current_step_time
+
+	#update gps, this should be called for every step
+	robot_correction.update_robot_gps_new(step_distance, bearing_now)
+
 
 # just send a command to stop robot 
 def stop_robot():
