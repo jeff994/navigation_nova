@@ -16,8 +16,8 @@ dist_completed 			= 0.0
 dist_to_run 			= 0.0
 #@yuqing_correctionper10m
 dist_to_correct 		= 10000.0
-dist_lowest_speed 		= 200.0
-dist_lower_speed 		= 500.0
+dist_lowest_speed 		= 500.0
+dist_lower_speed 		= 1000.0
 dist_end_point_check 	= 600.0 #was 600
 
 dist_4_speed 			= 2000.0
@@ -165,9 +165,9 @@ def move_distance(dist):
 	dist_remain = dist_threshold - dist_completed;
 	# very near to the target position, we could check whether the robot is closer to the position or the remaining value to move
 	# If it's closer, we just move the the position 
-	if(dist_remain < dist_end_point_check):
+	if(abs(dist_remain) < dist_end_point_check):
 		dist_temp = robot_job.left_gps_distance()
-		if(dist_temp < dist_remain):  # Robot is closer to end gps position then calculated task distance 
+		if(dist_temp < abs(dist_remain)):  # Robot is closer to end gps position then calculated task distance ##aaron: dist_remain less than 0 if overshoot
 			stop_move()
 			return not robot_drive.robot_on_mission
 		else:

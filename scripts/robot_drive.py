@@ -13,12 +13,13 @@ from math import radians, cos, sin, asin, sqrt, atan2, degrees
 #	Robot drive module									#
 #-------------------------------------------------------#
 
-encode_to_mm 		= 31.81297 		# 1000 encoding signals = 1 mm travelled
+encode_to_mm 		= 27.8 		# 1000 encoding signals = 1 mm travelled
 turn_radius 		= 307.0
+lengthBetweenTwoWheels = 614.0
 last_night_turn_radius 		= 370.0 			# radius when turning in mm (half distance between the middle point of two wheels) 
-speed_lower			= 3
-speed_lowest		= 3
-speed_full			= 4
+speed_full			= 6
+speed_lower			= 5
+speed_lowest		= 4
 speed_desired 		= speed_full	# Global robot moving spped, 3 - 5
 speed_now 			= speed_full	# Robot moving speed now
 robot_on_mission 	= False			# set an indicator that robot's on a job right now 
@@ -62,6 +63,8 @@ past_step_time 			= 0.0
 
 step_angle 			= 0.0
 step_distance		= 0.0
+
+direction 			= 0
 
 
 #yuqing_obstaclemodeconfirm
@@ -118,10 +121,11 @@ def get_step():
 	global y	
 	global bearing_now
 	global bearing_target
-	global vx 	#mm/s
-	global vy 	#mm/s
-	global vth 	#rad/s
+	global vx 	#encode/s
+	global vy 	#encode/s
+	global vth 	#encode/mm*s
 	global step_distance
+	global encode_to_mm
 
 	current_step_time 	= rospy.get_time()
 	dt 			 	 	= current_step_time - past_step_time
@@ -135,23 +139,24 @@ def get_step():
 
 	#calculate step deltas
 	th_radian 			= th * 3.14159265 / 180.0
-	delta_x 			= vx * cos(th_radian) * dt #mm
-	delta_y 			= vx * sin(th_radian) * dt #mm
-	delta_th 			= vth * dt #radians
+	delta_x 			= vx * cos(th_radian) * dt / encode_to_mm #mm
+	delta_y 			= vx * sin(th_radian) * dt / encode_to_mm #mm
+	delta_th 			= vth * dt / encode_to_mm #radians
 
 	#coordinates relative to job
 	x  		 			= x + delta_x
 	y 					= y + delta_y
 
 	#relative to step
-	bearing_now 		= (bearing_now - (delta_th * 180.0 / 3.14159265) + 360.0)%360.0
+	bearing_now 		= (bearing_now + (delta_th * 180.0 / 3.14159265) + 360.0)%360.0
 	step_distance 		= sqrt((delta_x ** 2.0) + (delta_y ** 2.0))
 
 	#setting past_time for next iteration
-	past_step_time  		= current_step_time
+	past_step_time  	= current_step_time
 
 	#update gps, this should be called for every step
 	robot_correction.update_robot_gps_new(step_distance, bearing_now)
+	time.sleep(0.02)
 
 
 # just send a command to stop robot 

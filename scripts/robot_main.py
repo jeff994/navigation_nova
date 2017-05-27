@@ -38,14 +38,14 @@ def main_commander():
 	# Very important error handling: 
 	# If Not any new data comming, waiting for next data, 
 	# if waiting too long need to issue warning or error	 
-	if(robot_listener.encoder_received == robot_listener.encoder_processed): 	#aaron comment
-		robot_listener.process_encoder_delay() 									#aaron comment
-		return 																	#aaron comment
+	#if(robot_listener.encoder_received == robot_listener.encoder_processed): 	#aaron comment
+	#	robot_listener.process_encoder_delay() 									#aaron comment
+	#	return 																	#aaron comment
 	
 	# It process all the encoder data received - regardless robot status etc .  
-	# Including dynamically update robot GPS etc 
-	robot_listener.process_encoder_data() 										#aaron comment
-	#robot_drive.get_step() 													#aaron comment
+	#Including dynamically update robot GPS etc 
+	#robot_listener.process_encoder_data() 										#aaron comment
+	robot_drive.get_step() 														#aaron comment
 
 	# ----------------------------------------------------------------------------------------#
 	#  code to close robot when required	                    							  #
@@ -150,7 +150,7 @@ def read_system_config():
 def main_listener():
 	rospy.init_node('commander')
 	#rospy.Subscriber('compass', String, robot_listener.compass_callback) 			#aaron comment
-	rospy.Subscriber('encoder', String, robot_listener.encoder_callback) 			#aaron comment
+	#rospy.Subscriber('encoder', String, robot_listener.encoder_callback) 			#aaron comment
 	rospy.Subscriber('keyboard', String, robot_listener.keyboard_callback)
 	#rospy.Subscriber('rc_sensor_f', String, robot_listener.rc_sensor_f_callback)  #write the callbacks properly
 	#rospy.Subscriber('rc_sensor_b', String, robot_listener.rc_sensor_b_callback)  #once we can get the correct data formats
@@ -160,7 +160,10 @@ def main_listener():
 	rospy.Subscriber('obstacle_status', String, robot_listener.obstacle_status_callback) #was previously driver_obstacle
 	rospy.Subscriber('job', String, robot_listener.job_callback)
 	rospy.Subscriber('control', String, robot_listener.control_callback)
-	#rospy.Subscriber('velocity', Vector3, robot_listener.velocity_callback)
+	rospy.Subscriber('velocity', Vector3, robot_listener.velocity_callback)
+	rospy.Subscriber('IMU', Vector3, robot_listener.IMU_callback) #not yet done
+	rospy.Subscriber('battery', String, robot_listener.battery_callback)
+	rospy.Subscriber('direction', String, robot_listener.direction_callback)
 	
 	while not rospy.is_shutdown():
 		main_commander()

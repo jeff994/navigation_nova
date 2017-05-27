@@ -15,10 +15,10 @@ degree_to_turn 		= 0
 angle_lower_speed 	= 250
 angle_lowest_speed 	= 180
 
-angle_6_speed 		= 360.0
-angle_4_speed 		= 180
-angle_3_speed 		= 90
-angle_2_speed 		= 45
+angle_5_speed 		= 360.0
+angle_4_speed 		= 180.0
+angle_3_speed 		= 90.0
+angle_2_speed 		= 45.0
 
 # start a turn job 
 def start_turn():
@@ -62,11 +62,11 @@ def start_turn():
 		robot_drive.speed_now 		= robot_drive.speed_3
 		robot_drive.speed_desired 	= robot_drive.speed_3
 	elif (abs(degree_to_turn) < angle_4_speed):
+		robot_drive.speed_now 		= robot_drive.speed_3
+		robot_drive.speed_desired 	= robot_drive.speed_3
+	elif (abs(degree_to_turn) < 360.0):
 		robot_drive.speed_now 		= robot_drive.speed_4
 		robot_drive.speed_desired 	= robot_drive.speed_4
-	elif (abs(degree_to_turn) < 360.0):
-		robot_drive.speed_now 		= robot_drive.speed_6
-		robot_drive.speed_desired 	= robot_drive.speed_6
 
 	if robot_drive.robot_turning:
 		robot_drive.robot_on_mission = True
@@ -107,9 +107,9 @@ def continue_turn(step_angle):
 	if (abs(degree_to_turn) - abs(degree_turned) < angle_3_speed):
 		robot_drive.desired_speed = robot_drive.speed_3
 	elif (abs(degree_to_turn) - abs(degree_turned) < angle_4_speed):
+		robot_drive.desired_speed = robot_drive.speed_3
+	elif (abs(degree_to_turn) - abs(degree_turned) < angle_5_speed):
 		robot_drive.desired_speed = robot_drive.speed_4
-	elif (abs(degree_to_turn) - abs(degree_turned) < angle_6_speed):
-		robot_drive.desired_speed = robot_drive.speed_6
 
 
 	#dynamically update robot bearing 

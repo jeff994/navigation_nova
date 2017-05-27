@@ -186,6 +186,22 @@ def encoder_callback(data):
 	#if (robot_drive.robot_on_mission ==1 ):
 	#	rospy.loginfo(str(data_string))
 
+def encoder_callback_new(data):
+	robot_drive.burn_mode = False
+	left_encode 			= data.x
+	right_encode 			= data.y
+
+	if(left_encode == 0 or right_encode == 0):
+		#rospy.loginfo("encoder 0,0")
+		robot_drive.robot_moving 	= False
+		robot_drive.robot_turning 	= False
+	elif (left_encode * right_encode > 0):
+		robot_drive.robot_moving 	= True
+		robot_drive.robot_turning 	= False
+	else:
+		robot_drive.robot_turning 	= True
+		robot_drive.robot_moving 	= False
+
 # Subscriber to keyboard topic and peform actions based on the command get  
 def keyboard_callback(data):
 	keyboard_data = ''
@@ -364,6 +380,24 @@ def IMU_callback(data):
 	robot_drive.roll  	= data.x
 	robot_drive.pitch 	= data.y
 	robot_drive.yaw 	= data.z
+
+def battery_callback(data):
+	data_string = data.data
+	robot_status.battery_level = int(data_string)
+
+def direction_callback(data):
+	data_string = data.data
+	data_int  	= int(data_string)
+	if (data_int == 0):
+		robot_drive.direction = "stop"
+	elif (data_int == 1):
+		robot_drive.direction = "forward"
+	elif (data_int == 2):
+		robot_drive.direction = "backward"
+	elif (data_int == 3):
+		robot_drive.direction = "left"
+	elif (data_int == 4):
+		robot_drive.direction = "right"
 
 # init the the encoder buffer with some empty data when system starts 
 def init_encoder_buffer( size=2000 ):

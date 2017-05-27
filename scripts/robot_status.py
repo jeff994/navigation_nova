@@ -4,6 +4,8 @@ import string
 
 from std_msgs.msg import String
 
+battery_level = 100
+
 #designed to dynamically update the robot status 
 def get_status(data):
 	#accumulate encoder data

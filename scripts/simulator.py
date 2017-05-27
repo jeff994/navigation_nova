@@ -5,13 +5,18 @@ import rospy
 import serial
 import string
 import sys
-
+from geometry_msgs.msg import Vector3
 
 from datetime import datetime
 
 from std_msgs.msg import String
 
 encoder_pub = rospy.Publisher('encoder', String, queue_size = 10)
+velocity_pub  		= rospy.Publisher('velocity', Vector3, queue_size = 1)
+velocity_vector  	= Vector3()
+velocity_vector.x  	= 0.0
+velocity_vector.y 	= 0.0
+velocity_vector.z 	= 0.0
 
 left_encode   	= 0 
 right_encode 	= 0
@@ -24,20 +29,18 @@ def executor_simulator(data):
 	command_str = str(data.data)
 	command_str = command_str.rstrip('\n')
 	command_str = command_str.rstrip('\r')
+	command_str = command_str.rstrip('\0')
 	rospy.loginfo("recieved command %s", command_str)
 
-    	if command_str == 'unlock':
+	if (command_str == 'normal'):
 		rospy.loginfo('Turn off burn mode')
-        	burn_mode = False
-    	elif command_str == 'lock':
+		burn_mode = False
+	elif (command_str == 'burn'):
 		rospy.loginfo("Turn to burn mode")
-        	burn_mode = True
-	elif  (command_str == 'SF000006E'):
+		burn_mode = True
+	elif (command_str == 'SF000006E'):
 		left_encode = 1700
 		right_encode  = 1700
-	elif (command_str == 'SL000006E'):
-		left_encode = -2400
-		right_encode = 2400
 	elif (command_str == 'SF000005E'):
 		left_encode = 1444
 		right_encode  = 1444
@@ -60,44 +63,58 @@ def executor_simulator(data):
 		left_encode = -867
 		right_encode = -867
 	elif(command_str == 'SL000006E'):
-		left_encode = -2000
-		right_encode  = 2000
+		left_encode = -1500
+		right_encode  = 1500
 	elif(command_str == 'SL000005E'):
-		left_encode = -1444
-		right_encode  = 1444
-	elif(command_str == 'SL000004E'):
 		left_encode = -1108
-		right_encode = 1108
+		right_encode  = 1108
+	elif(command_str == 'SL000004E'):
+		left_encode = -888
+		right_encode = 888
 	elif(command_str == 'SL000003E'):
-		left_encode = -879
-		right_encode = 879
+		left_encode = -666
+		right_encode = 666
 	elif(command_str == 'SR000006E'):
-		left_encode = 2000
-		right_encode  = -2000
+		left_encode = 1500
+		right_encode  = -1500
 	elif(command_str == 'SR000005E'):
 		left_encode = 1108
 		right_encode = -1108
 	elif(command_str == 'SR000004E'):
-		left_encode = 1108
-		right_encode = -1108
+		left_encode = 888
+		right_encode = -888
 	elif(command_str == 'SR000003E'):
-		left_encode = 879
-		right_encode = -879
+		left_encode = 666
+		right_encode = -666
 	else:
 		left_encode = 0
 		right_encode = 0
+
+
 	rospy.loginfo("I heard %s: %d:%d",command_str, left_encode, right_encode)
 
 def encoder_simulator():
 	if burn_mode:
-        	rospy.loginfo("Robot hardware in burn mode, doing notheing")
-        	return 
+		rospy.loginfo("Robot hardware in burn mode, doing notheing")
+		return 
 	#rospy.loginfo("Robot hardware in normal mode")
-    	global encoder_pub	
+	global encoder_pub	
+	global left_encode
+	global right_encode
+	global velocity_vector
 	bytesToPublish = '%d %d' % (left_encode, right_encode)
 	if(left_encode != 0  or right_encode != 0):
-	 	rospy.loginfo(bytesToPublish)
-   	encoder_pub.publish(str(bytesToPublish))
+		rospy.loginfo(bytesToPublish)
+	encoder_pub.publish(str(bytesToPublish))
+
+	dt  		 		= 0.1
+	vx 			 		= (float(left_encode)+float(right_encode))/(2.0 * dt)
+	vy 			 		= 0.0
+	vth 		 		= (float(left_encode)-float(right_encode)) / (614.0 * dt);
+	velocity_vector.x 	= vx
+	velocity_vector.y 	= vy
+	velocity_vector.z 	= vth
+	velocity_pub.publish(velocity_vector)
 
 def simulator():
 	rospy.init_node('simulator', anonymous=True)
