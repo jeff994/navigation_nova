@@ -94,6 +94,8 @@ turn_on_light				= False
 is_light_on					= False
 robot_interacting			= False
 
+roll_start 				= 0.0 
+
 
 ############################################################
 
@@ -126,7 +128,7 @@ def accum_encoder_data(encoder_data, encoder_received, encoder_processed):
 def stop_robot():
 	speed_now = 0
 	desired_speed = 0
-	move_direction = 'B' #P
+	move_direction = 'K' #P
 	# move_direction = 'S'
 	# updated the stop command from 'S' to 'P'
 	#while True:

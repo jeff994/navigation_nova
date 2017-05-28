@@ -72,8 +72,14 @@ def update_robot_gps(left_encode, right_encode):
 		return
 
 	# loacal vaiables
-	left_dist 	= float(left_encode) / robot_drive.turning_encode_to_mm
-	right_dist 	= float(right_encode) / robot_drive.turning_encode_to_mm
+
+	if (robot_drive.direction == "forward" or robot_drive.direction == "backward"):
+		left_dist 	= float(left_encode) / robot_drive.linear_encode_to_mm
+		right_dist 	= float(right_encode) / robot_drive.linear_encode_to_mm
+	else :
+		left_dist 	= float(left_encode) / robot_drive.turning_encode_to_mm
+		right_dist 	= float(right_encode) / robot_drive.turning_encode_to_mm
+
 	alpha 		= 0.0 # step turn angle in radian
 	total_dist 	= abs(left_dist) + abs(right_dist)
 	R 			= 0.0 # turn raidus, if two wheels in same direction, then the faster wheel radius is R + robot_drive.turn_radius

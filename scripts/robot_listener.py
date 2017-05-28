@@ -58,6 +58,12 @@ def sonar_callback(data):
 def IMU_callback(data):
 	#store the past value first
 	robot_drive.past_yaw  	= robot_drive.yaw
+	if(robot_drive.show_log):
+		diff_x = -robot_drive.roll + data.x 
+        	diff_y = -robot_drive.pitch + data.y 
+        	diff_z = -robot_drive.yaw + data.z
+
+		rospy.loginfo("values (%f, %f, %f)", diff_x, diff_y, diff_z)
 	robot_drive.roll  	= data.x
 	robot_drive.pitch 	= data.y
 	robot_drive.yaw 	= data.z
@@ -121,7 +127,7 @@ def status_callback(data):
 	if (data.obstacle_avoidance_mode and data.has_obstacle): 	#when obstacle mode on, and finds obstacle
 		robot_obstacle.robot_on_obstacle = True
 		robot_obstacle.robot_over_obstacle = False
-	elif (data.obstacle_avoidance_mode and data.on_obstacle): 	#when obstacle avoidance is over
+	elif (data.obstacle_avoidance_mode and data.over_obstacle): 	#when obstacle avoidance is over
 		robot_obstacle.robot_on_obstacle = False
 		robot_obstacle.robot_over_obstacle = True
 	else: 													 #when no obstacle,
@@ -364,10 +370,10 @@ def keyboard_callback(data):
 		robot_drive.robot_paused = 0;
 	elif (keyboard_data == 'Forward'):
 		rospy.loginfo("Command received: Start to move forward 4 m")
-		robot_job.simple_move(4000.0, robot_drive.bearing_now, 'F')
+		robot_job.simple_move(1000.0, robot_drive.bearing_now, 'F')
 	elif (keyboard_data == 'Back'):
 		rospy.loginfo("Command received: Start to move backward 4 m")
-		robot_job.simple_move(-4000.0, robot_drive.bearing_now, 'B')
+		robot_job.simple_move(-1000.0, robot_drive.bearing_now, 'B')
 	elif (keyboard_data == 'Turn_West'):
 		rospy.loginfo("Command received: turn to 270 (WEST)")
 		#robot_drive.bearing_now = compass_data[compass_index]

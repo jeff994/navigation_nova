@@ -68,12 +68,15 @@ def start_turn():
 	else:
 		rospy.loginfo("Sending command to let robot start turn")
 		robot_drive.start()
+		robot_drive.roll_start = robot_drive.roll
 
 # tell the robot to complete it's turning job
 def stop_turn():
 	global degree_turned
 	global degree_to_turn
 	if not robot_drive.robot_turning and not robot_drive.robot_moving:
+		diff = robot_drive.roll - robot_drive.roll_start
+		rospy.loginfo("Calculated roll difference %f, degreed turned %f", diff, degree_turned)
 		robot_drive.robot_on_mission = False
 		degree_turned = 0
 		degree_to_turn = 0
