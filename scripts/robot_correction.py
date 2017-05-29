@@ -203,3 +203,11 @@ def init_gps():
     robot_drive.lat_target      = robot_job.init_lat
     robot_drive.bearing_now     = robot_job.init_bearing
     robot_drive.bearing_target  = robot_job.init_bearing
+
+def distance_bearing_to_target():
+	# Get the distance
+	distance 	= gpsmath.haversine(robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target, robot_drive.lat_target)
+	bearing 	= gpsmath.bearing(robot_drive.lon_now, robot_drive.lat_now, robot_drive.lon_target, robot_drive.lat_target)
+	angle 		= gpsmath.format_bearing(bearing - robot_drive.bearing_now)
+	return distance, angle
+

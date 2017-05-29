@@ -44,20 +44,6 @@ def start_move():
 	robot_drive.speed_now  		= linear_lowest_speed
 	robot_drive.speed_desired 	= linear_lowest_speed
 
-	#changed by aaron to handle slow communication
-	#if abs(dist_to_run) < dist_2_speed:
-	#	robot_drive.speed_now 		= robot_drive.speed_2
-	#	robot_drive.speed_desired 	= robot_drive.speed_2
-	#elif abs(dist_to_run) < dist_3_speed:
-	#	robot_drive.speed_now 		= robot_drive.speed_3
-	#	robot_drive.speed_desired 	= robot_drive.speed_3
-	#elif abs(dist_to_run) < dist_4_speed:
-	#	robot_drive.speed_now 		= robot_drive.speed_4
-	#	robot_drive.speed_desired 	= robot_drive.speed_4
-	#else:
-	#	robot_drive.speed_now 		= robot_drive.speed_6
-	#	robot_drive.speed_now 		= robot_drive.speed_6
-
     # only if the robot starts to move then change the status
 	if robot_drive.robot_moving:
 		robot_drive.robot_on_mission = True
@@ -148,13 +134,14 @@ def move_distance(dist):
 		start_move()
 		return False
 
+	abs_dist_to_run = abs(dist_to_run)
 	# Accumulate the running distance and check
 	# Get each step of the distance
 	dist_step = robot_drive.step_distance
 	# accumulate the distance to the completed distance
 	dist_completed = dist_completed + abs(dist_step)   #this is in mm
 	# robot is with in the range, then we condidered robot reached the position
-	dist_threshold = abs(dist_to_run) - robot_correction.min_correction_distance/2 	#0 mm, I can choose -50mm, but since there will be inefficiencies, 0 error threshold might be good enough
+	dist_threshold = abs_dist_to_run - robot_correction.min_correction_distance/2 	#0 mm, I can choose -50mm, but since there will be inefficiencies, 0 error threshold might be good enough
 
 	if robot_drive.show_log:
 		distpub = 'speed %d, Dist-travelled: %f dist-total:%f dist-step:%f' % (robot_drive.speed_now, dist_completed, abs(dist_to_run) ,dist_step)
@@ -170,16 +157,16 @@ def move_distance(dist):
 		return not robot_drive.robot_on_mission
 
 	dist_remain = dist_threshold - dist_completed;
-	# very near to the target position, we could check whether the robot is closer to the position or the remaining value to move
-	# If it's closer, we just move the the position
-	#aaron comment 1/6/2017, to stop robot from stopping and jerking
-	#if(abs(dist_remain) < dist_end_point_check):
-	#	dist_temp = robot_job.left_gps_distance()
-	#	if(dist_temp < abs(dist_remain)):  # Robot is closer to end gps position then calculated task distance ##aaron: dist_remain less than 0 if overshoot
-	#		stop_move()
-	#		return not robot_drive.robot_on_mission
-	#	else:
-	#		continue_move()
+
+	#Check current point's distnace and angle to the target end point
+	if dist_remain > abs_dist_to_run/3:
+		distance_to_target, angle_to_target = robot_correction.distance_bearing_to_target()
+		if angle_to_target > 300 or angle_to_target < 60:
+			stop_move()
+			return not robot_drive.robot_on_mission
+		if distance_to_target < dist_remain / 2:
+			stop_move()
+			return not robot_drive.robot_on_mission
 
 	if (dist_remain > 0.0) :
 		#just continue moving of job not completed and no change of speed command received
