@@ -9,8 +9,8 @@ import robot_job
 import robot_publisher 
 
 ############################################################
-min_correction_distance 	= 100.0
-min_correction_angle 		= 5.0
+min_correction_distance 	= 200.0
+min_correction_angle 		= 4.0
 correction_count 			= 0.0
 max_correction_run 			= 15.0
 
@@ -39,6 +39,12 @@ def update_robot_gps(left_encode, right_encode):
 		return
 
 	# loacal vaiables 
+	if (robot_drive.direction == "forward" or robot_drive.direction == "backward"):
+		robot_drive.encode_to_mm 	= robot_drive.front_encode_to_mm
+	elif (robot_drive.direction == "left"):
+		robot_drive.encode_to_mm 	= robot_drive.left_encode_to_mm
+	elif (robot_drive.direction == "right"):
+		robot_drive.encode_to_mm 	= robot_drive.right_encode_to_mm
 	left_dist 	= float(left_encode) / robot_drive.encode_to_mm
 	right_dist 	= float(right_encode) / robot_drive.encode_to_mm
 	alpha 		= 0.0

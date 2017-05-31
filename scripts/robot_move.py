@@ -21,8 +21,8 @@ dist_lower_speed 		= 1000.0
 dist_end_point_check 	= 600.0 #was 600
 
 dist_4_speed 			= 2000.0
-dist_3_speed 			= 1000.0
-dist_2_speed 			= 500.0
+dist_3_speed 			= 250.0
+dist_2_speed 			= 250.0
 
 
 status_pub = rospy.Publisher('status', String, queue_size = 100)
@@ -38,15 +38,18 @@ def start_move():
 	global dist_2_speed
 
 	# if the task is a short distance task, then start with a lower speed 
-	if abs(dist_to_run) < dist_lowest_speed:
-		robot_drive.speed_now  		= robot_drive.speed_lowest 
-		robot_drive.speed_desired 	= robot_drive.speed_lowest
+	if abs(dist_to_run) < dist_3_speed:
+		robot_drive.speed_now 		= 2
+		robot_drive.speed_desired 	= 2
+	elif abs(dist_to_run) < dist_lowest_speed:
+		robot_drive.speed_now  		= 3 
+		robot_drive.speed_desired 	= 3
 	elif abs(dist_to_run) < dist_lower_speed: 
-		robot_drive.speed_now  		= robot_drive.speed_lower
-		robot_drive.speed_desired 	= robot_drive.speed_lower 
+		robot_drive.speed_now  		= 4
+		robot_drive.speed_desired 	= 4 
    	else:
-		robot_drive.speed_now 		= robot_drive.speed_full 
-		robot_drive.speed_desired 	= robot_drive.speed_full 
+		robot_drive.speed_now 		= 5 
+		robot_drive.speed_desired 	= 5 
 
 	#changed by aaron to handle slow communication
 	#if abs(dist_to_run) < dist_2_speed:
@@ -88,6 +91,7 @@ def continue_move():
 	global dist_completed
 	global dist_lowest_speed
 	global dist_lower_speed
+	global dist_3_speed
 
 	# if robot's on mission and somehow it's stopped, need to restart the robot 
 	if not robot_drive.robot_moving:
@@ -95,12 +99,15 @@ def continue_move():
         	robot_drive.start()
 
     # if robot is approaching the destination, then need to decrease speed 
-	if(abs(dist_to_run) - abs(dist_completed) < dist_lowest_speed):
-		robot_drive.speed_desired = robot_drive.speed_lowest
-		rospy.loginfo('Reduce speed to 4, very close to target position')
+	if (abs(dist_to_run) - abs(dist_completed) < dist_3_speed):
+		robot_drive.speed_desired = 2
+		rospy.loginfo('Reduce speed to 2, very close to target position')
+	elif(abs(dist_to_run) - abs(dist_completed) < dist_lowest_speed):
+		robot_drive.speed_desired = 3
+		rospy.loginfo('Reduce speed to 3, very close to target position')
 	elif(abs(dist_to_run) - abs(dist_completed) < dist_lower_speed):
-		robot_drive.speed_desired = robot_drive.speed_lower
-		rospy.loginfo('Reduce speed to 5, only 20 cm to target position')
+		robot_drive.speed_desired = 4
+		rospy.loginfo('Reduce speed to 4 only 20 cm to target position')
 
 	#if (abs(dist_to_run) - abs(dist_completed) < dist_2_speed):
 	#	#robot_drive.speed_now 		= robot_drive.speed_2

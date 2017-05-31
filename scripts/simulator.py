@@ -11,8 +11,8 @@ from datetime import datetime
 
 from std_msgs.msg import String
 
-encoder_pub = rospy.Publisher('encoder', String, queue_size = 10)
-velocity_pub  		= rospy.Publisher('velocity', Vector3, queue_size = 1)
+encoder_pub 		= rospy.Publisher('encoder', String, queue_size = 1000)
+#velocity_pub  		= rospy.Publisher('velocity', Vector3, queue_size = 1)
 velocity_vector  	= Vector3()
 velocity_vector.x  	= 0.0
 velocity_vector.y 	= 0.0
@@ -20,7 +20,7 @@ velocity_vector.z 	= 0.0
 
 left_encode   	= 0 
 right_encode 	= 0
-burn_mode	= True
+burn_mode		= True
 
 def executor_simulator(data):
 	global burn_mode
@@ -50,6 +50,9 @@ def executor_simulator(data):
 	elif(command_str == 'SF000003E'):
 		left_encode = 867
 		right_encode = 867
+	elif(command_str == 'SF000002E'):
+		left_encode = 666
+		right_encode = 666
 	elif(command_str == 'SB000006E'):
 		left_encode = -2000
 		right_encode  = -2000
@@ -62,6 +65,9 @@ def executor_simulator(data):
 	elif(command_str == 'SB000003E'):
 		left_encode = -867
 		right_encode = -867
+	elif(command_str == 'SB000002E'):
+		left_encode = -666
+		right_encode = -666
 	elif(command_str == 'SL000006E'):
 		left_encode = -1500
 		right_encode  = 1500
@@ -74,6 +80,9 @@ def executor_simulator(data):
 	elif(command_str == 'SL000003E'):
 		left_encode = -666
 		right_encode = 666
+	elif(command_str == 'SL000002E'):
+		left_encode = -444
+		right_encode = 444
 	elif(command_str == 'SR000006E'):
 		left_encode = 1500
 		right_encode  = -1500
@@ -86,6 +95,9 @@ def executor_simulator(data):
 	elif(command_str == 'SR000003E'):
 		left_encode = 666
 		right_encode = -666
+	elif(command_str == 'SR000002E'):
+		left_encode = 444
+		right_encode = -444
 	else:
 		left_encode = 0
 		right_encode = 0
@@ -110,11 +122,11 @@ def encoder_simulator():
 	dt  		 		= 0.1
 	vx 			 		= (float(left_encode)+float(right_encode))/(2.0 * dt)
 	vy 			 		= 0.0
-	vth 		 		= (float(left_encode)-float(right_encode)) / (614.0 * dt);
+	vth 		 		= (float(left_encode)-float(right_encode)) / (614.0 * dt)
 	velocity_vector.x 	= vx
 	velocity_vector.y 	= vy
 	velocity_vector.z 	= vth
-	velocity_pub.publish(velocity_vector)
+	#velocity_pub.publish(velocity_vector)
 
 def simulator():
 	rospy.init_node('simulator', anonymous=True)

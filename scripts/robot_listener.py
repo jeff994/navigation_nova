@@ -13,6 +13,7 @@ import robot_turn
 import robot_correction 
 import robot_publisher
 import robot_listener 
+import robot_status
 import json
 import math
 import robot_configure
@@ -227,11 +228,11 @@ def keyboard_callback(data):
 		rospy.loginfo("Resume the task");
 		robot_drive.robot_paused = 0; 
 	elif (keyboard_data == 'Forward'):
-		rospy.loginfo("Command received: Start to move forward 2 m")
-		robot_job.simple_move(2000.0, robot_drive.bearing_now, 'F')
+		rospy.loginfo("Command received: Start to move forward 4 m")
+		robot_job.simple_move(4000.0, robot_drive.bearing_now, 'F')
 	elif (keyboard_data == 'Back'):
-		rospy.loginfo("rospeived: Start to move back 2 m")
-		robot_job.simple_move(-2000.0, robot_drive.bearing_now, 'B')
+		rospy.loginfo("Command received: Start to move backward 4 m")
+		robot_job.simple_move(-4000.0, robot_drive.bearing_now, 'B')
 	elif (keyboard_data == 'Turn_West'):
 		rospy.loginfo("Command received: turn to 270 (WEST)") 
 		#robot_drive.bearing_now = compass_data[compass_index] 
@@ -377,6 +378,9 @@ def velocity_callback(data):
 		robot_drive.robot_moving 	= False 
 	
 def IMU_callback(data):
+	#store the past value first
+	robot_drive.past_yaw  	= robot_drive.yaw
+
 	robot_drive.roll  	= data.x
 	robot_drive.pitch 	= data.y
 	robot_drive.yaw 	= data.z

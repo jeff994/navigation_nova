@@ -13,7 +13,9 @@ from math import radians, cos, sin, asin, sqrt, atan2, degrees
 #	Robot drive module									#
 #-------------------------------------------------------#
 
-encode_to_mm 		= 27.8 		# 1000 encoding signals = 1 mm travelled
+encode_to_mm 		= 24.0
+linear_encode_to_mm 	= 28.5 		# 1000 encoding signals = 1 mm travelled
+turn_encode_to_mm 	= 50.0
 turn_radius 		= 307.0
 lengthBetweenTwoWheels = 614.0
 last_night_turn_radius 		= 370.0 			# radius when turning in mm (half distance between the middle point of two wheels) 
@@ -58,14 +60,27 @@ vth 				= 0.0
 roll 				= 0.0
 pitch 				= 0.0
 yaw 				= 0.0
+past_yaw 			= 0.0
 
 past_step_time 			= 0.0
 
 step_angle 			= 0.0
 step_distance		= 0.0
 
-direction 			= 0
+direction 			= "stop"
+past_direction 		= "stop"
+bearing_estimate 	= 0.0 	#estimation of bearing 1 second later
 
+front_linear_encode_to_mm 	= 28.5
+front_turn_encode_to_mm 	= 50.0
+left_linear_encode_to_mm 	= 20.0
+left_turn_encode_to_mm 		= 35.0
+right_linear_encode_to_mm 	= 20.0
+right_turn_encode_to_mm 	= 50.0
+
+front_encode_to_mm 			= 22.8
+left_encode_to_mm 			= 28.3
+right_encode_to_mm 			= 28.3
 
 #yuqing_obstaclemodeconfirm
 #1: obstacle mode 
@@ -126,6 +141,16 @@ def get_step():
 	global vth 	#encode/mm*s
 	global step_distance
 	global encode_to_mm
+	global direction
+	global bearing_estimate
+	global front_linear_encode_to_mm
+	global front_turn_encode_to_mm
+	global left_linear_encode_to_mm
+	global left_turn_encode_to_mm
+	global right_linear_encode_to_mm
+	global right_turn_encode_to_mm
+	global linear_encode_to_mm
+	global turn_encode_to_mm
 
 	current_step_time 	= rospy.get_time()
 	dt 			 	 	= current_step_time - past_step_time
@@ -136,12 +161,60 @@ def get_step():
 		th 				= th + 360.0
 	elif (th > 180.0):
 		th 				= th - 360.0
+	
+	#gyroscope for turning method
+#	if (direction == "forward" or direction == "backward"):
+#		linear_encode_to_mm  	= 28.5
+#		turn_encode_to_mm 	= 50.0
+#
+#		#calculate step deltas
+#		th_radian 			= th * 3.14159265 / 180.0
+#		delta_x 			= vx * cos(th_radian) * dt / linear_encode_to_mm #mm
+#		delta_y 			= vx * sin(th_radian) * dt / linear_encode_to_mm #mm
+#		delta_th 			= vth * dt / turn_encode_to_mm #radians
+#
+#		#coordinates relative to job
+#		x  		 			= x + delta_x
+#		y 					= y + delta_y
+#
+#		#relative to step
+#		bearing_now 		= (bearing_now + (delta_th * 180.0 / 3.14159265) + 360.0)%360.0
+#		step_distance 		= sqrt((delta_x ** 2.0) + (delta_y ** 2.0))
+#
+#		if (direction == "forward"):
+#			past_direction = "forward"
+#		elif (direction == "backward"):
+#			past_direction = "backward"
+#
+#	elif (direction == "left" or direction == "right"):
+#		delta_yaw  	 	= yaw - past_yaw
+#		if (delta_yaw > 180.0):
+#			delta_yaw = delta_yaw - 360.0
+#		elif (delta_yaw < -180.0):
+#			delta_yaw = delta_yaw + 360.0
+#		bearing_now 	= bearing_now + delta_yaw
+#
+#	else: #stop case
+#		bearing_now  	= bearing_now
+#		step_distance  	= 0.0
 
-	#calculate step deltas
+	#encoder, each direction tune method
+	if (direction == "forward" or direction == "backward"):
+		linear_encode_to_mm 	= front_linear_encode_to_mm
+		turn_encode_to_mm 		= front_turn_encode_to_mm
+	elif (direction == "left"):
+		linear_encode_to_mm 	= left_linear_encode_to_mm
+		turn_encode_to_mm 		= left_turn_encode_to_mm
+	elif (direction == "right"):
+		linear_encode_to_mm 	= right_linear_encode_to_mm
+		turn_encode_to_mm 		= right_turn_encode_to_mm
+
+	#calculate step deltas	
 	th_radian 			= th * 3.14159265 / 180.0
-	delta_x 			= vx * cos(th_radian) * dt / encode_to_mm #mm
-	delta_y 			= vx * sin(th_radian) * dt / encode_to_mm #mm
-	delta_th 			= vth * dt / encode_to_mm #radians
+	delta_x 			= vx * cos(th_radian) * dt / linear_encode_to_mm #mm
+	delta_y 			= vx * sin(th_radian) * dt / linear_encode_to_mm #mm
+	delta_th 			= vth * dt / turn_encode_to_mm #radians
+	delta_th_estimate 	= vth * 1 / turn_encode_to_mm #radians, estimated delta th after 1 second with same speed
 
 	#coordinates relative to job
 	x  		 			= x + delta_x
@@ -150,6 +223,7 @@ def get_step():
 	#relative to step
 	bearing_now 		= (bearing_now + (delta_th * 180.0 / 3.14159265) + 360.0)%360.0
 	step_distance 		= sqrt((delta_x ** 2.0) + (delta_y ** 2.0))
+	bearing_estimate 	= (bearing_now + (delta_th_estimate * 180.0 / 3.14159265) + 360.0)%360.0
 
 	#setting past_time for next iteration
 	past_step_time  	= current_step_time
@@ -163,7 +237,7 @@ def get_step():
 def stop_robot():
 	speed_now = 0
 	desired_speed = 0
-	move_direction = 'P' #P
+	move_direction = 'B' #P
 	# move_direction = 'S'
 	# updated the stop command from 'S' to 'P'
 	#while True:
