@@ -59,8 +59,8 @@ def IMU_callback(data):
 	#store the past value first
 	robot_drive.past_yaw  	= robot_drive.yaw
 	if(robot_drive.show_log):
-		diff_x = -robot_drive.roll + data.x 
-        	diff_y = -robot_drive.pitch + data.y 
+		diff_x = -robot_drive.roll + data.x
+        	diff_y = -robot_drive.pitch + data.y
         	diff_z = -robot_drive.yaw + data.z
 
 		rospy.loginfo("values (%f, %f, %f)", diff_x, diff_y, diff_z)
@@ -79,18 +79,24 @@ def serial_encoder_callback(data):
 	left_encode  = data.left_encoder
 	right_encode = data.right_encoder
 
-	if(left_encode == 0 and right_encode == 0):
+	multiply = left_encode * right_encode
+
+	if left_encode == 0 and right_encode == 0:
 		#rospy.loginfo("encoder 0,0")
 		robot_drive.robot_moving 	= False
 		robot_drive.robot_turning 	= False
-	elif (left_encode * right_encode > 25):
+	elif multiply > 25:
 		#rospy.loginfo("encoder 0.1")
 		robot_drive.robot_moving 	= True
 		robot_drive.robot_turning 	= False
-	elif (left_encode * right_encode < -25):
+	elif multiply < -25:
 		#rospy.loginfo("encode 1.1")
 		robot_drive.robot_turning 	= True
 		robot_drive.robot_moving 	= False
+	elif multiply < 10:
+		robot_drive.robot_turning 	= False
+		robot_drive.robot_moving 	= False
+		rospy.logwarn("The encoder is changing on a small value")
 	elif left_encode != 0 or right_encode != 0:
 		#rospy.loginfo("encoder 1.3")
 		robot_drive.robot_turning = True
