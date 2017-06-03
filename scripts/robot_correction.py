@@ -30,7 +30,7 @@ def update_robot_gps_new(left_encode, right_encode):
 	robot_drive.step_distance = 0.0
 
 	if (robot_drive.direction == "forward" or robot_drive.direction == "backward"):
-		robot_drive.step_distance  	= float(left_encode + right_encode) / (2.0 * robot_drive.encode_to_mm)
+		robot_drive.step_distance  	= float(left_encode + right_encode) / (2.0 * robot_drive.linear_encode_to_mm)
 		robot_drive.step_angle 		= 0.0
 	elif (robot_drive.direction == "left" or robot_drive.direction == "right"):
 		robot_drive.step_distance  	= 0.0

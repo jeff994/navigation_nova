@@ -33,20 +33,20 @@ def start_move():
 	global dist_lowest_speed
 	global dist_lower_speed
 
-	global full_speed
-	global lower_speed
-	global lowest_speed
+	global linear_full_speed
+	global linear_lower_speed
+	global linear_lowest_speed
 
 	# if the task is a short distance task, then start with a lower speed 
 	if abs(dist_to_run) < dist_lowest_speed:
-		robot_drive.speed_now  		= lowest_speed
-		robot_drive.speed_desired 	= lowest_speed
+		robot_drive.speed_now  		= linear_lowest_speed
+		robot_drive.speed_desired 	= linear_lowest_speed
 	elif abs(dist_to_run) < dist_lower_speed: 
-		robot_drive.speed_now  		= lower_speed
-		robot_drive.speed_desired 	= lower_speed
+		robot_drive.speed_now  		= linear_lower_speed
+		robot_drive.speed_desired 	= linear_lower_speed
    	else:
-		robot_drive.speed_now 		= full_speed 
-		robot_drive.speed_desired 	= full_speed
+		robot_drive.speed_now 		= linear_full_speed 
+		robot_drive.speed_desired 	= linear_full_speed
 
 	#changed by aaron to handle slow communication
 	#if abs(dist_to_run) < dist_2_speed:
@@ -89,9 +89,9 @@ def continue_move():
 	global dist_lowest_speed
 	global dist_lower_speed
 	
-	global full_speed
-	global lower_speed
-	global lowest_speed
+	global linear_full_speed
+	global linear_lower_speed
+	global linear_lowest_speed
 
 	# if robot's on mission and somehow it's stopped, need to restart the robot 
 	if not robot_drive.robot_moving:
@@ -100,10 +100,10 @@ def continue_move():
 
     # if robot is approaching the destination, then need to decrease speed 
 	if(abs(dist_to_run) - abs(dist_completed) < dist_lowest_speed):
-		robot_drive.speed_desired = lowest_speed
+		robot_drive.speed_desired = linear_lowest_speed
 		rospy.loginfo('Reducing to lowest speed, very close to target position')
 	elif(abs(dist_to_run) - abs(dist_completed) < dist_lower_speed):
-		robot_drive.speed_desired = lower_speed
+		robot_drive.speed_desired = linear_lower_speed
 		rospy.loginfo('Reducing to lower speed, %f to target position', dist_lower_speed)
 
 	#if (abs(dist_to_run) - abs(dist_completed) < dist_2_speed):
