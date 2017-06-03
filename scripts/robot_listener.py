@@ -448,23 +448,27 @@ def process_encoder_data():
 	# After process, update the proccessed index the same as received index 
 	encoder_processed = encoder_received
 	# dynamically calculate and update the gps data, step_angle, step_distance etc while the robot moving 
-	robot_correction.update_robot_gps(left_encode, right_encode)
+	#robot_correction.update_robot_gps(left_encode, right_encode)
+	robot_correction.update_robot_gps_new(left_encode, right_encode) #aaron
 
 def print_config():
-	rospy.loginfo("robot_drive: Speed full - %f", 	robot_drive.speed_full)
-	rospy.loginfo("robot_drive: Speed lower - %f", 	robot_drive.speed_lower)
-	rospy.loginfo("robot_drive: Speed lowest - %f", 	robot_drive.speed_lowest)
-	rospy.loginfo("robot_drive: Encoder to mm - %f", 	robot_drive.encoder_to_mm)
+	rospy.loginfo("robot_drive: linear_encode_to_mm - %f", 	robot_drive.linear_encode_to_mm)
+	rospy.loginfo("robot_drive: turn_encode_to_mm - %f", 	robot_drive.turning_encode_to_mm)
 	rospy.loginfo("robot_drive: Turn radius - %f", 	robot_drive.turn_radius)
 	rospy.loginfo("robot_correction: Min correction distance - %f",robot_correction.min_correction_distance)
 	rospy.loginfo("robot_correction: min correction angle - %f", 	robot_correction.min_correction_angle)
 	rospy.loginfo("robot_correction: max_correction_runs - %f", 	robot_correction.max_correction_runs)
-	rospy.loginfo("robot_move: dist_lower_speed: %f", 	robot_move.dist_lower_speed)
-	rospy.loginfo("robot_move: dist_lowest_speed): %f", 	robot_move.dist_lowest_speed)
 	rospy.loginfo("robot_move: dist_to_correct: %f", 	robot_move.dist_to_correct)
-	rospy.loginfo("robot_move: dist_end_point_check: %f", 	robot_move.dist_end_point_check)
-	rospy.loginfo("robot_move: angle_lower_speed: %f", 	robot_move.angle_lower_speed)
-	rospy.loginfo("robot_move: angle_lowest_speed: %f", 	robot_move.angle_lowest_speed)
+	rospy.loginfo("robot_move: dist_lower_speed: %f", 	robot_move.dist_lower_speed)
+	rospy.loginfo("robot_move: dist_lowest_speed: %f", 	robot_move.dist_lowest_speed)
+	rospy.loginfo("robot_move: linear full speed: %f", robot_move.linear_full_speed)
+	rospy.loginfo("robot_move: linear lower speed: %f", robot_move.linear_lower_speed)
+	rospy.loginfo("robot_move: linear lowest speed: %f", robot_move.linear_lowest_speed)
+	rospy.loginfo("robot_turn: angle lower speed: %f", robot_turn.angle_lower_speed)
+	rospy.loginfo("robot_turn: angle lowest speed: %f", robot_turn.angle_lowest_speed)
+	rospy.loginfo("robot_turn: turn full speed: %f", robot_turn.turn_full_speed)
+	rospy.loginfo("robot_turn: turn lower speed: %f", robot_turn.turn_lower_speed)
+	rospy.loginfo("robot_turn: turn lowest speed: %f", robot_turn.turn_lowest_speed)
 	rospy.loginfo("robot_drive: obstacle_mode: %f", 	robot_drive.obstacle_mode)
 	rospy.loginfo("robot_drive: robot_enabled: %f", 	robot_drive.robot_enabled)
 	rospy.loginfo("robot_drive: robot_paused: %f", 	robot_drive.robot_paused)

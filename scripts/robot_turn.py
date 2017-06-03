@@ -12,13 +12,13 @@ import robot_correction
 #-------------------------------------------------------#
 degree_turned 		= 0
 degree_to_turn 		= 0 
-angle_lower_speed 	= 250
-angle_lowest_speed 	= 180
 
-angle_5_speed 		= 360.0
-angle_4_speed 		= 180.0
-angle_3_speed 		= 45.0
-angle_2_speed 		= 10.0
+angle_lower_speed 	= 0.0
+angle_lowest_speed 	= 0.0
+
+turn_full_speed 	= 0.0
+turn_lower_speed 	= 0.0
+turn_lowest_speed 	= 0.0
 
 #it takes about 1 second for it to stop
 
@@ -26,10 +26,13 @@ angle_2_speed 		= 10.0
 def start_turn():
 	global degree_turned
 	global degree_to_turn
+
+	global angle_lower_speed
+	global angle_lowest_speed
 	
-	global angle_4_speed
-	global angle_3_speed
-	global angle_2_speed
+	global turn_full_speed
+	global turn_lower_speed
+	global turn_lowest_speed
 
 	rospy.loginfo("start turn...........................")
 	
@@ -57,18 +60,15 @@ def start_turn():
 	#	robot_drive.desired_speed 	= robot_drive.speed_full
 
 	#added by aaron to handle the slow communication
-	if (abs(degree_to_turn) < angle_2_speed):
-		robot_drive.speed_now 		= robot_drive.speed_2
-		robot_drive.speed_desired 	= robot_drive.speed_2
-	elif (abs(degree_to_turn) < angle_3_speed):
-		robot_drive.speed_now 		= robot_drive.speed_3
-		robot_drive.speed_desired 	= robot_drive.speed_3
-	elif (abs(degree_to_turn) < angle_4_speed):
-		robot_drive.speed_now 		= robot_drive.speed_4
-		robot_drive.speed_desired 	= robot_drive.speed_4
-	elif (abs(degree_to_turn) < angle_5_speed):
-		robot_drive.speed_now 		= robot_drive.speed_4
-		robot_drive.speed_desired 	= robot_drive.speed_4
+	if (abs(degree_to_turn) < angle_lowest_speed):
+		robot_drive.speed_now 		= turn_lowest_speed
+		robot_drive.speed_desired 	= turn_lowest_speed
+	elif (abs(degree_to_turn) < angle_lower_speed):
+		robot_drive.speed_now 		= turn_lower_speed
+		robot_drive.speed_desired 	= turn_lower_speed
+	else:
+		robot_drive.speed_now 		= turn_full_speed
+		robot_drive.speed_desired 	= turn_full_speed
 
 	if robot_drive.robot_turning:
 		robot_drive.robot_on_mission = True
@@ -93,6 +93,13 @@ def stop_turn():
 def continue_turn(step_angle):
 	global degree_turned
 	global degree_to_turn
+
+	global angle_lower_speed
+	global angle_lowest_speed
+
+	global turn_full_speed
+	global turn_lower_speed
+	global turn_lowest_speed
 	
 	if not robot_drive.robot_turning:
 		rospy.loginfo("Robot stopped during the mission, start to turn again")
@@ -104,14 +111,12 @@ def continue_turn(step_angle):
 	#elif(abs(degree_to_turn) - abs(degree_turned) < angle_lower_speed):
 	#	robot_drive.desired_speed = 5
 	#	rospy.loginfo("Only 5 degrees left, redusing turning speed to 4")
-	if (abs(degree_to_turn) - abs(degree_turned) < angle_2_speed):
-		robot_drive.speed_desired = robot_drive.speed_2
-	elif (abs(degree_to_turn) - abs(degree_turned) < angle_3_speed):
-		robot_drive.speed_desired = robot_drive.speed_3
-	elif (abs(degree_to_turn) - abs(degree_turned) < angle_4_speed):
-		robot_drive.speed_desired = robot_drive.speed_4
-	elif (abs(degree_to_turn) - abs(degree_turned) < angle_5_speed):
-		robot_drive.speed_desired = robot_drive.speed_4
+	if (abs(degree_to_turn) - abs(degree_turned) < angle_lowest_speed):
+		robot_drive.speed_desired = turn_lowest_speed
+	elif (abs(degree_to_turn) - abs(degree_turned) < angle_lower_speed):
+		robot_drive.speed_desired = turn_lower_speed
+	else:
+		robot_drive.speed_desired = turn_full_speed
 
 
 	#dynamically update robot bearing 

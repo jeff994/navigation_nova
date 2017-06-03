@@ -9,10 +9,10 @@ import robot_job
 import robot_publisher 
 
 ############################################################
-min_correction_distance 	= 200.0
-min_correction_angle 		= 4.0
+min_correction_distance 	= 0.0
+min_correction_angle 		= 0.0
 correction_count 			= 0.0
-max_correction_run 			= 15.0
+max_correction_run 			= 0.0
 
 from math import radians, cos, sin, asin, sqrt, atan2, degrees
 
@@ -21,11 +21,32 @@ from math import radians, cos, sin, asin, sqrt, atan2, degrees
 #-------------------------------------------------------#
 # while robot's moving, dynamically update robot gps
 # still need to handle more scenarios 
-def update_robot_gps_new(dist, bearing):
-	rospy.loginfo("Step distance moved %fmm, Step_angle %f degree, Step_distance %f mm", dist, robot_drive.step_angle, robot_drive.step_distance)
-	robot_drive.lon_now, robot_drive.lat_now 	= gpsmath.get_gps(robot_drive.lon_now, robot_drive.lat_now, dist, bearing)		
-	#robot_drive.bearing_now 					= gpsmath.format_bearing(robot_drive.bearing_now + robot_drive.step_angle)
-	#robot_publisher.publish_gps()
+
+#aaron : 1/6/2017, this was added because we cant accurately tune how much the robot deviates while going straight
+#so this solution is only suitable for demo, while direction is straight, no deviation is assumed
+#while turning, no translation is assumed
+def update_robot_gps_new(left_encode, right_encode):
+	robot_drive.step_angle = 0.0
+	robot_drive.step_distance = 0.0
+
+	if (robot_drive.direction == "forward" or robot_drive.direction == "backward"):
+		robot_drive.step_distance  	= float(left_encode + right_encode) / (2.0 * robot_drive.encode_to_mm)
+		robot_drive.step_angle 		= 0.0
+	elif (robot_drive.direction == "left" or robot_drive.direction == "right"):
+		robot_drive.step_distance  	= 0.0
+		#delta_yaw 		 			= robot_drive.yaw - robot_drive.past_yaw
+		#if (delta_yaw > 180.0):
+		#	delta_yaw = delta_yaw - 360.0
+		#elif (delta_yaw < -180.0):
+		#	delta_yaw = delta_yaw + 360.0
+		#robot_drive.step_angle 		= delta_yaw
+
+		arc_length 				 	= float(left_encode - right_encode) / (2.0 * robot_drive.turning_encode_to_mm)
+		robot_drive.step_angle 		= (arc_length * 180.0) / (robot_drive.turn_radius * 3.14159265)
+
+	rospy.loginfo("Step distance moved %fmm, Step_angle %f degree", robot_drive.step_distance, robot_drive.step_angle)
+	robot_drive.lon_now, robot_drive.lat_now 	= gpsmath.get_gps(robot_drive.lon_now, robot_drive.lat_now, robot_drive.step_distance, robot_drive.bearing_now)		
+	robot_drive.bearing_now 					= gpsmath.format_bearing(robot_drive.bearing_now + robot_drive.step_angle)
 	rospy.loginfo("Bearing now %f,lon_now %f, lat_now %f", robot_drive.bearing_now, robot_drive.lon_now, robot_drive.lat_now)
 
 def update_robot_gps(left_encode, right_encode): 

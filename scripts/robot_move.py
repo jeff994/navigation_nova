@@ -15,41 +15,38 @@ import robot_job
 dist_completed 			= 0.0
 dist_to_run 			= 0.0
 #@yuqing_correctionper10m
-dist_to_correct 		= 10000.0
-dist_lowest_speed 		= 500.0
-dist_lower_speed 		= 1000.0
-dist_end_point_check 	= 600.0 #was 600
+dist_to_correct 		= 0.0
+dist_lowest_speed 		= 0.0
+dist_lower_speed 		= 0.0
+#dist_end_point_check 	= 600.0 #was 600
 
-dist_4_speed 			= 2000.0
-dist_3_speed 			= 250.0
-dist_2_speed 			= 250.0
-
+linear_full_speed 		= 0.0
+linear_lower_speed 		= 0.0
+linear_lowest_speed		= 0.0
 
 status_pub = rospy.Publisher('status', String, queue_size = 100)
 # Starts the robot for moving, put the control variables into proper value 
 def start_move():
 	global dist_completed
 	global dist_to_run 
+	
 	global dist_lowest_speed
 	global dist_lower_speed
 
-	global dist_4_speed
-	global dist_3_speed
-	global dist_2_speed
+	global full_speed
+	global lower_speed
+	global lowest_speed
 
 	# if the task is a short distance task, then start with a lower speed 
-	if abs(dist_to_run) < dist_3_speed:
-		robot_drive.speed_now 		= 2
-		robot_drive.speed_desired 	= 2
-	elif abs(dist_to_run) < dist_lowest_speed:
-		robot_drive.speed_now  		= 3 
-		robot_drive.speed_desired 	= 3
+	if abs(dist_to_run) < dist_lowest_speed:
+		robot_drive.speed_now  		= lowest_speed
+		robot_drive.speed_desired 	= lowest_speed
 	elif abs(dist_to_run) < dist_lower_speed: 
-		robot_drive.speed_now  		= 4
-		robot_drive.speed_desired 	= 4 
+		robot_drive.speed_now  		= lower_speed
+		robot_drive.speed_desired 	= lower_speed
    	else:
-		robot_drive.speed_now 		= 5 
-		robot_drive.speed_desired 	= 5 
+		robot_drive.speed_now 		= full_speed 
+		robot_drive.speed_desired 	= full_speed
 
 	#changed by aaron to handle slow communication
 	#if abs(dist_to_run) < dist_2_speed:
@@ -91,7 +88,10 @@ def continue_move():
 	global dist_completed
 	global dist_lowest_speed
 	global dist_lower_speed
-	global dist_3_speed
+	
+	global full_speed
+	global lower_speed
+	global lowest_speed
 
 	# if robot's on mission and somehow it's stopped, need to restart the robot 
 	if not robot_drive.robot_moving:
@@ -99,15 +99,12 @@ def continue_move():
         	robot_drive.start()
 
     # if robot is approaching the destination, then need to decrease speed 
-	if (abs(dist_to_run) - abs(dist_completed) < dist_3_speed):
-		robot_drive.speed_desired = 2
-		rospy.loginfo('Reduce speed to 2, very close to target position')
-	elif(abs(dist_to_run) - abs(dist_completed) < dist_lowest_speed):
-		robot_drive.speed_desired = 3
-		rospy.loginfo('Reduce speed to 3, very close to target position')
+	if(abs(dist_to_run) - abs(dist_completed) < dist_lowest_speed):
+		robot_drive.speed_desired = lowest_speed
+		rospy.loginfo('Reducing to lowest speed, very close to target position')
 	elif(abs(dist_to_run) - abs(dist_completed) < dist_lower_speed):
-		robot_drive.speed_desired = 4
-		rospy.loginfo('Reduce speed to 4 only 20 cm to target position')
+		robot_drive.speed_desired = lower_speed
+		rospy.loginfo('Reducing to lower speed, %f to target position', dist_lower_speed)
 
 	#if (abs(dist_to_run) - abs(dist_completed) < dist_2_speed):
 	#	#robot_drive.speed_now 		= robot_drive.speed_2
@@ -172,13 +169,14 @@ def move_distance(dist):
 	dist_remain = dist_threshold - dist_completed;
 	# very near to the target position, we could check whether the robot is closer to the position or the remaining value to move
 	# If it's closer, we just move the the position 
-	if(abs(dist_remain) < dist_end_point_check):
-		dist_temp = robot_job.left_gps_distance()
-		if(dist_temp < abs(dist_remain)):  # Robot is closer to end gps position then calculated task distance ##aaron: dist_remain less than 0 if overshoot
-			stop_move()
-			return not robot_drive.robot_on_mission
-		else:
-			continue_move()
+	#aaron comment 1/6/2017, to stop robot from stopping and jerking
+	#if(abs(dist_remain) < dist_end_point_check):
+	#	dist_temp = robot_job.left_gps_distance()
+	#	if(dist_temp < abs(dist_remain)):  # Robot is closer to end gps position then calculated task distance ##aaron: dist_remain less than 0 if overshoot
+	#		stop_move()
+	#		return not robot_drive.robot_on_mission
+	#	else:
+	#		continue_move()
 
 	if (dist_remain > 0.0) :
 		#just continue moving of job not completed and no change of speed command received 

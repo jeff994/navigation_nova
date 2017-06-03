@@ -17,9 +17,10 @@ from math import radians, cos, sin, asin, sqrt, atan2, degrees
 
 ###################### EDIT HERE ###########################
 #defining or acquiring the GPS coordinates
-init_lon			= 121.635139
-init_lat			= 31.2112262
+init_lon			= 0.0
+init_lat			= 0.0
 init_bearing		= 0.0
+
 gps_lon 			= [103.962389,103.962456,103.962461,103.962381] #S,A,B,C,D
 gps_lat 			= [1.3407,1.340696,1.340589,1.340599]
 loops 				= 1 			#how many rounds to go

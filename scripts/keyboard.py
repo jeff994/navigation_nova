@@ -32,6 +32,7 @@ def KeyControl():
 	print ("t. 180")
 	print ("z. 0")
 	print ("b. Enter/Quite from burn mode")
+	print ("c. Print config parameters")
 	print ("using ctrl + c to exit")
 	print (30 * '-')
 	

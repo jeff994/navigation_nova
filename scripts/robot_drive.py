@@ -13,25 +13,17 @@ from math import radians, cos, sin, asin, sqrt, atan2, degrees
 #	Robot drive module									#
 #-------------------------------------------------------#
 
-encode_to_mm 		= 24.0
-linear_encode_to_mm 	= 28.5 		# 1000 encoding signals = 1 mm travelled
-turn_encode_to_mm 	= 50.0
-turn_radius 		= 307.0
-lengthBetweenTwoWheels = 614.0
-last_night_turn_radius 		= 370.0 			# radius when turning in mm (half distance between the middle point of two wheels) 
-speed_full			= 6
-speed_lower			= 5
-speed_lowest		= 4
-speed_desired 		= speed_full	# Global robot moving spped, 3 - 5
-speed_now 			= speed_full	# Robot moving speed now
-robot_on_mission 	= False			# set an indicator that robot's on a job right now 
-robot_enabled 		= False 		# A switch to enable or disable robot from execuing any jobs
-robot_paused 		= False 		# A flag to indicate enable robot to execute job  
-move_direction 		= 'F'			# Global robot walking/turning direction
-robot_initialized	= True 			# Confirm whehter the robot has initialized the true north 
-robot_moving 		= False			# based on the encoder data to know whether the robot's moving
-robot_turning		= False
-initial_bearing 	= 0.0 			#set as north for now
+linear_encode_to_mm 		 	= 0.0
+turning_encode_to_mm  			= 0.0
+turn_radius 					= 0.0
+
+lon_now 						= 0.0
+lat_now  						= 0.0
+bearing_now 					= 0.0
+
+lon_target 						= 0.0
+lat_target 						= 0.0
+bearing_target 					= 0.0 		#degrees
 
 speed_6 			= 6
 speed_5 			= 5
@@ -39,48 +31,28 @@ speed_4 			= 4
 speed_3 			= 3
 speed_2 			= 2
 
-############################################################
-
-lon_now 			= 121.635139
-lat_now  			= 31.2112262
-bearing_now 		= 0.0
-
-lon_target 			= 121.635139
-lat_target 			= 31.2112262
-bearing_target 		= 0.0 		#degrees
-
-x 					= 0.0
-y 					= 0.0
-th 					= 0.0
-
-vx 					= 0.0
-vy 					= 0.0
-vth 				= 0.0
-
 roll 				= 0.0
 pitch 				= 0.0
 yaw 				= 0.0
 past_yaw 			= 0.0
-
-past_step_time 			= 0.0
 
 step_angle 			= 0.0
 step_distance		= 0.0
 
 direction 			= "stop"
 past_direction 		= "stop"
-bearing_estimate 	= 0.0 	#estimation of bearing 1 second later
 
-front_linear_encode_to_mm 	= 28.5
-front_turn_encode_to_mm 	= 50.0
-left_linear_encode_to_mm 	= 20.0
-left_turn_encode_to_mm 		= 35.0
-right_linear_encode_to_mm 	= 20.0
-right_turn_encode_to_mm 	= 50.0
+#-----------------FLAGS------------------#
 
-front_encode_to_mm 			= 22.8
-left_encode_to_mm 			= 28.3
-right_encode_to_mm 			= 28.3
+speed_desired 		= speed_6	# Global robot moving spped, 3 - 5
+speed_now 			= speed_6	# Robot moving speed now
+robot_on_mission 	= False			# set an indicator that robot's on a job right now 
+robot_enabled 		= False 		# A switch to enable or disable robot from execuing any jobs
+robot_paused 		= False 		# A flag to indicate enable robot to execute job  
+move_direction 		= 'F'			# Global robot walking/turning direction
+robot_initialized	= True 			# Confirm whehter the robot has initialized the true north 
+robot_moving 		= False			# based on the encoder data to know whether the robot's moving
+robot_turning		= False
 
 #yuqing_obstaclemodeconfirm
 #1: obstacle mode 
@@ -92,6 +64,8 @@ isunlockdone = False
 # True for burn mode when pwer up 
 # False for normal mode 
 burn_mode = True
+
+############################################################
 
 def init_gps():
 	global lon_now, lat_now, bearing_now
@@ -129,109 +103,6 @@ def accum_encoder_data(encoder_data, encoder_received, encoder_processed):
 				left_encode 	+= encoder_data[2 * x]
 				right_encode 	+= encoder_data[2 * x + 1]
 	return left_encode, right_encode 
-
-def get_step():
-	global past_step_time
-	global x
-	global y	
-	global bearing_now
-	global bearing_target
-	global vx 	#encode/s
-	global vy 	#encode/s
-	global vth 	#encode/mm*s
-	global step_distance
-	global encode_to_mm
-	global direction
-	global bearing_estimate
-	global front_linear_encode_to_mm
-	global front_turn_encode_to_mm
-	global left_linear_encode_to_mm
-	global left_turn_encode_to_mm
-	global right_linear_encode_to_mm
-	global right_turn_encode_to_mm
-	global linear_encode_to_mm
-	global turn_encode_to_mm
-
-	current_step_time 	= rospy.get_time()
-	dt 			 	 	= current_step_time - past_step_time
-
-	#th is relative to each job
-	th 					= (bearing_target - bearing_now) 	
-	if (th < -180.0):
-		th 				= th + 360.0
-	elif (th > 180.0):
-		th 				= th - 360.0
-	
-	#gyroscope for turning method
-#	if (direction == "forward" or direction == "backward"):
-#		linear_encode_to_mm  	= 28.5
-#		turn_encode_to_mm 	= 50.0
-#
-#		#calculate step deltas
-#		th_radian 			= th * 3.14159265 / 180.0
-#		delta_x 			= vx * cos(th_radian) * dt / linear_encode_to_mm #mm
-#		delta_y 			= vx * sin(th_radian) * dt / linear_encode_to_mm #mm
-#		delta_th 			= vth * dt / turn_encode_to_mm #radians
-#
-#		#coordinates relative to job
-#		x  		 			= x + delta_x
-#		y 					= y + delta_y
-#
-#		#relative to step
-#		bearing_now 		= (bearing_now + (delta_th * 180.0 / 3.14159265) + 360.0)%360.0
-#		step_distance 		= sqrt((delta_x ** 2.0) + (delta_y ** 2.0))
-#
-#		if (direction == "forward"):
-#			past_direction = "forward"
-#		elif (direction == "backward"):
-#			past_direction = "backward"
-#
-#	elif (direction == "left" or direction == "right"):
-#		delta_yaw  	 	= yaw - past_yaw
-#		if (delta_yaw > 180.0):
-#			delta_yaw = delta_yaw - 360.0
-#		elif (delta_yaw < -180.0):
-#			delta_yaw = delta_yaw + 360.0
-#		bearing_now 	= bearing_now + delta_yaw
-#
-#	else: #stop case
-#		bearing_now  	= bearing_now
-#		step_distance  	= 0.0
-
-	#encoder, each direction tune method
-	if (direction == "forward" or direction == "backward"):
-		linear_encode_to_mm 	= front_linear_encode_to_mm
-		turn_encode_to_mm 		= front_turn_encode_to_mm
-	elif (direction == "left"):
-		linear_encode_to_mm 	= left_linear_encode_to_mm
-		turn_encode_to_mm 		= left_turn_encode_to_mm
-	elif (direction == "right"):
-		linear_encode_to_mm 	= right_linear_encode_to_mm
-		turn_encode_to_mm 		= right_turn_encode_to_mm
-
-	#calculate step deltas	
-	th_radian 			= th * 3.14159265 / 180.0
-	delta_x 			= vx * cos(th_radian) * dt / linear_encode_to_mm #mm
-	delta_y 			= vx * sin(th_radian) * dt / linear_encode_to_mm #mm
-	delta_th 			= vth * dt / turn_encode_to_mm #radians
-	delta_th_estimate 	= vth * 1 / turn_encode_to_mm #radians, estimated delta th after 1 second with same speed
-
-	#coordinates relative to job
-	x  		 			= x + delta_x
-	y 					= y + delta_y
-
-	#relative to step
-	bearing_now 		= (bearing_now + (delta_th * 180.0 / 3.14159265) + 360.0)%360.0
-	step_distance 		= sqrt((delta_x ** 2.0) + (delta_y ** 2.0))
-	bearing_estimate 	= (bearing_now + (delta_th_estimate * 180.0 / 3.14159265) + 360.0)%360.0
-
-	#setting past_time for next iteration
-	past_step_time  	= current_step_time
-
-	#update gps, this should be called for every step
-	robot_correction.update_robot_gps_new(step_distance, bearing_now)
-	time.sleep(0.02)
-
 
 # just send a command to stop robot 
 def stop_robot():
