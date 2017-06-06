@@ -194,12 +194,12 @@ def clear_job_list():
 def complete_current_job():
 	global job_lists
 	bRet = True
-	rospy.loginfo("Job classification: %s", job_lists[0].classfication)
 	if job_lists[0].classfication == 'N':
 		robot_drive.lon_target 		= job_lists[0].lon_target;
 		robot_drive.lat_target 		= job_lists[0].lat_target; 
 		robot_drive.bearing_target 	= job_lists[0].bearing_target; 
 		bRet = False
+	rospy.loginfo("Removed a job with classification: %s", job_lists[0].classfication)
 	del job_lists[0]
 	return bRet
 
@@ -259,6 +259,15 @@ def define_initialize_job():
 	append_turn_job(robot_drive.lon_now, robot_drive.lat_now, 0.0)
 	append_turn_job(robot_drive.lon_now, robot_drive.lat_now, 90.0)
 
+def clear_correction_jobs():
+	global job_lists
+	while has_jobs_left():
+		if(job_lists[0].classfication == 'N'):
+			break; 
+		else:
+			complete_current_job()
+
+
 # a list of operations for the correction jobs 
 def insert_compensation_jobs(lon_source, lat_source, bearing_source, lon_target, lat_target, bearing_target, correction_type, need_correct_distance, need_correct_angle):
 	global job_lists
@@ -268,7 +277,7 @@ def insert_compensation_jobs(lon_source, lat_source, bearing_source, lon_target,
 	turn_job 				= Job(lon_source, lat_source, bearing_target, correction_type, 'T', bearing_target)
 	turn_before_move_job 	= Job(lon_source, lat_source, bearing, correction_type, 'T', bearing)
 	move_job 				= Job(lon_target, lat_target, bearing, correction_type, 'F', distance)
-	reverse_job 			= Job(lon_target, lat_target, bearing, correction_type, 'B', distance)
+	#reverse_job 			= Job(lon_target, lat_target, bearing, correction_type, 'B', distance)
 
 	#if (need_correct_distance and not need_correct_angle):
 	#	if((bearing - bearing_source + 360.0)%360.0 >= 90):
@@ -277,11 +286,14 @@ def insert_compensation_jobs(lon_source, lat_source, bearing_source, lon_target,
 	#	else:
 	#		rospy.loginfo("Added a forward distance correction")
 	#		job_lists.insert(0, move_job)
-	if need_correct_distance:
-		rospy.loginfo("Added a distance correction")
+	if need_correct_distance and need_correct_angle:
+		rospy.loginfo("Added a distance correction and angle correction")
 		job_lists.insert(0, turn_before_move_job)
 		job_lists.insert(1, move_job)
 		job_lists.insert(2, turn_job)
+	elif need_correct_distance and not need_correct_angle:
+		rospy.loginfo("Added an angle correction")
+		job_lists.insert(0, move_job)
 	elif (need_correct_angle and not need_correct_distance):
 		rospy.loginfo("Added a angle correction")
 		job_lists.insert(0, turn_job) 

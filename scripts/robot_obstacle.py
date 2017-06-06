@@ -102,29 +102,15 @@ def quit_obstacle_correction(current_job_type):
 		rospy.loginfo("Add correction for next %s job", current_job_type)
 		robot_job.complete_current_job()
 
-def clear_after_obstacle_avoidance(current_job_type):
-	# Remove the un-finished job 
-	if(current_job_type == 'N' or current_job_type == 'C'):
-		rospy.loginfo("Robot met obstacle during normal job, finishing current job")
-		robot_correction.correction_count 	= 0
-		robot_job.complete_current_job()
-	elif(current_job_type == 'O'): 
-		if(robot_correction.correction_count  > robot_correction.max_correction_run):
-			quit_obstacle_correction(current_job_type)
-		else:
-			clear_correction_trial_tasks(current_job_type)
-	else:
-		rospy.logerr("Invalid job_type found")
 
 def resume_from_obstacle_avoidance():
 	job_executing = robot_job.current_job()
 	current_job_type = job_executing.classfication; 
-		
-	# performing necessary clearing of current tasks 
-	clear_after_obstacle_avoidance(current_job_type)
+
 	# robot is resumed to clear state and ready for the correction tasks 
 
 	if needForward:
+		rospy.loginfo("Need to forward 0.5m after obstacle")
 		robot_correction.dist_correction_obstacle_need_forward(robot_job.dist_forward_after_obstacle)	
 	else:
 		robot_correction.dist_correction_obstacle()

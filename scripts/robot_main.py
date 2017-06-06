@@ -100,8 +100,11 @@ def main_commander():
 	# ----------------------------------------------------------------------------------------#
 	if job_completed:
 		if not robot_job.complete_current_job():
-			rospy.loginfo("Complete a normal job, correction is needed")
+			rospy.loginfo("Complete a normal job, check whether correction is needed")
 			robot_correction.dist_correction_normal()
+		else: # the job is a correction job 
+			robot_correction.dist_correction_correction();
+
 
 def read_system_config():
 	# Read configure path 

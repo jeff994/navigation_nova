@@ -14,6 +14,7 @@ import robot_job
 
 dist_completed 			= 0.0
 dist_to_run 			= 0.0
+angle_to_correct 		= 0.0
 #@yuqing_correctionper10m
 dist_to_correct 		= 0.0
 dist_lowest_speed 		= 0.0
@@ -66,6 +67,7 @@ def start_move():
 	if robot_drive.robot_moving:
 		robot_drive.robot_on_mission = True 
 		dist_completed = 0.0
+		angle_to_correct = 0.0
 		rospy.loginfo('Started a moving job')
 	else:
 	  	robot_drive.start()
@@ -128,6 +130,7 @@ def continue_move():
 def move_distance(dist):
 	global dist_completed
 	global dist_to_run 
+	global angle_to_correct 
 
 	dist_to_run = dist
 	# if robot received a meaning less job, just signal, clear the job and return 
@@ -158,7 +161,9 @@ def move_distance(dist):
 	
 	distpub = 'Dist-travelled: %f dist-total:%f dist-step:%f' % (dist_completed, abs(dist_to_run) ,dist_step)
 	rospy.loginfo(distpub)
+	angle_to_correct = angle_to_correct + robot_drive.step_angle 
 
+	rospy.loginfo('Accumulated angle error: %f', angle_to_correct)
 	#@yuqing_correctionper10m
 	#if travel over 10m, job_completed to 1, start to correct
 	if (dist_completed >= dist_to_correct):

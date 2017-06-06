@@ -133,8 +133,14 @@ def dist_correction_normal():
 	rospy.loginfo("**************normal correction jobs**************")
 	distance_correction(robot_drive.lon_now, robot_drive.lat_now, robot_drive.bearing_now, robot_drive.lon_target, robot_drive.lat_target, robot_drive.bearing_target, 'C')
 
+def dist_correction_correction():
+	rospy.loginfo("**************correction needed during correction**************")
+	robot_job.clear_correction_jobs()
+	distance_correction(robot_drive.lon_now, robot_drive.lat_now, robot_drive.bearing_now, robot_drive.lon_target, robot_drive.lat_target, robot_drive.bearing_target, 'C')
+
 def dist_correction_obstacle():
-	rospy.loginfo("**************normal correction jobs**************")
+	rospy.loginfo("**************correction needed during obstacle avoidence**************")
+	robot_job.clear_correction_jobs()
 	distance_correction(robot_drive.lon_now, robot_drive.lat_now, robot_drive.bearing_now, robot_drive.lon_target, robot_drive.lat_target, robot_drive.bearing_target, 'O')
 
 # correct robot every time by comapring the lat_now, lon_now with target position
@@ -173,6 +179,7 @@ def distance_correction(lon_now, lat_now, bearing_now, lon_target, lat_target, b
 
 # Correct a robot with obstancles by inserting a job to move the robot forward for 1m
 def dist_correction_obstacle_need_forward(dist):
+	robot_job.clear_correction_jobs()
 	rospy.loginfo("**************obstance correction jobs**************")
 	lon_new, lat_new = gpsmath.get_gps(robot_drive.lon_now, robot_drive.lat_now, dist, robot_drive.bearing_now)
 	#fist distance correction 
