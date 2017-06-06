@@ -99,9 +99,9 @@ def main_commander():
 	#  Error compensation after current job completed      									  #
 	# ----------------------------------------------------------------------------------------#
 	if job_completed:
-		rospy.loginfo("Complete a job")
-		robot_job.complete_current_job()
-		#robot_correction.dist_correction_normal()
+		if not robot_job.complete_current_job():
+			rospy.loginfo("Complete a normal job, correction is needed")
+			robot_correction.dist_correction_normal()
 
 def read_system_config():
 	# Read configure path 

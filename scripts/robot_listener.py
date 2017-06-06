@@ -448,8 +448,8 @@ def process_encoder_data():
 	# After process, update the proccessed index the same as received index 
 	encoder_processed = encoder_received
 	# dynamically calculate and update the gps data, step_angle, step_distance etc while the robot moving 
-	#robot_correction.update_robot_gps(left_encode, right_encode)
-	robot_correction.update_robot_gps_new(left_encode, right_encode) #aaron
+	robot_correction.update_robot_gps(left_encode, right_encode)
+	#robot_correction.update_robot_gps_new(left_encode, right_encode) #aaron
 
 def print_config():
 	rospy.loginfo("robot_drive: linear_encode_to_mm - %f", 	robot_drive.linear_encode_to_mm)

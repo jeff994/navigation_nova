@@ -106,6 +106,7 @@ class Job:
 		self.lon_target 	= lon
 		self.lat_target 	= lat 
 		self.bearing_target = bearing
+		rospy.loginfo("Define job: %s", classify)
 		self.classfication	= classify
 		self.value 			= value 
 		self.description 	= description
@@ -188,12 +189,19 @@ def clear_job_list():
 	global job_lists
 	del job_lists[:]
 
+# If return value is false, then need coorecction
+# If return value is true, then no need correction for the current job 
 def complete_current_job():
 	global job_lists
-	robot_drive.lon_target 		= job_lists[0].lon_target;
-	robot_drive.lat_target 		= job_lists[0].lat_target; 
-	robot_drive.bearing_target 	= job_lists[0].bearing_target; 
+	bRet = True
+	rospy.loginfo("Job classification: %s", job_lists[0].classfication)
+	if job_lists[0].classfication == 'N':
+		robot_drive.lon_target 		= job_lists[0].lon_target;
+		robot_drive.lat_target 		= job_lists[0].lat_target; 
+		robot_drive.bearing_target 	= job_lists[0].bearing_target; 
+		bRet = False
 	del job_lists[0]
+	return bRet
 
 # list of test jobs: Not from gps, but just like move, turn etc
 # ---------------------------------------------------------------------------------

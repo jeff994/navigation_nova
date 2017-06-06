@@ -26,8 +26,13 @@ from math import radians, cos, sin, asin, sqrt, atan2, degrees
 #so this solution is only suitable for demo, while direction is straight, no deviation is assumed
 #while turning, no translation is assumed
 def update_robot_gps_new(left_encode, right_encode):
+	if(left_encode == 0 and right_encode == 0):
+		#no updating of information 
+				#@yuqing_continueturn
+		return
 	robot_drive.step_angle = 0.0
 	robot_drive.step_distance = 0.0
+
 
 	if (robot_drive.direction == "forward" or robot_drive.direction == "backward"):
 		robot_drive.step_distance  	= float(left_encode + right_encode) / (2.0 * robot_drive.linear_encode_to_mm)
@@ -43,6 +48,11 @@ def update_robot_gps_new(left_encode, right_encode):
 
 		arc_length 				 	= float(left_encode - right_encode) / (2.0 * robot_drive.turning_encode_to_mm)
 		robot_drive.step_angle 		= (arc_length * 180.0) / (robot_drive.turn_radius * 3.14159265)
+	else:
+		arc_length 				 	= float(left_encode - right_encode) / (2.0 * robot_drive.turning_encode_to_mm)
+		robot_drive.step_distance  	= float(left_encode + right_encode) / (2.0 * robot_drive.linear_encode_to_mm)
+		robot_drive.step_angle 		= (arc_length * 180.0) / (robot_drive.turn_radius * 3.14159265)				
+
 
 	rospy.loginfo("Step distance moved %fmm, Step_angle %f degree", robot_drive.step_distance, robot_drive.step_angle)
 	robot_drive.lon_now, robot_drive.lat_now 	= gpsmath.get_gps(robot_drive.lon_now, robot_drive.lat_now, robot_drive.step_distance, robot_drive.bearing_now)		
@@ -60,14 +70,8 @@ def update_robot_gps(left_encode, right_encode):
 		return
 
 	# loacal vaiables 
-	if (robot_drive.direction == "forward" or robot_drive.direction == "backward"):
-		robot_drive.encode_to_mm 	= robot_drive.front_encode_to_mm
-	elif (robot_drive.direction == "left"):
-		robot_drive.encode_to_mm 	= robot_drive.left_encode_to_mm
-	elif (robot_drive.direction == "right"):
-		robot_drive.encode_to_mm 	= robot_drive.right_encode_to_mm
-	left_dist 	= float(left_encode) / robot_drive.encode_to_mm
-	right_dist 	= float(right_encode) / robot_drive.encode_to_mm
+	left_dist 	= float(left_encode) / robot_drive.turning_encode_to_mm
+	right_dist 	= float(right_encode) / robot_drive.turning_encode_to_mm
 	alpha 		= 0.0
 	total_dist 	= abs(left_dist) + abs(right_dist) 
 	R 			= 0.0
@@ -138,6 +142,7 @@ def distance_correction(lon_now, lat_now, bearing_now, lon_target, lat_target, b
 	distance 	= gpsmath.haversine(lon_now, lat_now, lon_target, lat_target)
 	bearing 	= gpsmath.bearing(lon_now, lat_now, lon_target, lat_target)
 	# check the bearing now and bearing target 
+	rospy.loginfo("Correction Type: %s", correction_type)
 	rospy.loginfo("GPS now [%f, %f], GPS target: [%f, %f]", lon_now, lat_now, lon_target, lat_target)
 	rospy.loginfo("Bearing now %f, bearing target %f, Bearing move %f, ", bearing_now, bearing_target, bearing)
 	
