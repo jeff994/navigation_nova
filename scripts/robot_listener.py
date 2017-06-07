@@ -168,13 +168,15 @@ def encoder_callback(data):
 		#rospy.loginfo("encoder 0,0")
 		robot_drive.robot_moving 	= False
 		robot_drive.robot_turning 	= False
-	elif (left_encode * right_encode > 0):
+	elif (left_encode * right_encode > 25):
 		robot_drive.robot_moving 	= True
 		robot_drive.robot_turning 	= False
-	else:
+	elif (left_encode * right_encode < -25):
 		robot_drive.robot_turning 	= True
 		robot_drive.robot_moving 	= False 		
-
+	else:
+		robot_drive.robot_turning = False
+		robot_drive.robot_moving = False
 	index = encoder_received * 2
 	encoder_data[encoder_received * 2] = float(left_encode)
 	encoder_data[encoder_received * 2 + 1] = float(right_encode)

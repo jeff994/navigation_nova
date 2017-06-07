@@ -60,15 +60,8 @@ def start_turn():
 	#	robot_drive.desired_speed 	= robot_drive.speed_full
 
 	#added by aaron to handle the slow communication
-	if (abs(degree_to_turn) < angle_lowest_speed):
-		robot_drive.speed_now 		= turn_lowest_speed
-		robot_drive.speed_desired 	= turn_lowest_speed
-	elif (abs(degree_to_turn) < angle_lower_speed):
-		robot_drive.speed_now 		= turn_lower_speed
-		robot_drive.speed_desired 	= turn_lower_speed
-	else:
-		robot_drive.speed_now 		= turn_full_speed
-		robot_drive.speed_desired 	= turn_full_speed
+	robot_drive.speed_now 		= turn_lowest_speed
+	robot_drive.speed_desired 	= turn_lowest_speed
 
 	if robot_drive.robot_turning:
 		robot_drive.robot_on_mission = True
@@ -81,7 +74,7 @@ def start_turn():
 def stop_turn():
 	global degree_turned
 	global degree_to_turn 
-	if not robot_drive.robot_turning:
+	if not robot_drive.robot_turning and not robot_drive.robot_moving:
 		robot_drive.robot_on_mission = False
 		degree_turned = 0
 		degree_to_turn = 0
@@ -111,9 +104,9 @@ def continue_turn(step_angle):
 	#elif(abs(degree_to_turn) - abs(degree_turned) < angle_lower_speed):
 	#	robot_drive.desired_speed = 5
 	#	rospy.loginfo("Only 5 degrees left, redusing turning speed to 4")
-	if (abs(degree_to_turn) - abs(degree_turned) < angle_lowest_speed):
+	if (abs(degree_to_turn) - abs(degree_turned) < angle_lowest_speed or abs(degree_turned) < angle_lowest_speed) :
 		robot_drive.speed_desired = turn_lowest_speed
-	elif (abs(degree_to_turn) - abs(degree_turned) < angle_lower_speed):
+	elif (abs(degree_to_turn) - abs(degree_turned) < angle_lower_speed or abs(degree_turned) < angle_lower_speed):
 		robot_drive.speed_desired = turn_lower_speed
 	else:
 		robot_drive.speed_desired = turn_full_speed
@@ -160,22 +153,22 @@ def turn_degree():
 
 	degree_turned = degree_turned + step_angle
     # 1 step before the robot turn, stop the robot
-	#degree_threshold = abs(degree_to_turn) - (robot_correction.min_correction_angle/2.0)
-	bearing_lower_threshold = robot_drive.bearing_target - (robot_correction.min_correction_angle/2.0)
-	bearing_upper_threshold = robot_drive.bearing_target + (robot_correction.min_correction_angle/2.0)
+	degree_threshold = abs(degree_to_turn) - robot_correction.min_correction_angle/2.0
+	#bearing_lower_threshold = robot_drive.bearing_target - (robot_correction.min_correction_angle/2.0)
+	#bearing_upper_threshold = robot_drive.bearing_target + (robot_correction.min_correction_angle/2.0)
 	#degree_threshold = 5
 	#simple log for tracing 
 	#distpub = 'To turn:%f Turned:%f Step angle: %f' % (degree_to_turn, degree_turned, step_angle)
 	#rospy.loginfo(distpub)
 	rospy.loginfo("To turn %f, Turned %f, Step %f, Bearing %f, Target %f", degree_to_turn, degree_turned, step_angle, robot_drive.bearing_now, robot_drive.bearing_target)
 
-	#if(degree_turned < degree_threshold): 
-	#	continue_turn(step_angle)
-	#	return False
-	#else: 
-	#	#finishe the turning 
-	#	stop_turn()
-	#	return not robot_drive.robot_on_mission
+	if(abs(degree_turned) < degree_threshold): 
+		continue_turn(step_angle)
+		return False
+	else: 
+		#finishe the turning 
+		stop_turn()
+		return not robot_drive.robot_on_mission
 	
 	#estimate the postition 1 second from now, 
 	#this assumes the robot only stops 1 second after we start sending stop command
@@ -188,12 +181,12 @@ def turn_degree():
 #		return False
 
 	#lower threshold and upper threshold
-	if(robot_drive.bearing_now >= bearing_lower_threshold and robot_drive.bearing_now <= bearing_upper_threshold):
-		rospy.loginfo("now %f, low thresh %f, high thresh %f", robot_drive.bearing_now, bearing_lower_threshold, bearing_upper_threshold)
-		stop_turn()
-		return not robot_drive.robot_on_mission
-	else:
-		continue_turn(step_angle)
-		return False
+	#if(robot_drive.bearing_now >= bearing_lower_threshold and robot_drive.bearing_now <= bearing_upper_threshold):
+	#	rospy.loginfo("now %f, low thresh %f, high thresh %f", robot_drive.bearing_now, bearing_lower_threshold, bearing_upper_threshold)
+	#	stop_turn()
+	#	return not robot_drive.robot_on_mission
+	#else:
+	#	continue_turn(step_angle)
+	#	return False
 
-	return False
+	#return False

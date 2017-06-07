@@ -94,21 +94,21 @@ def disable_robot():
 # class to define i
 class Job:
 	classfication		= 'N'
-	lon_target			= 0.0
-	lat_target 			= 0.0 
+	lon_target		= 0.0
+	lat_target 		= 0.0 
 	bearing_target		= 0.0
-	description			= ''
-	value				= 0
-	index				= 0
+	description		= ''
+	value			= 0
+	index			= 0
 
 	# constructor
 	def __init__(self, lon, lat, bearing, classify, description, value):
 		self.lon_target 	= lon
 		self.lat_target 	= lat 
-		self.bearing_target = bearing
+		self.bearing_target 	= bearing
 		rospy.loginfo("Define job: %s", classify)
 		self.classfication	= classify
-		self.value 			= value 
+		self.value 		= value 
 		self.description 	= description
 
 #@yuqing_forwardafterobstacle
@@ -275,7 +275,7 @@ def insert_compensation_jobs(lon_source, lat_source, bearing_source, lon_target,
 	distance 	= gpsmath.haversine(lon_source, lat_source, lon_target, lat_target)
 
 	turn_job 				= Job(lon_source, lat_source, bearing_target, correction_type, 'T', bearing_target)
-	turn_before_move_job 	= Job(lon_source, lat_source, bearing, correction_type, 'T', bearing)
+	turn_before_move_job 			= Job(lon_source, lat_source, bearing, correction_type, 'T', bearing)
 	move_job 				= Job(lon_target, lat_target, bearing, correction_type, 'F', distance)
 	#reverse_job 			= Job(lon_target, lat_target, bearing, correction_type, 'B', distance)
 
@@ -292,8 +292,10 @@ def insert_compensation_jobs(lon_source, lat_source, bearing_source, lon_target,
 		job_lists.insert(1, move_job)
 		job_lists.insert(2, turn_job)
 	elif need_correct_distance and not need_correct_angle:
-		rospy.loginfo("Added an angle correction")
-		job_lists.insert(0, move_job)
+		rospy.loginfo("Added an distance correction")
+		job_lists.insert(0, turn_before_move_job)
+		job_lists.insert(1, move_job)
+		job_lists.insert(2, turn_job)
 	elif (need_correct_angle and not need_correct_distance):
 		rospy.loginfo("Added a angle correction")
 		job_lists.insert(0, turn_job) 

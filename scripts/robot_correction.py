@@ -124,7 +124,7 @@ def update_robot_gps(left_encode, right_encode):
 	dist 					= R * sin(abs(alpha/2.0)) * 2.0
 	rospy.loginfo("Step in straight line %f mm, Step_angle %f degree, R %f mm, Step_distance calculated %f mm", dist, robot_drive.step_angle, R, robot_drive.step_distance) 
 	robot_drive.lon_now, robot_drive.lat_now 	= gpsmath.get_gps(robot_drive.lon_now, robot_drive.lat_now, dist, bearing)		
-	robot_drive.bearing_now 					= bearing
+	robot_drive.bearing_now 			= bearing
 	#robot_publisher.publish_gps()
 	#rospy.loginfo("Bearing now %f,lon_now %f, lat_now %f", robot_drive.bearing_now, robot_drive.lon_now, robot_drive.lat_now)
 

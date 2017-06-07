@@ -37,17 +37,12 @@ def start_move():
 	global linear_full_speed
 	global linear_lower_speed
 	global linear_lowest_speed
-
+	
+	rospy.loginfo("Lowest %d, Lower %d, Normal %d", linear_lowest_speed, linear_lower_speed, linear_full_speed)
+	
 	# if the task is a short distance task, then start with a lower speed 
-	if abs(dist_to_run) < dist_lowest_speed:
-		robot_drive.speed_now  		= linear_lowest_speed
-		robot_drive.speed_desired 	= linear_lowest_speed
-	elif abs(dist_to_run) < dist_lower_speed: 
-		robot_drive.speed_now  		= linear_lower_speed
-		robot_drive.speed_desired 	= linear_lower_speed
-   	else:
-		robot_drive.speed_now 		= linear_full_speed 
-		robot_drive.speed_desired 	= linear_full_speed
+	robot_drive.speed_now  		= linear_lowest_speed
+	robot_drive.speed_desired 	= linear_lowest_speed
 
 	#changed by aaron to handle slow communication
 	#if abs(dist_to_run) < dist_2_speed:
@@ -101,12 +96,14 @@ def continue_move():
         	robot_drive.start()
 
     # if robot is approaching the destination, then need to decrease speed 
-	if(abs(dist_to_run) - abs(dist_completed) < dist_lowest_speed):
+	if(abs(dist_to_run) - abs(dist_completed) < dist_lowest_speed or abs(dist_completed) < dist_lowest_speed):
 		robot_drive.speed_desired = linear_lowest_speed
 		rospy.loginfo('Reducing to lowest speed, very close to target position')
-	elif(abs(dist_to_run) - abs(dist_completed) < dist_lower_speed):
+	elif(abs(dist_to_run) - abs(dist_completed) < dist_lower_speed or abs(dist_completed) < dist_lower_speed):
 		robot_drive.speed_desired = linear_lower_speed
 		rospy.loginfo('Reducing to lower speed, %f to target position', dist_lower_speed)
+	else:
+		robot_drive.speed_desired = linear_full_speed
 
 	#if (abs(dist_to_run) - abs(dist_completed) < dist_2_speed):
 	#	#robot_drive.speed_now 		= robot_drive.speed_2
@@ -123,7 +120,7 @@ def continue_move():
 
 
     # if change of speed request is received 
-	if(robot_drive.speed_now  != robot_drive.speed_desired):
+	if(robot_drive.speed_now != robot_drive.speed_desired):
         	robot_drive.change_speed()
 
 # main function to control the robot movement 
@@ -159,7 +156,7 @@ def move_distance(dist):
 	# robot is with in the range, then we condidered robot reached the position 
 	dist_threshold = abs(dist_to_run) - robot_correction.min_correction_distance/2 	#0 mm, I can choose -50mm, but since there will be inefficiencies, 0 error threshold might be good enough
 	
-	distpub = 'Dist-travelled: %f dist-total:%f dist-step:%f' % (dist_completed, abs(dist_to_run) ,dist_step)
+	distpub = 'speed %d, Dist-travelled: %f dist-total:%f dist-step:%f' % (robot_drive.speed_now, dist_completed, abs(dist_to_run) ,dist_step)
 	rospy.loginfo(distpub)
 	angle_to_correct = angle_to_correct + robot_drive.step_angle 
 
