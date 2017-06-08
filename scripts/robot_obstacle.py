@@ -84,14 +84,7 @@ def rc_sensor_data(rc_sensor_value):
 
 def clear_correction_trial_tasks(current_job_type):
 	rospy.loginfo("Robot correction trial %d failed, perform clearing tasks", robot_correction.correction_count)
-	while (current_job_type == 'O'):
-		robot_job.complete_current_job()
-		if robot_job.has_jobs_left():
-			job_executing 		= robot_job.current_job()
-			current_job_type 	= job_executing.classfication; 
-		else:
-			rospy.loginfo("The last job in the queue")
-			break; 
+	robot_job.clear_correction_jobs()
 
 def quit_obstacle_correction(current_job_type):
 	clear_correction_trial_tasks(current_job_type)
@@ -102,12 +95,28 @@ def quit_obstacle_correction(current_job_type):
 		rospy.loginfo("Add correction for next %s job", current_job_type)
 		robot_job.complete_current_job()
 
+def clear_after_obstacle_avoidance(current_job_type):
+	# Remove the un-finished job 
+	if(current_job_type == 'N' or current_job_type == 'C'):
+		rospy.loginfo("Robot met obstacle during normal job, finishing current job")
+		robot_correction.correction_count 	= 0
+		robot_job.complete_current_job()
+	elif(current_job_type == 'O'): 
+		if(robot_correction.correction_count  > robot_correction.max_correction_run):
+			quit_obstacle_correction(current_job_type)
+		else:
+			clear_correction_trial_tasks(current_job_type)
+	else:
+		rospy.logerr("Invalid job_type found")
+
 
 def resume_from_obstacle_avoidance():
 	job_executing = robot_job.current_job()
 	current_job_type = job_executing.classfication; 
 
 	# robot is resumed to clear state and ready for the correction tasks 
+	# performing necessary clearing of current tasks 
+	clear_after_obstacle_avoidance(current_job_type)
 
 	if needForward:
 		rospy.loginfo("Need to forward 0.5m after obstacle")
