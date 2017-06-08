@@ -33,8 +33,6 @@ def start_turn():
 	global turn_full_speed
 	global turn_lower_speed
 	global turn_lowest_speed
-
-	rospy.loginfo("start turn...........................")
 	
 	
 	# get turning angle to (-180 to 180)
@@ -66,7 +64,7 @@ def start_turn():
 	if robot_drive.robot_turning:
 		robot_drive.robot_on_mission = True
 		degree_turned = 0
-		rospy.loginfo("Start: Degree turned %d, degree to turn %d", degree_turned, degree_to_turn)
+		rospy.loginfo("----------------- Started: Degree turned %d, degree to turn %d -----------------", degree_turned, degree_to_turn)
 	else:
 		robot_drive.start()
 
@@ -78,7 +76,7 @@ def stop_turn():
 		robot_drive.robot_on_mission = False
 		degree_turned = 0
 		degree_to_turn = 0
-		rospy.loginfo('Robot completed a turn job')
+		rospy.loginfo('----------------- Robot completed a turn job -----------------')
 	else:
 		robot_drive.stop_robot()
 
@@ -114,9 +112,7 @@ def continue_turn(step_angle):
 
 	#dynamically update robot bearing 
 	#robot_drive.bearing_now  = correct_angle(robot_drive.bearing_now)
-	if(robot_drive.speed_desired == robot_drive.speed_now ): 
-		rospy.loginfo('Continue turning at same speed...')
-	else:
+	if(robot_drive.speed_desired != robot_drive.speed_now ): 
 		robot_drive.change_speed()
 
 # main functions let robot performs a turning job of certain degree 

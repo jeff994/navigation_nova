@@ -63,7 +63,7 @@ def start_move():
 		robot_drive.robot_on_mission = True 
 		dist_completed = 0.0
 		angle_to_correct = 0.0
-		rospy.loginfo('Started a moving job')
+		rospy.loginfo('----------------- Started a moving job -------------------')
 	else:
 	  	robot_drive.start()
 		rospy.loginfo('Starting a moving job')
@@ -74,7 +74,7 @@ def stop_move():
 	if not robot_drive.robot_moving :
 		dist_completed = 0.0
 		robot_drive.robot_on_mission = False
-		rospy.loginfo('Robot completed a moving job')
+		rospy.loginfo('----------------- Robot completed a moving job -----------------')
 	else:
 		rospy.loginfo('Robot still moving, stopping robot')
 		robot_drive.stop_robot()

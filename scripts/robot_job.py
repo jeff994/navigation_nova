@@ -41,9 +41,10 @@ def process_no_job():
 def process_job():
 	job_completed = False
 	global job_lists
-	rospy.loginfo("Number of jobs left to execute %d", len(job_lists))
 	try: 
-		rospy.loginfo("Job classifictiaon %s, description %s, value %d", job_lists[0].classfication, job_lists[0].description, job_lists[0].value)
+		if not robot_drive.robot_on_mission:
+			rospy.loginfo("\n================== Start a new job ==================")
+			rospy.loginfo("Job classifictiaon %s, description %s, value %d", job_lists[0].classfication, job_lists[0].description, job_lists[0].value)
 		if (job_lists[0].description == 'T') : 
 			#rospy.loginfo("Bearing now %f, bearing target %f", robot_drive.bearing_now, robot_drive.bearing_target)
 			#if(robot_drive.robot_on_mission == 0): 
@@ -106,10 +107,10 @@ class Job:
 		self.lon_target 	= lon
 		self.lat_target 	= lat 
 		self.bearing_target 	= bearing
-		rospy.loginfo("Define job: %s", classify)
 		self.classfication	= classify
 		self.value 		= value 
 		self.description 	= description
+		rospy.loginfo("Define Job: %s, %s, %f", classify, description, value)
 
 #@yuqing_forwardafterobstacle
 dist_forward_after_obstacle = 1000
@@ -193,15 +194,14 @@ def clear_job_list():
 # If return value is true, then no need correction for the current job 
 def complete_current_job():
 	global job_lists
-	bRet = True
 	if job_lists[0].classfication == 'N':
 		robot_drive.lon_target 		= job_lists[0].lon_target;
 		robot_drive.lat_target 		= job_lists[0].lat_target; 
 		robot_drive.bearing_target 	= job_lists[0].bearing_target; 
-		bRet = False
-	rospy.loginfo("Removed a job with classification: %s", job_lists[0].classfication)
+	rospy.loginfo("Removed current job with classification: %s", job_lists[0].classfication)
 	del job_lists[0]
-	return bRet
+	rospy.loginfo("Number of jobs left to execute %d", len(job_lists))
+	rospy.loginfo("================== The job finished and discarded ==================\n\n")
 
 # list of test jobs: Not from gps, but just like move, turn etc
 # ---------------------------------------------------------------------------------
@@ -259,6 +259,18 @@ def define_initialize_job():
 	append_turn_job(robot_drive.lon_now, robot_drive.lat_now, 0.0)
 	append_turn_job(robot_drive.lon_now, robot_drive.lat_now, 90.0)
 
+def no_correction_jobs():
+	global job_lists
+	count = 0
+	no_job = len(job_lists)
+	for i in range(no_job):
+		if(job_lists[i].classfication == 'C'):
+			count = count + 1
+		else:
+			break
+	return count 
+	
+
 def clear_correction_jobs():
 	global job_lists
 	while has_jobs_left():
@@ -275,7 +287,7 @@ def insert_compensation_jobs(lon_source, lat_source, bearing_source, lon_target,
 	distance 	= gpsmath.haversine(lon_source, lat_source, lon_target, lat_target)
 
 	turn_job 				= Job(lon_source, lat_source, bearing_target, correction_type, 'T', bearing_target)
-	turn_before_move_job 			= Job(lon_source, lat_source, bearing, correction_type, 'T', bearing)
+	turn_before_move_job 	= Job(lon_source, lat_source, bearing, correction_type, 'T', bearing)
 	move_job 				= Job(lon_target, lat_target, bearing, correction_type, 'F', distance)
 	#reverse_job 			= Job(lon_target, lat_target, bearing, correction_type, 'B', distance)
 

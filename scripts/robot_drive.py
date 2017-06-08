@@ -130,8 +130,8 @@ def unlock_robot():
 def change_speed():
 	global move_direction, speed_now, speed_desired 
 	robot_publisher.publish_command(move_direction, speed_desired)
-	speed_now = speed_desired
 	distpub = 'Robot speed changed from %d to %d' % (speed_now, speed_desired)
+	speed_now = speed_desired
 	rospy.loginfo(distpub)
 
 #@yuqing_toggleobstaclemode

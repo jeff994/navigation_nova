@@ -129,18 +129,20 @@ def update_robot_gps(left_encode, right_encode):
 	#rospy.loginfo("Bearing now %f,lon_now %f, lat_now %f", robot_drive.bearing_now, robot_drive.lon_now, robot_drive.lat_now)
 
 def dist_correction_normal():
-	rospy.loginfo("**************normal correction jobs**************")
+	rospy.loginfo("************** Check errors after a normal job **************")
 	distance_correction(robot_drive.lon_now, robot_drive.lat_now, robot_drive.bearing_now, robot_drive.lon_target, robot_drive.lat_target, robot_drive.bearing_target, 'C')
+	rospy.loginfo("************** Completed checking errors after a normal job **************")
 
 def dist_correction_correction():
-	rospy.loginfo("**************correction needed during correction**************")
-	robot_job.clear_correction_jobs()
+	rospy.loginfo("************** Check errors after correction jobs **************")
 	distance_correction(robot_drive.lon_now, robot_drive.lat_now, robot_drive.bearing_now, robot_drive.lon_target, robot_drive.lat_target, robot_drive.bearing_target, 'C')
+	rospy.loginfo("************** Completed errors after correction jobs **************")
 
 def dist_correction_obstacle():
-	rospy.loginfo("**************correction needed during obstacle avoidence**************")
+	rospy.loginfo("**************Check erros after obstacle avoidence**************")
 	robot_job.clear_correction_jobs()
 	distance_correction(robot_drive.lon_now, robot_drive.lat_now, robot_drive.bearing_now, robot_drive.lon_target, robot_drive.lat_target, robot_drive.bearing_target, 'O')
+	rospy.loginfo("**************Added correction jobs after obstacle avoidence**************")
 
 # correct robot every time by comapring the lat_now, lon_now with target position
 def distance_correction(lon_now, lat_now, bearing_now, lon_target, lat_target, bearing_target, correction_type):
@@ -169,7 +171,6 @@ def distance_correction(lon_now, lat_now, bearing_now, lon_target, lat_target, b
 	#need_correct_angle 		=  diff_angle > min_correcton_angle and diff_angle < (360.0 - min_correction_angle)
 
 	if need_correct_distance or need_correct_angle:
-		rospy.loginfo("Add jobs to correction.")
 		#robot_job.insert_compensation_jobs(lon_now, lat_now, lon_target, lat_target, correction_type, need_correct_distance, need_correct_angle)
 		robot_job.insert_compensation_jobs(lon_now, lat_now, bearing_now, lon_target, lat_target, bearing_target, correction_type, need_correct_distance, need_correct_angle)
 	else: 
