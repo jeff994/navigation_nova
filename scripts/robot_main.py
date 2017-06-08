@@ -46,7 +46,6 @@ def main_commander():
 	# It process all the encoder data received - regardless robot status etc .  
 	#Including dynamically update robot GPS etc 
 	robot_listener.process_encoder_data() 										#aaron comment
-	#robot_drive.get_step() 														#aaron comment
 
 	# ----------------------------------------------------------------------------------------#
 	#  code to close robot when required	                    							  #
@@ -75,7 +74,6 @@ def main_commander():
 		rospy.loginfo("Pause robot") 
 		robot_job.pause_robot(); 
 		return; 
-
 
 	# ----------------------------------------------------------------------------------------#
 	#  Codes for robot normal jobs like walking and turning       							  #

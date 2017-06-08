@@ -29,7 +29,7 @@ job_lists 			= []
 # if not jobs in the sytem
 def process_no_job():
 	robot_drive.robot_on_mission = False
-	if(robot_drive.robot_moving):
+	if(robot_drive.robot_moving or robot_drive.robot_turning):
 		rospy.logwarn('warning: robot is not fully stopped even though a top command issued')
 		robot_drive.stop_robot()
 		time.sleep(0.05) 			#aaron comment

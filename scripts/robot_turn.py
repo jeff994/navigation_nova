@@ -61,11 +61,12 @@ def start_turn():
 	robot_drive.speed_now 		= turn_lowest_speed
 	robot_drive.speed_desired 	= turn_lowest_speed
 
-	if robot_drive.robot_turning:
+	if robot_drive.robot_turning and not robot_drive.robot_on_mission:
 		robot_drive.robot_on_mission = True
 		degree_turned = 0
 		rospy.loginfo("----------------- Started: Degree turned %d, degree to turn %d -----------------", degree_turned, degree_to_turn)
 	else:
+		rospy.loginfo("Sending command to let robot start turn")
 		robot_drive.start()
 
 # tell the robot to complete it's turning job 
@@ -126,10 +127,12 @@ def turn_degree():
  			degree_to_turn = degree_to_turn - 360.0
  		elif (degree_to_turn < -180):
  			degree_to_turn = degree_to_turn + 360.0
+
 		if abs(degree_to_turn) < robot_correction.min_correction_angle: 
 			rospy.loginfo("Degree to turn %d < %d",  degree_to_turn, robot_correction.min_correction_angle)
 			return True 
-		start_turn()
+		else:
+			start_turn()
 		return False
 	
 	# convered from angle to required turn angles  
