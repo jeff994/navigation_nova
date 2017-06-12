@@ -21,7 +21,7 @@ import webbrowser
 from datetime import datetime
 from std_msgs.msg import String
 from geometry_msgs.msg import Vector3
-from serial_handler.msg import Status
+from navigation_nova.msg import Status
 import os
 
 #used to hold the encoder data received, init with some value  
