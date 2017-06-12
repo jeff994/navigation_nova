@@ -16,6 +16,7 @@ import robot_status
 import execute_command    #only here to init command buffer
 from std_msgs.msg import String
 from geometry_msgs.msg import Vector3
+from serial_handler.msg import Status   #getting the msg file from the serial_handler package
 
 # The main progream process the robot logic
 def main_commander():
@@ -179,6 +180,7 @@ def main_listener():
 	rospy.Subscriber('IMU', Vector3, robot_listener.IMU_callback) #not yet done
 	rospy.Subscriber('battery', String, robot_listener.battery_callback)
 	rospy.Subscriber('direction', String, robot_listener.direction_callback)
+	rospy.Subscriber('status', Status, robot_listener.status_callback)
 
 	while not rospy.is_shutdown():
 		main_commander()

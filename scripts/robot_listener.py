@@ -21,6 +21,7 @@ import webbrowser
 from datetime import datetime
 from std_msgs.msg import String
 from geometry_msgs.msg import Vector3
+from navigation_nova.msg import Status
 import os
 
 #used to hold the encoder data received, init with some value  
@@ -404,6 +405,22 @@ def direction_callback(data):
 		robot_drive.direction = "left"
 	elif (data_int == 4):
 		robot_drive.direction = "right"
+
+def status_callback(data):
+	robot_status.on_obstacle  	 			= data.on_obstacle
+	robot_status.manual_mode 				= data.manual_mode
+	robot_status.obstacle_avoidance_mode 	= data.obstacle_avoidance_mode
+	robot_status.has_obstacle 				= data.has_obstacle
+	robot_status.interaction_mode 			= data.interaction_mode
+	
+	robot_status.motor_1_ok 				= data.motor_1_ok
+	robot_status.motor_2_ok 				= data.motor_2_ok
+	robot_status.encoder_ok 				= data.encoder_ok
+	robot_status.gyroscope_ok 				= data.gyroscope_ok
+	robot_status.reverse_sensor_ok 			= data.reverse_sensor_ok
+	robot_status.distance_sensor_ok 		= data.distance_sensor_ok
+
+######################################################################		
 
 # init the the encoder buffer with some empty data when system starts 
 def init_encoder_buffer( size=2000 ):
