@@ -2,7 +2,6 @@
 import rospy
 import string
 import time
-import os
 import robot_obstacle
 import robot_job
 import robot_correction
@@ -21,25 +20,33 @@ from serial_handler.msg import Status   #getting the msg file from the serial_ha
 # The main progream process the robot logic
 def main_commander():
 	# ----------------------------------------------------------------------------------------#
-	#  code to check and use the ecnoder data                     							  #
+	#  If robot is on burn mode, it does not receive any encoder data                 		  #
+	#  If robot is eanbled or received command to off the burn mode, the robot shall 		  #
+	#   exit from burn mode and enter normal working mode                                     #
 	# ----------------------------------------------------------------------------------------#
-	# publish parameters to the web server
-	#robot_publisher.publish_parameters()
-
 	if robot_drive.burn_mode:
-		if not robot_drive.robot_enabled:
-			rospy.loginfo("Robot is on burn mode")
+		if not robot_drive.robot_enabled or robot_drive.burn_mode_desired == False:
+			rospy.loginfo("Robot is on burn mode and robot disabled")
 			time.sleep(0.1)
 			return
-		else:
-			rospy.loginfo("Robot enabled, switch to normal mode")
-			robot_drive.enter_normal_mode()
-	else:
-		robot_publisher.publish_parameters()
+		elif robot_drive.robot_enabled:
+			rospy.loginfo("Robot enabled, raised requiremnt to exit from burn mode")
+			robot_drive.burn_mode_desired = False
+			return;
+		elif not robot_drive.burn_mode_desired:
+			rospy.loginfo("Robot burn mode is on, received command to off burn mode")
+			robot_drive.change_obstacle_mode()
+			return;
+
+
+	# publish running parameters to the para topic
+	robot_publisher.publish_parameters()
+
 
 	# Very important error handling:
 	# If Not any new data comming, waiting for next data,
-	# if waiting too long need to issue warning or error
+	# if waiting too long need to issue warning or errorburn_mode_desired
+
 	if(robot_listener.encoder_received == robot_listener.encoder_processed): 	#aaron comment
 		robot_listener.process_encoder_delay() 									#aaron comment
 		return 																	#aaron comment
@@ -47,6 +54,18 @@ def main_commander():
 	# It process all the encoder data received - regardless robot status etc .
 	#Including dynamically update robot GPS etc
 	robot_listener.process_encoder_data() 										#aaron comment
+
+	# Received command to switch to burn mode
+	if robot_drive.burn_mode_desired:
+		robot_drive.change_mode()
+		time.sleep(0.1)
+		return;
+
+	# Received command to on/off obstacle avoidance mode
+	if robot_drive.obstacle_mode != robot_drive.obstacle_mode_desired:
+		robot_drive.change_obstacle_mode()
+		time.sleep(0.1)
+		return;
 
 	# ----------------------------------------------------------------------------------------#
 	#  code to close robot when required	                    							  #
@@ -137,7 +156,7 @@ if __name__ == '__main__':
 	try:
 		# AAron's initial one for final testing
 		#job_generator(initial_bearing, loops)
-		robot_drive.read_system_config()
+		robot_configure.read_system_config()
 		robot_listener.init_encoder_buffer()
 		robot_listener.init_compass_buffer()
 		main_listener()

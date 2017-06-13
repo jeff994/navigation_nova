@@ -217,12 +217,11 @@ def keyboard_callback(data):
 		robot_job.initialize_job()
 	elif (keyboard_data == "Burn"):
 		if robot_drive.burn_mode:
-			rospy.loginfo("Robot is on burn mode")
-			robot_drive.enter_normal_mode()
-			rospy.loginfo("Entered nomrl mode")
+			rospy.loginfo('Received keyboard command to exit from burn mode')
+			robot_drive.burn_mode_desired = False
 		else:
-			rospy.loginfo("Robot is on normal mode")
-			robot_drive.enter_burn_mode()
+			rospy.loginfo('Received keyboard command to enter burn mode')
+			robot_drive.burn_mode_desired = True
 	elif (keyboard_data == 'Pause'):
 		rospy.loginfo("Pause the task");
 		robot_drive.robot_paused = 1;
@@ -250,12 +249,12 @@ def keyboard_callback(data):
 		robot_drive.robot_on_mission =  0
 	elif (keyboard_data == "Switch"):
 		if(robot_drive.robot_enabled == 1):
-			#rospy.loginfo("")
+			rospy.loginfo("Received keyboard command to disable robot")
 			robot_drive.robot_enabled = 0
 			#robot_drive.init_gps()
 		else:
 			#robot_drive.init_gps()
-			#rospy.loginfo("robot enabled")
+			rospy.loginfo("Reveived keyboard command to enable robot")
 			robot_drive.robot_enabled = 1
 	elif (keyboard_data == 'Faster'):
 		rospy.loginfo('Command received: Try to increase robot speed')
@@ -278,11 +277,11 @@ def keyboard_callback(data):
 	elif (keyboard_data == "Test"):
 		robot_job.simple_turn(0.0)
 	elif (keyboard_data == "No_obstacle"):#@yuqing_toggleobstaclemode
-		rospy.loginfo('keyboard No_obstacle')
-		robot_drive.enter_no_obstacle()
+		rospy.loginfo('Received keyboard command to switch off obstacle avoidance mode')
+		robot_drive.obstacle_mode_desired = False
 	elif (keyboard_data == "Obstacle"):#@yuqing_toggleobstaclemode
-		rospy.loginfo('keyboard Obstacle')
-		robot_drive.enter_obstacle()
+		rospy.loginfo('Received keyboard command to switch on obstacle avoidance mode')
+		robot_drive.obstacle_mode_desired = True
 	elif (keyboard_data == "10m"):#@yuqing_toggleobstaclemode
 		rospy.loginfo('forward 10m')
 		robot_job.simple_move(10000.0, robot_drive.bearing_now, 'F')
