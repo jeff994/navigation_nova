@@ -157,6 +157,7 @@ if __name__ == '__main__':
 		# AAron's initial one for final testing
 		#job_generator(initial_bearing, loops)
 		robot_configure.read_system_config()
+		robot_job.init_gps()
 		robot_listener.init_encoder_buffer()
 		robot_listener.init_compass_buffer()
 		main_listener()

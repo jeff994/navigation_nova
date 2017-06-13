@@ -88,13 +88,6 @@ def read_system_config():
     ret[21], robot_job.init_lat                         = read_config_float(config_path, 'init', 'init_lat')
     ret[22], robot_job.init_bearing                     = read_config_float(config_path, 'init', 'init_bearing')
 
-    robot_drive.lon_now         = robot_job.init_lon
-    robot_drive.lat_now         = robot_job.init_lat
-    robot_drive.lon_target      = robot_job.init_lon
-    robot_drive.lat_target      = robot_job.init_lat
-    robot_drive.bearing_now     = robot_job.init_bearing
-    robot_drive.bearing_target  = robot_job.init_bearing
-
     # check whether the reading is successful or not
     for index in range(size_para):
         if not ret[index]:
