@@ -27,15 +27,6 @@ loops 				= 1 			#how many rounds to go
 job_lists 			= []
 
 
-def init_gps():
-	# Setting other dependant parameters
-    robot_drive.lon_now         = init_lon
-    robot_drive.lat_now         = init_lat
-    robot_drive.lon_target      = init_lon
-    robot_drive.lat_target      = init_lat
-    robot_drive.bearing_now     = init_bearing
-    robot_drive.bearing_target  = init_bearing
-
 # if not jobs in the sytem
 def process_no_job():
 	robot_drive.robot_on_mission = False

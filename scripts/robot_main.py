@@ -25,17 +25,18 @@ def main_commander():
 	#   exit from burn mode and enter normal working mode                                     #
 	# ----------------------------------------------------------------------------------------#
 	if robot_drive.burn_mode:
-		if not robot_drive.robot_enabled or robot_drive.burn_mode_desired == False:
+		if not robot_drive.robot_enabled or robot_drive.burn_mode_desired:
 			rospy.loginfo("Robot is on burn mode and robot disabled")
 			time.sleep(0.1)
 			return
-		elif robot_drive.robot_enabled:
+		elif robot_drive.robot_enabled and robot_drive.burn_mode_desired:
 			rospy.loginfo("Robot enabled, raised requiremnt to exit from burn mode")
 			robot_drive.burn_mode_desired = False
 			return;
 		elif not robot_drive.burn_mode_desired:
 			rospy.loginfo("Robot burn mode is on, received command to off burn mode")
-			robot_drive.change_obstacle_mode()
+			robot_drive.change_mode()
+			time.sleep(1)
 			return;
 
 
@@ -46,7 +47,7 @@ def main_commander():
 	# Very important error handling:
 	# If Not any new data comming, waiting for next data,
 	# if waiting too long need to issue warning or errorburn_mode_desired
-
+	#rospy.loginfo("1")
 	if(robot_listener.encoder_received == robot_listener.encoder_processed): 	#aaron comment
 		robot_listener.process_encoder_delay() 									#aaron comment
 		return 																	#aaron comment
@@ -54,17 +55,18 @@ def main_commander():
 	# It process all the encoder data received - regardless robot status etc .
 	#Including dynamically update robot GPS etc
 	robot_listener.process_encoder_data() 										#aaron comment
-
+	#rospy.loginfo("2")
 	# Received command to switch to burn mode
 	if robot_drive.burn_mode_desired:
 		robot_drive.change_mode()
 		time.sleep(0.1)
 		return;
 
+	#rospy.loginfo("3")
 	# Received command to on/off obstacle avoidance mode
 	if robot_drive.obstacle_mode != robot_drive.obstacle_mode_desired:
 		robot_drive.change_obstacle_mode()
-		time.sleep(0.1)
+		time.sleep(1)
 		return;
 
 	# ----------------------------------------------------------------------------------------#
@@ -131,6 +133,9 @@ def main_commander():
 #subscribes to different topic
 def main_listener():
 	rospy.init_node('commander')
+
+	# Step 1:
+	# Regiser callback to recived data from different nodes which would be used for calculation
 	#rospy.Subscriber('compass', String, robot_listener.compass_callback) 			#aaron comment
 	rospy.Subscriber('encoder', String, robot_listener.encoder_callback) 			#aaron comment
 	rospy.Subscriber('keyboard', String, robot_listener.keyboard_callback)
@@ -148,6 +153,8 @@ def main_listener():
 	rospy.Subscriber('direction', String, robot_listener.direction_callback)
 	rospy.Subscriber('hardware_status', Status, robot_listener.status_callback)
 
+	# Step 2:
+	# Start the main loop
 	while not rospy.is_shutdown():
 		main_commander()
 	rospy.spin()
@@ -157,7 +164,7 @@ if __name__ == '__main__':
 		# AAron's initial one for final testing
 		#job_generator(initial_bearing, loops)
 		robot_configure.read_system_config()
-		robot_job.init_gps()
+		robot_correction.init_gps()
 		robot_listener.init_encoder_buffer()
 		robot_listener.init_compass_buffer()
 		main_listener()

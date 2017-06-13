@@ -406,11 +406,12 @@ def direction_callback(data):
 		robot_drive.direction = "right"
 
 def status_callback(data):
+	robot_drive.burn_mode					= data.burn_mode
 	robot_status.on_obstacle  	 			= data.on_obstacle
 	robot_status.manual_mode 				= data.manual_mode
-	robot_status.obstacle_avoidance_mode 	= data.obstacle_avoidance_mode
+	robot_drive.obstacle_mode 				= data.obstacle_avoidance_mode
 	robot_status.has_obstacle 				= data.has_obstacle
-	robot_status.interaction_mode 			= data.interaction_mode
+	robot_status.interaction_mode 				= data.interaction_mode
 
 	robot_status.motor_1_ok 				= data.motor_1_ok
 	robot_status.motor_2_ok 				= data.motor_2_ok
