@@ -3,7 +3,6 @@ import serial
 import string
 import robot_drive 
 import robot_obstacle
-import robot_status
 import json
 from std_msgs.msg import String
 
@@ -27,7 +26,7 @@ def publish_parameters():
 	info["LONG"]        =    robot_drive.lon_now
 	info["LAT"]         =    robot_drive.lat_now
 	info["BEARING"]     =    robot_drive.bearing_now
-	info["BATTERY"] 	= 	 robot_status.battery_level #aaron added
+	info["BATTERY"] 	= 	 robot_drive.battery_level #aaron added
 	data={}
 	data["parameters"]  =    info
 	  

@@ -11,7 +11,6 @@ import robot_drive
 import robot_move
 import robot_turn
 import robot_configure
-import robot_status
 import execute_command    #only here to init command buffer
 from std_msgs.msg import String
 from geometry_msgs.msg import Vector3
@@ -81,7 +80,7 @@ def main_commander():
 	# ----------------------------------------------------------------------------------------#
 	#  Codes for obstacle avoidence handling                     							  #
 	# ----------------------------------------------------------------------------------------#
-	# The flat would be set by hardware, we cannot do anything but blankly calculate the gps coordinates
+	# The flag would be set by hardware, we cannot do anything but blankly calculate the gps coordinates
 	if robot_obstacle.robot_on_obstacle:
 		rospy.loginfo("Robot on obstacle avoidence, please wait")
 		return

@@ -58,7 +58,7 @@ robot_turning		= False
 # Flags indicate the mode desired to minimize the startup keyboard entries
 obstacle_mode_desired 	= False
 burn_mode_desired 		= False
-robot_enabled_dired 	= True
+robot_enabled_desired 	= True
 
 #yuqing_obstaclemodeconfirm
 #1: obstacle mode
@@ -70,6 +70,19 @@ isunlockdone = False
 # True for burn mode when pwer up
 # False for normal mode
 burn_mode = True
+
+#battery percentage, updated by callback
+battery_level  			 	= 100
+
+#status flags
+manual_mode 	 			= 0
+interaction_mode 			= 0
+
+motor_1_ok 	 				= 1
+motor_2_ok 	 	 			= 1
+encoder_ok 					= 1
+gyroscope_ok 				= 1
+
 
 ############################################################
 

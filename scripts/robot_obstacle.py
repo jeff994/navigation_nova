@@ -9,11 +9,18 @@ import robot_drive
 import robot_job 
 import robot_correction 
 
-robot_on_obstacle 	= False # if robot is on obstacle avoidence, it would be set to 1
+robot_on_obstacle 	 	= False # if robot is on obstacle avoidence, it would be set to 1
 robot_over_obstacle 	= False # it's effective if the robot_on_obstacle 
 
-needForward 		= False
-justStop 		= False
+needForward 			= False
+justStop 		 		= False
+
+#status flags
+on_obstacle  				= 0 #when obstacle avoidance finish = 1, else 0
+has_obstacle 				= 0
+
+reverse_sensor_ok 		 	= 1
+distance_sensor_ok 			= 1
 
 from math import radians, cos, sin, asin, sqrt, atan2, degrees
 

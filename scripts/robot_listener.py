@@ -13,7 +13,6 @@ import robot_turn
 import robot_correction
 import robot_publisher
 import robot_listener
-import robot_status
 import json
 import math
 import robot_configure
@@ -391,7 +390,7 @@ def IMU_callback(data):
 
 def battery_callback(data):
 	data_string = data.data
-	robot_status.battery_level = int(data_string)
+	robot_drive.battery_level = int(data_string)
 
 def direction_callback(data):
 	data_string = data.data
@@ -408,19 +407,29 @@ def direction_callback(data):
 		robot_drive.direction = "right"
 
 def status_callback(data):
-	robot_drive.burn_mode						= data.burn_mode
-	robot_status.on_obstacle  	 			= data.on_obstacle
-	robot_status.manual_mode 				= data.manual_mode
-	robot_drive.obstacle_mode 					= data.obstacle_avoidance_mode
-	robot_status.has_obstacle 				= data.has_obstacle
-	robot_status.interaction_mode 			= data.interaction_mode
+	robot_drive.burn_mode				= data.burn_mode
+	robot_obstacle.on_obstacle  	 	= data.on_obstacle #when over obstacle avoidance, = 1, else 0
+	robot_drive.manual_mode 			= data.manual_mode
+	robot_obstacle.obstacle_mode 		= data.obstacle_avoidance_mode
+	robot_obstacle.has_obstacle 		= data.has_obstacle
+	robot_drive.interaction_mode 		= data.interaction_mode
 
-	robot_status.motor_1_ok 				= data.motor_1_ok
-	robot_status.motor_2_ok 				= data.motor_2_ok
-	robot_status.encoder_ok 				= data.encoder_ok
-	robot_status.gyroscope_ok 				= data.gyroscope_ok
-	robot_status.reverse_sensor_ok 			= data.reverse_sensor_ok
-	robot_status.distance_sensor_ok 		= data.distance_sensor_ok
+	robot_drive.motor_1_ok 				= data.motor_1_ok
+	robot_drive.motor_2_ok 				= data.motor_2_ok
+	robot_drive.encoder_ok 				= data.encoder_ok
+	robot_drive.gyroscope_ok 			= data.gyroscope_ok
+	robot_obstacle.reverse_sensor_ok 	= data.reverse_sensor_ok
+	robot_obstacle.distance_sensor_ok 	= data.distance_sensor_ok
+
+	if (data.obstacle_avoidance_mode and data.has_obstacle): #when obstacle mode on, and finds obstacle
+		robot_obstacle.robot_on_obstacle = True
+		robot_obstacle.robot_over_obstacle = False
+	elif (data.on_obstacle): 								 #when obstacle avoidance is over
+		robot_obstacle.robot_on_obstacle = False
+		robot_obstacle.robot_over_obstacle = True
+	else: 													 #when no obstacle, 
+		robot_obstacle.robot_on_obstacle = False
+		robot_obstacle.robot_over_obstacle = False
 
 ######################################################################
 
@@ -502,13 +511,13 @@ def update_base(lon, lat):
 def print_status():
 	rospy.loginfo("Burn mode:               %d", robot_drive.burn_mode)
 	rospy.loginfo("Obstacle mode:           %d", robot_drive.obstacle_mode)
-	rospy.loginfo("On obstacle avoidance:   %d", robot_status.on_obstacle)
-	rospy.loginfo("Obstacle detected:       %d", robot_status.has_obstacle)
-	rospy.loginfo("Manual control mode:     %d", robot_status.manual_mode)
-	rospy.loginfo("Interaction mode:        %d", robot_status.interaction_mode)
-	rospy.loginfo("Motor 1:                 %d", robot_status.motor_1_ok)
-	rospy.loginfo("Motor 2:                 %d", robot_status.motor_2_ok)
-	rospy.loginfo("Encoders:                %d", robot_status.encoder_ok)
-	rospy.loginfo("Gyroscope:               %d", robot_status.gyroscope_ok)
-	rospy.loginfo("Reverse sensors:         %d", robot_status.reverse_sensor_ok)
-	rospy.loginfo("Distance sensors:        %d", robot_status.distance_sensor_ok)
+	rospy.loginfo("On obstacle avoidance:   %d", robot_obstacle.on_obstacle)
+	rospy.loginfo("Obstacle detected:       %d", robot_obstacle.has_obstacle)
+	rospy.loginfo("Manual control mode:     %d", robot_drive.manual_mode)
+	rospy.loginfo("Interaction mode:        %d", robot_drive.interaction_mode)
+	rospy.loginfo("Motor 1:                 %d", robot_drive.motor_1_ok)
+	rospy.loginfo("Motor 2:                 %d", robot_drive.motor_2_ok)
+	rospy.loginfo("Encoders:                %d", robot_drive.encoder_ok)
+	rospy.loginfo("Gyroscope:               %d", robot_drive.gyroscope_ok)
+	rospy.loginfo("Reverse sensors:         %d", robot_obstacle.reverse_sensor_ok)
+	rospy.loginfo("Distance sensors:        %d", robot_obstacle.distance_sensor_ok)
