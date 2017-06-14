@@ -4,12 +4,12 @@ import string
 
 from std_msgs.msg import String
 
-battery_level = 100
+#battery percentage, updated by callback
+battery_level  				= 100
 
 #status callback variables
 on_obstacle  				= 0
 manual_mode 	 			= 0
-obstacle_avoidance_mode 	= 0
 has_obstacle 				= 0
 interaction_mode 			= 0
 

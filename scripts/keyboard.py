@@ -33,6 +33,7 @@ def KeyControl():
 	print ("z. 0")
 	print ("b. Enter/Quite from burn mode")
 	print ("c. Print config parameters")
+	print ("s. Print robot status")
 	print ("using ctrl + c to exit")
 	print (30 * '-')
 	
@@ -77,6 +78,8 @@ def KeyControl():
 			pub.publish("Burn")
 		elif choice == 'c':
 			pub.publish('cfg')
+		elif choice == 's':
+			pub.publish('status')
 		else:
 			print ("Invalid/Not defined number. Try again...")
 	rate.sleep()

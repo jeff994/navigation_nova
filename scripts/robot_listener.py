@@ -293,6 +293,8 @@ def keyboard_callback(data):
 		robot_job.simple_turn(0.0)
 	elif (keyboard_data == "cfg"):
 		print_config()
+	elif (keyboard_data == "status"):
+		print_status()
 	else:
 		rospy.loginfo(keyboard_data)
 		rospy.loginfo("Not recognizing command receivied")
@@ -406,12 +408,12 @@ def direction_callback(data):
 		robot_drive.direction = "right"
 
 def status_callback(data):
-	robot_drive.burn_mode					= data.burn_mode
+	robot_drive.burn_mode						= data.burn_mode
 	robot_status.on_obstacle  	 			= data.on_obstacle
 	robot_status.manual_mode 				= data.manual_mode
-	robot_drive.obstacle_mode 				= data.obstacle_avoidance_mode
+	robot_drive.obstacle_mode 					= data.obstacle_avoidance_mode
 	robot_status.has_obstacle 				= data.has_obstacle
-	robot_status.interaction_mode 				= data.interaction_mode
+	robot_status.interaction_mode 			= data.interaction_mode
 
 	robot_status.motor_1_ok 				= data.motor_1_ok
 	robot_status.motor_2_ok 				= data.motor_2_ok
@@ -496,3 +498,17 @@ def update_base(lon, lat):
 	config_path = os.path.dirname(os.path.abspath(__file__)) + '/robot.cfg'
 	robot_configure.write_config(config_path, 'init', 'init_lon', lon)
 	robot_configure.write_config(config_path, 'init', 'init_lat', lat)
+
+def print_status():
+	rospy.loginfo("Burn mode:               %d", robot_drive.burn_mode)
+	rospy.loginfo("Obstacle mode:           %d", robot_drive.obstacle_mode)
+	rospy.loginfo("On obstacle avoidance:   %d", robot_status.on_obstacle)
+	rospy.loginfo("Obstacle detected:       %d", robot_status.has_obstacle)
+	rospy.loginfo("Manual control mode:     %d", robot_status.manual_mode)
+	rospy.loginfo("Interaction mode:        %d", robot_status.interaction_mode)
+	rospy.loginfo("Motor 1:                 %d", robot_status.motor_1_ok)
+	rospy.loginfo("Motor 2:                 %d", robot_status.motor_2_ok)
+	rospy.loginfo("Encoders:                %d", robot_status.encoder_ok)
+	rospy.loginfo("Gyroscope:               %d", robot_status.gyroscope_ok)
+	rospy.loginfo("Reverse sensors:         %d", robot_status.reverse_sensor_ok)
+	rospy.loginfo("Distance sensors:        %d", robot_status.distance_sensor_ok)
