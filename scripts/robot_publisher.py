@@ -44,7 +44,7 @@ def publish_chat():
 	data["chat"] = info
 	chat_para = json.dumps(data)
 	rospy.loginfo(chat_para)
-	pub_char.publish(chat_para)
+	pub_chat.publish(chat_para)
 
 def publish_gps():
 	stringToSend = '%f %f %f' % (robot_drive.lon_now, robot_drive.lat_now, robot_drive.bearing_now) #might need to add \n behind the E

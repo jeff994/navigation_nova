@@ -391,6 +391,8 @@ def IMU_callback(data):
 def battery_callback(data):
 	data_string = data.data
 	robot_drive.battery_level = int(data_string)
+	if(robot_drive.battery_level >= 20):
+		robot_job.back_to_base_mode = false
 
 def direction_callback(data):
 	data_string = data.data
@@ -427,7 +429,7 @@ def status_callback(data):
 	elif (data.on_obstacle): 								 #when obstacle avoidance is over
 		robot_obstacle.robot_on_obstacle = False
 		robot_obstacle.robot_over_obstacle = True
-	else: 													 #when no obstacle, 
+	else: 													 #when no obstacle,
 		robot_obstacle.robot_on_obstacle = False
 		robot_obstacle.robot_over_obstacle = False
 

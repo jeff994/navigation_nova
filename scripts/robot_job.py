@@ -26,6 +26,8 @@ gps_lat 			= [1.3407,1.340696,1.340589,1.340599]
 loops 				= 1 			#how many rounds to go
 job_lists 			= []
 
+back_to_base_mode 	= False
+
 
 # if not jobs in the sytem
 def process_no_job():
@@ -141,7 +143,7 @@ def generate_jobs_from_gps():
 	rospy.loginfo("Number of loops %d", loops);
 	if(gps_num > 1):
 		rospy.loginfo("Number of loops %d", loops);
-		for i in range(len(gps_lon)):
+		for i in range(loops):
 			rospy.loginfo("Adding loops %d", i);
 			for k in range (gps_num):
 				ne_k = (k + 1) % gps_num
@@ -314,7 +316,73 @@ def insert_compensation_jobs(lon_source, lat_source, bearing_source, lon_target,
 		job_lists.insert(0, turn_job)
 
 
+def distance_route(gps_lon_lst, gps_lat_lst):
+	dist_total = 0.0
+	for k in range(len(gps_lon_lst) - 1):
+		k_nex = k + 1
+		distance_cal 	= gpsmath.haversine(gps_lon_lst[k], gps_lat_lst[k], gps_lon_lst[k_nex], gps_lat_lst[k_nex])
+		dist_total = dist_total + distance_cal
+
+	return dist_total
+
+def generate_rb_jobs(gps_lon_lst, gps_lat_lst):
+	for k in range(len(gps_lon_lst) - 1)
+		k_nex = k + 1
+		append_regular_jobs(gps_lon_lst[k], gps_lat_lst[k], gps_lon_lst[k_nex], gps_lat_lst[k_nex])
+
+def find_closest_loop_index():
+	# Find the loop points which is cloest to the current position
+	distance = 100000000.0
+	gps_num = len(gps_lon)
+	index  = 0
+	for k in range (gps_num):
+		distance_cal 	= gpsmath.haversine(robot_drive.lon_now, robot_drive.lat_now, gps_lon[k],gps_lat[k])
+		if(distance_cal < distance):
+			distance = distance_cal
+			index = k
+	return index
+
+def back_to_base_jobs():
+	# Find the loop points which is cloest to the current position
+	index = find_closest_loop_index()
+
+	gps_lon_tmp_1 = []
+	gps_lon_tmp_2 = []
+	gps_lat_tmp_1 = []
+	gps_lat_tmp_2 = []
+
+	gps_lon_tmp_1.extend([robot_drive.lon_now])
+	gps_lat_tmp_1.extend([robot_drive.lat_now])
+	gps_lon_tmp_2.extend([robot_drive.lon_now])
+	gps_lat_tmp_2.extend([robot_drive.lat_now])
+
+	# Prepare path1
+	for k in range (index, gps_num + 1):
+		idx =  k % gps_num
+		gps_lon_tmp_1.extend([gps_lon[idx]])
+		gps_lat_tmp_1.extend([gps_lat[idx]])
+
+	# parepare path2
+	for k in range (index, 0):
+		gps_lon_tmp_2.extend([gps_lon[k]])
+		gps_lat_tmp_2.extend([gps_lat[k]])
+
+	dist1 = distance_route(gps_lon_tmp_1, gps_lat_tmp_1)
+	dist2 = distance_route(gps_lon_tmp_2, gps_lat_tmp_2)
+
+	if(dist1 > dist2):
+		gps_lon_tmp_1.extend(init_lon)
+		gps_lat_tmp_1.extend(init_lat)
+		generate_rb_jobs(gps_lon_tmp_1, gps_lat_tmp_1)
+	else:
+		gps_lon_tmp_2.extend(init_lon)
+		gps_lat_tmp_2.extend(init_lat)
+		generate_rb_jobs(gps_lon_tmp_2, gps_lat_tmp_2)
 
 
+def prepare_back_to_base():
+	global back_to_base_mode
+	back_to_base_jobs()
+	back_to_base_mode = True;
 
 #------------------------- end of re-factoring ----------------------------------

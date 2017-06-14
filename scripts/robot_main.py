@@ -59,19 +59,20 @@ def main_commander():
 	if robot_drive.burn_mode_desired:
 		robot_drive.change_mode()
 		time.sleep(0.1)
-		return;
+		return
 
 	#rospy.loginfo("3")
 	# Received command to on/off obstacle avoidance mode
 	if robot_drive.obstacle_mode != robot_drive.obstacle_mode_desired:
 		robot_drive.change_obstacle_mode()
 		time.sleep(0.1)
-		return;
+		return
+
 
 	if robot_drive.manual_mode:
 		rospy.loginfo("Robot is unde manual remote control")
 		time.sleep(0.1)
-		return;
+		return
 
 	# ----------------------------------------------------------------------------------------#
 	#  code to close robot when required	                    							  #
@@ -118,6 +119,16 @@ def main_commander():
 		robot_job.pause_robot();
 		time.sleep(0.1)
 		return;
+
+	# Handle the low battery
+	if robot_drive.battery_level < 20 && robot_job.back_to_base_mode == False
+		robot_job.clear_job_list()
+		# Generate jobs which can drive robot back to base
+		robot_job.prepare_back_to_base()
+		return
+
+
+
 
 	# ----------------------------------------------------------------------------------------#
 	#  Codes for robot normal jobs like walking and turning       							  #
