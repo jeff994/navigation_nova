@@ -75,13 +75,13 @@ burn_mode = True
 battery_level  			 	= 100
 
 #status flags
-manual_mode 	 			= 0
-interaction_mode 			= 0
+manual_mode 	 			= False
+interaction_mode 			= False
 
-motor_1_ok 	 				= 1
-motor_2_ok 	 	 			= 1
-encoder_ok 					= 1
-gyroscope_ok 				= 1
+motor_1_ok 	 				= True
+motor_2_ok 	 	 			= True
+encoder_ok 					= True
+gyroscope_ok 				= True
 
 
 ############################################################

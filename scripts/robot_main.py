@@ -65,7 +65,12 @@ def main_commander():
 	# Received command to on/off obstacle avoidance mode
 	if robot_drive.obstacle_mode != robot_drive.obstacle_mode_desired:
 		robot_drive.change_obstacle_mode()
-		time.sleep(1)
+		time.sleep(0.1)
+		return;
+
+	if robot_drive.manual_mode:
+		rospy.loginfo("Robot is unde manual remote control")
+		time.sleep(0.1)
 		return;
 
 	# ----------------------------------------------------------------------------------------#
@@ -75,6 +80,7 @@ def main_commander():
 	if not robot_drive.robot_enabled:
 		rospy.loginfo("Robot is disabled")
 		robot_job.disable_robot()
+		time.sleep(0.1)
 		return
 
 	# ----------------------------------------------------------------------------------------#
@@ -83,17 +89,30 @@ def main_commander():
 	# The flag would be set by hardware, we cannot do anything but blankly calculate the gps coordinates
 	if robot_obstacle.robot_on_obstacle:
 		rospy.loginfo("Robot on obstacle avoidence, please wait")
+		time.sleep(0.1)
 		return
 
 	# Robot obstancle avoidence is over, now resume to normal operation
 	if robot_obstacle.robot_over_obstacle:
 		robot_obstacle.complete_obstacle_avoidance()
+		time.sleep(0.1)
 		return
+
+	# handle interaction mode
+	if robot_drive.interaction_mode:
+		# pause the current tasks
+		robot_job.pause_robot()
+		# Start video chat
+		robot_publisher.publish_chat()
+		# send a command to call the office
+		time.sleep(0.1)
+		return;
 
 	# handle robot paused conidtions
 	if robot_drive.robot_paused:
 		rospy.loginfo("Pause robot")
 		robot_job.pause_robot();
+		time.sleep(0.1)
 		return;
 
 	# ----------------------------------------------------------------------------------------#
@@ -103,6 +122,7 @@ def main_commander():
 	# If no jobs, make sure robot stopped moving, we cannot leave robot moving there
 	if not robot_job.has_jobs_left():
 		robot_job.process_no_job()
+		time.sleep(0.1)
 		return
 
 	job_completed = robot_job.process_job()
