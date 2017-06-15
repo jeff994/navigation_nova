@@ -121,7 +121,7 @@ def main_commander():
 		return;
 
 	# Handle the low battery
-	if robot_drive.battery_level < 20 && robot_job.back_to_base_mode == False
+	if robot_drive.battery_level < 20 and robot_job.back_to_base_mode == False:
 		robot_job.clear_job_list()
 		# Generate jobs which can drive robot back to base
 		robot_job.prepare_back_to_base()

@@ -326,7 +326,7 @@ def distance_route(gps_lon_lst, gps_lat_lst):
 	return dist_total
 
 def generate_rb_jobs(gps_lon_lst, gps_lat_lst):
-	for k in range(len(gps_lon_lst) - 1)
+	for k in range(len(gps_lon_lst) - 1):
 		k_nex = k + 1
 		append_regular_jobs(gps_lon_lst[k], gps_lat_lst[k], gps_lon_lst[k_nex], gps_lat_lst[k_nex])
 
