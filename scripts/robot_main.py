@@ -98,15 +98,19 @@ def main_commander():
 		time.sleep(0.1)
 		return
 
-	# handle interaction mode
+	# handle interaction mode --
 	if robot_drive.interaction_mode:
 		# pause the current tasks
 		robot_job.pause_robot()
 		# Start video chat
 		robot_publisher.publish_chat()
+		# Turn off the obstacle avoidance mode
+		robot_drive.obstacle_mode_desired = false;
 		# send a command to call the office
 		time.sleep(0.1)
 		return;
+
+	# if video chat closed by any sides (server or robot), then to resume the robot for the job
 
 	# handle robot paused conidtions
 	if robot_drive.robot_paused:

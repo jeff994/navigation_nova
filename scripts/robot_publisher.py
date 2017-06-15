@@ -2,14 +2,14 @@ import rospy
 import serial
 import string
 import robot_drive
-import robot_obstacl
+import robot_obstacle
 import json
 from std_msgs.msg import String
 
 pub_param 		= rospy.Publisher('parameters', String, queue_size = 1)
 pub_gps			= rospy.Publisher('gps', 	String, queue_size=10)
 pub_command 	= rospy.Publisher('command', 	String, queue_size=1)
-pub_chat 		= rosply.Publisher('chat', String, queue_size = 1)
+pub_chat 		= rospy.Publisher('chat', String, queue_size = 1)
 
 # Used to publish parameters
 def publish_parameters():
@@ -39,11 +39,11 @@ def publish_parameters():
 def publish_chat():
 	info = {}
 	info["TYPE"]  	= 0
-	info["ACTION"] 	= 0
+	info["ACTION"] 	= 1
 	data={}
 	data["chat"] = info
 	chat_para = json.dumps(data)
-	rospy.loginfo(char_para);
+	rospy.loginfo(chat_para)
 	pub_char.publish(chat_para)
 
 def publish_gps():
