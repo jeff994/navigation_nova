@@ -83,6 +83,8 @@ motor_2_ok 	 	 			= True
 encoder_ok 					= True
 gyroscope_ok 				= True
 
+show_log					= False
+
 
 ############################################################
 

@@ -54,10 +54,12 @@ def update_robot_gps_new(left_encode, right_encode):
 		robot_drive.step_angle 		= (arc_length * 180.0) / (robot_drive.turn_radius * 3.14159265)
 
 
-	rospy.loginfo("Step distance moved %fmm, Step_angle %f degree", robot_drive.step_distance, robot_drive.step_angle)
+	if robot_drive.show_log:
+		rospy.loginfo("Step distance moved %fmm, Step_angle %f degree", robot_drive.step_distance, robot_drive.step_angle)
 	robot_drive.lon_now, robot_drive.lat_now 	= gpsmath.get_gps(robot_drive.lon_now, robot_drive.lat_now, robot_drive.step_distance, robot_drive.bearing_now)
 	robot_drive.bearing_now 					= gpsmath.format_bearing(robot_drive.bearing_now + robot_drive.step_angle)
-	rospy.loginfo("Bearing now %f,lon_now %f, lat_now %f", robot_drive.bearing_now, robot_drive.lon_now, robot_drive.lat_now)
+	if robot_drive.show_log:
+		rospy.loginfo("Bearing now %f,lon_now %f, lat_now %f", robot_drive.bearing_now, robot_drive.lon_now, robot_drive.lat_now)
 
 def update_robot_gps(left_encode, right_encode):
 	robot_drive.step_angle = 0.0
@@ -122,7 +124,8 @@ def update_robot_gps(left_encode, right_encode):
 	# convert between [0 - 360)
 	bearing 				= gpsmath.format_bearing(bearing)
 	dist 					= R * sin(abs(alpha/2.0)) * 2.0
-	rospy.loginfo("Step in straight line %f mm, Step_angle %f degree, R %f mm, Step_distance calculated %f mm", dist, robot_drive.step_angle, R, robot_drive.step_distance)
+	if robot_drive.show_log:
+		rospy.loginfo("Step in straight line %f mm, Step_angle %f degree, R %f mm, Step_distance calculated %f mm", dist, robot_drive.step_angle, R, robot_drive.step_distance)
 	robot_drive.lon_now, robot_drive.lat_now 	= gpsmath.get_gps(robot_drive.lon_now, robot_drive.lat_now, dist, bearing)
 	robot_drive.bearing_now 			= bearing
 	#robot_publisher.publish_gps()

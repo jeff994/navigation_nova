@@ -38,10 +38,8 @@ def main_commander():
 			time.sleep(1)
 			return;
 
-
-	# publish running parameters to the para topic
+	# publish running parameters to the para topic once the robot is not on burn mode
 	robot_publisher.publish_parameters()
-
 
 	# Very important error handling:
 	# If Not any new data comming, waiting for next data,
@@ -54,38 +52,29 @@ def main_commander():
 	# It process all the encoder data received - regardless robot status etc .
 	#Including dynamically update robot GPS etc
 	robot_listener.process_encoder_data() 										#aaron comment
-	#rospy.loginfo("2")
+
 	# Received command to switch to burn mode
 	if robot_drive.burn_mode_desired:
+		robot_job.pause_robot()
 		robot_drive.change_mode()
 		time.sleep(0.1)
 		return
 
-	if robot_drive.obstacle_mode:
-		rospy.loginfo("obstacle mode")
-	
-
-	if robot_drive.obstacle_mode_desired: 
-		rospy.loginfo("need to be obstacle mode")
-
-		
-
-	#rospy.loginfo("3")
 	# Received command to on/off obstacle avoidance mode
 	if robot_drive.obstacle_mode != robot_drive.obstacle_mode_desired:
-		rospy.loginfo("change obstabcle mode")
+		robot_job.pause_robot()
 		robot_drive.change_obstacle_mode()
 		time.sleep(0.1)
 		return
 
-
+	# if remote control is on
 	if robot_drive.manual_mode:
 		rospy.loginfo("Robot is unde manual remote control")
 		time.sleep(0.1)
 		return
 
 	# ----------------------------------------------------------------------------------------#
-	#  code to close robot when required	                    							  #
+	#  code to disable robot when required (clear all tasks)                    			  #
 	# ----------------------------------------------------------------------------------------#
 	# If robot not enabled, just need to disable the robot
 	if not robot_drive.robot_enabled:
@@ -112,6 +101,7 @@ def main_commander():
 
 	# handle interaction mode --
 	if robot_drive.interaction_mode:
+		rospy.loginfo("Robot interaction button pressed")
 		# pause the current tasks
 		robot_job.pause_robot()
 		# Start video chat
@@ -137,9 +127,6 @@ def main_commander():
 		# Generate jobs which can drive robot back to base
 		robot_job.prepare_back_to_base()
 		return
-
-
-
 
 	# ----------------------------------------------------------------------------------------#
 	#  Codes for robot normal jobs like walking and turning       							  #

@@ -36,12 +36,12 @@ def KeyControl():
 	print ("s. Print robot status")
 	print ("using ctrl + c to exit")
 	print (30 * '-')
-	
+
 	while not rospy.is_shutdown():
-		choice = raw_input('Enter your choice [0-9] : ') 
+		choice = raw_input('Enter your choice [0-9] : ')
 		if(len(choice) > 1):
 			print("You're supposed to enter only one key, try again...")
-			continue 
+			continue
 		elif (choice == 'i'):
 			pub.publish('Init')
 		elif choice == '0':
@@ -52,9 +52,9 @@ def KeyControl():
 			pub.publish('Back')
 		elif choice == '3':
 			pub.publish('Turn_West')
-		elif choice == '4': 
+		elif choice == '4':
 			pub.publish('Turn_East')
-		elif choice == '5': 
+		elif choice == '5':
 			pub.publish('Faster')
 		elif choice == '6':
 			pub.publish('Slower')
@@ -80,6 +80,8 @@ def KeyControl():
 			pub.publish('cfg')
 		elif choice == 's':
 			pub.publish('status')
+		elif choice == 'l':
+			pub.publish('log')
 		else:
 			print ("Invalid/Not defined number. Try again...")
 	rate.sleep()
@@ -90,5 +92,5 @@ if __name__ == '__main__':
 	except rospy.ROSInterruptException:
 		#ser.close()  #this doesn't seem to work well
 		pass
-		
-		
+
+

@@ -297,6 +297,8 @@ def keyboard_callback(data):
 		print_config()
 	elif (keyboard_data == "status"):
 		print_status()
+	elif keyboard_data == 'log':
+		robot_drive.show_log = not robot_drive.show_log
 	else:
 		rospy.loginfo(keyboard_data)
 		rospy.loginfo("Not recognizing command receivied")
