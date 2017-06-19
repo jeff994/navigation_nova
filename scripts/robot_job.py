@@ -84,6 +84,7 @@ def pause_robot():
 		while True:
 			#step 1, send the stop command every 10 milli seoncs
 			if(robot_drive.robot_moving or robot_drive.robot_turning):
+				rospy.loginfo("Stopping robot")
 				robot_drive.stop_robot()
 				time.sleep(0.01) 			#aaron comment
 			else:
@@ -92,7 +93,9 @@ def pause_robot():
 
 # disable robot if emergency stop button clicked (0)
 def disable_robot():
+	#rospy.loginfo("disable robot")
 	pause_robot()
+	#rospy.loginfo("Paused robot")
 	clear_job_list()
 
 # class to define i
@@ -346,6 +349,8 @@ def back_to_base_jobs():
 	# Find the loop points which is cloest to the current position
 	index = find_closest_loop_index()
 
+	gps_num = len(gps_lon)
+
 	gps_lon_tmp_1 = []
 	gps_lon_tmp_2 = []
 	gps_lat_tmp_1 = []
@@ -371,12 +376,12 @@ def back_to_base_jobs():
 	dist2 = distance_route(gps_lon_tmp_2, gps_lat_tmp_2)
 
 	if(dist1 > dist2):
-		gps_lon_tmp_1.extend(init_lon)
-		gps_lat_tmp_1.extend(init_lat)
+		gps_lon_tmp_1.extend([init_lon])
+		gps_lat_tmp_1.extend([init_lat])
 		generate_rb_jobs(gps_lon_tmp_1, gps_lat_tmp_1)
 	else:
-		gps_lon_tmp_2.extend(init_lon)
-		gps_lat_tmp_2.extend(init_lat)
+		gps_lon_tmp_2.extend([init_lon])
+		gps_lat_tmp_2.extend([init_lat])
 		generate_rb_jobs(gps_lon_tmp_2, gps_lat_tmp_2)
 
 

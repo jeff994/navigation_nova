@@ -61,9 +61,19 @@ def main_commander():
 		time.sleep(0.1)
 		return
 
+	if robot_drive.obstacle_mode:
+		rospy.loginfo("obstacle mode")
+	
+
+	if robot_drive.obstacle_mode_desired: 
+		rospy.loginfo("need to be obstacle mode")
+
+		
+
 	#rospy.loginfo("3")
 	# Received command to on/off obstacle avoidance mode
 	if robot_drive.obstacle_mode != robot_drive.obstacle_mode_desired:
+		rospy.loginfo("change obstabcle mode")
 		robot_drive.change_obstacle_mode()
 		time.sleep(0.1)
 		return
@@ -79,8 +89,9 @@ def main_commander():
 	# ----------------------------------------------------------------------------------------#
 	# If robot not enabled, just need to disable the robot
 	if not robot_drive.robot_enabled:
-		rospy.loginfo("Robot is disabled")
+		#rospy.loginfo("Robot is disabled")
 		robot_job.disable_robot()
+		#rospy.loginfo("Disabled robot")
 		time.sleep(0.1)
 		return
 

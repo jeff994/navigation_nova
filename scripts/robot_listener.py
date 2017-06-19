@@ -164,19 +164,22 @@ def encoder_callback(data):
 
 	left_encode  = int(left_encode)
 	right_encode = int(right_encode)
-	if(left_encode == 0 or right_encode == 0):
+	if(left_encode == 0 and right_encode == 0):
 		#rospy.loginfo("encoder 0,0")
 		robot_drive.robot_moving 	= False
 		robot_drive.robot_turning 	= False
 	elif (left_encode * right_encode > 25):
+		#rospy.loginfo("encoder 0.1")
 		robot_drive.robot_moving 	= True
 		robot_drive.robot_turning 	= False
 	elif (left_encode * right_encode < -25):
+		#rospy.loginfo("encode 1.1")
 		robot_drive.robot_turning 	= True
 		robot_drive.robot_moving 	= False
-	else:
-		robot_drive.robot_turning = False
-		robot_drive.robot_moving = False
+	elif left_encode != 0 or right_encode != 0:
+		#rospy.loginfo("encoder 1.3")
+		robot_drive.robot_turning = True
+		robot_drive.robot_moving = True
 	index = encoder_received * 2
 	encoder_data[encoder_received * 2] = float(left_encode)
 	encoder_data[encoder_received * 2 + 1] = float(right_encode)
@@ -392,7 +395,7 @@ def battery_callback(data):
 	data_string = data.data
 	robot_drive.battery_level = int(data_string)
 	if(robot_drive.battery_level >= 20):
-		robot_job.back_to_base_mode = false
+		robot_job.back_to_base_mode = False
 
 def direction_callback(data):
 	data_string = data.data
@@ -412,7 +415,7 @@ def status_callback(data):
 	robot_drive.burn_mode				= data.burn_mode
 	robot_obstacle.on_obstacle  	 	= data.on_obstacle #when over obstacle avoidance, = 1, else 0
 	robot_drive.manual_mode 			= data.manual_mode
-	robot_obstacle.obstacle_mode 		= data.obstacle_avoidance_mode
+	robot_drive.obstacle_mode 		= data.obstacle_avoidance_mode
 	robot_obstacle.has_obstacle 		= data.has_obstacle
 	robot_drive.interaction_mode 		= data.interaction_mode
 
