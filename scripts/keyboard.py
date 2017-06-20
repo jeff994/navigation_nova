@@ -36,6 +36,7 @@ def KeyControl():
 	print ("s. Print robot status")
 	print ("l. Turn off/on detailed step logs")
 	print ("k. Turn lights on/off")
+	print ("p. Pause/Resume robot")
 	print ("using ctrl + c to exit")
 	print (30 * '-')
 
@@ -66,6 +67,8 @@ def KeyControl():
 			pub.publish('Stop')
 		elif choice == '9':
 			pub.publish('Test')
+		elif choice == 'p':
+			pub.publish('pause')
 		elif choice == 'w':#@yuqing_toggleobstaclemode
 			pub.publish('No_obstacle')
 		elif choice == 'o':#@yuqing_toggleobstaclemode

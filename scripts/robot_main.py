@@ -62,7 +62,7 @@ def main_commander():
 
 	# Received command to on/off obstacle avoidance mode
 	if robot_drive.obstacle_mode != robot_drive.obstacle_mode_desired:
-		robot_job.pause_robot()
+		#robot_job.pause_robot()
 		robot_drive.change_obstacle_mode()
 		time.sleep(0.1)
 		return
