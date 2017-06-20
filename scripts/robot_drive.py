@@ -163,7 +163,7 @@ def turn_on_lights():
 	rospy.loginfo('Command sent to turn lights on ')
 
 def turn_off_lights():
-	robot_publisher.pub_command.publish('SC000000PE')
+	robot_publisher.pub_command.publish('SC00000PE')
 	rospy.loginfo('command sent to turn lights off')
 
 #normal and burn mode's commands are written in serial_handler_node
