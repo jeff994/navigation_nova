@@ -84,6 +84,7 @@ encoder_ok 					= True
 gyroscope_ok 				= True
 
 show_log					= False
+light_on					= False
 
 
 ############################################################
@@ -133,13 +134,13 @@ def unlock_robot():
 	# send a command to unlock robot after obstacle avoidece
 	robot_publisher.pub_command.publish('SB00000BE\n')
 	#robot_publisher.pub_command.publish('obstacle unlock')
-	rospy.loginfo('Unlock robot after avoidancee ')
+	rospy.loginfo('Command sent to unlock robot after avoidancee ')
 
 # change speed
 def change_speed():
 	global move_direction, speed_now, speed_desired
 	robot_publisher.publish_command(move_direction, speed_desired)
-	distpub = 'Robot speed changed from %d to %d' % (speed_now, speed_desired)
+	distpub = 'Command sent to change speed from %d to %d' % (speed_now, speed_desired)
 	speed_now = speed_desired
 	rospy.loginfo(distpub)
 
@@ -147,27 +148,34 @@ def change_speed():
 def enter_no_obstacle():
 	robot_publisher.pub_command.publish('SW00000WE\n')
 	#robot_publisher.pub_command.publish('no obstacle mode')
-	rospy.loginfo('SW00000WE enter no obstacle mode')
+	rospy.loginfo('Command sent to enter no obstacle mode')
 
 #@yuqing_toggleobstaclemode
 def enter_obstacle():
 	robot_publisher.pub_command.publish('SO00000OE\n')
 	#robot_publisher.pub_command.publish('obstacle mode')
-	rospy.loginfo('SO00000OE enter obstacle mode')
+	rospy.loginfo('Coammand sent to enter obstacle mode')
 	#yuqing_obstaclemodeconfirm
 	#remove unlock
+
+def turn_on_lights():
+	robot_publisher.pub_command.publish('SO00000PE')
+	rospy.loginfo('Command sent to turn lights on ')
+
+def turn_off_lights():
+	robot_publisher.pub_command.publish('SC000000PE')
+	rospy.loginfo('command sent to turn lights off')
 
 #normal and burn mode's commands are written in serial_handler_node
 def enter_normal_mode():
 	#for i in range (0,3):
 	robot_publisher.pub_command.publish('normal')
-	rospy.loginfo('Switch to normal mode')
+	rospy.loginfo('Command sent to switch to normal mode')
 
 def enter_burn_mode():
 	#for i in range (0,5):
 	robot_publisher.pub_command.publish('burn')
-	rospy.loginfo('Switch to burn mode')
-
+	rospy.loginfo('Command sent to switch to burn mode')
 
 def change_mode():
 	if burn_mode_desired:
@@ -180,3 +188,9 @@ def change_obstacle_mode():
 		enter_obstacle()
 	else:
 		enter_no_obstacle()
+
+def change_light_mode():
+	if light_on:
+		turn_on_lights()
+	else:
+		turn_off_lights()

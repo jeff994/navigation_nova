@@ -34,6 +34,8 @@ def KeyControl():
 	print ("b. Enter/Quite from burn mode")
 	print ("c. Print config parameters")
 	print ("s. Print robot status")
+	print ("l. Turn off/on detailed step logs")
+	print ("k. Turn lights on/off")
 	print ("using ctrl + c to exit")
 	print (30 * '-')
 
@@ -82,6 +84,8 @@ def KeyControl():
 			pub.publish('status')
 		elif choice == 'l':
 			pub.publish('log')
+		elif choice == 'k':
+			pub.publish('light')
 		else:
 			print ("Invalid/Not defined number. Try again...")
 	rate.sleep()

@@ -299,6 +299,9 @@ def keyboard_callback(data):
 		print_status()
 	elif keyboard_data == 'log':
 		robot_drive.show_log = not robot_drive.show_log
+	elif keyboard_data == 'light':
+		robot_drive.light_on = not robot_drive.light_on
+		robot_drive.change_light_mode()
 	else:
 		rospy.loginfo(keyboard_data)
 		rospy.loginfo("Not recognizing command receivied")
