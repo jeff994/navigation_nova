@@ -84,7 +84,8 @@ encoder_ok 					= True
 gyroscope_ok 				= True
 
 show_log					= False
-light_on					= False
+turn_on_light				= False
+is_light_on					= False;
 
 
 ############################################################
@@ -190,7 +191,7 @@ def change_obstacle_mode():
 		enter_no_obstacle()
 
 def change_light_mode():
-	if light_on:
+	if turn_on_light:
 		turn_on_lights()
 	else:
 		turn_off_lights()

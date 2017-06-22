@@ -58,7 +58,6 @@ def sonar_callback(data):
 def IMU_callback(data):
 	#store the past value first
 	robot_drive.past_yaw  	= robot_drive.yaw
-
 	robot_drive.roll  	= data.x
 	robot_drive.pitch 	= data.y
 	robot_drive.yaw 	= data.z
@@ -94,9 +93,6 @@ def serial_encoder_callback(data):
 	encoder_data[encoder_received * 2] = float(left_encode)
 	encoder_data[encoder_received * 2 + 1] = float(right_encode)
 
-		#bytesToLog = 'Encoder sequence %d received' % (encoder_received)
-		#rospy.loginfo(str(bytesToLog))
-
 	encoder_received = (encoder_received + 1) % 1000
 	#convert encoder number to floading point number, make sure all subsquent calculation is on floating point mode
 	#if (robot_drive.robot_on_mission ==1 ):
@@ -104,10 +100,10 @@ def serial_encoder_callback(data):
 
 
 def status_callback(data):
-	robot_drive.burn_mode				= False;
-	robot_obstacle.on_obstacle	 	= data.on_obstacle #when over obstacle avoidance, = 1, else 0
-	robot_drive.manual_mode 			= data.manual_mode
-	robot_drive.obstacle_mode 		= data.obstacle_avoidance_mode
+	robot_drive.burn_mode				= False
+	robot_obstacle.on_obstacle	 		= data.over_obstacle #when over obstacle avoidance, = 1, else 0
+	robot_drive.manual_mode				= data.manual_mode
+	robot_drive.obstacle_mode 			= data.obstacle_avoidance_mode
 	robot_obstacle.has_obstacle 		= data.has_obstacle
 	robot_drive.interaction_mode 		= data.interaction_mode
 
@@ -117,11 +113,12 @@ def status_callback(data):
 	robot_drive.gyroscope_ok 			= data.gyroscope_ok
 	robot_obstacle.reverse_sensor_ok 	= data.reverse_sensor_ok
 	robot_obstacle.distance_sensor_ok 	= data.distance_sensor_ok
+	robot_drive.is_light_on				= data.light_on
 
-	if (data.obstacle_avoidance_mode and data.has_obstacle): #when obstacle mode on, and finds obstacle
+	if (data.obstacle_avoidance_mode and data.has_obstacle): 	#when obstacle mode on, and finds obstacle
 		robot_obstacle.robot_on_obstacle = True
 		robot_obstacle.robot_over_obstacle = False
-	elif (data.on_obstacle): 								 #when obstacle avoidance is over
+	elif (data.obstacle_avoidance_mode and data.on_obstacle): 	#when obstacle avoidance is over
 		robot_obstacle.robot_on_obstacle = False
 		robot_obstacle.robot_over_obstacle = True
 	else: 													 #when no obstacle,
@@ -411,7 +408,7 @@ def keyboard_callback(data):
 	elif keyboard_data == 'log':
 		robot_drive.show_log = not robot_drive.show_log
 	elif keyboard_data == 'light':
-		robot_drive.light_on = not robot_drive.light_on
+		robot_drive.turn_on_light = not robot_drive.turn_on_light
 		robot_drive.change_light_mode()
 	else:
 		rospy.loginfo(keyboard_data)
