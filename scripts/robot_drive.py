@@ -159,22 +159,22 @@ def enter_obstacle():
 	#remove unlock
 
 def turn_on_lights():
-	robot_publisher.pub_command.publish('SO00000PE')
+	robot_publisher.pub_command.publish('SO00000PE\n')
 	rospy.loginfo('Command sent to turn lights on ')
 
 def turn_off_lights():
-	robot_publisher.pub_command.publish('SC00000PE')
+	robot_publisher.pub_command.publish('SC00000PE\n')
 	rospy.loginfo('command sent to turn lights off')
 
 #normal and burn mode's commands are written in serial_handler_node
 def enter_normal_mode():
 	#for i in range (0,3):
-	robot_publisher.pub_command.publish('normal')
+	robot_publisher.pub_command.publish('iap_jump_app\r\n\0')
 	rospy.loginfo('Command sent to switch to normal mode')
 
 def enter_burn_mode():
 	#for i in range (0,5):
-	robot_publisher.pub_command.publish('burn')
+	robot_publisher.pub_command.publish('iap\r\n\0')
 	rospy.loginfo('Command sent to switch to burn mode')
 
 def change_mode():

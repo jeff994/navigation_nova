@@ -6,19 +6,20 @@ import serial
 import string
 import sys
 from geometry_msgs.msg import Vector3
+from serial_handler.msg import Encoder
 
 from datetime import datetime
 
 from std_msgs.msg import String
 
-encoder_pub 		= rospy.Publisher('encoder', String, queue_size = 1000)
+encoder_pub 		= rospy.Publisher('encoder', Encoder, queue_size = 1000)
 #velocity_pub  		= rospy.Publisher('velocity', Vector3, queue_size = 1)
 velocity_vector  	= Vector3()
 velocity_vector.x  	= 0.0
 velocity_vector.y 	= 0.0
 velocity_vector.z 	= 0.0
 
-left_encode   	= 0 
+left_encode   	= 0
 right_encode 	= 0
 burn_mode		= True
 
@@ -27,15 +28,15 @@ def executor_simulator(data):
 	global left_encode
 	global right_encode
 	command_str = str(data.data)
+	command_str = command_str.rstrip('\0')
 	command_str = command_str.rstrip('\n')
 	command_str = command_str.rstrip('\r')
-	command_str = command_str.rstrip('\0')
 	rospy.loginfo("recieved command %s", command_str)
-
-	if (command_str == 'normal'):
+	rospy.loginfo("--------------------------")
+	if (command_str == 'iap_jump_app'):
 		rospy.loginfo('Turn off burn mode')
 		burn_mode = False
-	elif (command_str == 'burn'):
+	elif (command_str == 'iap'):
 		rospy.loginfo("Turn to burn mode")
 		burn_mode = True
 	elif (command_str == 'SF000006E'):
@@ -108,16 +109,19 @@ def executor_simulator(data):
 def encoder_simulator():
 	if burn_mode:
 		rospy.loginfo("Robot hardware in burn mode, doing notheing")
-		return 
+		return
 	#rospy.loginfo("Robot hardware in normal mode")
-	global encoder_pub	
+	global encoder_pub
 	global left_encode
 	global right_encode
 	global velocity_vector
 	bytesToPublish = '%d %d' % (left_encode, right_encode)
 	if(left_encode != 0  or right_encode != 0):
 		rospy.loginfo(bytesToPublish)
-	encoder_pub.publish(str(bytesToPublish))
+	ee = Encoder()
+	ee.left_encoder = left_encode
+	ee.right_encoder = right_encode
+	encoder_pub.publish(ee)
 
 	dt  		 		= 0.1
 	vx 			 		= (float(left_encode)+float(right_encode))/(2.0 * dt)
@@ -145,5 +149,5 @@ if __name__ == '__main__':
 	except rospy.ROSInterruptException:
 		#ser.close()  #this doesn't seem to work well
 		pass
-		
-		
+
+

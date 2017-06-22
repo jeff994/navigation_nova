@@ -15,6 +15,8 @@ import execute_command    #only here to init command buffer
 from std_msgs.msg import String
 from geometry_msgs.msg import Vector3
 from serial_handler.msg import Status   #getting the msg file from the serial_handler package
+from serial_handler.msg import Encoder
+from serial_handler.msg import Sonar
 
 # The main progream process the robot logic
 def main_commander():
@@ -169,20 +171,17 @@ def main_listener():
 	# Step 1:
 	# Regiser callback to recived data from different nodes which would be used for calculation
 	#rospy.Subscriber('compass', String, robot_listener.compass_callback) 			#aaron comment
-	rospy.Subscriber('encoder', String, robot_listener.encoder_callback) 			#aaron comment
+	rospy.Subscriber('encoder', Encoder, robot_listener.serial_encoder_callback) 			#aaron comment
 	rospy.Subscriber('keyboard', String, robot_listener.keyboard_callback)
 	#rospy.Subscriber('rc_sensor_f', String, robot_listener.rc_sensor_f_callback)  #write the callbacks properly
 	#rospy.Subscriber('rc_sensor_b', String, robot_listener.rc_sensor_b_callback)  #once we can get the correct data formats
 	#ADD SUBSCRIBERS FOR GYRO DATA, MAKE CALLBACKS TO HANDLE THEM
-
 	#@yuqing_obstacledriverread
-	rospy.Subscriber('obstacle_status', String, robot_listener.obstacle_status_callback) #was previously driver_obstacle
+	#rospy.Subscriber('obstacle_status', String, robot_listener.obstacle_status_callback) #was previously driver_obstacle
 	rospy.Subscriber('job', String, robot_listener.job_callback)
 	rospy.Subscriber('control', String, robot_listener.control_callback)
 	#rospy.Subscriber('velocity', Vector3, robot_listener.velocity_callback)
 	rospy.Subscriber('IMU', Vector3, robot_listener.IMU_callback) #not yet done
-	rospy.Subscriber('battery', String, robot_listener.battery_callback)
-	rospy.Subscriber('direction', String, robot_listener.direction_callback)
 	rospy.Subscriber('hardware_status', Status, robot_listener.status_callback)
 
 	# Step 2:
