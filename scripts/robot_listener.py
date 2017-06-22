@@ -104,7 +104,7 @@ def serial_encoder_callback(data):
 
 
 def status_callback(data):
-	robot_drive.burn_mode				= data.burn_mode
+	robot_drive.burn_mode				= False;
 	robot_obstacle.on_obstacle	 	= data.on_obstacle #when over obstacle avoidance, = 1, else 0
 	robot_drive.manual_mode 			= data.manual_mode
 	robot_drive.obstacle_mode 		= data.obstacle_avoidance_mode
