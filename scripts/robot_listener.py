@@ -39,6 +39,111 @@ last_process_time 	= 0 	# last processing time
 max_delay 			= 1.0	# max delay allowed for not receiving any signal from encooder
 last_received_time 	= 0.0 	# the time of receiving the last encoer data
 
+
+def sonar_callback(data):
+	robot_obstacle.front_sensor[0] = data.front_0;
+	robot_obstacle.front_sensor[1] = data.front_1;
+	robot_obstacle.front_sensor[2] = data.front_2;
+	robot_obstacle.front_sensor[3] = data.front_3;
+	robot_obstacle.back_sensor[0] = data.back_0;
+	robot_obstacle.back_sensor[1] = data.back_1;
+	robot_obstacle.back_sensor[2] = data.back_2;
+	robot_obstacle.back_sensor[3] = data.back_3;
+
+	if (robot_drive.show_log):
+		rospy.log("f: %d, %d, %d, %d, b: %d, %d, %d, %d", data.front_0, data.front_1, data.front_2,data.front_3, data.back_0, data.back_1, data.back_2, data.back_3)
+	return;
+
+
+def IMU_callback(data):
+	#store the past value first
+	robot_drive.past_yaw  	= robot_drive.yaw
+
+	robot_drive.roll  	= data.x
+	robot_drive.pitch 	= data.y
+	robot_drive.yaw 	= data.z
+
+
+def serial_encoder_callback(data):
+	global encoder_data
+	global encoder_received
+	robot_drive.burn_mode = False
+	#accumulate encoder data
+	#Step 1: Get encoder data and convert them to number for later use
+	#Get left encoder and right encoder
+	left_encode  = data.left_encoder
+	right_encode = data.right_encoder
+
+	if(left_encode == 0 and right_encode == 0):
+		#rospy.loginfo("encoder 0,0")
+		robot_drive.robot_moving 	= False
+		robot_drive.robot_turning 	= False
+	elif (left_encode * right_encode > 25):
+		#rospy.loginfo("encoder 0.1")
+		robot_drive.robot_moving 	= True
+		robot_drive.robot_turning 	= False
+	elif (left_encode * right_encode < -25):
+		#rospy.loginfo("encode 1.1")
+		robot_drive.robot_turning 	= True
+		robot_drive.robot_moving 	= False
+	elif left_encode != 0 or right_encode != 0:
+		#rospy.loginfo("encoder 1.3")
+		robot_drive.robot_turning = True
+		robot_drive.robot_moving = True
+	index = encoder_received * 2
+	encoder_data[encoder_received * 2] = float(left_encode)
+	encoder_data[encoder_received * 2 + 1] = float(right_encode)
+
+		#bytesToLog = 'Encoder sequence %d received' % (encoder_received)
+		#rospy.loginfo(str(bytesToLog))
+
+	encoder_received = (encoder_received + 1) % 1000
+	#convert encoder number to floading point number, make sure all subsquent calculation is on floating point mode
+	#if (robot_drive.robot_on_mission ==1 ):
+	#	rospy.loginfo(str(data_string))
+
+
+def status_callback(data):
+	robot_drive.burn_mode				= data.burn_mode
+	robot_obstacle.on_obstacle	 	= data.on_obstacle #when over obstacle avoidance, = 1, else 0
+	robot_drive.manual_mode 			= data.manual_mode
+	robot_drive.obstacle_mode 		= data.obstacle_avoidance_mode
+	robot_obstacle.has_obstacle 		= data.has_obstacle
+	robot_drive.interaction_mode 		= data.interaction_mode
+
+	robot_drive.motor_1_ok 				= data.motor_1_ok
+	robot_drive.motor_2_ok 				= data.motor_2_ok
+	robot_drive.encoder_ok 				= data.encoder_ok
+	robot_drive.gyroscope_ok 			= data.gyroscope_ok
+	robot_obstacle.reverse_sensor_ok 	= data.reverse_sensor_ok
+	robot_obstacle.distance_sensor_ok 	= data.distance_sensor_ok
+
+	if (data.obstacle_avoidance_mode and data.has_obstacle): #when obstacle mode on, and finds obstacle
+		robot_obstacle.robot_on_obstacle = True
+		robot_obstacle.robot_over_obstacle = False
+	elif (data.on_obstacle): 								 #when obstacle avoidance is over
+		robot_obstacle.robot_on_obstacle = False
+		robot_obstacle.robot_over_obstacle = True
+	else: 													 #when no obstacle,
+		robot_obstacle.robot_on_obstacle = False
+		robot_obstacle.robot_over_obstacle = False
+
+	robot_drive.battery_level = data.battery_level
+	if(robot_drive.battery_level >= 20):
+		robot_job.back_to_base_mode = False
+
+	data_int  	= data.direction
+	if (data_int == 0):
+		robot_drive.direction = "stop"
+	elif (data_int == 1):
+		robot_drive.direction = "forward"
+	elif (data_int == 2):
+		robot_drive.direction = "backward"
+	elif (data_int == 3):
+		robot_drive.direction = "left"
+	elif (data_int == 4):
+		robot_drive.direction = "right"
+
 #aaron added globals
 
 
@@ -377,94 +482,6 @@ def obstacle_status_callback(data):
 
 #aaron 23May
 
-def IMU_callback(data):
-	#store the past value first
-	robot_drive.past_yaw  	= robot_drive.yaw
-
-	robot_drive.roll  	= data.x
-	robot_drive.pitch 	= data.y
-	robot_drive.yaw 	= data.z
-
-
-def serial_encoder_callback(data):
-	global encoder_data
-	global encoder_received
-	robot_drive.burn_mode = False
-	#accumulate encoder data
-	#Step 1: Get encoder data and convert them to number for later use
-	#Get left encoder and right encoder
-	left_encode  = data.left_encoder
-	right_encode = data.right_encoder
-
-	if(left_encode == 0 and right_encode == 0):
-		#rospy.loginfo("encoder 0,0")
-		robot_drive.robot_moving 	= False
-		robot_drive.robot_turning 	= False
-	elif (left_encode * right_encode > 25):
-		#rospy.loginfo("encoder 0.1")
-		robot_drive.robot_moving 	= True
-		robot_drive.robot_turning 	= False
-	elif (left_encode * right_encode < -25):
-		#rospy.loginfo("encode 1.1")
-		robot_drive.robot_turning 	= True
-		robot_drive.robot_moving 	= False
-	elif left_encode != 0 or right_encode != 0:
-		#rospy.loginfo("encoder 1.3")
-		robot_drive.robot_turning = True
-		robot_drive.robot_moving = True
-	index = encoder_received * 2
-	encoder_data[encoder_received * 2] = float(left_encode)
-	encoder_data[encoder_received * 2 + 1] = float(right_encode)
-
-		#bytesToLog = 'Encoder sequence %d received' % (encoder_received)
-		#rospy.loginfo(str(bytesToLog))
-
-	encoder_received = (encoder_received + 1) % 1000
-	#convert encoder number to floading point number, make sure all subsquent calculation is on floating point mode
-	#if (robot_drive.robot_on_mission ==1 ):
-	#	rospy.loginfo(str(data_string))
-
-
-def status_callback(data):
-	robot_drive.burn_mode				= data.burn_mode
-	robot_obstacle.on_obstacle	 	= data.on_obstacle #when over obstacle avoidance, = 1, else 0
-	robot_drive.manual_mode 			= data.manual_mode
-	robot_drive.obstacle_mode 		= data.obstacle_avoidance_mode
-	robot_obstacle.has_obstacle 		= data.has_obstacle
-	robot_drive.interaction_mode 		= data.interaction_mode
-
-	robot_drive.motor_1_ok 				= data.motor_1_ok
-	robot_drive.motor_2_ok 				= data.motor_2_ok
-	robot_drive.encoder_ok 				= data.encoder_ok
-	robot_drive.gyroscope_ok 			= data.gyroscope_ok
-	robot_obstacle.reverse_sensor_ok 	= data.reverse_sensor_ok
-	robot_obstacle.distance_sensor_ok 	= data.distance_sensor_ok
-
-	if (data.obstacle_avoidance_mode and data.has_obstacle): #when obstacle mode on, and finds obstacle
-		robot_obstacle.robot_on_obstacle = True
-		robot_obstacle.robot_over_obstacle = False
-	elif (data.on_obstacle): 								 #when obstacle avoidance is over
-		robot_obstacle.robot_on_obstacle = False
-		robot_obstacle.robot_over_obstacle = True
-	else: 													 #when no obstacle,
-		robot_obstacle.robot_on_obstacle = False
-		robot_obstacle.robot_over_obstacle = False
-
-	robot_drive.battery_level = data.battery_level
-	if(robot_drive.battery_level >= 20):
-		robot_job.back_to_base_mode = False
-
-	data_int  	= data.direction
-	if (data_int == 0):
-		robot_drive.direction = "stop"
-	elif (data_int == 1):
-		robot_drive.direction = "forward"
-	elif (data_int == 2):
-		robot_drive.direction = "backward"
-	elif (data_int == 3):
-		robot_drive.direction = "left"
-	elif (data_int == 4):
-		robot_drive.direction = "right"
 
 ######################################################################
 
