@@ -98,6 +98,9 @@ def serial_encoder_callback(data):
 	#if (robot_drive.robot_on_mission ==1 ):
 	#	rospy.loginfo(str(data_string))
 
+def face_detection_callback(data):
+	data_string = data.data
+	robot_drive.face_detected, robot_drive.face_x, robot_drive.face_y, robot_drive.face_w, robot_drive.face_h = data_string.split(",")
 
 def status_callback(data):
 	robot_drive.burn_mode				= False
@@ -413,7 +416,6 @@ def keyboard_callback(data):
 	else:
 		rospy.loginfo(keyboard_data)
 		rospy.loginfo("Not recognizing command receivied")
-
 
 #@yuqing_obstacledriverread
 #read obstacle finish data thro driver node

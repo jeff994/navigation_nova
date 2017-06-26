@@ -42,6 +42,12 @@ step_distance		= 0.0
 direction 			= "stop"
 past_direction 		= "stop"
 
+face_detected 		= 0
+face_x 				= 0.0
+face_y 				= 0.0
+face_w 				= 0.0
+face_h 				= 0.0
+
 #-----------------FLAGS------------------#
 
 speed_desired 		= speed_6	# Global robot moving spped, 3 - 5
