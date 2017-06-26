@@ -21,8 +21,8 @@ init_lon			= 0.0
 init_lat			= 0.0
 init_bearing		= 0.0
 
-gps_lon 			= [103.962389,103.962456,103.962461,103.962381] #S,A,B,C,D
-gps_lat 			= [1.3407,1.340696,1.340589,1.340599]
+gps_lon 			= [] #S,A,B,C,D
+gps_lat 			= []
 loops 				= 1 			#how many rounds to go
 job_lists 			= []
 
@@ -347,9 +347,13 @@ def find_closest_loop_index():
 
 def back_to_base_jobs():
 	# Find the loop points which is cloest to the current position
-	index = find_closest_loop_index()
 
 	gps_num = len(gps_lon)
+
+	if(gps_num ==0):
+		return
+
+	index = find_closest_loop_index()
 
 	gps_lon_tmp_1 = []
 	gps_lon_tmp_2 = []
