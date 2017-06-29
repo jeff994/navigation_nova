@@ -91,7 +91,8 @@ gyroscope_ok 				= True
 
 show_log					= False
 turn_on_light				= False
-is_light_on					= False;
+is_light_on					= False
+robot_interacting			= False
 
 
 ############################################################

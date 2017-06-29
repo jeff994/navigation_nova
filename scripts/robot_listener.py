@@ -162,6 +162,26 @@ def status_callback(data):
 # 	#if ret > 0:
 # 	#	robot_obstacle.start_obstacle_avidence()
 # 	return
+#-------------------- communicate with web interface
+
+def chat_callback(data):
+	json_str = str(data.dat)
+	rospy.loginfo(json_str)
+	try:
+		decoded = json.loads(json_str)
+		chat_type = decoded('TYPE')
+		chat_action = decoded('ACTION')
+		rospy.loginfo("TYPE %d, ACTION %d", chat_type, chat_action)
+		if(chat_type == 1 and chat_action == 0):
+			robot_drive.robot_paused		  	= False
+			robot_drive.robot_interacting		= False
+			robot_drive.obstacle_mode_desired 	= True
+
+	except(ValueError, KeyError, TypeError):
+		rospy.loginfo('JSON format error')
+
+
+
 
 def communicate_callback(data):
 
@@ -174,7 +194,7 @@ def communicate_callback(data):
 		web_id 		= decoded['control_id']
 		# Open URL in a new tab, if a browser window is already open.
 		#webbrowser.register('mozilla', Mozilla('mozilla'))
-		webbrowser.open_new(url + '?robotid=' + my_id + ';web_id=' + web_id)
+		webbrowser.open_new(url + '?robotid=' +  + ';web_id=' + web_id)
 	except (ValueError, KeyError, TypeError):
 		rospy.loginfo('JSON format error:')
 		rospy.loginfo(json_str)

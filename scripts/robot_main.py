@@ -101,19 +101,26 @@ def main_commander():
 		time.sleep(0.1)
 		return
 
-	# handle interaction mode --
+	# First time button pressed, enter interaction mode
 	if robot_drive.interaction_mode:
 		rospy.loginfo("Robot interaction button pressed")
-		# pause the current tasks
-		robot_job.pause_robot()
-		# Start video chat
-		robot_publisher.publish_chat()
-		# Turn off the obstacle avoidance mode
-		robot_drive.obstacle_mode_desired = False;
-		robot_drive.robot_paused		  = True;
-		# send a command to call the office
-		time.sleep(0.1)
-		return;
+		if not robot_drive.robot_interacting:
+			# pause the current tasks
+			robot_job.pause_robot()
+			# Start video chat
+			robot_publisher.publish_chat()
+			# Turn off the obstacle avoidance mode
+			robot_drive.obstacle_mode_desired 	= False
+			robot_drive.robot_paused		  	= True
+			robot_drive.robot_interacting 	 	= True
+			# send a command to call the office
+			time.sleep(0.1)
+			return;
+		else:
+			robot_drive.robot_paused		  	= False
+			robot_drive.robot_interacting		= False
+			robot_drive.obstacle_mode_desired 	= True
+
 
 	# if video chat closed by any sides (server or robot), then to resume the robot for the job
 
@@ -180,6 +187,7 @@ def main_listener():
 	#@yuqing_obstacledriverread
 	#rospy.Subscriber('obstacle_status', String, robot_listener.obstacle_status_callback) #was previously driver_obstacle
 	rospy.Subscriber('job', String, robot_listener.job_callback)
+	rospy.Subscriber('chat', String, robot_listener.chat_callback)
 	rospy.Subscriber('control', String, robot_listener.control_callback)
 	#rospy.Subscriber('velocity', Vector3, robot_listener.velocity_callback)
 	rospy.Subscriber('IMU', Vector3, robot_listener.IMU_callback) #not yet done
