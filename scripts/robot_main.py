@@ -109,7 +109,8 @@ def main_commander():
 		# Start video chat
 		robot_publisher.publish_chat()
 		# Turn off the obstacle avoidance mode
-		robot_drive.obstacle_mode_desired = false;
+		robot_drive.obstacle_mode_desired = False;
+		robot_drive.robot_paused		  = True;
 		# send a command to call the office
 		time.sleep(0.1)
 		return;
