@@ -96,6 +96,8 @@ robot_interacting			= False
 
 roll_start 				= 0.0 
 
+bluetooth_panel 			= ''
+
 
 ############################################################
 

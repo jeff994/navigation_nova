@@ -193,6 +193,7 @@ def main_listener():
 	rospy.Subscriber('IMU', Vector3, robot_listener.IMU_callback) #not yet done
 	rospy.Subscriber('hardware_status', Status, robot_listener.status_callback)
 	rospy.Subscriber('face_detection', String, robot_listener.face_detection_callback)
+	rospy.Subscriber('bluetooth', String, robot_listener.bluetooth_callback)
 
 	# Step 2:
 	# Start the main loop

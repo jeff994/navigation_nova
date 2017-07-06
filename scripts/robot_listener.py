@@ -507,6 +507,10 @@ def obstacle_status_callback(data):
 
 #aaron 23May
 
+def bluetooth_callback(data):
+	string = data.data
+	robot_drive.bluetooth_panel = string
+	rospy.loginfo("found panel: %s", string)
 
 ######################################################################
 
