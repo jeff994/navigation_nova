@@ -161,7 +161,7 @@ def move_distance(dist):
 	#Check current point's distnace and angle to the target end point
 	if dist_remain > abs_dist_to_run/3:
 		distance_to_target, angle_to_target = robot_correction.distance_bearing_to_target()
-		if angle_to_target > 300 or angle_to_target < 60:
+		if angle_to_target < 300 and angle_to_target > 60:
 			stop_move()
 			return not robot_drive.robot_on_mission
 		if distance_to_target < dist_remain / 2:
