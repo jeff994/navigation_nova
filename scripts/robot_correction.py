@@ -106,11 +106,11 @@ def update_robot_gps(left_encode, right_encode):
 	# robot not so perfectly walking forward, eigher left wheel is faster or right wheel is faster
 	elif(left_dist > 0.0 and right_dist > 0.0):
 		# a little bit of right turning
-		alpha 	= (left_dist - right_dist) / (2.0 * robot_drive.turn_radius)
+		alpha 	= (left_dist_turn - right_dist_turn) / (2.0 * robot_drive.turn_radius)
 		R 	= (total_dist * robot_drive.turn_radius) / abs(left_dist_turn - right_dist_turn) 		#aaron 8 july
 	# scenario 04 robot moving backward
 	elif(left_dist < 0.0 and right_dist < 0.0):
-		alpha 	= (left_dist - right_dist) / (2.0 * robot_drive.turn_radius)
+		alpha 	= (left_dist_turn - right_dist_turn) / (2.0 * robot_drive.turn_radius)
 		R 	= -total_dist * robot_drive.turn_radius / abs(right_dist_turn - left_dist_turn) 		#aaron 8 july
 	# for robot two wheels not moving at the same direction or once of the thing not moving
 	# forwaring with rotation
@@ -182,11 +182,11 @@ def distance_correction(lon_now, lat_now, bearing_now, lon_target, lat_target, b
 	need_correct_angle 		= abs(diff_angle) > min_correction_angle
 	#need_correct_angle 		=  diff_angle > min_correcton_angle and diff_angle < (360.0 - min_correction_angle)
 
-	if need_correct_distance or need_correct_angle:
-		#robot_job.insert_compensation_jobs(lon_now, lat_now, lon_target, lat_target, correction_type, need_correct_distance, need_correct_angle)
-		robot_job.insert_compensation_jobs(lon_now, lat_now, bearing_now, lon_target, lat_target, bearing_target, correction_type, need_correct_distance, need_correct_angle)
-	else:
-		rospy.loginfo("no need to compensate errors")
+	# if need_correct_distance or need_correct_angle:
+	# 	#robot_job.insert_compensation_jobs(lon_now, lat_now, lon_target, lat_target, correction_type, need_correct_distance, need_correct_angle)
+	# 	robot_job.insert_compensation_jobs(lon_now, lat_now, bearing_now, lon_target, lat_target, bearing_target, correction_type, need_correct_distance, need_correct_angle)
+	# else:
+	# 	rospy.loginfo("no need to compensate errors")
 
 # Correct a robot with obstancles by inserting a job to move the robot forward for 1m
 def dist_correction_obstacle_need_forward(dist):

@@ -71,7 +71,7 @@ def main_commander():
 
 	# if remote control is on
 	if robot_drive.manual_mode:
-		rospy.loginfo("Robot is unde manual remote control")
+		rospy.loginfo("Robot is unde manual remote control, bearing: %f", robot_drive.bearing_now)
 		time.sleep(0.1)
 		return
 

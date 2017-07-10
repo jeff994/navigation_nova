@@ -159,14 +159,14 @@ def move_distance(dist):
 	dist_remain = dist_threshold - dist_completed;
 
 	#Check current point's distnace and angle to the target end point
-	if dist_remain > abs_dist_to_run/3:
-		distance_to_target, angle_to_target = robot_correction.distance_bearing_to_target()
-		if angle_to_target < 300 and angle_to_target > 60:
-			stop_move()
-			return not robot_drive.robot_on_mission
-		if distance_to_target < dist_remain / 2:
-			stop_move()
-			return not robot_drive.robot_on_mission
+	# if dist_remain > abs_dist_to_run/3:
+	# 	distance_to_target, angle_to_target = robot_correction.distance_bearing_to_target()
+	# 	if angle_to_target < 300 and angle_to_target > 60:
+	# 		stop_move()
+	# 		return not robot_drive.robot_on_mission
+	# 	if distance_to_target < dist_remain / 2:
+	# 		stop_move()
+	# 		return not robot_drive.robot_on_mission
 
 	if (dist_remain > 0.0) :
 		#just continue moving of job not completed and no change of speed command received
