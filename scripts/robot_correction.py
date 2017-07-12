@@ -93,6 +93,7 @@ def update_robot_gps(left_encode, right_encode):
 	robot_drive.step_angle 		= 0.0
 	robot_drive.step_distance 	= (left_dist + right_dist) / 2.0
 
+
 	#rospy.loginfo("Bearing now %f,lon_now %f, lat_now %f", robot_drive.bearing_now, robot_drive.lon_now, robot_drive.lat_now)
 	# scenario 01, 02 robot moving perfectly straight, bearing won't change, while lan and lon need to be updated
 	if(left_dist == right_dist):
@@ -101,6 +102,7 @@ def update_robot_gps(left_encode, right_encode):
 		if(right_dist < 0.0):
 			robot_drive.lon_now, robot_drive.lat_now = gpsmath.get_gps(robot_drive.lon_now, robot_drive.lat_now , right_dist, -robot_drive.bearing_now)
 		#rospy.loginfo("Bearing now %f,lon_now %f, lat_now %f", robot_drive.bearing_now, robot_drive.lon_now, robot_drive.lat_now)
+
 		return
 	# scenario 02 robot moving forward with slight
 	# robot not so perfectly walking forward, eigher left wheel is faster or right wheel is faster
